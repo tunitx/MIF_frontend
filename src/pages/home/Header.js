@@ -15,7 +15,7 @@ const Header = () => {
           </p>
         </div>
         <div className="flex flex-col gap-7 items-center sm:flex-row sm:gap-14">
-          <button className="flex w-full justify-center max-w-[200px] rounded-md bg-[#EF4D48] px-12 py-5 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+          <button className="flex w-full justify-center max-w-[200px] rounded-md bg-[#EF4D48] px-12 py-5 text-lg font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 ">
             Join Us
           </button>
           <button className="flex w-full justify-center max-w-[200px] rounded-sm border-2 border-[#EF4D48]  fill-white px-12 py-5 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">

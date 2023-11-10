@@ -11,26 +11,9 @@ import aboutus_women_entrepreneur from "../../../assests/images/aboutus_women_en
 // import Carousel from "../../components/CarouselImage";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import { responsive } from "../../utils/constants";
 
 const Aboutus = () => {
-  const responsive = {
-    superLargeDesktop: {
-      breakpoint: { max: 4000, min: 3000 },
-      items: 5,
-    },
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 4,
-    },
-    tablet: {
-      breakpoint: { max: 1024, min: 740 },
-      items: 2,
-    },
-    mobile: {
-      breakpoint: { max: 740, min: 0 },
-      items: 1,
-    },
-  };
   const slides = [
     {
       imageSource: aboutus_network,

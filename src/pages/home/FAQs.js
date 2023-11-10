@@ -11,7 +11,7 @@ const Section = ({
     <div className="w-full ">
       <div className="bg-[#EF4D48] p-4 flex justify-between items-center gap-2 w-full">
         <svg
-          fill="#000000"
+          fill="#fff"
           height="2rem"
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"

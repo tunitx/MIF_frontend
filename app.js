@@ -7,6 +7,8 @@ import ListOfMembers from "./src/pages/list_of_members/ListOfMembers";
 import FormAddNewMember from "./src/components/admin/FormAddNewMember";
 import Press from "./src/pages/press/Press";
 import MissionAndVision from "./src/pages/mission-and-vision/MissionAndVision";
+import Gallery from "./src/pages/gallery/Gallery";
+import About from "./src/pages/about/About";
 
 const appRoutes = createBrowserRouter([
   {
@@ -34,6 +36,14 @@ const appRoutes = createBrowserRouter([
       {
         path: "/mission-and-vision",
         element: <MissionAndVision />,
+      },
+      {
+        path: "/gallery",
+        element: <Gallery />,
+      },
+      {
+        path: "/about",
+        element: <About />,
       },
     ],
   },

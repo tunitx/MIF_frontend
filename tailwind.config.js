@@ -11,6 +11,7 @@ module.exports = {
       fontFamily: {
         PlayFair: ["Playfair Display", "sans-serif"],
         Poppins: ["Poppins ", "sans-serif"],
+        Lato: ["Lato", "sans-serif"],
       },
       boxShadow: {
         box_shadow_marwadi: "0px 0px 10px 0px rgba(0,0,0,0.5)",

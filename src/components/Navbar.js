@@ -13,7 +13,7 @@ const navigation = [
     subNames: [
       {
         name: "About",
-        href: "#",
+        href: "/about",
       },
       {
         name: "Registration",
@@ -76,7 +76,7 @@ const navigation = [
       },
     ],
   },
-  { name: "Gallery", href: "#", current: false },
+  { name: "Gallery", href: "/gallery", current: false },
   {
     name: "Join Us",
     href: "#",

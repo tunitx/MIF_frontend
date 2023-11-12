@@ -1,7 +1,14 @@
 import React from "react";
+import Header from "./Header";
+import Body from "./Body";
 
 const About = () => {
-  return <div>About</div>;
+  return (
+    <div>
+      <Header />
+      <Body />
+    </div>
+  );
 };
 
 export default About;

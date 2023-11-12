@@ -2,6 +2,16 @@ import company1 from "../../assests/images/company1.png.webp";
 import company2 from "../../assests/images/company2.jpeg.webp";
 import company3 from "../../assests/images/company3.jpeg.webp";
 
+import aboutus_economy from "../../assests/images/aboutus_economy.png";
+import aboutus_entrepreneur from "../../assests/images/aboutus_entrepreneur.png";
+import aboutus_network from "../../assests/images/aboutus_network.png";
+import aboutus_networking from "../../assests/images/aboutus_networking.png";
+import aboutus_team from "../../assests/images/aboutus_team.png";
+import aboutus_entrepreneur from "../../assests/images/aboutus_entrepreneur.png";
+import aboutus_skill_development from "../../assests/images/aboutus_skill-development.png";
+import aboutus_social_care from "../../assests/images/aboutus_social-care.png";
+import aboutus_women_entrepreneur from "../../assests/images/aboutus_women_entrepreneur.png";
+
 export const trusteeMembers = [
   {
     name: "Vijay Garg",
@@ -148,5 +158,48 @@ export const companies = [
     title: "Jeevan Lakshya Foundation",
     description:
       "Drenching the humanity with ray of LOVE, UNITY, EDUCATION and HOPE. JLF- A Ray of Sunshine, A Drop of Rain.JLF is a charitable trust organization dedicated to making a positive impact on society by addressing various social, economic, and environmental issues.",
+  },
+];
+
+export const slides = [
+  {
+    imageSource: aboutus_network,
+    title: "Bridging",
+    description: "Between Businesses to Businesses and Government",
+  },
+  {
+    imageSource: aboutus_economy,
+    title: "Economic Development",
+    description: "Of the state and the country",
+  },
+  {
+    imageSource: aboutus_team,
+    title: "Employment",
+    description: "Opportunities to Youngsters and Women",
+  },
+  {
+    imageSource: aboutus_networking,
+    title: "Networking",
+    description: "Provides Business and Social Networking Opportunities",
+  },
+  {
+    imageSource: aboutus_entrepreneur,
+    title: "Incubation",
+    description: "Support to Businesses and Startup",
+  },
+  {
+    imageSource: aboutus_skill_development,
+    title: "Skill Development",
+    description: "Enhancing Your Skill Development Journey",
+  },
+  {
+    imageSource: aboutus_social_care,
+    title: "Social Obligation",
+    description: "Social Responsibility in Ethical Framework",
+  },
+  {
+    imageSource: aboutus_women_entrepreneur,
+    title: "Women Entrepreneurship",
+    description: "Breaking Barriers and Building Success",
   },
 ];

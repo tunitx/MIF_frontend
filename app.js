@@ -13,6 +13,7 @@ import MembershipAndFees from "./src/pages/membership_and_fees/MembershipAndFees
 import StudyAbroad from "./src/pages/study_abroad/StudyAbroad";
 import FAQ from "./src/pages/faqs/FAQ";
 import FreeWebsite from "./src/pages/free_website/FreeWebsite";
+import BookMarwadiVyapari from "./src/pages/book_marwadi_vyapari/BookMarwadiVyapari";
 
 const appRoutes = createBrowserRouter([
   {
@@ -64,6 +65,10 @@ const appRoutes = createBrowserRouter([
       {
         path: "/free-website",
         element: <FreeWebsite />,
+      },
+      {
+        path: "/book-marwadi-vyapari",
+        element: <BookMarwadiVyapari />,
       },
     ],
   },

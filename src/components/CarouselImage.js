@@ -68,7 +68,7 @@ export default function CarouselImage({ slides }) {
 
       <div className="bottom-0 py-4 flex justify-center gap-3 w-full">
         <div className="rounded-full cursor-pointer w-full flex justify-center items-center">
-          <img src={slides[current]} className=" w-auto" />
+          <img src={slides[current]} className="lg:h-[300px] w-auto" />
         </div>
       </div>
     </div>

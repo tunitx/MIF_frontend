@@ -30,7 +30,7 @@ const ProudOfRajasthan = () => {
         <h2 className="text-[#EF4D48] font-Lato text-center w-full text-xl font-bold lg:text-2xl">
           Proud of Rajasthan (Book of Records)
         </h2>
-        <p className="text-center text-[#453E3E] font-Poppins w-full">
+        <p className="text-justify text-[#453E3E] font-Poppins w-full">
           मारवाड़ी इंटरनेशनल फेडरेशन के संस्थापक सचिव सीए विजय गर्ग ने बताया कि,
           राजस्थान स्थापना दिवस पर मारवाड़ी इंटरनेशनल फेडरेशन ने निर्णय लिया है
           कि ऐसी प्रतिभाएं जिन्होंने राजस्थान का नाम रोशन किया है या राजस्थान को

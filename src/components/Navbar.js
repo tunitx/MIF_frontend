@@ -68,7 +68,7 @@ const navigation = [
     subNames: [
       {
         name: "Types of Member/Fees",
-        href: "#",
+        href: "/membership-and-fees",
       },
       {
         name: "List of Members",

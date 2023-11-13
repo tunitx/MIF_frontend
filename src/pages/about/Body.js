@@ -145,8 +145,8 @@ const Body = () => {
                     style={{
                       lineHeight: "1.38",
                       textAlign: "justify",
-                      marginTop: "12pt",
-                      marginBottom: "12pt",
+                      // marginTop: "12pt",
+                      // marginBottom: "12pt",
                     }}
                   >
                     <span
@@ -1279,8 +1279,8 @@ const Body = () => {
                     dir="ltr"
                     style={{
                       lineHeight: "1.38",
-                      marginTop: "12pt",
-                      marginBottom: "12pt",
+                      // marginTop: "12pt",
+                      // marginBottom: "12pt",
                     }}
                   >
                     <span
@@ -1657,7 +1657,7 @@ const Body = () => {
             </p>
           </div>
         </div>
-        <div className="flex flex-col items-center justify-evenly gap-12 py-6">
+        <div className="flex flex-col items-center gap-20 py-6">
           {slides
             .filter((slide, index) => {
               return index <= 3;

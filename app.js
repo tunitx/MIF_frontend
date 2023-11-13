@@ -9,6 +9,7 @@ import Press from "./src/pages/press/Press";
 import MissionAndVision from "./src/pages/mission-and-vision/MissionAndVision";
 import Gallery from "./src/pages/gallery/Gallery";
 import About from "./src/pages/about/About";
+import MembershipAndFees from "./src/pages/membership_and_fees/MembershipAndFees";
 
 const appRoutes = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ const appRoutes = createBrowserRouter([
       {
         path: "/about",
         element: <About />,
+      },
+      {
+        path: "/membership-and-fees",
+        element: <MembershipAndFees />,
       },
     ],
   },

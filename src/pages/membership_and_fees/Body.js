@@ -1,7 +1,7 @@
 import React from "react";
 import membershipChart from "../../../assests/images/membershipChart.jpeg.webp";
 
-const Header = () => {
+const Body = () => {
   return (
     <div className="w-full flex justify-center items-center">
       <div className="mt-12 w-full flex flex-col justify-center items-center gap-6 sm:gap-8 max-w-6xl mb-8">
@@ -11,7 +11,7 @@ const Header = () => {
         <p className="text-[#2B161B] font-semibold  text-base sm:text-2xl w-full text-center font-PlayFair">
           Come, Join and Become Member at MIF
         </p>
-        <p className="text-[#453E3E] font-nomal text-sm sm:text-base lg:text-lg font-Poppins sm:font-medium w-full lg:text-base px-5 text-justify">
+        <p className="text-[#453E3E] font-nomal text-sm sm:text-base lg:text-lg font-Poppins sm:font-medium w-full px-5 text-justify">
           Come and join the Marwadi International community and experience a
           world of opportunities and connections. As a member, you will gain
           access to a vibrant network of like-minded individuals who share a
@@ -36,4 +36,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Body;

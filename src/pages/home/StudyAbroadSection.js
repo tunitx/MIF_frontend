@@ -1,6 +1,6 @@
 import React from "react";
 
-const StudyAbroad = () => {
+const StudyAbroadSection = () => {
   return (
     <div className="w-full bg-globe_study bg-top bg-no-repeat bg-cover flex justify-center px-5">
       <div className="max-w-6xl flex flex-col gap-6 py-8">
@@ -23,4 +23,4 @@ const StudyAbroad = () => {
   );
 };
 
-export default StudyAbroad;
+export default StudyAbroadSection;

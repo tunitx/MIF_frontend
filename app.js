@@ -10,6 +10,7 @@ import MissionAndVision from "./src/pages/mission-and-vision/MissionAndVision";
 import Gallery from "./src/pages/gallery/Gallery";
 import About from "./src/pages/about/About";
 import MembershipAndFees from "./src/pages/membership_and_fees/MembershipAndFees";
+import StudyAbroad from "./src/pages/study_abroad/StudyAbroad";
 
 const appRoutes = createBrowserRouter([
   {
@@ -49,6 +50,10 @@ const appRoutes = createBrowserRouter([
       {
         path: "/membership-and-fees",
         element: <MembershipAndFees />,
+      },
+      {
+        path: "/study-abroad",
+        element: <StudyAbroad />,
       },
     ],
   },

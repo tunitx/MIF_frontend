@@ -6,7 +6,7 @@ import VideoSection from "./VideoSection";
 import FounderSection from "./FounderSection";
 import MIF_news from "./MIF_news";
 import Network from "./Network";
-import StudyAbroad from "./StudyAbroad";
+import StudyAbroadSection from "./StudyAbroadSection";
 import EventsGallery from "./EventsGallery";
 import Services from "./Services";
 import FAQs from "./FAQs";
@@ -21,7 +21,7 @@ const Home = () => {
       <FounderSection />
       <MIF_news />
       <Network />
-      <StudyAbroad />
+      <StudyAbroadSection />
       <EventsGallery />
       <Services />
       <FAQs />

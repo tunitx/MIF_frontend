@@ -114,7 +114,7 @@ const navigation = [
       },
     ],
   },
-  { name: "Study Abroad", href: "#", current: false },
+  { name: "Study Abroad", href: "/study-abroad", current: false },
   {
     name: "Business Networking",
     href: "#",

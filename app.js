@@ -12,6 +12,7 @@ import About from "./src/pages/about/About";
 import MembershipAndFees from "./src/pages/membership_and_fees/MembershipAndFees";
 import StudyAbroad from "./src/pages/study_abroad/StudyAbroad";
 import FAQ from "./src/pages/faqs/FAQ";
+import FreeWebsite from "./src/pages/free_website/FreeWebsite";
 
 const appRoutes = createBrowserRouter([
   {
@@ -59,6 +60,10 @@ const appRoutes = createBrowserRouter([
       {
         path: "/faqs",
         element: <FAQ />,
+      },
+      {
+        path: "/free-website",
+        element: <FreeWebsite />,
       },
     ],
   },

@@ -11,6 +11,7 @@ import Gallery from "./src/pages/gallery/Gallery";
 import About from "./src/pages/about/About";
 import MembershipAndFees from "./src/pages/membership_and_fees/MembershipAndFees";
 import StudyAbroad from "./src/pages/study_abroad/StudyAbroad";
+import FAQ from "./src/pages/faqs/FAQ";
 
 const appRoutes = createBrowserRouter([
   {
@@ -54,6 +55,10 @@ const appRoutes = createBrowserRouter([
       {
         path: "/study-abroad",
         element: <StudyAbroad />,
+      },
+      {
+        path: "/faqs",
+        element: <FAQ />,
       },
     ],
   },

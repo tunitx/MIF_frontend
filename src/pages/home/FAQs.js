@@ -36,7 +36,7 @@ const Section = ({
               ? setVisibleComponent(null)
               : setVisibleComponent(index);
           }}
-          className="text-white font-Poppins font-medium text-[15px] leading-5 text-left w-full"
+          className="text-white font-Poppins font-medium text-[15px] leading-5 text-left w-full hover:cursor-pointer"
         >
           {question}
         </p>
@@ -61,28 +61,13 @@ const Section = ({
   );
 };
 
-const FAQs = () => {
+const FAQs = ({ faqs, viewMore }) => {
   const [visibleComponent, setVisibleComponent] = useState(null);
-  const faqs = [
-    {
-      question: "What is Marwadi International Federation?",
-      answer:
-        "Marwadi International Federation known as MIF is an organisation which encourages social, Cultural, Trade and Business activities amongst Marwadis throughout the world.",
-    },
-    {
-      question: "Who can become a member of MIF?",
-      answer: `Any person who is born in Rajasthan or his/her ancestors belongs to Rajasthan can become member of this organisation irrespective of his present location/residence.`,
-    },
-    {
-      question: "Is membership restricted to any particular area?",
-      answer: `NO. Anyone from any part of Rajasthan, India or world can become member if he/she fulfils the membership criteria.`,
-    },
-  ];
 
   return (
     <div className="px-5 py-12 w-full sm:flex sm:justify-center">
       <div className="max-w-3xl flex flex-col items-center gap-8 w-full">
-        <div className="flex flex-col justify-center items-center gap-4">
+        <div className="flex flex-col justify-center items-center gap-4 mb-8">
           <h2 className="text-4xl font-PlayFair text-center font-bold">
             Frequently Asked Questions
           </h2>
@@ -101,9 +86,13 @@ const FAQs = () => {
             );
           })}
         </div>
-        <button className="flex w-full justify-center max-w-[120px] rounded-md bg-[#EF4D48] px-2 py-2 text-lg font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 ">
-          View More
-        </button>
+        {viewMore === false ? (
+          ""
+        ) : (
+          <button className="flex w-full justify-center max-w-[120px] rounded-md bg-[#EF4D48] px-2 py-2 text-lg font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 ">
+            View More
+          </button>
+        )}
       </div>
     </div>
   );

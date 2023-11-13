@@ -203,3 +203,94 @@ export const slides = [
     description: "Breaking Barriers and Building Success",
   },
 ];
+
+export const faqs_home = [
+  {
+    question: "What is Marwadi International Federation?",
+    answer:
+      "Marwadi International Federation known as MIF is an organisation which encourages social, Cultural, Trade and Business activities amongst Marwadis throughout the world.",
+  },
+  {
+    question: "Who can become a member of MIF?",
+    answer: `Any person who is born in Rajasthan or his/her ancestors belongs to Rajasthan can become member of this organisation irrespective of his present location/residence.`,
+  },
+  {
+    question: "Is membership restricted to any particular area?",
+    answer: `NO. Anyone from any part of Rajasthan, India or world can become member if he/she fulfils the membership criteria.`,
+  },
+];
+
+export const faqs_page = [
+  {
+    question: "What is Marwadi International Federation?",
+    answer:
+      "Marwadi International Federation known as MIF is an organisation which encourages social, Cultural, Trade and Business activities amongst Marwadis throughout the world.",
+  },
+  {
+    question: "Who can become a member of MIF?",
+    answer: `Any person who is born in Rajasthan or his/her ancestors belongs to Rajasthan can become member of this organisation irrespective of his present location/residence.`,
+  },
+  {
+    question: "Is membership restricted to any particular area?",
+    answer: `NO. Anyone from any part of Rajasthan, India or world can become member if he/she fulfils the membership criteria.`,
+  },
+  {
+    question: "Is there any cast restrictions",
+    answer: `No. Anybody who qualifies for membership can become member irrespective of cast, creed, gender or profession.`,
+  },
+  {
+    question:
+      "Is it necessary to be a current resident of Rajasthan to become a member?",
+    answer:
+      "No. A person born in Rajasthan or his/her ancestors born in Rajasthan can become member. You can presently reside anywhere in the world to become a MIF member.",
+  },
+  {
+    question: "How to become a member?",
+    answer:
+      "Just visit our website and click JOIN US. Fill the details, submit and you will become a member.",
+  },
+  {
+    question: "Is this a registered organization?",
+    answer:
+      "Yes. It is a Non-Profit organization registered with Government of India and all other applicable law bodies of state and central government.",
+  },
+  {
+    question: "Is there any paid membership?",
+    answer:
+      "Yes. MIF have different types of paid membership also. If you are interested to work with the organisation actively in any capacity you can be a paid member.",
+  },
+  {
+    question: "Is membership, a yearly membership or life time membership?",
+    answer: "It is lifetime membership.",
+  },
+  {
+    question: "Is there any age limit of becoming member?",
+    answer: "Yes. Minimum 18 Years or above.",
+  },
+  {
+    question: "Can I upgarde my membership?",
+    answer: "Yes. You can do so anytime.",
+  },
+  {
+    question:
+      "Can a person not born in Rajasthan and also his ancestors are not from Rajasthan, but presently residing in Rajasthan can become a member.",
+    answer: "No.",
+  },
+  {
+    question: "How can I take part in Management activites?",
+    answer: "Please contact MIF office to serve in any capacity.",
+  },
+  {
+    question: "Any tax benefits on donations made to MIF?",
+    answer: "Yes, under section 80G of the Income Tax Act 1961.",
+  },
+  {
+    question: "Is MIF eligible for CSR activites?",
+    answer: "Yes, eligible for all CSR activities under companies act.",
+  },
+  {
+    question: "Where is the registered office of MIF?",
+    answer:
+      "It is in Jaipur. ‘ABHYAM’, C-121 A, Lal Kothi Opp Jyoti Nagar Thana, near Rajasthan Vidhan Sabha, Jaipur, Rajasthan 302015",
+  },
+];

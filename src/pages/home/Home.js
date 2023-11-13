@@ -10,6 +10,7 @@ import StudyAbroadSection from "./StudyAbroadSection";
 import EventsGallery from "./EventsGallery";
 import Services from "./Services";
 import FAQs from "./FAQs";
+import { faqs_home } from "../../utils/constants";
 
 const Home = () => {
   return (
@@ -24,7 +25,7 @@ const Home = () => {
       <StudyAbroadSection />
       <EventsGallery />
       <Services />
-      <FAQs />
+      <FAQs faqs={faqs_home} viewMore={true} />
     </div>
   );
 };

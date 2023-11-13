@@ -129,7 +129,7 @@ const navigation = [
   },
   {
     name: "FAQs",
-    href: "#",
+    href: "/faqs",
   },
 ];
 

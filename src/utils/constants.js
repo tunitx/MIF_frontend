@@ -235,7 +235,7 @@ export const faqs_page = [
     answer: `NO. Anyone from any part of Rajasthan, India or world can become member if he/she fulfils the membership criteria.`,
   },
   {
-    question: "Is there any cast restrictions",
+    question: "Is there any cast restrictions?",
     answer: `No. Anybody who qualifies for membership can become member irrespective of cast, creed, gender or profession.`,
   },
   {

@@ -3,6 +3,7 @@ import Header from "./Header";
 import Body from "./Body";
 import { Outlet } from "react-router-dom";
 import MembersContext from "../../utils/context/Members";
+import ProfileCard from "./ProfileCard";
 
 const ListOfMembers = () => {
   const [membersList, setMembersList] = useState([]);

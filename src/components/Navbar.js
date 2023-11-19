@@ -17,11 +17,15 @@ const navigation = [
       },
       {
         name: "Registration",
-        href: "#",
+        href: "/government-registration",
       },
       {
         name: "Mission and Vision",
         href: "/mission-and-vision",
+      },
+      {
+        name: "MIF Core Members",
+        href: "/mif-core-members",
       },
     ],
   },

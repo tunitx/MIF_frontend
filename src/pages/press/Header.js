@@ -13,9 +13,9 @@ const Header = () => {
           MIF Press Coverage
         </h2>
         <MIF_news />
-        <div className="w-full flex justify-center">
+        {/* <div className="w-full flex justify-center">
           <div className="w-full border-black border-2 max-w-5xl">
-            <div className=" w-full flex flex-wrap px-10 gap-4 text-[#444] font-Poppins justify-center py-3 pt-0">
+            <div className=" w-full flex flex-wrap px-10 gap-8 text-[#444] font-Poppins justify-center py-3 pt-0">
               <button className="bg-[#444] text-white px-3 py-2">2023</button>
               <button>JAN</button>
               <button>FEB</button>
@@ -34,7 +34,7 @@ const Header = () => {
                 })}
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

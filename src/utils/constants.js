@@ -12,6 +12,13 @@ import aboutus_skill_development from "../../assests/images/aboutus_skill-develo
 import aboutus_social_care from "../../assests/images/aboutus_social-care.png";
 import aboutus_women_entrepreneur from "../../assests/images/aboutus_women_entrepreneur.png";
 
+export const GET_ALL_PRESS = "http://localhost:3000/press/all";
+export const GET_YEARS_LIST = "http://localhost:3000/press/yearsList";
+export const POST_MEMBER_DETAILS = "http://localhost:3000/postMemberDetails";
+
+export const GET_ADVERTISMENTS = "http://localhost:3000/advertisment/all";
+export const POST_ADVERTISMENT = "http://localhost:3000/advertisment/new";
+
 export const trusteeMembers = [
   {
     name: "Vijay Garg",
@@ -139,6 +146,58 @@ export const responsive = {
     items: 1,
   },
 };
+
+export const REGISTRATIONS = [
+  {
+    title: "12A_REGISTRATION UNDER INCOME TAX ACT",
+    subTitle: "12A",
+    ministry: "MINISTRY OF FINANCE, GOVT. OF INDIA",
+    docLink:
+      "https://drive.google.com/file/d/1JnMgkp_jLBKpNMWkw0XicfUzE9Syzhjv/preview",
+  },
+  {
+    title: "80G_REGISTRATION UNDER INCOME TAX ACT",
+    subTitle: "80G",
+    ministry: "MINISTRY OF FINANCE, GOVT. OF INDIA",
+    docLink:
+      "https://drive.google.com/file/d/1hsg3eqT0DCrFVxUchSoykKeXtNTLXJEZ/preview",
+  },
+  {
+    title: "CERTIFICATE OF INCORPORATION_REGISTRATION UNDER COMPANIES ACT",
+    subTitle: "COI",
+    ministry: "MINISTRY OF CORPORATE AFFAIRS, GOVT. OF INDIA",
+    docLink:
+      "https://drive.google.com/file/d/1LXIkJlI26bTOgBhFw-3KZ7mPWHjmtR99/preview",
+  },
+  {
+    title: "CSR_REGISTRATION UNDER COMPANIES ACT",
+    subTitle: "CSR",
+    ministry: "MINISTRY OF CORPORATE AFFAIRS, GOVT. OF INDIA",
+    docLink:
+      "https://drive.google.com/file/d/1L-ai81tsd1GdJNt9KhMbtPlt43F5vg7p/preview",
+  },
+  {
+    title: "DARPAN ID_REGISTRATION UNDER NITI AAYOG",
+    subTitle: "DARPAN ID",
+    ministry: "NITI AAYOG, GOVT OF INDIA",
+    docLink:
+      "https://drive.google.com/file/d/1TybcxwOus4M9ZeCkpRQQ5rt08kkC4jf0/preview",
+  },
+  {
+    title: "PAN_REGISTRATION UNDER INCOME TAX ACT",
+    subTitle: "PAN",
+    ministry: "MINISTRY OF FINANCE, GOVT. OF INDIA",
+    docLink:
+      "https://drive.google.com/file/d/1oXudVoPc6kw5lo1hKCyOQohrElBvr9Qo/preview",
+  },
+  {
+    title: "CERTIFICATE OF RECOGNITION – STARTUP  INDIA",
+    subTitle: "STARTUP  INDIA",
+    ministry: "MINISTRY OF COMMERCE & INDUSTRY, GOVT. OF INDIA",
+    docLink:
+      "https://drive.google.com/file/d/1Mg5_MxnpC9SnqmBtCfQdUixcgZ2PE782/preview",
+  },
+];
 
 export const companies = [
   {

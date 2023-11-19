@@ -2,13 +2,13 @@ import React from "react";
 import Header from "./Header";
 import Body from "./Body";
 
-const Press = () => {
+const GovRegistration = () => {
   return (
-    <div className="p-3 w-full">
+    <div>
       <Header />
       <Body />
     </div>
   );
 };
 
-export default Press;
+export default GovRegistration;

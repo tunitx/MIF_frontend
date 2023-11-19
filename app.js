@@ -14,6 +14,10 @@ import StudyAbroad from "./src/pages/study_abroad/StudyAbroad";
 import FAQ from "./src/pages/faqs/FAQ";
 import FreeWebsite from "./src/pages/free_website/FreeWebsite";
 import BookMarwadiVyapari from "./src/pages/book_marwadi_vyapari/BookMarwadiVyapari";
+import Form from "./src/components/form";
+import FormAddAdvertisment from "./src/components/admin/FormAddAdvertisment";
+import GovRegistration from "./src/pages/government_registration/GovRegistration";
+import CoreMembersMIF from "./src/pages/mif_core_members/CoreMembersMIF";
 
 const appRoutes = createBrowserRouter([
   {
@@ -69,6 +73,22 @@ const appRoutes = createBrowserRouter([
       {
         path: "/book-marwadi-vyapari",
         element: <BookMarwadiVyapari />,
+      },
+      {
+        path: "/form",
+        element: <Form />,
+      },
+      {
+        path: "/form/adver",
+        element: <FormAddAdvertisment />,
+      },
+      {
+        path: "/government-registration",
+        element: <GovRegistration />,
+      },
+      {
+        path: "/mif-core-members",
+        element: <CoreMembersMIF />,
       },
     ],
   },

@@ -1,10 +1,10 @@
 import React, { useState, useContext } from "react";
 import { Formik } from "formik";
 import MembersContext from "../../utils/context/Members";
-import { POST_MEMBER_DETAILS } from "../../utils/constants";
 import axios from "axios";
+import { POST_ADVERTISMENT } from "../../utils/constants";
 
-const FormAddNewMember = () => {
+const FormAddAdvertisment = () => {
   const [show, setShow] = useState(false);
   const { membersList, setMembersList } = useContext(MembersContext);
   const [selectedFile, setFile] = useState(null);
@@ -19,7 +19,7 @@ const FormAddNewMember = () => {
           }}
           className="flex w-fit justify-center rounded-md bg-[#EF4D48] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm "
         >
-          Add New Member
+          Add Advertisment
         </button>
       </div>
     );
@@ -28,37 +28,47 @@ const FormAddNewMember = () => {
   return (
     <Formik
       initialValues={{
-        pfp: "",
-        memberType: "trusteeMember",
-        name: "",
-        profession: "",
-        nativePlace: "",
+        businessImage: "",
+        title: "",
+        twitter: "",
+        facebook: "",
+        playStore: "",
+        instagram: "",
         email: "",
-        address: "",
-        phoneNumber: "",
+        description: "",
+        phone: "",
+        whatsapp: "",
+        youtube: "",
+        website: "",
       }}
       onSubmit={async (values, { setSubmitting, resetForm }) => {
         console.log(values);
 
         const reqBody = new FormData();
-        reqBody.append("pfp", values.pfp);
-        reqBody.append("memberType", values.memberType);
-        reqBody.append("name", values.name);
-        reqBody.append("profession", values.profession);
-        reqBody.append("nativePlace", values.nativePlace);
+        reqBody.append("businessImage", values.businessImage);
+        reqBody.append("title", values.title);
+        reqBody.append("twitter", values.twitter);
+        reqBody.append("description", values.description);
+        reqBody.append("facebook", values.facebook);
         reqBody.append("email", values.email);
-        reqBody.append("address", values.address);
-        reqBody.append("phoneNumber", values.phoneNumber);
+        reqBody.append("playStore", values.playStore);
+        reqBody.append("instagram", values.instagram);
+        reqBody.append("phone", values.phone);
+        reqBody.append("whatsapp", values.whatsapp);
+        reqBody.append("youtube", values.youtube);
+        reqBody.append("website", values.website);
 
         try {
-          const response = await axios.post(POST_MEMBER_DETAILS, reqBody, {
+          const response = await axios.post(POST_ADVERTISMENT, reqBody, {
             headers: {
               "Content-Type": "multipart/form-data",
             },
           });
           setSubmitting(false);
-          resetForm();
+          // resetForm();
           console.log(response.data);
+
+          // console.log(values);
 
           // if (response.status === 201) {
           //   dispatch(
@@ -70,6 +80,7 @@ const FormAddNewMember = () => {
           //   navigate("/profiles");
           // }
         } catch (error) {
+          console.log(errors);
           // resetForm();
           // setImage(null);
           // setError(error.message);
@@ -96,10 +107,12 @@ const FormAddNewMember = () => {
                   onSubmit={formik.handleSubmit}
                   encType="multipart/form-data"
                 >
+                  {/* BUSINESS IMAGE */}
+
                   <div className="flex gap-4 justify-between items-center min-h-fit ">
                     <div className="flex flex-col gap-2">
                       <label
-                        htmlFor="pfp"
+                        htmlFor="businessImage"
                         className="block text-sm font-medium leading-6 text-gray-900 self-start mb-4"
                       >
                         Profile Photo
@@ -109,12 +122,12 @@ const FormAddNewMember = () => {
                           display: "none",
                         }}
                         type="file"
-                        id="pfp"
-                        name="pfp"
+                        id="businessImage"
+                        name="businessImage"
                         accept="image/*"
                         onChange={(event) => {
                           formik.setFieldValue(
-                            "pfp",
+                            "businessImage",
                             event.currentTarget.files[0]
                           );
                           setFile(event.currentTarget.files[0]);
@@ -126,15 +139,16 @@ const FormAddNewMember = () => {
                         }}
                       />
                       <label
-                        htmlFor="pfp"
+                        htmlFor="businessImage"
                         className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                       >
-                        Upload Image
+                        Upload Business Image
                       </label>
                       {selectedFile ? <p>✔</p> : null}
                     </div>
                   </div>
-                  <div className="sm:col-span-3">
+
+                  {/* <div className="sm:col-span-3">
                     <label
                       htmlFor="memberType"
                       className="block text-sm font-medium leading-6 text-gray-900"
@@ -157,94 +171,45 @@ const FormAddNewMember = () => {
                         </option>
                       </select>
                     </div>
-                  </div>
+                  </div> */}
+
+                  {/* BUSINESS TITLE */}
+
                   <div>
                     <label
-                      htmlFor="name"
+                      htmlFor="title"
                       className="block text-sm font-medium leading-6 text-gray-900"
                     >
-                      Username
+                      Business Title
                     </label>
                     <div className="mt-2">
                       <input
-                        {...formik.getFieldProps("name")}
-                        id="name"
-                        name="name"
+                        {...formik.getFieldProps("title")}
+                        id="title"
+                        name="title"
                         type="text"
-                        required
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="profession"
-                      className="block text-sm font-medium leading-6 text-gray-900"
-                    >
-                      Profession
-                    </label>
-                    <div className="mt-2">
-                      <input
-                        {...formik.getFieldProps("profession")}
-                        id="profession"
-                        name="profession"
-                        type="text"
-                        required
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="email"
-                      className="block text-sm font-medium leading-6 text-gray-900"
-                    >
-                      Email address
-                    </label>
-                    <div className="mt-2">
-                      <input
-                        {...formik.getFieldProps("email")}
-                        id="email"
-                        name="email"
-                        type="email"
                         required
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
                     </div>
                   </div>
 
-                  <div>
-                    <label
-                      htmlFor="nativePlace"
-                      className="block text-sm font-medium leading-6 text-gray-900"
-                    >
-                      Native Place
-                    </label>
-                    <div className="mt-2">
-                      <input
-                        {...formik.getFieldProps("nativePlace")}
-                        id="nativePlace"
-                        name="nativePlace"
-                        type="text"
-                        required
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      />
-                    </div>
-                  </div>
+                  {/* BUSINESS DESCRIPTION */}
 
                   <div className="col-span-full">
                     <label
-                      htmlFor="address"
+                      htmlFor="description"
                       className="block text-sm font-medium leading-6 text-gray-900"
                     >
-                      Address
+                      Business Description
                     </label>
                     <div className="mt-2">
                       <textarea
-                        id="address"
-                        name="address"
+                        id="description"
+                        name="description"
+                        required
                         rows={3}
-                        {...formik.getFieldProps("address")}
+                        {...formik.getFieldProps("description")}
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
                     </div>
@@ -253,20 +218,181 @@ const FormAddNewMember = () => {
                     </p>
                   </div>
 
+                  {/* TWITTER */}
+
                   <div>
                     <label
-                      htmlFor="phoneNumber"
+                      htmlFor="twitter"
+                      className="block text-sm font-medium leading-6 text-gray-900"
+                    >
+                      Twitter
+                    </label>
+                    <div className="mt-2">
+                      <input
+                        {...formik.getFieldProps("twitter")}
+                        id="twitter"
+                        name="twitter"
+                        type="text"
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      />
+                    </div>
+                  </div>
+
+                  {/* FACEBOOK */}
+
+                  <div>
+                    <label
+                      htmlFor="facebook"
+                      className="block text-sm font-medium leading-6 text-gray-900"
+                    >
+                      Facebook
+                    </label>
+                    <div className="mt-2">
+                      <input
+                        {...formik.getFieldProps("facebook")}
+                        id="facebook"
+                        name="facebook"
+                        type="text"
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      />
+                    </div>
+                  </div>
+
+                  {/* PlayStore */}
+
+                  <div>
+                    <label
+                      htmlFor="playStore"
+                      className="block text-sm font-medium leading-6 text-gray-900"
+                    >
+                      Play Store
+                    </label>
+                    <div className="mt-2">
+                      <input
+                        {...formik.getFieldProps("playStore")}
+                        id="playStore"
+                        name="playStore"
+                        type="text"
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      />
+                    </div>
+                  </div>
+
+                  {/* INSTAGRAM */}
+
+                  <div>
+                    <label
+                      htmlFor="instagram"
+                      className="block text-sm font-medium leading-6 text-gray-900"
+                    >
+                      Instagram
+                    </label>
+                    <div className="mt-2">
+                      <input
+                        {...formik.getFieldProps("instagram")}
+                        id="instagram"
+                        name="instagram"
+                        type="text"
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      />
+                    </div>
+                  </div>
+
+                  {/* EMAIL */}
+
+                  <div>
+                    <label
+                      htmlFor="email"
+                      className="block text-sm font-medium leading-6 text-gray-900"
+                    >
+                      E-mail
+                    </label>
+                    <div className="mt-2">
+                      <input
+                        {...formik.getFieldProps("email")}
+                        id="email"
+                        name="email"
+                        type="email"
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      />
+                    </div>
+                  </div>
+
+                  {/* YOUTUBE */}
+
+                  <div>
+                    <label
+                      htmlFor="youtube"
+                      className="block text-sm font-medium leading-6 text-gray-900"
+                    >
+                      Youtube
+                    </label>
+                    <div className="mt-2">
+                      <input
+                        {...formik.getFieldProps("youtube")}
+                        id="youtube"
+                        name="youtube"
+                        type="text"
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      />
+                    </div>
+                  </div>
+
+                  {/* WEBSITE */}
+
+                  <div>
+                    <label
+                      htmlFor="website"
+                      className="block text-sm font-medium leading-6 text-gray-900"
+                    >
+                      Website
+                    </label>
+                    <div className="mt-2">
+                      <input
+                        {...formik.getFieldProps("website")}
+                        id="website"
+                        name="website"
+                        type="text"
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      />
+                    </div>
+                  </div>
+
+                  {/* PHONE */}
+
+                  <div>
+                    <label
+                      htmlFor="phone"
                       className="block text-sm font-medium leading-6 text-gray-900"
                     >
                       Phone Number
                     </label>
                     <div className="mt-2">
                       <input
-                        {...formik.getFieldProps("phoneNumber")}
-                        id="phoneNumber"
-                        name="phoneNumber"
+                        {...formik.getFieldProps("phone")}
+                        id="phone"
+                        name="phone"
                         type="number"
-                        required
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      />
+                    </div>
+                  </div>
+
+                  {/* WHATSAPP */}
+
+                  <div>
+                    <label
+                      htmlFor="whatsapp"
+                      className="block text-sm font-medium leading-6 text-gray-900"
+                    >
+                      Whatsapp Number
+                    </label>
+                    <div className="mt-2">
+                      <input
+                        {...formik.getFieldProps("whatsapp")}
+                        id="whatsapp"
+                        name="whatsapp"
+                        type="number"
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
                     </div>
@@ -291,4 +417,4 @@ const FormAddNewMember = () => {
   );
 };
 
-export default FormAddNewMember;
+export default FormAddAdvertisment;

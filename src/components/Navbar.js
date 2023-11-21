@@ -254,9 +254,11 @@ export default function Navbar() {
                 </div>
               </div>
               <div>
-                <button className="flex w-full justify-center max-w-[200px] rounded-md bg-[#EF4D48] px-3 py-3 text-lg font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ">
-                  Find Marwadi
-                </button>
+                <Link to={"/admin"}>
+                  <button className="flex w-full justify-center max-w-[200px] rounded-md bg-[#EF4D48] px-3 py-3 text-lg font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ">
+                    Admin
+                  </button>
+                </Link>
               </div>
             </div>
           </div>

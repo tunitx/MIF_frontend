@@ -3,6 +3,7 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import marwadi_logo_navbar from "../../assests/images/marwadi_logo_navbar.jpg";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import { Link } from "react-router-dom";
 
 const navigation = [
   { name: "Home", href: "/", current: true },
@@ -174,9 +175,9 @@ export default function Navbar() {
                       // console.log(item);
                       if (!item?.subNames) {
                         return (
-                          <a
+                          <Link
                             key={item.name}
-                            href={item.href}
+                            to={item.href}
                             className={classNames(
                               item.current
                                 ? "text-[#453E3E]"
@@ -186,7 +187,7 @@ export default function Navbar() {
                             aria-current={item.current ? "page" : undefined}
                           >
                             {item.name}
-                          </a>
+                          </Link>
                         );
                       } else {
                         return (
@@ -226,8 +227,8 @@ export default function Navbar() {
                                 {item.subNames.map((subName) => {
                                   return (
                                     <Menu.Item>
-                                      <a
-                                        href={subName.href}
+                                      <Link
+                                        to={subName.href}
                                         className={classNames(
                                           subName.current
                                             ? "text-[#453E3E]"
@@ -239,7 +240,7 @@ export default function Navbar() {
                                         }
                                       >
                                         {subName.name}
-                                      </a>
+                                      </Link>
                                     </Menu.Item>
                                   );
                                 })}
@@ -266,9 +267,9 @@ export default function Navbar() {
                 // console.log(item);
                 if (!item?.subNames) {
                   return (
-                    <a
+                    <Link
                       key={item.name}
-                      href={item.href}
+                      to={item.href}
                       className={classNames(
                         item.current ? "text-[#453E3E]" : "text-[#453E3E]",
                         "rounded-md px-3 py-2 text-sm font-medium  whitespace-nowrap"
@@ -276,7 +277,7 @@ export default function Navbar() {
                       aria-current={item.current ? "page" : undefined}
                     >
                       {item.name}
-                    </a>
+                    </Link>
                   );
                 } else {
                   return (
@@ -314,8 +315,8 @@ export default function Navbar() {
                           {item.subNames.map((subName) => {
                             return (
                               <Menu.Item>
-                                <a
-                                  href={subName.href}
+                                <Link
+                                  to={subName.href}
                                   className={classNames(
                                     subName.current
                                       ? "text-[#453E3E]"
@@ -327,7 +328,7 @@ export default function Navbar() {
                                   }
                                 >
                                   {subName.name}
-                                </a>
+                                </Link>
                               </Menu.Item>
                             );
                           })}

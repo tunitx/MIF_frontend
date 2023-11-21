@@ -35,7 +35,7 @@ const Body = () => {
   // console.log(membersList);
 
   const [memberTypeList, setMemberTypeList] = useState([]);
-  // console.log(memberTypeList);
+  console.log(memberTypeList);
 
   const [searchFor, setSearchFor] = useState("");
 
@@ -149,7 +149,7 @@ const Body = () => {
         <div className="flex flex-col w-full pb-6 sm:flex-row">
           <div className="w-full flex flex-wrap">
             {memberTypeList &&
-              memberTypeList.map((type, index) => {
+              memberTypeList?.map((type, index) => {
                 return (
                   <button
                     key={index}

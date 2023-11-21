@@ -36,16 +36,18 @@ const Body = () => {
   // console.log(showImage);
 
   function updatesShowPress(forYear, forMonth) {
-    if (forMonth === "all") {
-      let temp = JSON.parse(JSON.stringify(showPress));
-      temp[forYear] = [...allPress[forYear]];
-      setShowPress(temp);
-    } else {
-      let temp = JSON.parse(JSON.stringify(showPress));
-      temp[forYear] = [...allPress[forYear]].filter((item) => {
-        return item.month === forMonth;
-      });
-      setShowPress(temp);
+    if (allPress[forYear]) {
+      if (forMonth === "all") {
+        let temp = JSON.parse(JSON.stringify(showPress));
+        temp[forYear] = [...allPress[forYear]];
+        setShowPress(temp);
+      } else {
+        let temp = JSON.parse(JSON.stringify(showPress));
+        temp[forYear] = [...allPress[forYear]].filter((item) => {
+          return item.month === forMonth;
+        });
+        setShowPress(temp);
+      }
     }
   }
 
@@ -111,7 +113,10 @@ const Body = () => {
     }
   }, [showMonth]);
 
-  if (allPress === null) return;
+  // console.log(allPress);
+  // console.log(allPress?.length);
+
+  if (!allPress || Object.keys(allPress)?.length <= 0) return;
 
   return (
     <div className="w-full flex justify-center items-center">
@@ -177,7 +182,7 @@ const Body = () => {
               </div>
             </div>
             <div className="w-full flex flex-wrap ">
-              {showPress[showYear].map((e, i) => {
+              {showPress[showYear]?.map((e, i) => {
                 return (
                   <div
                     className="w-full min-[450px]:w-1/2 sm:w-1/3 lg:w-1/4 border-[3px] h-80 overflow-hidden p-3 flex items-center group relative hover:cursor-pointer "

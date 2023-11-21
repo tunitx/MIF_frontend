@@ -12,21 +12,44 @@ import aboutus_skill_development from "../../assests/images/aboutus_skill-develo
 import aboutus_social_care from "../../assests/images/aboutus_social-care.png";
 import aboutus_women_entrepreneur from "../../assests/images/aboutus_women_entrepreneur.png";
 
-export const GET_ALL_PRESS = "http://localhost:3000/press/all";
-export const POST_PRESS = "http://localhost:3000/press/new";
-export const GET_YEARS_LIST = "http://localhost:3000/press/yearsList";
-export const POST_MEMBER_DETAILS = "http://localhost:3000/postMemberDetails";
-export const GET_ALL_MEMBER = "http://localhost:3000/getMemberDetails";
+// export const GET_ALL_PRESS = "http://localhost:3000/press/all";
+// export const POST_PRESS = "http://localhost:3000/press/new";
+// export const GET_YEARS_LIST = "http://localhost:3000/press/yearsList";
+// export const POST_MEMBER_DETAILS = "http://localhost:3000/postMemberDetails";
+// export const GET_ALL_MEMBER = "http://localhost:3000/getMemberDetails";
 
-export const GET_ADVERTISMENTS = "http://localhost:3000/advertisment/all";
-export const POST_ADVERTISMENT = "http://localhost:3000/advertisment/new";
+// export const GET_ADVERTISMENTS = "http://localhost:3000/advertisment/all";
+// export const POST_ADVERTISMENT = "http://localhost:3000/advertisment/new";
+
+// export const GET_MEMBERTYPES_LIST =
+//   "http://localhost:3000/member/memberType/all";
+// export const POST_MEMBERTYPE = "http://localhost:3000/member/memberType/new";
+
+// export const GET_AVAILABLE_MEMBERTYPES_LIST =
+//   "http://localhost:3000/member/typesList";
+
+export const GET_ALL_PRESS =
+  "https://marvaadi-backend-api.onrender.com/press/all";
+export const POST_PRESS = "https://marvaadi-backend-api.onrender.com/press/new";
+export const GET_YEARS_LIST =
+  "https://marvaadi-backend-api.onrender.com/press/yearsList";
+export const POST_MEMBER_DETAILS =
+  "https://marvaadi-backend-api.onrender.com/postMemberDetails";
+export const GET_ALL_MEMBER =
+  "https://marvaadi-backend-api.onrender.com/getMemberDetails";
+
+export const GET_ADVERTISMENTS =
+  "https://marvaadi-backend-api.onrender.com/advertisment/all";
+export const POST_ADVERTISMENT =
+  "https://marvaadi-backend-api.onrender.com/advertisment/new";
 
 export const GET_MEMBERTYPES_LIST =
-  "http://localhost:3000/member/memberType/all";
-export const POST_MEMBERTYPE = "http://localhost:3000/member/memberType/new";
+  "https://marvaadi-backend-api.onrender.com/member/memberType/all";
+export const POST_MEMBERTYPE =
+  "https://marvaadi-backend-api.onrender.com/member/memberType/new";
 
 export const GET_AVAILABLE_MEMBERTYPES_LIST =
-  "http://localhost:3000/member/typesList";
+  "https://marvaadi-backend-api.onrender.com/member/typesList";
 
 export const trusteeMembers = [
   {

@@ -28,14 +28,14 @@ const Advertisment = () => {
 
   useEffect(() => {
     async function getAdvertisments() {
-      try {
-        const resBody = await fetch(GET_ADVERTISMENTS);
-        const resData = await resBody.json();
+      // try {
+      const resBody = await fetch(GET_ADVERTISMENTS);
+      const resData = await resBody.json();
 
-        return resData;
-      } catch (e) {
-        console.log(e);
-      }
+      return resData;
+      // } catch (e) {
+      //   console.log(e);
+      // }
     }
 
     getAdvertisments()
@@ -79,8 +79,8 @@ const Advertisment = () => {
               <div className="flex gap-4 px-4 flex-wrap justify-center w-full">
                 {/* Email */}
 
-                {!advertisment?.email && (
-                  <a>
+                {advertisment?.email && (
+                  <a href={`mailto:${advertisment?.email}`}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       height="1.3em"
@@ -95,8 +95,8 @@ const Advertisment = () => {
 
                 {/* Facebook */}
 
-                {!advertisment?.facebook && (
-                  <a>
+                {advertisment?.facebook && (
+                  <a href={`${advertisment.facebook}`}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       height="1.3em"
@@ -112,8 +112,8 @@ const Advertisment = () => {
 
                 {/* Instagram */}
 
-                {!advertisment?.instagram && (
-                  <a>
+                {advertisment?.instagram && (
+                  <a href={`${advertisment.instagram}`}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       height="1.3em"
@@ -129,8 +129,8 @@ const Advertisment = () => {
 
                 {/* Phone */}
 
-                {!advertisment?.phone && (
-                  <a>
+                {advertisment?.phone && (
+                  <a href={`tel:${advertisment.phone}`}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       height="1.3em"
@@ -146,8 +146,8 @@ const Advertisment = () => {
 
                 {/* PlayStore */}
 
-                {!advertisment?.playStore && (
-                  <a>
+                {advertisment?.playStore && (
+                  <a href={`${advertisment.playStore}`}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       height="1.3em"
@@ -163,8 +163,8 @@ const Advertisment = () => {
 
                 {/* Twitter */}
 
-                {!advertisment?.twitter && (
-                  <a>
+                {advertisment?.twitter && (
+                  <a href={`${advertisment.twitter}`}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       height="1.3em"
@@ -180,8 +180,8 @@ const Advertisment = () => {
 
                 {/* Website */}
 
-                {!advertisment?.website && (
-                  <a>
+                {advertisment?.website && (
+                  <a href={`${advertisment.website}`}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       height="1.3em"
@@ -197,7 +197,7 @@ const Advertisment = () => {
 
                 {/* WhatsApp */}
 
-                {!advertisment?.whatsapp && (
+                {advertisment?.whatsapp && (
                   <a>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -214,8 +214,8 @@ const Advertisment = () => {
 
                 {/* Youtube */}
 
-                {!advertisment?.youtube && (
-                  <a>
+                {advertisment?.youtube && (
+                  <a href={`${advertisment.youtube}`}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       height="1.3em"

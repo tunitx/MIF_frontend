@@ -198,7 +198,7 @@ const Advertisment = () => {
                 {/* WhatsApp */}
 
                 {advertisment?.whatsapp && (
-                  <a>
+                  <a href={`https://wa.me/${advertisment.whatsapp}`}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       height="1.3em"

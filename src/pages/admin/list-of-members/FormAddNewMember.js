@@ -29,6 +29,7 @@ const FormAddNewMember = () => {
     }
 
     getMemberTypeList().then((data) => {
+      data = ["", ...data];
       setMemberTypeList(data);
     });
   }, []);
@@ -37,7 +38,7 @@ const FormAddNewMember = () => {
     <Formik
       initialValues={{
         pfp: "",
-        memberType: "trusteeMember",
+        memberType: "",
         name: "",
         profession: "",
         nativePlace: "",
@@ -57,20 +58,21 @@ const FormAddNewMember = () => {
         reqBody.append("email", values.email);
         reqBody.append("address", values.address);
         reqBody.append("phoneNumber", values.phoneNumber);
+        console.log(values);
 
         try {
-          const response = await axios.post(POST_MEMBER_DETAILS, reqBody, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          });
-          if (response.status === 201) {
-            setMessage(
-              `${values.name} is successfully added as ${values.memberType}`
-            );
-          } else {
-            setMessage("Not Uploaded");
-          }
+          // const response = await axios.post(POST_MEMBER_DETAILS, reqBody, {
+          //   headers: {
+          //     "Content-Type": "multipart/form-data",
+          //   },
+          // });
+          // if (response.status === 201) {
+          //   setMessage(
+          //     `${values.name} is successfully added as ${values.memberType}`
+          //   );
+          // } else {
+          //   setMessage("Not Uploaded");
+          // }
 
           setSubmitting(false);
           resetForm();

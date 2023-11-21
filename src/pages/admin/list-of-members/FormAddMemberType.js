@@ -17,16 +17,20 @@ const FormAddMemberType = () => {
       onSubmit={async (values, { setSubmitting, resetForm }) => {
         // console.log(values);
 
-        const reqBody = new FormData();
-        reqBody.append("name", values.name);
-        reqBody.append("id", values.id);
+        // const reqBody = new FormData();
+        // reqBody.append("name", values.name);
+        // reqBody.append("id", values.id);
 
         try {
-          const response = await axios.post(POST_MEMBERTYPE, reqBody, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          });
+          const response = await axios.post(
+            POST_MEMBERTYPE,
+            JSON.stringify(values),
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
 
           console.log(response);
 
@@ -38,9 +42,9 @@ const FormAddMemberType = () => {
 
           setSubmitting(false);
           resetForm();
-          setFile(null);
+          // setFile(null);
         } catch (error) {
-          setFile(null);
+          // setFile(null);
           resetForm();
           setError(error.message);
         }

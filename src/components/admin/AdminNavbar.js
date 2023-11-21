@@ -61,17 +61,16 @@ export default function AdminNavbar() {
                   </div>
                 </div>
               </div>
-              {/* <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 gap-4">
-               
-                <button
-                  type="button"
-                  className="relative border border-white rounded-lg px-4 bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none  focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                 
-                >
-                  Sign Out
-                </button>
-              
-              </div> */}
+              <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 gap-4">
+                <Link to={"/"}>
+                  <button
+                    type="button"
+                    className="relative border border-white rounded-lg px-4 bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none  focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                  >
+                    Public
+                  </button>
+                </Link>
+              </div>
             </div>
           </div>
 

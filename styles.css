@@ -1,0 +1,21 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Playfair+Display:wght@500;600;700;800&family=Poppins:wght@400;500;600;700;800;900&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.text-stroke {
+  -webkit-text-stroke: 1px white; /* For WebKit browsers (e.g., Safari) */
+  stroke: 1px white; /* Standard property */
+}
+
+body {
+  scrollbar-width: thin; /* Hide the scrollbar track */
+}
+
+body::-webkit-scrollbar {
+  width: 0rem; /* Set the width of the scrollbar track to make it thin */
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: transparent; /* Hide the thumb of the scrollbar */
+}

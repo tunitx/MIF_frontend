@@ -47,7 +47,7 @@ const FormAddNewMember = () => {
         phoneNumber: "",
       }}
       onSubmit={async (values, { setSubmitting, resetForm }) => {
-        console.log(values);
+        // console.log(values);
 
         const reqBody = new FormData();
         reqBody.append("pfp", values.pfp);
@@ -58,21 +58,21 @@ const FormAddNewMember = () => {
         reqBody.append("email", values.email);
         reqBody.append("address", values.address);
         reqBody.append("phoneNumber", values.phoneNumber);
-        console.log(values);
+        // console.log(values);
 
         try {
-          // const response = await axios.post(POST_MEMBER_DETAILS, reqBody, {
-          //   headers: {
-          //     "Content-Type": "multipart/form-data",
-          //   },
-          // });
-          // if (response.status === 201) {
-          //   setMessage(
-          //     `${values.name} is successfully added as ${values.memberType}`
-          //   );
-          // } else {
-          //   setMessage("Not Uploaded");
-          // }
+          const response = await axios.post(POST_MEMBER_DETAILS, reqBody, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          });
+          if (response.status === 201) {
+            setMessage(
+              `${values.name} is successfully added as ${values.memberType}`
+            );
+          } else {
+            setMessage("Not Uploaded");
+          }
 
           setSubmitting(false);
           resetForm();
@@ -147,6 +147,7 @@ const FormAddNewMember = () => {
                       <select
                         id="memberType"
                         name="memberType"
+                        required
                         {...formik.getFieldProps("memberType")}
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600  sm:text-sm sm:leading-6"
                       >

@@ -64,6 +64,7 @@ const FormAddAdvertisment = () => {
           resetForm();
           setFile(null);
         } catch (error) {
+          setSubmitting(false);
           setFile(null);
           resetForm();
           setError(error.message);
@@ -72,7 +73,7 @@ const FormAddAdvertisment = () => {
     >
       {(formik) => {
         return (
-          <div>
+          <div className={` ${formik.isSubmitting ? "opacity-50" : ""}`}>
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
               <h2 className="text-[#EF4D48] text-xl font-Poppins  font-bold w-full text-start md:text-2xl lg:text-3xl ">
                 <p className="border rounded-md border-[#333] p-3 w-fit">

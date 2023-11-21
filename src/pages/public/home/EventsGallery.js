@@ -69,9 +69,9 @@ const EventsGallery = () => {
             Explore More
           </button>
         </div>
-        <div className="w-full flex justify-center">
+        {/* <div className="w-full flex justify-center">
           <Advertisment />
-        </div>
+        </div> */}
       </div>
     </div>
   );

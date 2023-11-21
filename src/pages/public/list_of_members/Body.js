@@ -125,7 +125,7 @@ const Body = () => {
 
   useEffect(() => {
     const list = membersList?.filter((member) => {
-      return member.memberType === memberTypeList[0];
+      return member.memberType.id === memberTypeList[0]?.id;
     });
 
     // console.log(list);
@@ -135,7 +135,7 @@ const Body = () => {
 
   function handleShowListChange(setTo) {
     const list = membersList.filter((member) => {
-      return member.memberType === setTo;
+      return member.memberType.id === setTo;
     });
 
     // console.log(list);
@@ -154,15 +154,15 @@ const Body = () => {
                   <button
                     key={index}
                     className={`w-1/2 sm:w-fit grow min-w-[170px] border  border-[#EF4D48] rounded-xl text-sm sm:text-base py-3 md:py-4 font-Poppins hover:cursor-pointer ${
-                      showList[0]?.memberType === type
+                      showList[0]?.memberType?.id === type?.id
                         ? "bg-[#EF4D48] text-white"
                         : " bg-[#FFFFFF] text-[#333]"
                     }`}
                     onClick={() => {
-                      handleShowListChange(type);
+                      handleShowListChange(type?.id);
                     }}
                   >
-                    {mapper[type]}
+                    {type?.name}
                   </button>
                 );
               })}

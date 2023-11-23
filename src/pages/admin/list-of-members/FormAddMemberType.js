@@ -8,18 +8,37 @@ const FormAddMemberType = () => {
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
 
+  function camelCaseSentence(sentence) {
+    const words = sentence.trim().split(/\s+/);
+
+    // Convert the first word to lowercase
+    const camelCaseWords = [words[0].toLowerCase()];
+
+    // Capitalize the first letter of each subsequent word
+    for (let i = 1; i < words.length; i++) {
+      camelCaseWords.push(
+        words[i].charAt(0).toUpperCase() + words[i].slice(1).toLowerCase()
+      );
+    }
+
+    // Join the words to form the camel case string
+    const camelCaseString = camelCaseWords.join("");
+
+    return camelCaseString;
+  }
+
   return (
     <Formik
       initialValues={{
         name: "",
         id: "",
       }}
-      onSubmit={async (values, { setSubmitting, resetForm }) => {
+      onSubmit={async (values, { setSubmitting, resetForm, setFieldValue }) => {
+        setError(null);
+        setMessage(null);
         // console.log(values);
 
-        // const reqBody = new FormData();
-        // reqBody.append("name", values.name);
-        // reqBody.append("id", values.id);
+        // return;
 
         try {
           const response = await axios.post(
@@ -69,40 +88,6 @@ const FormAddMemberType = () => {
                   onSubmit={formik.handleSubmit}
                   encType="multipart/form-data"
                 >
-                  {/* <div className="flex gap-4 justify-between items-center min-h-fit ">
-                    <div className="flex flex-col gap-2">
-                      <label
-                        htmlFor="image"
-                        className="block text-sm font-medium leading-6 text-gray-900 self-start mb-4"
-                      >
-                        News Cutout
-                      </label>
-                      <input
-                        style={{
-                          display: "none",
-                        }}
-                        type="file"
-                        id="image"
-                        name="image"
-                        accept="image/*"
-                        onChange={(event) => {
-                          formik.setFieldValue(
-                            "image",
-                            event.currentTarget.files[0]
-                          );
-                          setFile(event.currentTarget.files[0]);
-                        }}
-                      />
-                      <label
-                        htmlFor="image"
-                        className="rounded-md bg-[#EF4D48] px-3 py-2 text-sm font-semibold text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                      >
-                        Upload News Cutout Image
-                      </label>
-                      {selectedFile ? <p>✔</p> : null}
-                    </div>
-                  </div> */}
-
                   <div>
                     <label
                       htmlFor="name"
@@ -112,7 +97,15 @@ const FormAddMemberType = () => {
                     </label>
                     <div className="mt-2">
                       <input
-                        {...formik.getFieldProps("name")}
+                        // {...formik.getFieldProps("name")}
+                        value={formik.values.name}
+                        onChange={(e) => {
+                          formik.setFieldValue("name", e.target.value);
+
+                          const id_ = camelCaseSentence(e.target.value);
+
+                          formik.setFieldValue("id", id_);
+                        }}
                         id="name"
                         name="name"
                         type="text"
@@ -130,11 +123,14 @@ const FormAddMemberType = () => {
                     </label>
                     <div className="mt-2">
                       <input
-                        {...formik.getFieldProps("id")}
+                        // {...formik.getFieldProps("id")}
+                        value={formik.values.id}
+                        onChange={() => {}}
                         id="id"
                         name="id"
                         type="text"
-                        required
+                        disabled
+                        // required
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
                     </div>

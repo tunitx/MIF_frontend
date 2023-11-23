@@ -28,10 +28,14 @@ const FormAddNewMember = () => {
       }
     }
 
-    getMemberTypeList().then((data) => {
-      data = ["", ...data];
-      setMemberTypeList(data);
-    });
+    getMemberTypeList()
+      .then((data) => {
+        // data = [{ name: "Select Member Type" }, ...data];
+        setMemberTypeList(data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }, []);
 
   return (
@@ -47,7 +51,7 @@ const FormAddNewMember = () => {
         phoneNumber: "",
       }}
       onSubmit={async (values, { setSubmitting, resetForm }) => {
-        // console.log(values);
+        console.log(values);
 
         const reqBody = new FormData();
         reqBody.append("pfp", values.pfp);
@@ -58,7 +62,10 @@ const FormAddNewMember = () => {
         reqBody.append("email", values.email);
         reqBody.append("address", values.address);
         reqBody.append("phoneNumber", values.phoneNumber);
-        // console.log(values);
+
+        setError(null);
+        setMessage(null);
+        // return;
 
         try {
           const response = await axios.post(POST_MEMBER_DETAILS, reqBody, {
@@ -151,6 +158,9 @@ const FormAddNewMember = () => {
                         {...formik.getFieldProps("memberType")}
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600  sm:text-sm sm:leading-6"
                       >
+                        <option disabled value={""}>
+                          Select Member Type
+                        </option>
                         {memberTypeList &&
                           memberTypeList.map((type, index) => {
                             return (
@@ -159,14 +169,6 @@ const FormAddNewMember = () => {
                               </option>
                             );
                           })}
-
-                        {/* <option value={"trusteeMember"}>Trustee Member</option>
-                        <option value={"advisoryMember"}>
-                          Advisory Member
-                        </option>
-                        <option value={"activeMember"}>
-                          Active Life Member
-                        </option> */}
                       </select>
                     </div>
                   </div>

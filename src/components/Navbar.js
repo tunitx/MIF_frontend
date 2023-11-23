@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import marwadi_logo_navbar from "../../assests/images/marwadi_logo_navbar.jpg";
+import marwadi_logo_navbar from "../../assests/images/marwari_logo_pro.png";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
 
@@ -37,7 +37,7 @@ const navigation = [
     subNames: [
       {
         name: "Rajasthan",
-        href: "#",
+        href: "https://app.marwadiinternationalfederation.com/rajasthan-network",
         subNames: [
           {
             name: "Udyog Mitra",
@@ -46,7 +46,7 @@ const navigation = [
       },
       {
         name: "India",
-        href: "#",
+        href: "https://app.marwadiinternationalfederation.com/india-network",
         subNames: [
           {
             name: "Rajasthan Udyog Mitra",
@@ -55,7 +55,7 @@ const navigation = [
       },
       {
         name: "Abroad",
-        href: "#",
+        href: "https://app.marwadiinternationalfederation.com/abroad-network",
         subNames: [
           {
             name: "Marwadi Business Mitra",
@@ -144,14 +144,14 @@ function classNames(...classes) {
 
 export default function Navbar() {
   return (
-    <Disclosure as="nav" className="bg-white font-Poppins">
+    <Disclosure as="nav" className="bg-[#FFFEFE] font-Poppins ">
       {({ open }) => (
         <>
-          <div className="mx-auto  px-2 sm:px-6 lg:px-8">
+          <div className="mx-auto  p-3 px-4 sm:px-6 lg:px-10 ">
             <div className="relative flex h-fit items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
-                <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-500 ">
                   <span className="absolute -inset-0.5" />
                   <span className="sr-only">Open main menu</span>
                   {open ? (
@@ -162,36 +162,43 @@ export default function Navbar() {
                 </Disclosure.Button>
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                <div className="flex flex-shrink-0 items-center">
-                  <img
-                    className="h-24 w-auto"
-                    src={marwadi_logo_navbar}
-                    alt="Your Company"
-                  />
+                <div className="flex flex-shrink-0 items-center hover:cursor-pointer">
+                  <Link to={"/"}>
+                    {" "}
+                    <img
+                      className="sm:h-20 h-16 w-auto"
+                      src={marwadi_logo_navbar}
+                      loading="eager"
+                      alt="Your Company"
+                    />
+                  </Link>
                 </div>
-                <div className="hidden sm:ml-6 sm:block">
-                  <div className="flex space-x-4 flex-wrap">
+                <div className="hidden  sm:ml-6 sm:mr-6 sm:flex items-center">
+                  <div className="flex flex-wrap items-center">
                     {navigation.map((item) => {
                       // console.log(item);
                       if (!item?.subNames) {
                         return (
-                          <Link
-                            key={item.name}
-                            to={item.href}
-                            className={classNames(
-                              item.current
-                                ? "text-[#453E3E]"
-                                : "text-[#453E3E]",
-                              "rounded-md px-3 py-2 text-sm font-medium  whitespace-nowrap"
-                            )}
-                            aria-current={item.current ? "page" : undefined}
-                          >
-                            {item.name}
-                          </Link>
+                          <div>
+                            {" "}
+                            <Link
+                              key={item.name}
+                              to={item.href}
+                              className={classNames(
+                                item.current
+                                  ? "text-[#453E3E]"
+                                  : "text-[#453E3E]",
+                                "rounded-md px-3 py-2 text-sm font-medium  whitespace-nowrap"
+                              )}
+                              aria-current={item.current ? "page" : undefined}
+                            >
+                              {item.name}
+                            </Link>
+                          </div>
                         );
                       } else {
                         return (
-                          <Menu as="div" className="relative ml-3">
+                          <Menu as="div" className="relative m-0">
                             <div>
                               <Menu.Button className="relative flex rounded-full  text-sm ">
                                 <p
@@ -254,9 +261,13 @@ export default function Navbar() {
                 </div>
               </div>
               <div>
-                <Link to={"/admin"}>
-                  <button className="flex w-full justify-center max-w-[200px] rounded-md bg-[#EF4D48] px-3 py-3 text-lg font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ">
-                    Admin
+                <Link
+                  to={
+                    "https://app.marwadiinternationalfederation.com/advance-search"
+                  }
+                >
+                  <button className="flex w-full justify-center max-w-[200px] rounded-md bg-[#EF4D48] px-3 sm:py-3 py-2  text-base sm:text-lg font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ">
+                    Find Marwadi
                   </button>
                 </Link>
               </div>
@@ -264,7 +275,7 @@ export default function Navbar() {
           </div>
 
           <Disclosure.Panel className="sm:hidden">
-            <div className="space-y-1 px-2 pb-3 pt-2">
+            <div className="flex flex-col gap-1 px-2 pb-3 pt-2 border-b-4 ">
               {navigation.map((item) => {
                 // console.log(item);
                 if (!item?.subNames) {
@@ -283,7 +294,7 @@ export default function Navbar() {
                   );
                 } else {
                   return (
-                    <Menu as="div" className="relative ml-3">
+                    <Menu as="div" className="relative">
                       <div>
                         <Menu.Button className="relative flex rounded-full  text-sm ">
                           <p

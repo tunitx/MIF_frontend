@@ -45,6 +45,9 @@ const FormAddAdvertisment = () => {
         reqBody.append("youtube", values.youtube);
         reqBody.append("website", values.website);
 
+        setError(null);
+        setMessage(null);
+
         try {
           const response = await axios.post(POST_ADVERTISMENT, reqBody, {
             headers: {

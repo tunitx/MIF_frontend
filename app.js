@@ -25,6 +25,7 @@ import Admin from "./src/Admin";
 import AdminPress from "./src/pages/admin/press/Press";
 import AdminListOfMembers from "./src/pages/admin/list-of-members/ListOfMembers";
 import AdminAdvertismentBoard from "./src/pages/admin/advertisment-board/AdvertismentBoard";
+import Contact from "./src/pages/public/contact/Contact";
 
 const appRoutes = createBrowserRouter([
   {
@@ -86,6 +87,10 @@ const appRoutes = createBrowserRouter([
           {
             path: "/mif-core-members",
             element: <CoreMembersMIF />,
+          },
+          {
+            path: "/contact",
+            element: <Contact />,
           },
         ],
       },

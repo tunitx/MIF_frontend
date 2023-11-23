@@ -1,25 +1,3 @@
-// import React from "react";
-
-// const Form = () => {
-//   return (
-//     <div>
-//       <form
-//         method="post"
-//         encType="multipart/form-data"
-//         action="http://localhost:3000/press/new"
-//       >
-//         <input type="file" accept="image/*" id="image" name="image" />
-
-//         <input type="date" id="date" name="date" placeholder="date" />
-
-//         <button type="submit">ADD</button>
-//       </form>
-//     </div>
-//   );
-// };
-
-// export default Form;
-
 import React, { useState, useContext, useEffect } from "react";
 import { Formik } from "formik";
 import MembersContext from "../../../utils/context/Members";
@@ -31,23 +9,6 @@ const FormAddNewPress = () => {
 
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
-
-  //   useEffect(() => {
-  //     async function getMemberTypeList() {
-  //       try {
-  //         const resBody = await fetch(GET_MEMBERTYPES_LIST);
-  //         const resData = await resBody.json();
-
-  //         return resData;
-  //       } catch (e) {
-  //         console.log(e);
-  //       }
-  //     }
-
-  //     getMemberTypeList().then((data) => {
-  //       setMemberTypeList(data);
-  //     });
-  //   }, []);
 
   return (
     <Formik
@@ -61,6 +22,9 @@ const FormAddNewPress = () => {
         const reqBody = new FormData();
         reqBody.append("image", values.image);
         reqBody.append("date", values.date);
+
+        setError(null);
+        setMessage(null);
 
         try {
           const response = await axios.post(POST_PRESS, reqBody, {

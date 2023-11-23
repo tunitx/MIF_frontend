@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Section = ({
   question,
@@ -89,9 +90,11 @@ const FAQs = ({ faqs, viewMore }) => {
         {viewMore === false ? (
           ""
         ) : (
-          <button className="flex w-full justify-center max-w-[120px] rounded-md bg-[#EF4D48] px-2 py-2 text-lg font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 ">
-            View More
-          </button>
+          <Link to={"/faqs"} className="w-full mx-auto flex justify-center">
+            <button className="flex w-full justify-center max-w-[120px] rounded-md bg-[#EF4D48] px-2 py-2 text-lg font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 ">
+              View More
+            </button>
+          </Link>
         )}
       </div>
     </div>

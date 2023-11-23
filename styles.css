@@ -19,3 +19,11 @@ body::-webkit-scrollbar {
 body::-webkit-scrollbar-thumb {
   background-color: transparent; /* Hide the thumb of the scrollbar */
 }
+
+.header_gradient {
+  background: linear-gradient(
+    135deg,
+    rgba(26, 25, 63, 1) 42%,
+    rgba(174, 55, 30, 1) 100%
+  );
+}

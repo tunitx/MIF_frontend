@@ -37,14 +37,6 @@ const Body = () => {
     },
   };
 
-  function nouse() {
-    imagesSlides.forEach((slide) => {
-      console.log(`${slide} jhkgkjkjhks`);
-    });
-  }
-
-  nouse();
-
   return (
     <div className="w-full flex justify-center items-center mb-8">
       <div className="mt-12 w-full flex  justify-center items-center max-w-6xl">

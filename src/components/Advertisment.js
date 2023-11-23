@@ -61,14 +61,14 @@ const Advertisment = () => {
         arrows={false}
         showDots={true}
         dotListClass="flex gap-4 mt-4 relative"
-        containerClass="mb-10 p-2"
+        containerClass="mb-10"
         itemClass="flex justify-center items-center"
       >
         {advertisments.map((advertisment) => {
           return (
             <div
               key={advertisment._id}
-              className="w-full flex gap-8 flex-col h-full  p-2 rounded-md pb-6 border-b-4 hover:border-[#2575fc] border-white box-border hover:cursor-pointer "
+              className="w-[95%] bg-white flex gap-8 flex-col h-full  p-2 py-4 rounded-md pb-6 border-b-4 hover:border-[#2575fc] border-[#f7f3f5] box-border hover:cursor-pointer "
             >
               <div className="w-full flex justify-center items-center">
                 <img

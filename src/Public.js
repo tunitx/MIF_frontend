@@ -6,7 +6,7 @@ import Advertisment from "./components/Advertisment";
 
 const Public = () => {
   return (
-    <div>
+    <div className="bg-[#f7f3f5]">
       <Navbar />
       <Outlet />
       <div className="w-full flex justify-center my-10">

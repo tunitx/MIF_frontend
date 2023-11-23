@@ -131,7 +131,7 @@ const Body = () => {
     // console.log(list);
 
     setShowList(list);
-  }, [membersList]);
+  }, [membersList, memberTypeList]);
 
   function handleShowListChange(setTo) {
     const list = membersList.filter((member) => {

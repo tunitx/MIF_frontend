@@ -8,7 +8,7 @@ const ListOfMembers = () => {
 
   return (
     <div className="flex flex-col w-full sm:flex-row ">
-      <div className="w-full sm:w-1/4 md:1/5 lg:1/6 flex justify-center items-center m-5 border-r-4 border-[#444]">
+      <div className="w-full sm:w-1/4 md:1/5 lg:1/6 flex justify-center items-center my-5 sm:border-r-4 sm:border-[#444]">
         <div className="flex flex-col gap-8 justify-center items-center self-start py-8 ">
           <button
             onClick={() => {

@@ -12,6 +12,7 @@ import aboutus_women_entrepreneur from "../../../../assests/images/aboutus_women
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { responsive } from "../../../utils/constants";
+import { Link } from "react-router-dom";
 
 const Aboutus = () => {
   const slides = [
@@ -118,9 +119,12 @@ const Aboutus = () => {
           </Carousel>
         </div>
         <div className="image_carousel_for_about_us w-full flex justify-center mt-4">
-          <button className="flex w-full justify-center max-w-[150px] rounded-md bg-[#EF4D48] px-5 py-3 text-lg font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ">
-            Read More
-          </button>
+          <Link to={"/about"} className="w-full flex justify-center">
+            {" "}
+            <button className="flex w-full justify-center max-w-[150px] rounded-md bg-[#EF4D48] px-5 py-3 text-lg font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ">
+              Read More
+            </button>
+          </Link>
         </div>
       </div>
     </div>

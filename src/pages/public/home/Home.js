@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import MissionVisionSection from "./MissionVisionSection";
 import Header from "./Header";
 import Aboutus from "./Aboutus";
@@ -13,6 +13,9 @@ import FAQs from "./FAQs";
 import { faqs_home } from "../../../utils/constants";
 
 const Home = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div>
       <Header />
@@ -20,9 +23,9 @@ const Home = () => {
       <Aboutus />
       <VideoSection />
       <FounderSection />
-      <MIF_news />
+      <MIF_news exploreMore={true} />
       <Network />
-      <StudyAbroadSection />
+      <StudyAbroadSection knowMore={true} />
       <EventsGallery />
       <Services />
       <FAQs faqs={faqs_home} viewMore={true} />

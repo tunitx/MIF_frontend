@@ -3,14 +3,14 @@ import Navbar from "./components/Navbar";
 import { Outlet } from "react-router-dom";
 import Footer from "./components/Footer";
 import Advertisment from "./components/Advertisment";
-import ReactGA from "react-ga4";
+// import ReactGA from "react-ga4";
 
-ReactGA.initialize("G-LSQRE31E23");
+// ReactGA.initialize("G-LSQRE31E23");
 
 const Public = () => {
-  useEffect(() => {
-    ReactGA.send({ hitType: "pageview", page: "/", title: "MIF Home" });
-  }, []);
+  // useEffect(() => {
+  //   ReactGA.send({ hitType: "pageview", page: "/", title: "MIF Home" });
+  // }, []);
 
   return (
     <div className="bg-[#f7f3f5]">

@@ -6,6 +6,7 @@ import events3 from "../../../../assests/images/events3.jpeg.webp";
 import events4 from "../../../../assests/images/events4.jpeg";
 import events5 from "../../../../assests/images/events5.jpeg";
 import Advertisment from "../../../components/Advertisment";
+import { Link } from "react-router-dom";
 
 const EventsGallery = () => {
   const imagesSlides = [events1, events2, events3, events4, events5];
@@ -65,9 +66,11 @@ const EventsGallery = () => {
         </div>
 
         <div className="w-full flex justify-center">
-          <button className="flex w-full justify-center max-w-[150px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 ">
-            Explore More
-          </button>
+          <Link to="/gallery" className="w-full flex justify-center">
+            <button className="flex w-full justify-center max-w-[150px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 ">
+              Explore More
+            </button>
+          </Link>
         </div>
         {/* <div className="w-full flex justify-center">
           <Advertisment />

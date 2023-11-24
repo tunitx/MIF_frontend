@@ -9,8 +9,9 @@ import mifNews7 from "../../../../assests/images/mifNews7.jpeg";
 import mifNews9 from "../../../../assests/images/mifNews9.jpeg";
 import CarouselImage from "../../../components/CarouselImage";
 import CarouselVideo from "../../../components/CarouselVideo";
+import { Link } from "react-router-dom";
 
-const MIF_news = () => {
+const MIF_news = ({ exploreMore }) => {
   const imageSlides = [
     mifNews1,
     mifNews2,
@@ -42,11 +43,15 @@ const MIF_news = () => {
             <CarouselImage slides={imageSlides} />
           </div>
         </div>
-        <div className="flex justify-center items-center">
-          <button className="flex w-full justify-center max-w-[150px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 ">
-            Explore More
-          </button>
-        </div>
+        {exploreMore ? (
+          <div className="flex justify-center items-center">
+            <Link to={"/press"} className="w-full flex justify-center">
+              <button className="flex w-full justify-center max-w-[150px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 ">
+                Explore More
+              </button>
+            </Link>
+          </div>
+        ) : null}
       </div>
     </div>
   );

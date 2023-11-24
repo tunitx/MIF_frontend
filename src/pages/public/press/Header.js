@@ -8,7 +8,7 @@ const Header = () => {
         <h2 className="font-PlayFair text-[#2B161B] font-bold text-2xl w-full text-center py-5 mt-10 sm:text-3xl md:text-4xl lg:text-5xl">
           MIF Press Coverage
         </h2>
-        <MIF_news />
+        <MIF_news exploreMore={false} />
       </div>
     </div>
   );

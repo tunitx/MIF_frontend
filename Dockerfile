@@ -4,10 +4,10 @@ COPY package.json .
 RUN npm install
 COPY . .
 # RUN npm run build
-# ENV PORT=3000
+ENV PORT=3000
 
-CMD ["npx","parcel","index.html","--port","${PORT}"]
-
+# CMD ["npx","parcel","index.html","--port","${PORT}"]
+CMD npx parcel serve index.html --port $PORT
 
 
 # # node block

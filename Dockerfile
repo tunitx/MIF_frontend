@@ -4,7 +4,9 @@ COPY package.json .
 RUN npm install
 COPY . .
 # RUN npm run build
-CMD ["npx","parcel","index.html"]
+ENV PORT=3000
+
+CMD ["npx","parcel","index.html","--port","${PORT}"]
 
 
 

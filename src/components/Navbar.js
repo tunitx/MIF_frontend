@@ -9,7 +9,6 @@ const navigation = [
   { name: "Home", href: "/", current: true },
   {
     name: "About Us",
-    href: "#",
     current: false,
     subNames: [
       {
@@ -32,32 +31,31 @@ const navigation = [
   },
   {
     name: "Network",
-    href: "#",
     current: false,
     subNames: [
       {
         name: "Rajasthan",
-        href: "https://app.marwadiinternationalfederation.com/rajasthan-network",
         subNames: [
           {
+            href: "https://app.marwadiinternationalfederation.com/rajasthan-network",
             name: "Udyog Mitra",
           },
         ],
       },
       {
         name: "India",
-        href: "https://app.marwadiinternationalfederation.com/india-network",
         subNames: [
           {
+            href: "https://app.marwadiinternationalfederation.com/india-network",
             name: "Rajasthan Udyog Mitra",
           },
         ],
       },
       {
         name: "Abroad",
-        href: "https://app.marwadiinternationalfederation.com/abroad-network",
         subNames: [
           {
+            href: "https://app.marwadiinternationalfederation.com/abroad-network",
             name: "Marwadi Business Mitra",
           },
         ],
@@ -84,7 +82,6 @@ const navigation = [
   { name: "Gallery", href: "/gallery", current: false },
   {
     name: "Join Us",
-    href: "#",
     current: false,
 
     subNames: [
@@ -100,15 +97,14 @@ const navigation = [
   },
   {
     name: "Publication",
-    href: "#",
     current: false,
 
     subNames: [
       {
         name: "Author",
-        href: "/book-marwadi-vyapari",
         subNames: [
           {
+            href: "/book-marwadi-vyapari",
             name: "Marwadi Vyapari",
           },
         ],

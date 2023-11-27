@@ -3,6 +3,9 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 
+import { useContext } from "react";
+import AdminContext from "../../utils/context/Admincontext";
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -21,6 +24,8 @@ const navigation = [
 export default function AdminNavbar() {
   //   const userStore = useSelector((store) => store.User);
   //   const dispatch = useDispatch();
+
+  const { admin, setAdmin } = useContext(AdminContext);
 
   return (
     <Disclosure as="nav" className="bg-gray-800 mb-4">
@@ -70,6 +75,19 @@ export default function AdminNavbar() {
                     Public
                   </button>
                 </Link>
+
+                {admin ? (
+                  <button
+                    onClick={() => {
+                      setAdmin(null);
+                      localStorage.removeItem("admin");
+                    }}
+                    type="button"
+                    className="relative border border-white rounded-lg px-4 bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none  focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                  >
+                    Sign Out
+                  </button>
+                ) : null}
               </div>
             </div>
           </div>

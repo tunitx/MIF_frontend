@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "testmarwadi",
+  "private_key_id": "ad5e2c62b657efab78acc5b08dba57fc07b90b37",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDFXCqbAQjqS3X6\nCmGjBOQm1ZCEa6/2cIM/lzokr+cyyKI/xwtO9A39VvaCkvQQkjQ3HCLfUvQX7ILR\ntfuSafNyNFvQ9Vw4k1olRgKmLJbsB54Cjsqq8BhRR8yJFtBtmhGipbjtZawI2Zre\nMFPOA1NBiM9WF329jbFX3bwWHneGEeprjYR0BTlGhckM3gNtxQtpBnO2dugyNzTM\nValQQoOB7U6Eth64lo0HvCLFyLe8jKxYDG3CBtqnVOknCQ5QrIVPoRV1V8HNW1wy\n1XXXsYHJcy0E97KcpfbBTC125zMdBWwztbWGZyHWCkxFUih+LuBTUvUddKEsvFvj\nawnyy93DAgMBAAECggEAERQtaQXT5wKUuQiWSRcumeBisIg+d/hl7eYrqpUWUCIQ\nowLvNZaPx1vz2norvhYI3WQFQzIt3AwkM1BTmZNVn+JsDPnOpeQKfwM/ThtkYWnf\nVfVUEIAqeo4uDbGjDnkGDFSEW6GFcQFJEkU4W1w/o4Iv/xFAA7FJUYM8uDqhY+vu\nBRGWZI+GkoNfzj48G1Q5p22ZsQ9uAdbsVXoLY6W8U4O+1bXbsc1NyIFj1b9MlB+f\n+wEO/+t43GlfAS47zO8vnnPBVRHo+ucVFWwXW8WCkwkKUVpXg/Td/eaBDg6i5hgw\nDoTaq0sKa8uNRBL+jrC/LRwYWX50dku0wRhNCN1psQKBgQDs43zNKK4dooSO1uVE\nG26cB2y8ZiJeeR5yZKK4+gJIIigahSogmq0K4eKtm71KryjuzmG0OKibFvWnXzun\nBxrLm/WaYXeiQv/tPJ97elNfb3yf2o0Za7itoavEWBQvMlBUDuKmqY00UvbOcUYU\noxfHmyo13UTlTSZ3Mp2sI3xSZwKBgQDVSElBNAWgI0UaPUhMDjj1u0ArWiZq6SxX\njq6oGQ0qYBkdyL8eACKks/w6yv2CJLPQE6A44CJ6jRyRQsvTDrFyyg6dzDLJOj9E\nYz6UU3VCjmb6PA0XPJXtqrGFO13CrC+BWMDy3qPNue/ImIq1vVRm2NAOxk3b27nd\n+U74dvAYRQKBgQC3oLgziJ8/1aUP3MEoBGO/i3ncqQdnWFgjsKL65MI0DFYuCJ/Z\nWk1dLDC9Bwa7CACg7VaLj4gTgL64GXhyR22b+69tFrTYETu2ONIfs3lBd3iRqabK\n19f2sGYn82biFwxxvIAxVSliMBWlfeUnRi2+yybzTiyD20RADfpvX6qVbQKBgQCK\ng1Gf2Os2XvGH4vjK/Amd/Sflf7ynfhtgGbfwT6SvOo3VPARytV/KW2GZxS7ykGd+\n4OATT+zUbkR5SkoZHde8VuE7Ndxdt0hTX6jKp5Dl0pmqNcnCp4QvP8XeYvm3bh/D\n/yIAGPuEphbFzdt3wCfKS1CD5+G0wXRqZnkVABlZiQKBgCCKop9m8YowM+XcB5L1\nY7d15Kw16A3H3ixqjK03DK05kI3buTeQaljqyDdH2kyNjijKSzhIX76Pesklt21R\nSZlYMeMcf2D8Q3TWfqe5WIlC9TO61Sc9hjv6AAVwgN0NbWnssSMChSqLHgZNEFb/\nDHFlyrrcfKh3+7JEbGG0Vyfn\n-----END PRIVATE KEY-----\n",
+  "client_email": "test-service-account-marwadi@testmarwadi.iam.gserviceaccount.com",
+  "client_id": "107117647026167126684",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/test-service-account-marwadi%40testmarwadi.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

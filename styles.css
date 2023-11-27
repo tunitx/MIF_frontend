@@ -27,3 +27,27 @@ body::-webkit-scrollbar-thumb {
     rgba(174, 55, 30, 1) 100%
   );
 }
+
+.background-overlay-matrimony {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #f7f3f5;
+  /* Adjust the alpha channel for opacity */
+  opacity: 0.95;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 500ms ease-in-out; /* Adjust the duration and timing function as needed */
+}

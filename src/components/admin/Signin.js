@@ -1,54 +1,69 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import AdminContext from "../../utils/context/Admincontext";
 import { SIGN_IN_URL } from "../../utils/constants";
-import { useDispatch, useSelector } from "react-redux";
-import { signIN } from "../../utils/slices/user";
-import store from "../../utils/store";
+// import { useDispatch, useSelector } from "react-redux";
+// import { signIN } from "../../utils/slices/user";
+// import store from "../../utils/store";
 
 const Signin = () => {
+  const { admin, setAdmin } = useContext(AdminContext);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userStore = useSelector((store) => store.User);
+
   const [isSubmitting, setSubmitting] = useState(false);
 
-  useEffect(() => {
-    if (userStore.user) navigate("/");
-  }, []);
+  // useEffect(() => {
+  //   if (userStore.user) navigate("/");
+  // }, []);
 
   // console.log(userStore);
 
   async function handleSignIn(e) {
-    e.preventDefault();
-    setSubmitting(true);
-    const reqBody = {
-      email,
-      password,
-    };
+    try {
+      e.preventDefault();
+      setSubmitting(true);
+      const reqBody = {
+        email,
+        password,
+      };
+      // return;
 
-    const resBody = await fetch(SIGN_IN_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(reqBody),
-    });
+      const resBody = await fetch(SIGN_IN_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(reqBody),
+      });
 
-    const resData = await resBody.json();
-    if (resBody.ok) {
-      dispatch(
-        signIN({ jwtToken: resData.token, user: resData.userWithProfiles })
-      );
-      navigate("/");
-    } else {
-      setEmail("");
-      setPassword("");
-      setSubmitting(false);
-      setError(resData.message);
+      const resData = await resBody.json();
+
+      // console.log(resBody);
+
+      // console.log(resData);
+
+      // return;
+
+      if (resBody.status === 200) {
+        // dispatch(
+        //   signIN({ jwtToken: resData.token, user: resData.userWithProfiles })
+        // );
+        localStorage.setItem("admin", JSON.stringify(resData));
+        setAdmin(resBody);
+        navigate("/admin");
+      } else {
+        setEmail("");
+        setPassword("");
+        setSubmitting(false);
+        setError(resData.message);
+      }
+    } catch (e) {
+      console.log(e);
     }
-    console.log(resData);
   }
 
   return (
@@ -57,7 +72,7 @@ const Signin = () => {
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Sign in to your account
+            Sign in as Admin
           </h2>
         </div>
 
@@ -137,7 +152,7 @@ const Signin = () => {
             </div>
           </form>
 
-          <p className="mt-10 text-center text-sm text-gray-500">
+          {/* <p className="mt-10 text-center text-sm text-gray-500">
             Don't have a account?{" "}
             <Link
               to={"/signup"}
@@ -146,7 +161,7 @@ const Signin = () => {
               {" "}
               Sign Up
             </Link>
-          </p>
+          </p> */}
         </div>
       </div>
     </div>

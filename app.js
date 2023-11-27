@@ -1,4 +1,4 @@
-import react from "react";
+import react, { useContext } from "react";
 import ReactDOM from "react-dom/client";
 import AppLayout from "./src/AppLayout";
 import Home from "./src/pages/public/home/Home";
@@ -18,6 +18,8 @@ import FormAddAdvertisment from "./src/pages/admin/advertisment-board/FormAddAdv
 import GovRegistration from "./src/pages/public/government_registration/GovRegistration";
 import CoreMembersMIF from "./src/pages/public/mif_core_members/CoreMembersMIF";
 import Public from "./src/Public";
+import dotenv from "dotenv";
+dotenv.config();
 
 // admin
 
@@ -26,6 +28,9 @@ import AdminPress from "./src/pages/admin/press/Press";
 import AdminListOfMembers from "./src/pages/admin/list-of-members/ListOfMembers";
 import AdminAdvertismentBoard from "./src/pages/admin/advertisment-board/AdvertismentBoard";
 import Contact from "./src/pages/public/contact/Contact";
+import Matrimony from "./src/pages/public/marwadi_matrimony/Matrimony";
+import path from "path-browserify";
+import Registration from "./src/pages/public/marwadi_matrimony/Registration";
 
 const appRoutes = createBrowserRouter([
   {
@@ -92,6 +97,16 @@ const appRoutes = createBrowserRouter([
             path: "/contact",
             element: <Contact />,
           },
+          {
+            path: "/matrimony",
+            element: <Matrimony />,
+            children: [
+              {
+                path: "register",
+                element: <Registration />,
+              },
+            ],
+          },
         ],
       },
       {
@@ -112,6 +127,16 @@ const appRoutes = createBrowserRouter([
           },
         ],
       },
+      // {
+      //   path: "/matrimony",
+      //   element: <Matrimony />,
+      //   children: [
+      //     {
+      //       path: "register",
+      //       element: <Registration />,
+      //     },
+      //   ],
+      // },
     ],
   },
 ]);

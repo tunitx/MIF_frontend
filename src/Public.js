@@ -16,7 +16,7 @@ const Public = () => {
     <div className="bg-[#f7f3f5]">
       <Navbar />
       <Outlet />
-      <div className="w-full flex justify-center my-10">
+      <div className="w-full flex justify-center ">
         <Advertisment />
       </div>
       <Footer />

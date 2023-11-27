@@ -12,9 +12,13 @@ import aboutus_skill_development from "../../assests/images/aboutus_skill-develo
 import aboutus_social_care from "../../assests/images/aboutus_social-care.png";
 import aboutus_women_entrepreneur from "../../assests/images/aboutus_women_entrepreneur.png";
 
-export const GET_ALL_PRESS = "http://localhost:3000/press/all";
+export const GET_ALL_PRESS = "http://18.188.11.111:8080/press/all";
+export const GET_YEARS_LIST = "http://18.188.11.111:8080/press/yearsList";
+
+// export const GET_ALL_PRESS = "http://localhost:3000/press/all";
 export const POST_PRESS = "http://localhost:3000/press/new";
-export const GET_YEARS_LIST = "http://localhost:3000/press/yearsList";
+// export const GET_YEARS_LIST = "http://localhost:3000/press/yearsList";
+
 export const POST_MEMBER_DETAILS = "http://localhost:3000/postMemberDetails";
 export const GET_ALL_MEMBER = "http://localhost:3000/getMemberDetails";
 

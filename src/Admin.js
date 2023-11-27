@@ -16,6 +16,7 @@ const Admin = () => {
     }
     setChecked(true);
   }, []);
+
   if (!checked) return <div></div>;
 
   return (

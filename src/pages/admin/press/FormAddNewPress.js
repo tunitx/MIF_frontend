@@ -3,12 +3,15 @@ import { Formik } from "formik";
 import MembersContext from "../../../utils/context/Members";
 import { POST_PRESS } from "../../../utils/constants";
 import axios from "axios";
+import AdminContext from "../../../utils/context/Admincontext";
 
 const FormAddNewPress = () => {
   const [selectedFile, setFile] = useState(null);
 
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
+
+  const { admin, setAdmin } = useContext(AdminContext);
 
   return (
     <Formik
@@ -30,6 +33,7 @@ const FormAddNewPress = () => {
           const response = await axios.post(POST_PRESS, reqBody, {
             headers: {
               "Content-Type": "multipart/form-data",
+              Authorization: `bearer ${admin?.token}`,
             },
           });
 

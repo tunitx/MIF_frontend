@@ -8,6 +8,7 @@ const Matrimony = () => {
       <div className="background-overlay-matrimony z-30"></div>
       <div className="w-full z-50">
         <Header />
+
         <Outlet />
       </div>
     </div>

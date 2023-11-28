@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import bioData from "../../../utils/biodata";
 import indiaStates from "../../../utils/indiaStates";
 // import ReactSlider from "react-slider";
-import "./BioDataFilterForm.css";
+// import "./BioDataFilterForm.css";
 // import { Slider } from "@mui/material";
 
 const heights = [

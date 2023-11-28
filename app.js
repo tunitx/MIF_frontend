@@ -21,6 +21,8 @@ import Public from "./src/Public";
 import dotenv from "dotenv";
 dotenv.config();
 
+import Matrimony_Home from "./src/pages/public/marwadi_matrimony/Home";
+
 // admin
 
 import Admin from "./src/Admin";
@@ -31,6 +33,7 @@ import Contact from "./src/pages/public/contact/Contact";
 import Matrimony from "./src/pages/public/marwadi_matrimony/Matrimony";
 import path from "path-browserify";
 import Registration from "./src/pages/public/marwadi_matrimony/Registration";
+import FindPartner from "./src/pages/public/marwadi_matrimony/FindPartner";
 
 const appRoutes = createBrowserRouter([
   {
@@ -102,8 +105,16 @@ const appRoutes = createBrowserRouter([
             element: <Matrimony />,
             children: [
               {
-                path: "register",
+                path: "/matrimony",
+                element: <Matrimony_Home />,
+              },
+              {
+                path: "add-biodata",
                 element: <Registration />,
+              },
+              {
+                path: "search-biodata",
+                element: <FindPartner />,
               },
             ],
           },
@@ -127,16 +138,6 @@ const appRoutes = createBrowserRouter([
           },
         ],
       },
-      // {
-      //   path: "/matrimony",
-      //   element: <Matrimony />,
-      //   children: [
-      //     {
-      //       path: "register",
-      //       element: <Registration />,
-      //     },
-      //   ],
-      // },
     ],
   },
 ]);

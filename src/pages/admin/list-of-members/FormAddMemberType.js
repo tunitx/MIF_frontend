@@ -3,10 +3,13 @@ import { Formik } from "formik";
 import MembersContext from "../../../utils/context/Members";
 import { POST_MEMBERTYPE, POST_PRESS } from "../../../utils/constants";
 import axios from "axios";
+import AdminContext from "../../../utils/context/Admincontext";
 
 const FormAddMemberType = () => {
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
+
+  const { admin, setAdmin } = useContext(AdminContext);
 
   function camelCaseSentence(sentence) {
     const words = sentence.trim().split(/\s+/);
@@ -47,6 +50,7 @@ const FormAddMemberType = () => {
             {
               headers: {
                 "Content-Type": "application/json",
+                Authorization: `bearer ${admin?.token}`,
               },
             }
           );

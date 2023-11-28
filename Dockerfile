@@ -6,6 +6,8 @@ COPY . .
 # RUN npm run build
 ENV PORT=3000
 
+ARG BASE_URL="http://bababatuni.in/api/"
+ENV BASE_URL=${BASE_URL}
 # CMD ["npx","parcel","index.html","--port","${PORT}"]
 CMD npx parcel serve index.html --port $PORT
 

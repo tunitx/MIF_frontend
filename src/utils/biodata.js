@@ -1,6 +1,6 @@
 export default {
     baniya: {
-      aggarwal: [
+      agarwal: [
         "goyal",
         "bansal",
         "kucchal",

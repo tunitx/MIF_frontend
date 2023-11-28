@@ -18,7 +18,7 @@ const heights = [
 ];
 
 function SearchBiodata() {
-  const [step, setStep] = useState(3);
+  const [step, setStep] = useState(1);
   const [ageRange, setAgeRange] = useState([{ min: 18, max: 100 }]);
   const [caste, setCaste] = useState("");
   const [subcaste, setSubcaste] = useState("");

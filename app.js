@@ -34,6 +34,7 @@ import Matrimony from "./src/pages/public/marwadi_matrimony/Matrimony";
 import path from "path-browserify";
 import Registration from "./src/pages/public/marwadi_matrimony/Registration";
 import SearchBiodata from "./src/pages/public/marwadi_matrimony/SearchBiodata";
+import Disclaimer from "./src/pages/public/disclaimer/Disclaimer";
 
 const appRoutes = createBrowserRouter([
   {
@@ -75,6 +76,10 @@ const appRoutes = createBrowserRouter([
           {
             path: "/study-abroad",
             element: <StudyAbroad />,
+          },
+          {
+            path: "/disclaimer",
+            element: <Disclaimer />,
           },
           {
             path: "/faqs",

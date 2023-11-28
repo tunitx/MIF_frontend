@@ -169,23 +169,6 @@ function Registration() {
         >
           {step === 1 && (
             <div className="w-full max-w-full flex flex-col justify-between items-center gap-14">
-              {/* <label
-                htmlFor="gender"
-                className="font-Poppins font-semibold text-lg text-[#B0B1B1]"
-              >
-                Gender:
-              </label>
-              <select
-                id="gender"
-                name="gender"
-                onChange={formik.handleChange}
-                value={formik.values.gender}
-                className="font-Poppins text-sm w-full px-3 py-2 border rounded-md border-indigo-900 min-w-xl"
-              >
-                <option value="">Select Gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-              </select> */}
               <p className=" fade-in w-full text-center font-Poppins text-lg sm:text-xl font-semibold text-[#333]">
                 CHOOSE YOUR GENDER
               </p>
@@ -314,104 +297,102 @@ function Registration() {
               </div>
 
               {step === 2 && (
-                <>
-                  <div className="w-full flex flex-col gap-3 sm:flex-row md:gap-8">
-                    {/* Caste Dropdown */}
+                <div className="w-full flex flex-col gap-3 sm:flex-row md:gap-8">
+                  {/* Caste Dropdown */}
 
-                    <div className="w-full flex gap-2 items-center justify-center">
-                      <label
-                        htmlFor="caste"
-                        className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
-                      >
-                        CASTE:
-                      </label>
-                      <select
-                        id="caste"
-                        name="caste"
-                        onChange={(e) => {
-                          setCaste(e.target.value);
-                          formik.setFieldValue("caste", e.target.value);
-                        }}
-                        value={caste}
-                        placeholder="Caste"
-                        className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                      >
-                        <option value="" disabled>
-                          Select Caste
+                  <div className="w-full flex gap-2 items-center justify-center">
+                    <label
+                      htmlFor="caste"
+                      className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
+                    >
+                      CASTE:
+                    </label>
+                    <select
+                      id="caste"
+                      name="caste"
+                      onChange={(e) => {
+                        setCaste(e.target.value);
+                        formik.setFieldValue("caste", e.target.value);
+                      }}
+                      value={caste}
+                      placeholder="Caste"
+                      className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                    >
+                      <option value="" disabled>
+                        Select Caste
+                      </option>
+                      {castes.map((c) => (
+                        <option key={c} value={c}>
+                          {c}
                         </option>
-                        {castes.map((c) => (
-                          <option key={c} value={c}>
-                            {c}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-
-                    {/* SubCaste Dropdown */}
-
-                    <div className="w-full flex gap-2 items-center justify-center">
-                      <label
-                        htmlFor="subcaste"
-                        className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
-                      >
-                        SUBCASTE:
-                      </label>
-                      <select
-                        disabled={caste === "" ? true : false}
-                        id="subcaste"
-                        name="subcaste"
-                        onChange={(e) => {
-                          setSubcaste(e.target.value);
-                          formik.setFieldValue("subcaste", e.target.value);
-                        }}
-                        value={subcaste}
-                        className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                      >
-                        <option value="" disabled>
-                          Select Subcaste
-                        </option>
-                        {subcastes.map((s) => (
-                          <option key={s} value={s}>
-                            {s}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-
-                    {/* Gotra DropDown */}
-
-                    <div className="w-full flex gap-2 items-center justify-center">
-                      <label
-                        htmlFor="gotra"
-                        className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
-                      >
-                        GOTRA:
-                      </label>
-                      <select
-                        disabled={
-                          caste === "" || subcaste?.length === 0 ? true : false
-                        }
-                        id="gotra"
-                        name="gotra"
-                        onChange={(e) => {
-                          setGotra(e.target.value);
-                          formik.setFieldValue("gotra", e.target.value);
-                        }}
-                        value={gotra}
-                        className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                      >
-                        <option value="" disabled>
-                          Select Gotra
-                        </option>
-                        {gotras.map((g) => (
-                          <option key={g} value={g}>
-                            {g}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
+                      ))}
+                    </select>
                   </div>
-                </>
+
+                  {/* SubCaste Dropdown */}
+
+                  <div className="w-full flex gap-2 items-center justify-center">
+                    <label
+                      htmlFor="subcaste"
+                      className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
+                    >
+                      SUBCASTE:
+                    </label>
+                    <select
+                      disabled={caste === "" ? true : false}
+                      id="subcaste"
+                      name="subcaste"
+                      onChange={(e) => {
+                        setSubcaste(e.target.value);
+                        formik.setFieldValue("subcaste", e.target.value);
+                      }}
+                      value={subcaste}
+                      className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                    >
+                      <option value="" disabled>
+                        Select Subcaste
+                      </option>
+                      {subcastes.map((s) => (
+                        <option key={s} value={s}>
+                          {s}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Gotra DropDown */}
+
+                  <div className="w-full flex gap-2 items-center justify-center">
+                    <label
+                      htmlFor="gotra"
+                      className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
+                    >
+                      GOTRA:
+                    </label>
+                    <select
+                      disabled={
+                        caste === "" || subcaste?.length === 0 ? true : false
+                      }
+                      id="gotra"
+                      name="gotra"
+                      onChange={(e) => {
+                        setGotra(e.target.value);
+                        formik.setFieldValue("gotra", e.target.value);
+                      }}
+                      value={gotra}
+                      className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                    >
+                      <option value="" disabled>
+                        Select Gotra
+                      </option>
+                      {gotras.map((g) => (
+                        <option key={g} value={g}>
+                          {g}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
               )}
 
               {/* DOB */}
@@ -1238,6 +1219,7 @@ function Registration() {
               </div>
             </div>
           )}
+
           <div className="w-full flex flex-col items-center justify-center sm:flex-row sm:justify-between gap-4">
             {step > 1 && (
               <div className={`w-full justify-center sm:justify-start flex`}>

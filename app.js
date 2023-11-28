@@ -33,7 +33,7 @@ import Contact from "./src/pages/public/contact/Contact";
 import Matrimony from "./src/pages/public/marwadi_matrimony/Matrimony";
 import path from "path-browserify";
 import Registration from "./src/pages/public/marwadi_matrimony/Registration";
-import FindPartner from "./src/pages/public/marwadi_matrimony/FindPartner";
+import SearchBiodata from "./src/pages/public/marwadi_matrimony/SearchBiodata";
 
 const appRoutes = createBrowserRouter([
   {
@@ -114,7 +114,7 @@ const appRoutes = createBrowserRouter([
               },
               {
                 path: "search-biodata",
-                element: <FindPartner />,
+                element: <SearchBiodata />,
               },
             ],
           },

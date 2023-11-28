@@ -202,7 +202,7 @@ export default function Navbar() {
                                 item.current
                                   ? "text-[#453E3E]"
                                   : "text-[#453E3E]",
-                                "rounded-md px-3 py-2 text-sm font-medium  whitespace-nowrap"
+                                "rounded-md px-3 py-2 text-sm font-medium  whitespace-nowrap hover:text-[#EF4D48]"
                               )}
                               aria-current={item.current ? "page" : undefined}
                             >
@@ -222,7 +222,7 @@ export default function Navbar() {
                                     item.current
                                       ? "text-[#453E3E]"
                                       : "text-[#453E3E]",
-                                    "rounded-md px-3 py-2 text-sm font-medium flex gap-1 whitespace-nowrap"
+                                    "rounded-md px-3 py-2 text-sm font-medium flex gap-1 whitespace-nowrap hover:text-[#EF4D48] group"
                                   )}
                                   aria-current={
                                     item.current ? "page" : undefined
@@ -231,7 +231,7 @@ export default function Navbar() {
                                   {item.name}
 
                                   <ChevronDownIcon
-                                    className="ml-2 -mr-1 h-5 w-5 text-black "
+                                    className="ml-2 -mr-1 h-5 w-5 text-black group-hover:fill-[#EF4D48]"
                                     aria-hidden="true"
                                   />
                                 </p>
@@ -246,7 +246,7 @@ export default function Navbar() {
                               leaveFrom="transform opacity-100 scale-100"
                               leaveTo="transform opacity-0 scale-95"
                             >
-                              <Menu.Items className="absolute right-0 flex flex-col z-[100] mt-2 w-fit min-w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                              <Menu.Items className="absolute right-0 flex flex-col z-[100] mt-2 w-fit min-w-[200px] origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                                 {item.subNames.map((subName) => {
                                   // SECOND LEVEL DROPDOWN
 
@@ -259,7 +259,7 @@ export default function Navbar() {
                                             subName.current
                                               ? "text-[#453E3E]"
                                               : "text-[#453E3E]",
-                                            "rounded-md px-3 py-2 text-sm font-medium  whitespace-nowrap"
+                                            "rounded-md px-3 py-2 text-sm font-medium  whitespace-nowrap hover:text-[#EF4D48]"
                                           )}
                                           aria-current={
                                             subName.current ? "page" : undefined
@@ -282,7 +282,7 @@ export default function Navbar() {
                                                 item.current
                                                   ? "text-[#453E3E]"
                                                   : "text-[#453E3E]",
-                                                "rounded-md px-3 py-2 text-sm font-medium flex w-full justify-between gap-1 whitespace-nowrap"
+                                                "rounded-md px-3 py-2 text-sm font-medium flex w-full justify-between gap-1 whitespace-nowrap hover:text-[#EF4D48] group"
                                               )}
                                               aria-current={
                                                 item.current
@@ -293,7 +293,7 @@ export default function Navbar() {
                                               {subName.name}
 
                                               <ChevronRightIcon
-                                                className="ml-2 -mr-1 h-5 w-5 text-black "
+                                                className="ml-2 -mr-1 h-5 w-5 text-black group-hover:fill-[#EF4D48]"
                                                 aria-hidden="true"
                                               />
                                             </p>
@@ -323,7 +323,7 @@ export default function Navbar() {
                                                         innreSubName?.current
                                                           ? "text-[#453E3E]"
                                                           : "text-[#453E3E]",
-                                                        "rounded-md px-3 py-2 text-sm font-medium  whitespace-nowrap"
+                                                        "rounded-md px-3 py-2 text-sm font-medium  whitespace-nowrap hover:text-[#EF4D48]"
                                                       )}
                                                       aria-current={
                                                         innreSubName?.current
@@ -422,7 +422,7 @@ export default function Navbar() {
                         leaveFrom="transform opacity-100 scale-100"
                         leaveTo="transform opacity-0 scale-95"
                       >
-                        <Menu.Items className="absolute left-0 shadow-xl flex flex-col z-[100] mt-2 w-fit origin-top-right rounded-md bg-white py-1  ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <Menu.Items className="absolute left-0 shadow-xl flex flex-col z-[100] mt-2 w-fit min-w-[150px]  origin-top-right rounded-md bg-white py-1  ring-1 ring-black ring-opacity-5 focus:outline-none">
                           {item.subNames.map((subName) => {
                             // SECOND LEVEL DROPDOWN
 

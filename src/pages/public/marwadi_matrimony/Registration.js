@@ -35,7 +35,7 @@ async function getNewToken() {
 setInterval(getNewToken, 20 * 60 * 60 * 1000);
 
 function Registration() {
-  const [step, setStep] = useState(4);
+  const [step, setStep] = useState(1);
   const [location, setLocation] = useState("");
   const [countries, setCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState("");

@@ -30,6 +30,9 @@ export const GET_AVAILABLE_MEMBERTYPES_LIST = BASE_URL + "member/typesList";
 
 export const SIGN_IN_URL = BASE_URL + "signin";
 
+export const POST_BIODATA = BASE_URL + "postMarriageDetails";
+export const GET_BIODATAS = BASE_URL + "getBioDataByFilters";
+
 export const responsive = {
   superLargeDesktop: {
     breakpoint: { max: 4000, min: 3000 },

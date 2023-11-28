@@ -4,7 +4,9 @@ import * as Yup from "yup";
 import axios from "axios";
 import bioData from "../../../utils/biodata";
 import indiaStates from "../../../utils/indiaStates";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
+import { POST_BIODATA } from "../../../utils/constants";
+import { useNavigate } from "react-router-dom";
 
 const config = {
   headers: {
@@ -16,7 +18,8 @@ const config = {
 
 async function getNewToken() {
   const headers = {
-    "api-token": "WDfLEWHKHUf-cJUb8AEvPyLdLjT-ne-XckChlv60yyNq5Y4RfIlxMpBPRh3QFnFYotU",
+    "api-token":
+      "WDfLEWHKHUf-cJUb8AEvPyLdLjT-ne-XckChlv60yyNq5Y4RfIlxMpBPRh3QFnFYotU",
     "user-email": "imta819@gmail.com",
     Accept: "application/json",
   };
@@ -32,9 +35,11 @@ async function getNewToken() {
     console.error("Failed to get new token:", error);
   }
 }
-getNewToken()
+getNewToken();
 let res = {};
 function Registration() {
+  const navigate = useNavigate();
+
   const [step, setStep] = useState(1);
   const [location, setLocation] = useState("");
   const [countries, setCountries] = useState([]);
@@ -47,19 +52,22 @@ function Registration() {
   const [subcaste, setSubcaste] = useState("");
   const [gotra, setGotra] = useState("");
   const [nativePlaceLocation, setNativePlaceLocation] = useState("");
-  const [nativePlaceSelectedCountry, setNativePlaceSelectedCountry] = useState("");
+  const [nativePlaceSelectedCountry, setNativePlaceSelectedCountry] =
+    useState("");
   const [nativePlaceSelectedState, setNativePlaceSelectedState] = useState("");
   const [nativePlaceSelectedCity, setNativePlaceSelectedCity] = useState("");
   const [nativeAddressOption, setNativeAddressOption] = useState("Different");
   const [currentAddressLocation, setCurrentAddressLocation] = useState("");
-  const [currentAddressSelectedCountry, setCurrentAddressSelectedCountry] = useState("");
-  const [currentAddressSelectedState, setCurrentAddressSelectedState] = useState("");
-  const [currentAddressSelectedCity, setCurrentAddressSelectedCity] = useState("");
+  const [currentAddressSelectedCountry, setCurrentAddressSelectedCountry] =
+    useState("");
+  const [currentAddressSelectedState, setCurrentAddressSelectedState] =
+    useState("");
+  const [currentAddressSelectedCity, setCurrentAddressSelectedCity] =
+    useState("");
   const [currentAddressOption, setCurrentAddressOption] = useState("Different");
   const [foundGotra, setFoundGotra] = useState("");
   const [foundSubcaste, setFoundSubcaste] = useState("");
   const [foundCaste, setFoundCaste] = useState("");
-
 
   const [biodataFile, setBiodataFile] = useState(null);
 
@@ -68,8 +76,12 @@ function Registration() {
   const [image3File, setImage3File] = useState(null);
 
   const castes = Object.keys(bioData);
-  const subcastes = bioData && caste && bioData[caste] ? Object.keys(bioData[caste]) : [];
-  const gotras = bioData && caste && subcaste && bioData[caste] && bioData[caste][subcaste] ? bioData[caste][subcaste] : [];
+  const subcastes =
+    bioData && caste && bioData[caste] ? Object.keys(bioData[caste]) : [];
+  const gotras =
+    bioData && caste && subcaste && bioData[caste] && bioData[caste][subcaste]
+      ? bioData[caste][subcaste]
+      : [];
 
   useEffect(() => {
     if (location === "abroad") {
@@ -113,7 +125,6 @@ function Registration() {
       formik.setFieldValue("country", "india");
     }
   }, [location]);
-
 
   useEffect(() => {
     if (nativePlaceLocation === "abroad") {
@@ -224,11 +235,17 @@ function Registration() {
   function getGotra(surname) {
     let result = {};
     Object.entries(bioData.baniya).forEach(([key, values]) => {
-      if (values.map(value => value.toLowerCase()).includes(surname.toLowerCase())) {
+      if (
+        values
+          .map((value) => value.toLowerCase())
+          .includes(surname.toLowerCase())
+      ) {
         result = {
-          caste: 'baniya',
+          caste: "baniya",
           subcaste: key,
-          surname: values.map(value => value.toLowerCase()).find(value => value.includes(surname.toLowerCase()))
+          surname: values
+            .map((value) => value.toLowerCase())
+            .find((value) => value.includes(surname.toLowerCase())),
         };
       }
     });
@@ -237,41 +254,41 @@ function Registration() {
     return result;
   }
   const validationSchema = Yup.object().shape({
-    gender: Yup.string().required('Required'),
-    firstName: Yup.string().required('Required'),
-    surname: Yup.string().required('Required'),
-    caste: Yup.string().required('Required'),
-    subcaste: Yup.string().required('Required'),
-    gotra: Yup.string().required('Required'),
-    dob: Yup.string().required('Required'),
-    manglik: Yup.string().required('Required'),
+    gender: Yup.string().required("Required"),
+    firstName: Yup.string().required("Required"),
+    surname: Yup.string().required("Required"),
+    caste: Yup.string().required("Required"),
+    subcaste: Yup.string().required("Required"),
+    gotra: Yup.string().required("Required"),
+    dob: Yup.string().required("Required"),
+    manglik: Yup.string().required("Required"),
     // placeOfBirth: Yup.string().required('Required'),
-    currentAddress: Yup.string().required('Required'),
-    location: Yup.string().required('Required'),
-    country: Yup.string().required('Required'),
-    state: Yup.string().required('Required'),
-    city: Yup.string().required('Required'),
-    nativePlaceLocation: Yup.string().required('Required'),
-    nativePlaceCity: Yup.string().required('Required'),
-    nativePlaceState: Yup.string().required('Required'),
-    nativePlaceCurrentAddress: Yup.string().required('Required'),
-    currentAddressLocation: Yup.string().required('Required'),
-    currentAddressCity: Yup.string().required('Required'),
-    currentAddressState: Yup.string().required('Required'),
-    currentAddressScope: Yup.string().required('Required'),
-    heightFeet: Yup.string().required('Required'),
-    complexion: Yup.string().required('Required'),
-    education: Yup.string().required('Required'),
-    occupation: Yup.string().required('Required'),
-    incomeBracket: Yup.string().required('Required'),
-    maritalStatus: Yup.string().required('Required'),
-    pwd: Yup.string().required('Required'),
-    file: Yup.mixed().required('Required'),
-    image1: Yup.mixed().required('Required'),
-    image2: Yup.mixed().required('Required'),
-    phoneNumber1: Yup.string().required('Required'),
-    phoneNumber2: Yup.string().required('Required'),
-    email: Yup.string().required('Required'),
+    currentAddress: Yup.string().required("Required"),
+    location: Yup.string().required("Required"),
+    country: Yup.string().required("Required"),
+    state: Yup.string().required("Required"),
+    city: Yup.string().required("Required"),
+    nativePlaceLocation: Yup.string().required("Required"),
+    nativePlaceCity: Yup.string().required("Required"),
+    nativePlaceState: Yup.string().required("Required"),
+    nativePlaceCurrentAddress: Yup.string().required("Required"),
+    currentAddressLocation: Yup.string().required("Required"),
+    currentAddressCity: Yup.string().required("Required"),
+    currentAddressState: Yup.string().required("Required"),
+    currentAddressScope: Yup.string().required("Required"),
+    heightFeet: Yup.string().required("Required"),
+    complexion: Yup.string().required("Required"),
+    education: Yup.string().required("Required"),
+    occupation: Yup.string().required("Required"),
+    incomeBracket: Yup.string().required("Required"),
+    maritalStatus: Yup.string().required("Required"),
+    pwd: Yup.string().required("Required"),
+    file: Yup.mixed().required("Required"),
+    image1: Yup.mixed().required("Required"),
+    image2: Yup.mixed().required("Required"),
+    phoneNumber1: Yup.string().required("Required"),
+    phoneNumber2: Yup.string().required("Required"),
+    email: Yup.string().required("Required"),
     image3: Yup.mixed().notRequired(),
   });
   const formik = useFormik({
@@ -290,16 +307,16 @@ function Registration() {
       country: selectedCountry,
       state: selectedState,
       city: selectedCity,
-      nativePlaceLocation: '',
-      nativePlaceCity: '',
-      nativePlaceCountry: '',
-      nativePlaceState: '',
-      nativePlaceCurrentAddress: '',
-      currentAddressLocation: '',
-      currentAddressCountry: '',
-      currentAddressCity: '',
-      currentAddressState: '',
-      currentAddressScope: '',
+      nativePlaceLocation: "",
+      nativePlaceCity: "",
+      nativePlaceCountry: "",
+      nativePlaceState: "",
+      nativePlaceCurrentAddress: "",
+      currentAddressLocation: "",
+      currentAddressCountry: "",
+      currentAddressCity: "",
+      currentAddressState: "",
+      currentAddressScope: "",
       heightFeet: "",
       complexion: "",
       education: "",
@@ -323,32 +340,28 @@ function Registration() {
         formData.append(key, values[key]);
       }
 
-
       for (let pair of formData.entries()) {
         console.log(pair[0] + ", " + pair[1]);
       }
-
 
       console.log(values);
 
       // return;
 
       try {
-        const response = await fetch(
-          "http://localhost:3000/postMarriageDetails",
-          {
-            method: "POST",
-            body: formData,
-          }
-        );
+        const response = await fetch(POST_BIODATA, {
+          method: "POST",
+          body: formData,
+        });
         const data = await response.json();
         console.log(data);
+
+        navigate("/matrimony");
       } catch (error) {
         console.error(error);
       }
     },
   });
-
 
   const nextStep = () => {
     if (step === 1) {
@@ -358,149 +371,179 @@ function Registration() {
         // alert('Please fill in the gender field before moving to the next step.');
         Swal.fire({
           width: 600,
-          padding: '3em',
-          background: '#fff url(/images/trees.png)',
+          padding: "3em",
+          background: "#fff url(/images/trees.png)",
           backdrop: `
             rgba(0,0,123,0.4)
             url("/images/nyan-cat.gif")
             left top
             no-repeat
           `,
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Please fill in the gender field before moving to the next step.',
+          icon: "error",
+          title: "Oops...",
+          text: "Please fill in the gender field before moving to the next step.",
         });
       }
     } else if (step === 2) {
-      console.log(formik.errors)
-      if (formik.values.firstName && formik.values.surname && formik.values.dob && formik.values.manglik && formik.values.caste && formik.values.subcaste && formik.values.gotra) {
+      console.log(formik.errors);
+      if (
+        formik.values.firstName &&
+        formik.values.surname &&
+        formik.values.dob &&
+        formik.values.manglik &&
+        formik.values.caste &&
+        formik.values.subcaste &&
+        formik.values.gotra
+      ) {
         setStep((prevStep) => prevStep + 1);
       } else {
         Swal.fire({
           width: 600,
-          padding: '3em',
-          background: '#fff url(/images/trees.png)',
+          padding: "3em",
+          background: "#fff url(/images/trees.png)",
           backdrop: `
             rgba(0,0,123,0.4)
             url("/images/nyan-cat.gif")
             left top
             no-repeat
           `,
-          icon: 'error',
-          title: 'Oops...',
+          icon: "error",
+          title: "Oops...",
 
-          text: 'Please fill in all required fields before moving to the next step.',
+          text: "Please fill in all required fields before moving to the next step.",
         });
       }
     } else if (step === 3) {
-      console.log(formik.errors)
-      if (formik.values.currentAddress && formik.values.state && formik.values.city) {
+      console.log(formik.errors);
+      if (
+        formik.values.currentAddress &&
+        formik.values.state &&
+        formik.values.city
+      ) {
         setStep((prevStep) => prevStep + 1);
       } else {
         Swal.fire({
           width: 600,
-          padding: '3em',
-          background: '#fff url(/images/trees.png)',
+          padding: "3em",
+          background: "#fff url(/images/trees.png)",
           backdrop: `
             rgba(0,0,123,0.4)
             url("/images/nyan-cat.gif")
             left top
             no-repeat
           `,
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Please fill in all required fields before moving to the next step.',
+          icon: "error",
+          title: "Oops...",
+          text: "Please fill in all required fields before moving to the next step.",
         });
       }
-
-    }
-    else if (step === 4) {
-      console.log(formik.errors)
-      if (currentAddressOption === 'SameAsPlaceOfBirth' || (formik.values.currentAddressLocation && formik.values.currentAddressState && formik.values.currentAddressCity && formik.values.currentAddressScope)) {
+    } else if (step === 4) {
+      console.log(formik.errors);
+      if (
+        currentAddressOption === "SameAsPlaceOfBirth" ||
+        (formik.values.currentAddressLocation &&
+          formik.values.currentAddressState &&
+          formik.values.currentAddressCity &&
+          formik.values.currentAddressScope)
+      ) {
         setStep((prevStep) => prevStep + 1);
       } else {
         Swal.fire({
           width: 600,
-          padding: '3em',
-          background: '#fff url(/images/trees.png)',
+          padding: "3em",
+          background: "#fff url(/images/trees.png)",
           backdrop: `
             rgba(0,0,123,0.4)
             url("/images/nyan-cat.gif")
             left top
             no-repeat
           `,
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Please fill in all required fields before moving to the next step.',
+          icon: "error",
+          title: "Oops...",
+          text: "Please fill in all required fields before moving to the next step.",
         });
       }
-
-    }
-    else if (step === 5) {
-      console.log(formik.errors)
-      if ((nativeAddressOption === 'SameAsPlaceOfBirth' || nativeAddressOption === 'SameAsCurrentAddress') || (formik.values.nativePlaceLocation && formik.values.nativePlaceCurrentAddress && formik.values.nativePlaceState && formik.values.nativePlaceCity)) {
+    } else if (step === 5) {
+      console.log(formik.errors);
+      if (
+        nativeAddressOption === "SameAsPlaceOfBirth" ||
+        nativeAddressOption === "SameAsCurrentAddress" ||
+        (formik.values.nativePlaceLocation &&
+          formik.values.nativePlaceCurrentAddress &&
+          formik.values.nativePlaceState &&
+          formik.values.nativePlaceCity)
+      ) {
         setStep((prevStep) => prevStep + 1);
       } else {
-        console.log(formik.errors)
+        console.log(formik.errors);
         Swal.fire({
           width: 600,
-          padding: '3em',
-          background: '#fff url(/images/trees.png)',
+          padding: "3em",
+          background: "#fff url(/images/trees.png)",
           backdrop: `
             rgba(0,0,123,0.4)
             url("/images/nyan-cat.gif")
             left top
             no-repeat
           `,
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Please fill in all required fields before moving to the next step.',
+          icon: "error",
+          title: "Oops...",
+          text: "Please fill in all required fields before moving to the next step.",
         });
       }
-
-    }
-    else if (step === 6) {
-      console.log(formik.errors)
-      if (formik.values.heightFeet && formik.values.complexion && formik.values.education && formik.values.occupation && formik.values.incomeBracket && formik.values.maritalStatus && formik.values.pwd && formik.values.file && formik.values.image1 && formik.values.image2 && formik.values.phoneNumber1 && formik.values.phoneNumber2 && formik.values.email) {
-        formik.handleSubmit();
-        console.log("hiiii")
-
+    } else if (step === 6) {
+      console.log(formik.errors);
+      if (
+        formik.values.heightFeet &&
+        formik.values.complexion &&
+        formik.values.education &&
+        formik.values.occupation &&
+        formik.values.incomeBracket &&
+        formik.values.maritalStatus &&
+        formik.values.pwd &&
+        formik.values.file &&
+        formik.values.image1 &&
+        formik.values.image2 &&
+        formik.values.phoneNumber1 &&
+        formik.values.phoneNumber2 &&
+        formik.values.email
+      ) {
+        // formik.handleSubmit();
+        console.log("hiiii");
       } else {
         Swal.fire({
           width: 600,
-          padding: '3em',
-          background: '#fff url(/images/trees.png)',
+          padding: "3em",
+          background: "#fff url(/images/trees.png)",
           backdrop: `
             rgba(0,0,123,0.4)
             url("/images/nyan-cat.gif")
             left top
             no-repeat
           `,
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Please fill in all required fields before moving to the next step.',
+          icon: "error",
+          title: "Oops...",
+          text: "Please fill in all required fields before moving to the next step.",
         });
       }
-    }
-
-    else {
+    } else {
       formik.validateForm().then((errors) => {
         if (Object.keys(errors).length === 0) {
           setStep((prevStep) => prevStep + 1);
         } else {
           Swal.fire({
             width: 600,
-            padding: '3em',
-            background: '#fff url(/images/trees.png)',
+            padding: "3em",
+            background: "#fff url(/images/trees.png)",
             backdrop: `
             rgba(0,0,123,0.4)
             url("/images/nyan-cat.gif")
             left top
             no-repeat
           `,
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Please fill in all required fields before moving to the next step.',
+            icon: "error",
+            title: "Oops...",
+            text: "Please fill in all required fields before moving to the next step.",
           });
         }
       });
@@ -513,7 +556,11 @@ function Registration() {
 
   return (
     <div className="w-full flex justify-center my-4">
-      <div className="w-full max-w-4xl flex justify-center p-5">
+      <div
+        className={`w-full max-w-4xl flex justify-center p-5 ${
+          formik.isSubmitting ? "opacity-50" : ""
+        }`}
+      >
         <form
           onSubmit={formik.handleSubmit}
           className="w-full flex flex-col gap-16"
@@ -534,10 +581,11 @@ function Registration() {
                     // height={532}
                     viewBox="0 0 532 532"
                     xmlnsXlink="http://www.w3.org/1999/xlink"
-                    className={`fade-in w-full hover:cursor-pointer bg-[#f7f3f5] box-border shadow-xl delay-150 duration-300 transition-transform border-2 border-orange-500 rounded-full p-2 ${formik.values.gender === "male"
-                      ? ""
-                      : "border-none hover:scale-110"
-                      } `}
+                    className={`fade-in w-full hover:cursor-pointer bg-[#f7f3f5] box-border shadow-xl delay-150 duration-300 transition-transform border-2 border-orange-500 rounded-full p-2 ${
+                      formik.values.gender === "male"
+                        ? ""
+                        : "border-none hover:scale-110"
+                    } `}
                     onClick={() => {
                       formik.setFieldValue("gender", "male");
                     }}
@@ -580,10 +628,11 @@ function Registration() {
                     // height={532}
                     viewBox="0 0 532 532"
                     xmlnsXlink="http://www.w3.org/1999/xlink"
-                    className={`fade-in w-full hover:cursor-pointer bg-[#f7f3f5] box-border delay-150 shadow-xl duration-300 transition-transform border-2 border-orange-500 rounded-full p-2 ${formik.values.gender === "female"
-                      ? ""
-                      : "border-none hover:scale-110"
-                      }`}
+                    className={`fade-in w-full hover:cursor-pointer bg-[#f7f3f5] box-border delay-150 shadow-xl duration-300 transition-transform border-2 border-orange-500 rounded-full p-2 ${
+                      formik.values.gender === "female"
+                        ? ""
+                        : "border-none hover:scale-110"
+                    }`}
                     onClick={() => {
                       formik.setFieldValue("gender", "female");
                     }}
@@ -658,17 +707,16 @@ function Registration() {
                   type="text"
                   onChange={(e) => {
                     formik.handleChange(e);
-                    console.log("asdfds")
+                    console.log("asdfds");
                     const val = getGotra(e.target.value);
                     console.log(val);
                     if (val) {
-                      setFoundCaste(val.caste)
-                      setFoundGotra(val.surname)
-                      setFoundSubcaste(val.subcaste)
+                      setFoundCaste(val.caste);
+                      setFoundGotra(val.surname);
+                      setFoundSubcaste(val.subcaste);
                       setGotra(val.surname);
                       setCaste(val.caste);
                       setSubcaste(val.subcaste);
-
                     }
                   }}
                   value={formik.values.surname}
@@ -681,104 +729,106 @@ function Registration() {
                 <div className="w-full flex flex-col gap-3 sm:flex-row md:gap-8">
                   {/* Caste Dropdown */}
 
-                    <div className="w-full flex gap-2 items-center justify-center">
-                      <label
-                        htmlFor="caste"
-                        className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
-                      >
-                        CASTE* :
-                      </label>
-                      <select
-                        id="caste"
-                        name="caste"
-                        onChange={(e) => {
-                          setCaste(e.target.value);
-                          formik.setFieldValue("caste", e.target.value);
-                        }}
-                        value={caste}
-                        placeholder="Caste"
-                        className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                      >
-                        <option value="" disabled>
-                          Select Caste
+                  <div className="w-full flex gap-2 items-center justify-center">
+                    <label
+                      htmlFor="caste"
+                      className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
+                    >
+                      CASTE* :
+                    </label>
+                    <select
+                      id="caste"
+                      name="caste"
+                      onChange={(e) => {
+                        setCaste(e.target.value);
+                        formik.setFieldValue("caste", e.target.value);
+                      }}
+                      value={caste}
+                      placeholder="Caste"
+                      className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                    >
+                      <option value="" disabled>
+                        Select Caste
+                      </option>
+                      {foundCaste && (
+                        <option value={foundCaste}>{foundCaste}</option>
+                      )}
+                      {castes.map((c) => (
+                        <option key={c} value={c}>
+                          {c}
                         </option>
-                        {foundCaste && <option value={foundCaste}>{foundCaste}</option>}
-                        {castes.map((c) => (
-                          <option key={c} value={c}>
-                            {c}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
+                      ))}
+                    </select>
+                  </div>
 
                   {/* SubCaste Dropdown */}
 
-                    <div className="w-full flex gap-2 items-center justify-center">
-                      <label
-                        htmlFor="subcaste"
-                        className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
-                      >
-                        SUBCASTE* :
-                      </label>
-                      <select
-                        // disabled={caste === "" ? true : false}
-                        id="subcaste"
-                        name="subcaste"
-                        onChange={(e) => {
-                          setSubcaste(e.target.value);
-                          formik.setFieldValue("subcaste", e.target.value);
-                        }}
-                        value={subcaste}
-                        className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                      >
-                        <option value="" disabled>
-                          Select Subcaste
+                  <div className="w-full flex gap-2 items-center justify-center">
+                    <label
+                      htmlFor="subcaste"
+                      className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
+                    >
+                      SUBCASTE* :
+                    </label>
+                    <select
+                      // disabled={caste === "" ? true : false}
+                      id="subcaste"
+                      name="subcaste"
+                      onChange={(e) => {
+                        setSubcaste(e.target.value);
+                        formik.setFieldValue("subcaste", e.target.value);
+                      }}
+                      value={subcaste}
+                      className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                    >
+                      <option value="" disabled>
+                        Select Subcaste
+                      </option>
+                      {foundSubcaste && (
+                        <option value={foundSubcaste}>{foundSubcaste}</option>
+                      )}
+                      {subcastes.map((s) => (
+                        <option key={s} value={s}>
+                          {s}
                         </option>
-                        {foundSubcaste && <option value={foundSubcaste}>{foundSubcaste}</option>}
-                        {subcastes.map((s) => (
-                          <option key={s} value={s}>
-                            {s}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
+                      ))}
+                    </select>
+                  </div>
 
                   {/* Gotra DropDown */}
 
-                    <div className="w-full flex gap-2 items-center justify-center">
-                      <label
-                        htmlFor="gotra"
-                        className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
-                      >
-                        GOTRA* :
-                      </label>
-                      <select
-                        // disabled={
-                        //   caste === "" || subcaste?.length === 0 ? true : false
-                        // }
-                        id="gotra"
-                        name="gotra"
-                        onChange={(e) => {
-                          setGotra(e.target.value);
-                          formik.setFieldValue("gotra", e.target.value);
-
-                        }}
-                        value={gotra}
-                        className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                      >
-                        <option value="" disabled>
-                          Select Gotra* :
+                  <div className="w-full flex gap-2 items-center justify-center">
+                    <label
+                      htmlFor="gotra"
+                      className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
+                    >
+                      GOTRA* :
+                    </label>
+                    <select
+                      // disabled={
+                      //   caste === "" || subcaste?.length === 0 ? true : false
+                      // }
+                      id="gotra"
+                      name="gotra"
+                      onChange={(e) => {
+                        setGotra(e.target.value);
+                        formik.setFieldValue("gotra", e.target.value);
+                      }}
+                      value={gotra}
+                      className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                    >
+                      <option value="" disabled>
+                        Select Gotra* :
+                      </option>
+                      {foundGotra && <option value={gotra}>{gotra}</option>}
+                      {gotras.map((g) => (
+                        <option key={g} value={g}>
+                          {g}
                         </option>
-                        {foundGotra && <option value={gotra}>{gotra}</option>}
-                        {gotras.map((g) => (
-                          <option key={g} value={g}>
-                            {g}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
+                      ))}
+                    </select>
                   </div>
-                
+                </div>
               )}
 
               {/* DOB */}
@@ -799,7 +849,6 @@ function Registration() {
                   placeholder=""
                   className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
                 />
-
               </div>
 
               {/* Manglik */}
@@ -869,7 +918,7 @@ function Registration() {
           )}
           {step === 3 && (
             <div className="w-full fade-in gap-8 flex flex-col justify-center items-center">
-              <div className="w-full flex flex-col sm:flex-row justify-center gap-2 items-center">
+              <div className="Sharma w-full flex flex-col sm:flex-row justify-start gap-2 items-center">
                 <label
                   htmlFor="placeOfBirth"
                   className="font-semibold text-sm font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left"
@@ -896,7 +945,7 @@ function Registration() {
               </div>
               {location && (
                 <>
-                  <div className="w-full flex flex-col sm:flex-row justify-center gap-2 items-center">
+                  <div className="CurrentAddressTushar w-full flex flex-col sm:flex-row justify-center gap-2 items-center">
                     <label
                       htmlFor="currentAddress"
                       className="font-semibold text-sm self-start font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left"
@@ -966,7 +1015,10 @@ function Registration() {
                           className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
                         >
                           {states.map((state) => (
-                            <option key={state.state_name} value={state.state_name}>
+                            <option
+                              key={state.state_name}
+                              value={state.state_name}
+                            >
                               {state.state_name}
                             </option>
                           ))}
@@ -1069,14 +1121,10 @@ function Registration() {
                 </>
               )}
             </div>
-
-
           )}
           {step === 5 && (
             <div className="w-full fade-in gap-8 flex flex-col justify-center items-center">
-
-
-              <div className="w-full flex flex-col sm:flex-row justify-center gap-2 items-center">
+              <div className="w-full flex flex-col sm:flex-row justify-start gap-2 items-center">
                 <label
                   htmlFor="nativeAddressOption"
                   className="font-semibold text-sm font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left"
@@ -1087,30 +1135,39 @@ function Registration() {
                   id="nativeAddressOption"
                   name="nativeAddressOption"
                   onChange={(e) => {
-                    setNativeAddressOption(e.target.value)
-                    if (e.target.value === 'SameAsCurrentAddress') {
-                      formik.values.nativePlaceLocation = formik.values.currentAddressLocation;
-                      formik.values.nativePlaceCountry = formik.values.currentAddressCountry;
-                      formik.values.nativePlaceState = formik.values.currentAddressState;
-                      formik.values.nativePlaceCity = formik.values.currentAddressCity;
-                      formik.values.nativePlaceCurrentAddress = formik.values.currentAddressScope;
-                    } else if (e.target.value === 'SameAsPlaceOfBirth') {
-                      formik.values.nativePlaceLocation = formik.values.location;
+                    setNativeAddressOption(e.target.value);
+                    if (e.target.value === "SameAsCurrentAddress") {
+                      formik.values.nativePlaceLocation =
+                        formik.values.currentAddressLocation;
+                      formik.values.nativePlaceCountry =
+                        formik.values.currentAddressCountry;
+                      formik.values.nativePlaceState =
+                        formik.values.currentAddressState;
+                      formik.values.nativePlaceCity =
+                        formik.values.currentAddressCity;
+                      formik.values.nativePlaceCurrentAddress =
+                        formik.values.currentAddressScope;
+                    } else if (e.target.value === "SameAsPlaceOfBirth") {
+                      formik.values.nativePlaceLocation =
+                        formik.values.location;
                       formik.values.nativePlaceCountry = formik.values.country;
                       formik.values.nativePlaceState = formik.values.state;
                       formik.values.nativePlaceCity = formik.values.city;
-                      formik.values.nativePlaceCurrentAddress = formik.values.currentAddress;
+                      formik.values.nativePlaceCurrentAddress =
+                        formik.values.currentAddress;
                     }
-                  }
-                  }
+                  }}
                   value={nativeAddressOption}
                   className="w-full sm:w-1/2 border rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
                 >
                   <option value="Different">Different</option>
-                  <option value="SameAsPlaceOfBirth">Same as Place of Birth</option>
-                  <option value="SameAsCurrentAddress">Same as Current Address</option>
+                  <option value="SameAsPlaceOfBirth">
+                    Same as Place of Birth
+                  </option>
+                  <option value="SameAsCurrentAddress">
+                    Same as Current Address
+                  </option>
                 </select>
-
               </div>
 
               {nativeAddressOption === "Different" && (
@@ -1128,13 +1185,14 @@ function Registration() {
                       value={formik.values.nativePlaceLocation}
                       onChange={(e) => {
                         setNativePlaceLocation(e.target.value);
-                        formik.setFieldValue("nativePlaceLocation", e.target.value);
+                        formik.setFieldValue(
+                          "nativePlaceLocation",
+                          e.target.value
+                        );
                       }}
                       className="w-full sm:w-1/2 border  rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
                     >
-                      <option value="" >
-                        Select Location
-                      </option>
+                      <option value="">Select Location</option>
                       <option value="india">India</option>
                       <option value="abroad">Abroad</option>
                     </select>
@@ -1176,7 +1234,10 @@ function Registration() {
                               name="nativePlaceCountry"
                               onChange={(e) => {
                                 setNativePlaceSelectedCountry(e.target.value);
-                                formik.setFieldValue("nativePlaceCountry", e.target.value);
+                                formik.setFieldValue(
+                                  "nativePlaceCountry",
+                                  e.target.value
+                                );
                               }}
                               value={nativePlaceSelectedCountry}
                               className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
@@ -1206,13 +1267,19 @@ function Registration() {
                               name="nativePlaceState"
                               onChange={(e) => {
                                 setNativePlaceSelectedState(e.target.value);
-                                formik.setFieldValue("nativePlaceState", e.target.value);
+                                formik.setFieldValue(
+                                  "nativePlaceState",
+                                  e.target.value
+                                );
                               }}
                               value={nativePlaceSelectedState}
                               className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
                             >
                               {states.map((state) => (
-                                <option key={state.state_name} value={state.state_name}>
+                                <option
+                                  key={state.state_name}
+                                  value={state.state_name}
+                                >
                                   {state.state_name}
                                 </option>
                               ))}
@@ -1233,13 +1300,19 @@ function Registration() {
                               name="nativePlaceCity"
                               onChange={(e) => {
                                 setNativePlaceSelectedCity(e.target.value);
-                                formik.setFieldValue("nativePlaceCity", e.target.value);
+                                formik.setFieldValue(
+                                  "nativePlaceCity",
+                                  e.target.value
+                                );
                               }}
                               value={nativePlaceSelectedCity}
                               className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
                             >
                               {cities.map((city) => (
-                                <option key={city.city_name} value={city.city_name}>
+                                <option
+                                  key={city.city_name}
+                                  value={city.city_name}
+                                >
                                   {city.city_name}
                                 </option>
                               ))}
@@ -1263,7 +1336,10 @@ function Registration() {
                               name="nativePlaceState"
                               onChange={(e) => {
                                 setNativePlaceSelectedState(e.target.value);
-                                formik.setFieldValue("nativePlaceState", e.target.value);
+                                formik.setFieldValue(
+                                  "nativePlaceState",
+                                  e.target.value
+                                );
                               }}
                               value={formik.values.nativePlaceState}
                               className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
@@ -1293,7 +1369,10 @@ function Registration() {
                               value={formik.values.nativePlaceCity}
                               onChange={(e) => {
                                 setNativePlaceSelectedCity(e.target.value);
-                                formik.setFieldValue("nativePlaceCity", e.target.value);
+                                formik.setFieldValue(
+                                  "nativePlaceCity",
+                                  e.target.value
+                                );
                               }}
                               className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
                             >
@@ -1301,11 +1380,13 @@ function Registration() {
                                 Select a City
                               </option>
                               {nativePlaceSelectedState &&
-                                indiaStates[nativePlaceSelectedState].map((district) => (
-                                  <option key={district} value={district}>
-                                    {district}
-                                  </option>
-                                ))}
+                                indiaStates[nativePlaceSelectedState].map(
+                                  (district) => (
+                                    <option key={district} value={district}>
+                                      {district}
+                                    </option>
+                                  )
+                                )}
                             </select>
                           </div>
                         </div>
@@ -1315,14 +1396,10 @@ function Registration() {
                 </>
               )}
             </div>
-
-
           )}
           {step === 4 && (
             <div className="w-full fade-in gap-8 flex flex-col justify-center items-center">
-
-
-              <div className="w-full flex flex-col sm:flex-row justify-center gap-2 items-center">
+              <div className="w-full flex flex-col sm:flex-row justify-start gap-2 items-center">
                 <label
                   htmlFor="currentAddressOption"
                   className="font-semibold text-sm font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left"
@@ -1333,31 +1410,32 @@ function Registration() {
                   id="nativeAddressOption"
                   name="nativeAddressOption"
                   onChange={(e) => {
-                    setCurrentAddressOption(e.target.value)
+                    setCurrentAddressOption(e.target.value);
 
                     if (e.target.value === "SameAsPlaceOfBirth") {
-                      formik.values.currentAddressLocation = formik.values.location;
-                      formik.values.currentAddressCountry = formik.values.country;
+                      formik.values.currentAddressLocation =
+                        formik.values.location;
+                      formik.values.currentAddressCountry =
+                        formik.values.country;
                       formik.values.currentAddressState = formik.values.state;
                       formik.values.currentAddressCity = formik.values.city;
-                      formik.values.currentAddressScope = formik.values.currentAddress;
-
+                      formik.values.currentAddressScope =
+                        formik.values.currentAddress;
                     }
-                  }
-                  }
+                  }}
                   value={currentAddressOption}
                   className="w-full sm:w-1/2 border rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
                 >
                   <option value="Different">Different</option>
-                  <option value="SameAsPlaceOfBirth">Same as Place of Birth</option>
+                  <option value="SameAsPlaceOfBirth">
+                    Same as Place of Birth
+                  </option>
                   {/* <option value="SameAsNativeAddress">Same as Native Address</option> */}
                 </select>
-
               </div>
 
               {currentAddressOption === "Different" && (
                 <>
-
                   <div className="w-full flex gap-2 items-center justify-center sm:justify-start">
                     <label
                       htmlFor="currentAddressLocation"
@@ -1368,17 +1446,17 @@ function Registration() {
                     <select
                       id="currentAddressLocation"
                       name="currentAddressLocation"
-
                       onChange={(e) => {
                         setCurrentAddressLocation(e.target.value);
-                        formik.setFieldValue("currentAddressLocation", e.target.value);
+                        formik.setFieldValue(
+                          "currentAddressLocation",
+                          e.target.value
+                        );
                       }}
                       value={currentAddressLocation}
                       className="w-full sm:w-1/2 border  rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
                     >
-                      <option value="" >
-                        Select Location
-                      </option>
+                      <option value="">Select Location</option>
                       <option value="india">India</option>
                       <option value="abroad">Abroad</option>
                     </select>
@@ -1404,7 +1482,6 @@ function Registration() {
                         />
                       </div>
                       {currentAddressLocation === "abroad" && (
-
                         <div className="w-full fade-in flex flex-col gap-3 sm:flex-row md:gap-8">
                           {/* Country */}
 
@@ -1419,8 +1496,13 @@ function Registration() {
                               id="currentAddressCountry"
                               name="currentAddressCountry"
                               onChange={(e) => {
-                                setCurrentAddressSelectedCountry(e.target.value);
-                                formik.setFieldValue("currentAddressCountry", e.target.value);
+                                setCurrentAddressSelectedCountry(
+                                  e.target.value
+                                );
+                                formik.setFieldValue(
+                                  "currentAddressCountry",
+                                  e.target.value
+                                );
                               }}
                               value={currentAddressSelectedCountry}
                               className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
@@ -1450,13 +1532,19 @@ function Registration() {
                               name="currentAddressState"
                               onChange={(e) => {
                                 setCurrentAddressSelectedState(e.target.value);
-                                formik.setFieldValue("currentAddressState", e.target.value);
+                                formik.setFieldValue(
+                                  "currentAddressState",
+                                  e.target.value
+                                );
                               }}
                               value={currentAddressSelectedState}
                               className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
                             >
                               {states.map((state) => (
-                                <option key={state.state_name} value={state.state_name}>
+                                <option
+                                  key={state.state_name}
+                                  value={state.state_name}
+                                >
                                   {state.state_name}
                                 </option>
                               ))}
@@ -1477,13 +1565,19 @@ function Registration() {
                               name="currentAddressCity"
                               onChange={(e) => {
                                 setCurrentAddressSelectedCity(e.target.value);
-                                formik.setFieldValue("currentAddressCity", e.target.value);
+                                formik.setFieldValue(
+                                  "currentAddressCity",
+                                  e.target.value
+                                );
                               }}
                               value={currentAddressSelectedCity}
                               className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
                             >
                               {cities.map((city) => (
-                                <option key={city.city_name} value={city.city_name}>
+                                <option
+                                  key={city.city_name}
+                                  value={city.city_name}
+                                >
                                   {city.city_name}
                                 </option>
                               ))}
@@ -1491,7 +1585,6 @@ function Registration() {
                           </div>
                         </div>
                       )}
-
 
                       {currentAddressLocation === "india" && (
                         <div className="w-full fade-in flex flex-col gap-3 sm:flex-row md:gap-8">
@@ -1508,7 +1601,10 @@ function Registration() {
                               name="currentAddressState"
                               onChange={(e) => {
                                 setCurrentAddressSelectedState(e.target.value);
-                                formik.setFieldValue("currentAddressState", e.target.value);
+                                formik.setFieldValue(
+                                  "currentAddressState",
+                                  e.target.value
+                                );
                               }}
                               value={currentAddressSelectedState}
                               className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
@@ -1538,20 +1634,24 @@ function Registration() {
                               // value={formik.values.currentAddressCity}
                               onChange={(e) => {
                                 setCurrentAddressSelectedCity(e.target.value);
-                                formik.setFieldValue("currentAddressCity", e.target.value);
+                                formik.setFieldValue(
+                                  "currentAddressCity",
+                                  e.target.value
+                                );
                               }}
-
                               className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
                             >
                               <option value="" disabled>
                                 Select a City
                               </option>
                               {currentAddressSelectedState &&
-                                indiaStates[currentAddressSelectedState].map((district) => (
-                                  <option key={district} value={district}>
-                                    {district}
-                                  </option>
-                                ))}
+                                indiaStates[currentAddressSelectedState].map(
+                                  (district) => (
+                                    <option key={district} value={district}>
+                                      {district}
+                                    </option>
+                                  )
+                                )}
                             </select>
                           </div>
                         </div>
@@ -1561,17 +1661,11 @@ function Registration() {
                 </>
               )}
             </div>
-
           )}
-
-
-
 
           {step === 6 && (
             <div className="w-full fade-in gap-8 flex flex-col justify-center items-center">
               {/* Height And Complextion */}
-
-
 
               <div className="w-full flex flex-col gap-3 sm:flex-row md:gap-8">
                 {/* Height */}
@@ -1971,7 +2065,7 @@ function Registration() {
                     htmlFor="file"
                     className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
                   >
-                    Upload Biodata:
+                    Upload Biodata* :
                   </label>
                   <input
                     style={{
@@ -2020,7 +2114,7 @@ function Registration() {
                       htmlFor="image1"
                       className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
                     >
-                      Upload Image 1:
+                      Upload Image 1* :
                     </label>
                     <input
                       style={{
@@ -2066,7 +2160,7 @@ function Registration() {
                       htmlFor="image2"
                       className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
                     >
-                      Upload Image 2:
+                      Upload Image 2* :
                     </label>
                     <input
                       style={{
@@ -2244,10 +2338,11 @@ function Registration() {
             )}
             {step < 6 && (
               <div
-                className={`w-full  flex ${step === 1
-                  ? "justify-center"
-                  : "sm:justify-end justify-center"
-                  }`}
+                className={`w-full  flex ${
+                  step === 1
+                    ? "justify-center"
+                    : "sm:justify-end justify-center"
+                }`}
               >
                 <button
                   onClick={nextStep}

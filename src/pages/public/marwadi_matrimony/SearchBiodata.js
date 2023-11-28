@@ -7,6 +7,7 @@ import indiaStates from "../../../utils/indiaStates";
 // import "./BioDataFilterForm.css";
 import { Slider } from "@mui/material";
 import BiodataCard from "./BiodataCard";
+import { GET_BIODATAS } from "../../../utils/constants";
 
 const heights = [
   "Less than 4 fts.",
@@ -72,13 +73,13 @@ function SearchBiodata() {
 
       try {
         const response = await fetch(
-          `http://localhost:3000/getBioDataByFilters?gender=${
-            values.gender
-          }&height=${values.height}&ageRange=${JSON.stringify(
-            values.ageRange
-          )}&manglik=${values.manglik}&caste=${values.caste}&subcaste=${
-            values.subcaste
-          }&gotra=${values.gotra}`,
+          `${GET_BIODATAS}?gender=${values.gender}&height=${
+            values.height
+          }&ageRange=${JSON.stringify(values.ageRange)}&manglik=${
+            values.manglik
+          }&caste=${values.caste}&subcaste=${values.subcaste}&gotra=${
+            values.gotra
+          }`,
           {
             method: "GET",
           }

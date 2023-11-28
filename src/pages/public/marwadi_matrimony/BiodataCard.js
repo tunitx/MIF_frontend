@@ -3,7 +3,8 @@ import React from "react";
 const BiodataCard = ({ data }) => {
   const {
     image1,
-    fullName,
+    firstName,
+    surname,
     dob,
     gender,
     complexion,
@@ -50,7 +51,7 @@ const BiodataCard = ({ data }) => {
 
         <div className="w-full flex-col flex  justify-center text-center">
           <p className="font-Poppins text-2xl font-semibold text-[#EF4D48]">
-            {fullName}
+            {`${firstName} ${surname}`}
           </p>
           <p className="font-Poppins text-sm text-gray-800">
             ({ageInYear}yr., {gender}, {complexion})

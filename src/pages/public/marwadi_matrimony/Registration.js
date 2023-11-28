@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import axios from "axios";
 import bioData from "../../../utils/biodata";
 import indiaStates from "../../../utils/indiaStates";
+import Swal from 'sweetalert2';
 
 const config = {
   headers: {
@@ -32,10 +33,7 @@ async function getNewToken() {
   }
 }
 getNewToken()
-// console.log(config.headers.Authorization);
-
-// setInterval(getNewToken, 20 * 60 * 60 * 1000);
-
+let res = {};
 function Registration() {
   const [step, setStep] = useState(1);
   const [location, setLocation] = useState("");
@@ -59,12 +57,13 @@ function Registration() {
   const [currentAddressSelectedCity, setCurrentAddressSelectedCity] = useState("");
   const [currentAddressOption, setCurrentAddressOption] = useState("Different");
   const [foundGotra, setFoundGotra] = useState("");
-
+  const [foundSubcaste, setFoundSubcaste] = useState("");
+  const [foundCaste, setFoundCaste] = useState("");
 
 
   const castes = Object.keys(bioData);
-  const subcastes = caste ? Object.keys(bioData[caste]) : [];
-  const gotras = caste && subcaste ? bioData[caste][subcaste] : [];
+  const subcastes = bioData && caste && bioData[caste] ? Object.keys(bioData[caste]) : [];
+  const gotras = bioData && caste && subcaste && bioData[caste] && bioData[caste][subcaste] ? bioData[caste][subcaste] : [];
 
   useEffect(() => {
     if (location === "abroad") {
@@ -196,22 +195,82 @@ function Registration() {
     }
   }, [currentAddressLocation]);
 
+  useEffect(() => {
+    if (foundGotra) {
+      setGotra(foundGotra);
+      formik.setFieldValue("gotra", foundGotra);
+    }
+  }, [foundGotra]);
+
+  useEffect(() => {
+    if (foundCaste) {
+      setCaste(foundCaste);
+      formik.setFieldValue("caste", foundCaste);
+    }
+  }, [foundCaste]);
+  useEffect(() => {
+    if (foundSubcaste) {
+      setCaste(foundSubcaste);
+      formik.setFieldValue("subcaste", foundSubcaste);
+    }
+  }, [foundCaste]);
+
   function getGotra(surname) {
-    let gotra = '';
+    let result = {};
     Object.entries(bioData.baniya).forEach(([key, values]) => {
       if (values.map(value => value.toLowerCase()).includes(surname.toLowerCase())) {
-        gotra = values.map(value => value.toLowerCase()).find(value => value.includes(surname.toLowerCase()));
+        result = {
+          caste: 'baniya',
+          subcaste: key,
+          surname: values.map(value => value.toLowerCase()).find(value => value.includes(surname.toLowerCase()))
+        };
       }
     });
-    console.log(gotra);
-    return gotra;
+    console.log(result);
+    res = result;
+    return result;
   }
-
-
-
+  const validationSchema = Yup.object().shape({
+    gender: Yup.string().required('Required'),
+    firstName: Yup.string().required('Required'),
+    surname: Yup.string().required('Required'),
+    caste: Yup.string().required('Required'),
+    subcaste: Yup.string().required('Required'),
+    gotra: Yup.string().required('Required'),
+    dob: Yup.string().required('Required'),
+    manglik: Yup.string().required('Required'),
+    // placeOfBirth: Yup.string().required('Required'),
+    currentAddress: Yup.string().required('Required'),
+    location: Yup.string().required('Required'),
+    country: Yup.string().required('Required'),
+    state: Yup.string().required('Required'),
+    city: Yup.string().required('Required'),
+    nativePlaceLocation: Yup.string().required('Required'),
+    nativePlaceCity: Yup.string().required('Required'),
+    nativePlaceState: Yup.string().required('Required'),
+    nativePlaceCurrentAddress: Yup.string().required('Required'),
+    currentAddressLocation: Yup.string().required('Required'),
+    currentAddressCity: Yup.string().required('Required'),
+    currentAddressState: Yup.string().required('Required'),
+    currentAddressScope: Yup.string().required('Required'),
+    heightFeet: Yup.string().required('Required'),
+    complexion: Yup.string().required('Required'),
+    education: Yup.string().required('Required'),
+    occupation: Yup.string().required('Required'),
+    incomeBracket: Yup.string().required('Required'),
+    maritalStatus: Yup.string().required('Required'),
+    pwd: Yup.string().required('Required'),
+    file: Yup.mixed().required('Required'),
+    image1: Yup.mixed().required('Required'),
+    image2: Yup.mixed().required('Required'),
+    phoneNumber1: Yup.string().required('Required'),
+    phoneNumber2: Yup.string().required('Required'),
+    email: Yup.string().required('Required'),
+    image3: Yup.mixed().notRequired(),
+  });
   const formik = useFormik({
     initialValues: {
-      gender: "female",
+      gender: "",
       firstName: "",
       surname: "",
       caste: caste,
@@ -225,6 +284,16 @@ function Registration() {
       country: selectedCountry,
       state: selectedState,
       city: selectedCity,
+      nativePlaceLocation: '',
+      nativePlaceCity: '',
+      nativePlaceCountry: '',
+      nativePlaceState: '',
+      nativePlaceCurrentAddress: '',
+      currentAddressLocation: '',
+      currentAddressCountry: '',
+      currentAddressCity: '',
+      currentAddressState: '',
+      currentAddressScope: '',
       heightFeet: "",
       complexion: "",
       education: "",
@@ -235,15 +304,19 @@ function Registration() {
       file: null,
       image1: null,
       image2: null,
+      image3: null,
       phoneNumber1: "",
+      phoneNumber2: "",
+      email: "",
     },
-
+    validationSchema: validationSchema,
     onSubmit: async (values) => {
       const formData = new FormData();
 
       for (const key in values) {
         formData.append(key, values[key]);
       }
+
 
       for (let pair of formData.entries()) {
         console.log(pair[0] + ", " + pair[1]);
@@ -252,7 +325,7 @@ function Registration() {
 
       console.log(values);
 
-      return;
+      // return;
 
       try {
         const response = await fetch(
@@ -270,8 +343,162 @@ function Registration() {
     },
   });
 
+
   const nextStep = () => {
-    setStep((prevStep) => prevStep + 1);
+    if (step === 1) {
+      if (formik.values.gender) {
+        setStep((prevStep) => prevStep + 1);
+      } else {
+        // alert('Please fill in the gender field before moving to the next step.');
+        Swal.fire({
+          width: 600,
+          padding: '3em',
+          background: '#fff url(/images/trees.png)',
+          backdrop: `
+            rgba(0,0,123,0.4)
+            url("/images/nyan-cat.gif")
+            left top
+            no-repeat
+          `,
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Please fill in the gender field before moving to the next step.',
+        });
+      }
+    } else if (step === 2) {
+      console.log(formik.errors)
+      if (formik.values.firstName && formik.values.surname && formik.values.dob && formik.values.manglik && formik.values.caste && formik.values.subcaste && formik.values.gotra) {
+        setStep((prevStep) => prevStep + 1);
+      } else {
+        Swal.fire({
+          width: 600,
+          padding: '3em',
+          background: '#fff url(/images/trees.png)',
+          backdrop: `
+            rgba(0,0,123,0.4)
+            url("/images/nyan-cat.gif")
+            left top
+            no-repeat
+          `,
+          icon: 'error',
+          title: 'Oops...',
+
+          text: 'Please fill in all required fields before moving to the next step.',
+        });
+      }
+    } else if (step === 3) {
+      console.log(formik.errors)
+      if (formik.values.currentAddress && formik.values.state && formik.values.city) {
+        setStep((prevStep) => prevStep + 1);
+      } else {
+        Swal.fire({
+          width: 600,
+          padding: '3em',
+          background: '#fff url(/images/trees.png)',
+          backdrop: `
+            rgba(0,0,123,0.4)
+            url("/images/nyan-cat.gif")
+            left top
+            no-repeat
+          `,
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Please fill in all required fields before moving to the next step.',
+        });
+      }
+
+    }
+    else if (step === 4) {
+      console.log(formik.errors)
+      if (currentAddressOption === 'SameAsPlaceOfBirth' || (formik.values.currentAddressLocation && formik.values.currentAddressState && formik.values.currentAddressCity && formik.values.currentAddressScope)) {
+        setStep((prevStep) => prevStep + 1);
+      } else {
+        Swal.fire({
+          width: 600,
+          padding: '3em',
+          background: '#fff url(/images/trees.png)',
+          backdrop: `
+            rgba(0,0,123,0.4)
+            url("/images/nyan-cat.gif")
+            left top
+            no-repeat
+          `,
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Please fill in all required fields before moving to the next step.',
+        });
+      }
+
+    }
+    else if (step === 5) {
+      console.log(formik.errors)
+      if ((nativeAddressOption === 'SameAsPlaceOfBirth' || nativeAddressOption === 'SameAsCurrentAddress') || (formik.values.nativePlaceLocation && formik.values.nativePlaceCurrentAddress && formik.values.nativePlaceState && formik.values.nativePlaceCity)) {
+        setStep((prevStep) => prevStep + 1);
+      } else {
+        console.log(formik.errors)
+        Swal.fire({
+          width: 600,
+          padding: '3em',
+          background: '#fff url(/images/trees.png)',
+          backdrop: `
+            rgba(0,0,123,0.4)
+            url("/images/nyan-cat.gif")
+            left top
+            no-repeat
+          `,
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Please fill in all required fields before moving to the next step.',
+        });
+      }
+
+    }
+    else if (step === 6) {
+      console.log(formik.errors)
+      if (formik.values.heightFeet && formik.values.complexion && formik.values.education && formik.values.occupation && formik.values.incomeBracket && formik.values.maritalStatus && formik.values.pwd && formik.values.file && formik.values.image1 && formik.values.image2 && formik.values.phoneNumber1 && formik.values.phoneNumber2 && formik.values.email) {
+        formik.handleSubmit();
+        console.log("hiiii")
+
+      } else {
+        Swal.fire({
+          width: 600,
+          padding: '3em',
+          background: '#fff url(/images/trees.png)',
+          backdrop: `
+            rgba(0,0,123,0.4)
+            url("/images/nyan-cat.gif")
+            left top
+            no-repeat
+          `,
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Please fill in all required fields before moving to the next step.',
+        });
+      }
+    }
+
+    else {
+      formik.validateForm().then((errors) => {
+        if (Object.keys(errors).length === 0) {
+          setStep((prevStep) => prevStep + 1);
+        } else {
+          Swal.fire({
+            width: 600,
+            padding: '3em',
+            background: '#fff url(/images/trees.png)',
+            backdrop: `
+            rgba(0,0,123,0.4)
+            url("/images/nyan-cat.gif")
+            left top
+            no-repeat
+          `,
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Please fill in all required fields before moving to the next step.',
+          });
+        }
+      });
+    }
   };
 
   const prevStep = () => {
@@ -287,25 +514,8 @@ function Registration() {
         >
           {step === 1 && (
             <div className="w-full max-w-full flex flex-col justify-between items-center gap-14">
-              {/* <label
-                htmlFor="gender"
-                className="font-Poppins font-semibold text-lg text-[#B0B1B1]"
-              >
-                Gender:
-              </label>
-              <select
-                id="gender"
-                name="gender"
-                onChange={formik.handleChange}
-                value={formik.values.gender}
-                className="font-Poppins text-sm w-full px-3 py-2 border rounded-md border-indigo-900 min-w-xl"
-              >
-                <option value="">Select Gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-              </select> */}
               <p className=" fade-in w-full text-center font-Poppins text-lg sm:text-xl font-semibold text-[#333]">
-                CHOOSE YOUR GENDER
+                CHOOSE YOUR GENDER* :
               </p>
 
               <div className="w-full flex justify-between sm:justify-evenly gap-6">
@@ -416,7 +626,7 @@ function Registration() {
                   htmlFor="firstName"
                   className="font-semibold text-sm font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left"
                 >
-                  First Name:
+                  First Name* :
                 </label>
                 <input
                   id="firstName"
@@ -434,7 +644,7 @@ function Registration() {
                   htmlFor="surname"
                   className="font-semibold text-sm font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left"
                 >
-                  Last Name:
+                  Last Name* :
                 </label>
                 <input
                   id="surname"
@@ -443,11 +653,16 @@ function Registration() {
                   onChange={(e) => {
                     formik.handleChange(e);
                     console.log("asdfds")
-                    const gotra = getGotra(e.target.value);
-                    console.log(gotra);
-                    if (gotra) {
-                     setFoundGotra(gotra)
-                     setGotra(gotra);
+                    const val = getGotra(e.target.value);
+                    console.log(val);
+                    if (val) {
+                      setFoundCaste(val.caste)
+                      setFoundGotra(val.surname)
+                      setFoundSubcaste(val.subcaste)
+                      setGotra(val.surname);
+                      setCaste(val.caste);
+                      setSubcaste(val.subcaste);
+
                     }
                   }}
                   value={formik.values.surname}
@@ -466,7 +681,7 @@ function Registration() {
                         htmlFor="caste"
                         className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
                       >
-                        CASTE:
+                        CASTE* :
                       </label>
                       <select
                         id="caste"
@@ -482,6 +697,7 @@ function Registration() {
                         <option value="" disabled>
                           Select Caste
                         </option>
+                        {foundCaste && <option value={foundCaste}>{foundCaste}</option>}
                         {castes.map((c) => (
                           <option key={c} value={c}>
                             {c}
@@ -497,7 +713,7 @@ function Registration() {
                         htmlFor="subcaste"
                         className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
                       >
-                        SUBCASTE:
+                        SUBCASTE* :
                       </label>
                       <select
                         // disabled={caste === "" ? true : false}
@@ -513,6 +729,7 @@ function Registration() {
                         <option value="" disabled>
                           Select Subcaste
                         </option>
+                        {foundSubcaste && <option value={foundSubcaste}>{foundSubcaste}</option>}
                         {subcastes.map((s) => (
                           <option key={s} value={s}>
                             {s}
@@ -528,7 +745,7 @@ function Registration() {
                         htmlFor="gotra"
                         className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
                       >
-                        GOTRA:
+                        GOTRA* :
                       </label>
                       <select
                         // disabled={
@@ -545,9 +762,9 @@ function Registration() {
                         className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
                       >
                         <option value="" disabled>
-                          Select Gotra
+                          Select Gotra* :
                         </option>
-                        {foundGotra && <option value={foundGotra}>{foundGotra}</option>}
+                        {foundGotra && <option value={gotra}>{gotra}</option>}
                         {gotras.map((g) => (
                           <option key={g} value={g}>
                             {g}
@@ -566,7 +783,7 @@ function Registration() {
                   htmlFor="dob"
                   className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
                 >
-                  DATE OF BIRTH:
+                  DATE OF BIRTH* :
                 </label>
                 <input
                   id="dob"
@@ -577,9 +794,7 @@ function Registration() {
                   placeholder=""
                   className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
                 />
-                {formik.errors.dob && formik.touched.dob && (
-                  <div>{formik.errors.dob}</div>
-                )}
+
               </div>
 
               {/* Manglik */}
@@ -587,7 +802,7 @@ function Registration() {
               <div className="w-full flex gap-2 items-center justify-center">
                 <fieldset className="w-full flex gap-4 items-center justify-start">
                   <p className="font-semibold text-sm font-Poppins self-start tracking-wide sm:text-base whitespace-nowrap  text-[#444]">
-                    MANGLIK:
+                    MANGLIK* :
                   </p>
                   <div className="flex flex-col gap-2">
                     <div className="flex gap-2 hover:cursor-pointer">
@@ -654,14 +869,9 @@ function Registration() {
                   htmlFor="placeOfBirth"
                   className="font-semibold text-sm font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left"
                 >
-                  Place of Birth:
+                  Place of Birth* :
                 </label>
-                {/* <label
-                  htmlFor="placeOfBirth"
-                  className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
-                >
-                  Place of Birth
-                </label> */}
+
                 <select
                   id="location"
                   name="location"
@@ -679,203 +889,183 @@ function Registration() {
                   <option value="abroad">Abroad</option>
                 </select>
               </div>
-
-              <div className="w-full flex flex-col sm:flex-row justify-center gap-2 items-center">
-                <label
-                  htmlFor="placeOfBirthCurrentAddress"
-                  className="font-semibold text-sm self-start font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left"
-                >
-                  Current Address:
-                </label>
-                <textarea
-                  id="placeOfBirthCurrentAddress"
-                  name="placeOfBirthCurrentAddress"
-                  type="text"
-                  onChange={formik.handleChange}
-                  value={formik.values.placeOfBirthCurrentAddress}
-                  placeholder="Address"
-                  className="grow border h-28 w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                />
-              </div>
-
-              {/* <div className="w-full flex gap-2 items-center justify-center sm:justify-start">
-                <label
-                  htmlFor="location"
-                  className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] text-left"
-                >
-                  Address:
-                </label>
-                <select
-                  id="location"
-                  name="location"
-                  value={formik.values.location}
-                  onChange={(e) => {
-                    setLocation(e.target.value);
-                    formik.setFieldValue("location", e.target.value);
-                  }}
-                  className="w-full sm:w-1/2 border  rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                >
-                  <option value="" disabled>
-                    Select Location
-                  </option>
-                  <option value="india">India</option>
-                  <option value="abroad">Abroad</option>
-                </select>
-              </div> */}
-
-              {location === "abroad" && (
-                <div className="w-full fade-in flex flex-col gap-3 sm:flex-row md:gap-8">
-                  {/* Country */}
-
-                  <div className="w-full flex gap-2 items-center justify-center">
+              {location && (
+                <>
+                  <div className="w-full flex flex-col sm:flex-row justify-center gap-2 items-center">
                     <label
-                      htmlFor="country"
-                      className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
+                      htmlFor="currentAddress"
+                      className="font-semibold text-sm self-start font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left"
                     >
-                      Country:
+                      Current Address* :
                     </label>
-                    <select
-                      id="country"
-                      name="country"
-                      onChange={(e) => {
-                        setSelectedCountry(e.target.value);
-                        formik.setFieldValue("country", e.target.value);
-                      }}
-                      value={selectedCountry}
-                      className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                    >
-                      {countries.map((country) => (
-                        <option
-                          key={country.country_name}
-                          value={country.country_name}
+                    <textarea
+                      id="currentAddress"
+                      name="currentAddress"
+                      type="text"
+                      onChange={formik.handleChange}
+                      value={formik.values.currentAddress}
+                      placeholder="Address"
+                      className="grow border h-28 w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                    />
+                  </div>
+
+                  {location === "abroad" && (
+                    <div className="w-full fade-in flex flex-col gap-3 sm:flex-row md:gap-8">
+                      {/* Country */}
+
+                      <div className="w-full flex gap-2 items-center justify-center">
+                        <label
+                          htmlFor="country"
+                          className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
                         >
-                          {country.country_name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+                          Country* :
+                        </label>
+                        <select
+                          id="country"
+                          name="country"
+                          onChange={(e) => {
+                            setSelectedCountry(e.target.value);
+                            formik.setFieldValue("country", e.target.value);
+                          }}
+                          value={selectedCountry}
+                          className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                        >
+                          {countries.map((country) => (
+                            <option
+                              key={country.country_name}
+                              value={country.country_name}
+                            >
+                              {country.country_name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
 
-                  {/* State */}
+                      {/* State */}
 
-                  <div className="w-full flex gap-2 items-center justify-center">
-                    <label
-                      htmlFor="state"
-                      className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
-                    >
-                      State:
-                    </label>
-                    <select
-                      id="state"
-                      name="state"
-                      onChange={(e) => {
-                        setSelectedState(e.target.value);
-                        formik.setFieldValue("state", e.target.value);
-                      }}
-                      value={selectedCountry}
-                      className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                    >
-                      {states.map((state) => (
-                        <option key={state.state_name} value={state.state_name}>
-                          {state.state_name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+                      <div className="w-full flex gap-2 items-center justify-center">
+                        <label
+                          htmlFor="state"
+                          className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
+                        >
+                          State* :
+                        </label>
+                        <select
+                          id="state"
+                          name="state"
+                          onChange={(e) => {
+                            setSelectedState(e.target.value);
+                            formik.setFieldValue("state", e.target.value);
+                          }}
+                          value={selectedCountry}
+                          className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                        >
+                          {states.map((state) => (
+                            <option key={state.state_name} value={state.state_name}>
+                              {state.state_name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
 
-                  {/* City */}
+                      {/* City */}
 
-                  <div className="w-full flex gap-2 items-center justify-center">
-                    <label
-                      htmlFor="city"
-                      className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
-                    >
-                      City:
-                    </label>
-                    <select
-                      id="city"
-                      name="city"
-                      onChange={(e) => {
-                        setSelectedCity(e.target.value);
-                        formik.setFieldValue("city", e.target.value);
-                      }}
-                      value={selectedCity}
-                      className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                    >
-                      {cities.map((city) => (
-                        <option key={city.city_name} value={city.city_name}>
-                          {city.city_name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-              )}
+                      <div className="w-full flex gap-2 items-center justify-center">
+                        <label
+                          htmlFor="city"
+                          className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
+                        >
+                          City* :
+                        </label>
+                        <select
+                          id="city"
+                          name="city"
+                          onChange={(e) => {
+                            setSelectedCity(e.target.value);
+                            formik.setFieldValue("city", e.target.value);
+                          }}
+                          value={selectedCity}
+                          className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                        >
+                          {cities.map((city) => (
+                            <option key={city.city_name} value={city.city_name}>
+                              {city.city_name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                  )}
 
-              {location === "india" && (
-                <div className="w-full fade-in flex flex-col gap-3 sm:flex-row md:gap-8">
-                  {/* State */}
+                  {location === "india" && (
+                    <div className="w-full fade-in flex flex-col gap-3 sm:flex-row md:gap-8">
+                      {/* State */}
 
-                  <div className="w-full flex gap-2 items-center justify-center">
-                    <label
-                      htmlFor="state"
-                      className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
-                    >
-                      State:
-                    </label>
-                    <select
-                      id="state"
-                      name="state"
-                      onChange={(e) => {
-                        setSelectedState(e.target.value);
-                        formik.setFieldValue("state", e.target.value);
-                      }}
-                      value={formik.values.state}
-                      className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                    >
-                      <option value="" disabled>
-                        Select a state
-                      </option>
-                      {Object.keys(indiaStates).map((state) => (
-                        <option key={state} value={state}>
-                          {state}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  {/* City */}
-
-                  <div className="w-full flex gap-2 items-center justify-center">
-                    <label
-                      htmlFor="district"
-                      className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
-                    >
-                      City
-                    </label>
-                    <select
-                      id="city"
-                      name="city"
-                      value={formik.values.city}
-                      onChange={(e) => {
-                        setSelectedCity(e.target.value);
-                        formik.setFieldValue("city", e.target.value);
-                      }}
-                      className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                    >
-                      <option value="" disabled>
-                        Select a City
-                      </option>
-                      {selectedState &&
-                        indiaStates[selectedState].map((district) => (
-                          <option key={district} value={district}>
-                            {district}
+                      <div className="w-full flex gap-2 items-center justify-center">
+                        <label
+                          htmlFor="state"
+                          className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
+                        >
+                          State* :
+                        </label>
+                        <select
+                          id="state"
+                          name="state"
+                          onChange={(e) => {
+                            setSelectedState(e.target.value);
+                            formik.setFieldValue("state", e.target.value);
+                          }}
+                          value={formik.values.state}
+                          className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                        >
+                          <option value="" disabled>
+                            Select a state
                           </option>
-                        ))}
-                    </select>
-                  </div>
-                </div>
+                          {Object.keys(indiaStates).map((state) => (
+                            <option key={state} value={state}>
+                              {state}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      {/* City */}
+
+                      <div className="w-full flex gap-2 items-center justify-center">
+                        <label
+                          htmlFor="district"
+                          className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
+                        >
+                          City*
+                        </label>
+                        <select
+                          id="city"
+                          name="city"
+                          value={formik.values.city}
+                          onChange={(e) => {
+                            setSelectedCity(e.target.value);
+                            formik.setFieldValue("city", e.target.value);
+                          }}
+                          className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                        >
+                          <option value="" disabled>
+                            Select a City
+                          </option>
+                          {selectedState &&
+                            indiaStates[selectedState].map((district) => (
+                              <option key={district} value={district}>
+                                {district}
+                              </option>
+                            ))}
+                        </select>
+                      </div>
+                    </div>
+                  )}
+                </>
               )}
             </div>
+
+
           )}
           {step === 5 && (
             <div className="w-full fade-in gap-8 flex flex-col justify-center items-center">
@@ -886,12 +1076,28 @@ function Registration() {
                   htmlFor="nativeAddressOption"
                   className="font-semibold text-sm font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left"
                 >
-                  Native Address :
+                  Native Address* :
                 </label>
                 <select
                   id="nativeAddressOption"
                   name="nativeAddressOption"
-                  onChange={(e) => setNativeAddressOption(e.target.value)}
+                  onChange={(e) => {
+                    setNativeAddressOption(e.target.value)
+                    if (e.target.value === 'SameAsCurrentAddress') {
+                      formik.values.nativePlaceLocation = formik.values.currentAddressLocation;
+                      formik.values.nativePlaceCountry = formik.values.currentAddressCountry;
+                      formik.values.nativePlaceState = formik.values.currentAddressState;
+                      formik.values.nativePlaceCity = formik.values.currentAddressCity;
+                      formik.values.nativePlaceCurrentAddress = formik.values.currentAddressScope;
+                    } else if (e.target.value === 'SameAsPlaceOfBirth') {
+                      formik.values.nativePlaceLocation = formik.values.location;
+                      formik.values.nativePlaceCountry = formik.values.country;
+                      formik.values.nativePlaceState = formik.values.state;
+                      formik.values.nativePlaceCity = formik.values.city;
+                      formik.values.nativePlaceCurrentAddress = formik.values.currentAddress;
+                    }
+                  }
+                  }
                   value={nativeAddressOption}
                   className="w-full sm:w-1/2 border rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
                 >
@@ -909,7 +1115,7 @@ function Registration() {
                       htmlFor="nativePlaceLocation"
                       className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] text-left"
                     >
-                      Address:
+                      Address* :
                     </label>
                     <select
                       id="nativePlaceLocation"
@@ -928,177 +1134,181 @@ function Registration() {
                       <option value="abroad">Abroad</option>
                     </select>
                   </div>
-                  <div className="w-full flex flex-col sm:flex-row justify-center gap-2 items-center">
-                    <label
-                      htmlFor="nativePlaceCurrentAddress"
-                      className="font-semibold text-sm self-start font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left"
-                    >
-                      Current Address at Native Place:
-                    </label>
-                    <textarea
-                      id="nativePlaceCurrentAddress"
-                      name="nativePlaceCurrentAddress"
-                      type="text"
-                      onChange={formik.handleChange}
-                      value={formik.values.nativePlaceCurrentAddress}
-                      placeholder="Address"
-                      className="grow border h-28 w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                    />
-                  </div>
 
-                  {nativePlaceLocation === "abroad" && (
-                    <div className="w-full fade-in flex flex-col gap-3 sm:flex-row md:gap-8">
-                      {/* Country */}
-
-                      <div className="w-full flex gap-2 items-center justify-center">
+                  {nativePlaceLocation && (
+                    <>
+                      <div className="w-full flex flex-col sm:flex-row justify-center gap-2 items-center">
                         <label
-                          htmlFor="nativePlaceCountry"
-                          className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
+                          htmlFor="nativePlaceCurrentAddress"
+                          className="font-semibold text-sm self-start font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left"
                         >
-                          Country:
+                          Current Address at Native Place* :
                         </label>
-                        <select
-                          id="nativePlaceCountry"
-                          name="nativePlaceCountry"
-                          onChange={(e) => {
-                            setNativePlaceSelectedCountry(e.target.value);
-                            formik.setFieldValue("nativePlaceCountry", e.target.value);
-                          }}
-                          value={nativePlaceSelectedCountry}
-                          className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                        >
-                          {countries.map((country) => (
-                            <option
-                              key={country.country_name}
-                              value={country.country_name}
+                        <textarea
+                          id="nativePlaceCurrentAddress"
+                          name="nativePlaceCurrentAddress"
+                          type="text"
+                          onChange={formik.handleChange}
+                          value={formik.values.nativePlaceCurrentAddress}
+                          placeholder="Address"
+                          className="grow border h-28 w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                        />
+                      </div>
+
+                      {nativePlaceLocation === "abroad" && (
+                        <div className="w-full fade-in flex flex-col gap-3 sm:flex-row md:gap-8">
+                          {/* Country */}
+
+                          <div className="w-full flex gap-2 items-center justify-center">
+                            <label
+                              htmlFor="nativePlaceCountry"
+                              className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
                             >
-                              {country.country_name}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
+                              Country* :
+                            </label>
+                            <select
+                              id="nativePlaceCountry"
+                              name="nativePlaceCountry"
+                              onChange={(e) => {
+                                setNativePlaceSelectedCountry(e.target.value);
+                                formik.setFieldValue("nativePlaceCountry", e.target.value);
+                              }}
+                              value={nativePlaceSelectedCountry}
+                              className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                            >
+                              {countries.map((country) => (
+                                <option
+                                  key={country.country_name}
+                                  value={country.country_name}
+                                >
+                                  {country.country_name}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
 
-                      {/* State */}
+                          {/* State */}
 
-                      <div className="w-full flex gap-2 items-center justify-center">
-                        <label
-                          htmlFor="nativePlaceState"
-                          className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
-                        >
-                          State:
-                        </label>
-                        <select
-                          id="nativePlaceState"
-                          name="nativePlaceState"
-                          onChange={(e) => {
-                            setNativePlaceSelectedState(e.target.value);
-                            formik.setFieldValue("nativePlaceState", e.target.value);
-                          }}
-                          value={nativePlaceSelectedState}
-                          className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                        >
-                          {states.map((state) => (
-                            <option key={state.state_name} value={state.state_name}>
-                              {state.state_name}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
+                          <div className="w-full flex gap-2 items-center justify-center">
+                            <label
+                              htmlFor="nativePlaceState"
+                              className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
+                            >
+                              State* :
+                            </label>
+                            <select
+                              id="nativePlaceState"
+                              name="nativePlaceState"
+                              onChange={(e) => {
+                                setNativePlaceSelectedState(e.target.value);
+                                formik.setFieldValue("nativePlaceState", e.target.value);
+                              }}
+                              value={nativePlaceSelectedState}
+                              className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                            >
+                              {states.map((state) => (
+                                <option key={state.state_name} value={state.state_name}>
+                                  {state.state_name}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
 
-                      {/* City */}
+                          {/* City */}
 
-                      <div className="w-full flex gap-2 items-center justify-center">
-                        <label
-                          htmlFor="nativePlaceCity"
-                          className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
-                        >
-                          City:
-                        </label>
-                        <select
-                          id="nativePlaceCity"
-                          name="nativePlaceCity"
-                          onChange={(e) => {
-                            setNativePlaceSelectedCity(e.target.value);
-                            formik.setFieldValue("nativePlaceCity", e.target.value);
-                          }}
-                          value={nativePlaceSelectedCity}
-                          className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                        >
-                          {cities.map((city) => (
-                            <option key={city.city_name} value={city.city_name}>
-                              {city.city_name}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-                  )}
+                          <div className="w-full flex gap-2 items-center justify-center">
+                            <label
+                              htmlFor="nativePlaceCity"
+                              className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
+                            >
+                              City* :
+                            </label>
+                            <select
+                              id="nativePlaceCity"
+                              name="nativePlaceCity"
+                              onChange={(e) => {
+                                setNativePlaceSelectedCity(e.target.value);
+                                formik.setFieldValue("nativePlaceCity", e.target.value);
+                              }}
+                              value={nativePlaceSelectedCity}
+                              className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                            >
+                              {cities.map((city) => (
+                                <option key={city.city_name} value={city.city_name}>
+                                  {city.city_name}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
+                      )}
 
-                  {nativePlaceLocation === "india" && (
-                    <div className="w-full fade-in flex flex-col gap-3 sm:flex-row md:gap-8">
-                      {/* State */}
-                      <div className="w-full flex gap-2 items-center justify-center">
-                        <label
-                          htmlFor="nativePlaceState"
-                          className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
-                        >
-                          State:
-                        </label>
-                        <select
-                          id="nativePlaceState"
-                          name="nativePlaceState"
-                          onChange={(e) => {
-                            setNativePlaceSelectedState(e.target.value);
-                            formik.setFieldValue("nativePlaceState", e.target.value);
-                          }}
-                          value={formik.values.nativePlaceState}
-                          className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                        >
-                          <option value="" disabled>
-                            Select a state
-                          </option>
-                          {Object.keys(indiaStates).map((state) => (
-                            <option key={state} value={state}>
-                              {state}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-
-                      {/* City */}
-                      <div className="w-full flex gap-2 items-center justify-center">
-                        <label
-                          htmlFor="nativePlaceCity"
-                          className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
-                        >
-                          City
-                        </label>
-                        <select
-                          id="nativePlaceCity"
-                          name="nativePlaceCity"
-                          value={formik.values.nativePlaceCity}
-                          onChange={(e) => {
-                            setNativePlaceSelectedCity(e.target.value);
-                            formik.setFieldValue("nativePlaceCity", e.target.value);
-                          }}
-                          className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                        >
-                          <option value="" disabled>
-                            Select a City
-                          </option>
-                          {nativePlaceSelectedState &&
-                            indiaStates[nativePlaceSelectedState].map((district) => (
-                              <option key={district} value={district}>
-                                {district}
+                      {nativePlaceLocation === "india" && (
+                        <div className="w-full fade-in flex flex-col gap-3 sm:flex-row md:gap-8">
+                          {/* State */}
+                          <div className="w-full flex gap-2 items-center justify-center">
+                            <label
+                              htmlFor="nativePlaceState"
+                              className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
+                            >
+                              State* :
+                            </label>
+                            <select
+                              id="nativePlaceState"
+                              name="nativePlaceState"
+                              onChange={(e) => {
+                                setNativePlaceSelectedState(e.target.value);
+                                formik.setFieldValue("nativePlaceState", e.target.value);
+                              }}
+                              value={formik.values.nativePlaceState}
+                              className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                            >
+                              <option value="" disabled>
+                                Select a state
                               </option>
-                            ))}
-                        </select>
-                      </div>
-                    </div>
+                              {Object.keys(indiaStates).map((state) => (
+                                <option key={state} value={state}>
+                                  {state}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+
+                          {/* City */}
+                          <div className="w-full flex gap-2 items-center justify-center">
+                            <label
+                              htmlFor="nativePlaceCity"
+                              className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
+                            >
+                              City*
+                            </label>
+                            <select
+                              id="nativePlaceCity"
+                              name="nativePlaceCity"
+                              value={formik.values.nativePlaceCity}
+                              onChange={(e) => {
+                                setNativePlaceSelectedCity(e.target.value);
+                                formik.setFieldValue("nativePlaceCity", e.target.value);
+                              }}
+                              className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                            >
+                              <option value="" disabled>
+                                Select a City
+                              </option>
+                              {nativePlaceSelectedState &&
+                                indiaStates[nativePlaceSelectedState].map((district) => (
+                                  <option key={district} value={district}>
+                                    {district}
+                                  </option>
+                                ))}
+                            </select>
+                          </div>
+                        </div>
+                      )}
+                    </>
                   )}
                 </>
               )}
-
             </div>
 
 
@@ -1112,12 +1322,24 @@ function Registration() {
                   htmlFor="currentAddressOption"
                   className="font-semibold text-sm font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left"
                 >
-                  Current Address :
+                  Current Address* :
                 </label>
                 <select
                   id="nativeAddressOption"
                   name="nativeAddressOption"
-                  onChange={(e) => setCurrentAddressOption(e.target.value)}
+                  onChange={(e) => {
+                    setCurrentAddressOption(e.target.value)
+
+                    if (e.target.value === "SameAsPlaceOfBirth") {
+                      formik.values.currentAddressLocation = formik.values.location;
+                      formik.values.currentAddressCountry = formik.values.country;
+                      formik.values.currentAddressState = formik.values.state;
+                      formik.values.currentAddressCity = formik.values.city;
+                      formik.values.currentAddressScope = formik.values.currentAddress;
+
+                    }
+                  }
+                  }
                   value={currentAddressOption}
                   className="w-full sm:w-1/2 border rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
                 >
@@ -1130,34 +1352,13 @@ function Registration() {
 
               {currentAddressOption === "Different" && (
                 <>
-                  {/* <div className="w-full flex flex-col sm:flex-row justify-center gap-2 items-center">
-                    <label
-                      htmlFor="currentPlace"
-                      className="font-semibold text-sm font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left"
-                    >
-                      urren:
-                    </label>
-                    <select
-                      id="currentAddress"
-                      name="currentAddress"
-                      onChange={formik.handleChange}
-                      value={formik.values.currentAddress}
-                      className="w-full sm:w-1/2 border  rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                    >
-                      <option value="" disabled>
-                        Select Current Address
-                      </option>
-                      <option value="india">India</option>
-                      <option value="abroad">Abroad</option>
-                    </select>
-                  </div> */}
 
                   <div className="w-full flex gap-2 items-center justify-center sm:justify-start">
                     <label
                       htmlFor="currentAddressLocation"
                       className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] text-left"
                     >
-                      Address:
+                      Address* :
                     </label>
                     <select
                       id="currentAddressLocation"
@@ -1177,211 +1378,183 @@ function Registration() {
                       <option value="abroad">Abroad</option>
                     </select>
                   </div>
-                  <div className="w-full flex flex-col sm:flex-row justify-center gap-2 items-center">
-                    <label
-                      htmlFor="currentAddress"
-                      className="font-semibold text-sm self-start font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left"
-                    >
-                      Current Address:
-                    </label>
-                    <textarea
-                      id="currentAddress"
-                      name="currentAddress"
-                      type="text"
-                      onChange={formik.handleChange}
-                      value={formik.values.currentAddress}
-                      placeholder="Address"
-                      className="grow border h-28 w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                    />
-                  </div>
 
-
-
-                  {currentAddressLocation === "abroad" && (
-
-
-
-                    <div className="w-full fade-in flex flex-col gap-3 sm:flex-row md:gap-8">
-                      {/* Country */}
-
-                      {/* <div className="w-full flex gap-2 items-center justify-center">
+                  {currentAddressLocation && (
+                    <>
+                      <div className="w-full flex flex-col sm:flex-row justify-center gap-2 items-center">
                         <label
-                          htmlFor="currentAddressCountry"
-                          className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
+                          htmlFor="currentAddressScope"
+                          className="font-semibold text-sm self-start font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left"
                         >
-                          Country:
+                          Current Address* :
                         </label>
-                        <select
-                          id="currentAddressCountry"
-                          name="currentAddressCountry"
-                          onChange={(e) => {
-                            setCurrentAddressSelectedCountry(e.target.value);
-                            formik.setFieldValue("currentAddressCountry", e.target.value);
-                          }}
-                          value={setCurrentAddressSelectedCountry}
-                          className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                        >
-                          {countries.map((country) => (
-                            <option
-                              key={country.country_name}
-                              value={country.country_name}
+                        <textarea
+                          id="currentAddressScope"
+                          name="currentAddressScope"
+                          type="text"
+                          onChange={formik.handleChange}
+                          value={formik.values.currentAddressScope}
+                          placeholder="Address"
+                          className="grow border h-28 w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                        />
+                      </div>
+                      {currentAddressLocation === "abroad" && (
+
+                        <div className="w-full fade-in flex flex-col gap-3 sm:flex-row md:gap-8">
+                          {/* Country */}
+
+                          <div className="w-full flex gap-2 items-center justify-center">
+                            <label
+                              htmlFor="currentAddressCountry"
+                              className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
                             >
-                              {country.country_name}
-                            </option>
-                          ))}
-                        </select>
-                      </div> */}
-                      <div className="w-full flex gap-2 items-center justify-center">
-                        <label
-                          htmlFor="currentAddressCountry"
-                          className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
-                        >
-                          Country:
-                        </label>
-                        <select
-                          id="currentAddressCountry"
-                          name="currentAddressCountry"
-                          onChange={(e) => {
-                            setCurrentAddressSelectedCountry(e.target.value);
-                            formik.setFieldValue("currentAddressCountry", e.target.value);
-                          }}
-                          value={currentAddressSelectedCountry}
-                          className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                        >
-                          {countries.map((country) => (
-                            <option
-                              key={country.country_name}
-                              value={country.country_name}
+                              Country* :
+                            </label>
+                            <select
+                              id="currentAddressCountry"
+                              name="currentAddressCountry"
+                              onChange={(e) => {
+                                setCurrentAddressSelectedCountry(e.target.value);
+                                formik.setFieldValue("currentAddressCountry", e.target.value);
+                              }}
+                              value={currentAddressSelectedCountry}
+                              className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
                             >
-                              {country.country_name}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
+                              {countries.map((country) => (
+                                <option
+                                  key={country.country_name}
+                                  value={country.country_name}
+                                >
+                                  {country.country_name}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
 
-                      {/* State */}
+                          {/* State */}
 
-                      <div className="w-full flex gap-2 items-center justify-center">
-                        <label
-                          htmlFor="currentAddressState"
-                          className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
-                        >
-                          State:
-                        </label>
-                        <select
-                          id="currentAddressState"
-                          name="currentAddressState"
-                          onChange={(e) => {
-                            setCurrentAddressSelectedState(e.target.value);
-                            formik.setFieldValue("currentAddressState", e.target.value);
-                          }}
-                          value={currentAddressSelectedState}
-                          className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                        >
-                          {states.map((state) => (
-                            <option key={state.state_name} value={state.state_name}>
-                              {state.state_name}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
+                          <div className="w-full flex gap-2 items-center justify-center">
+                            <label
+                              htmlFor="currentAddressState"
+                              className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
+                            >
+                              State* :
+                            </label>
+                            <select
+                              id="currentAddressState"
+                              name="currentAddressState"
+                              onChange={(e) => {
+                                setCurrentAddressSelectedState(e.target.value);
+                                formik.setFieldValue("currentAddressState", e.target.value);
+                              }}
+                              value={currentAddressSelectedState}
+                              className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                            >
+                              {states.map((state) => (
+                                <option key={state.state_name} value={state.state_name}>
+                                  {state.state_name}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
 
-                      {/* City */}
+                          {/* City */}
 
-                      <div className="w-full flex gap-2 items-center justify-center">
-                        <label
-                          htmlFor="currentAddressCity"
-                          className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
-                        >
-                          City:
-                        </label>
-                        <select
-                          id="currentAddressCity"
-                          name="currentAddressCity"
-                          onChange={(e) => {
-                            setCurrentAddressSelectedCity(e.target.value);
-                            formik.setFieldValue("currentAddressCity", e.target.value);
-                          }}
-                          value={currentAddressSelectedCity}
-                          className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                        >
-                          {cities.map((city) => (
-                            <option key={city.city_name} value={city.city_name}>
-                              {city.city_name}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-                  )}
+                          <div className="w-full flex gap-2 items-center justify-center">
+                            <label
+                              htmlFor="currentAddressCity"
+                              className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
+                            >
+                              City* :
+                            </label>
+                            <select
+                              id="currentAddressCity"
+                              name="currentAddressCity"
+                              onChange={(e) => {
+                                setCurrentAddressSelectedCity(e.target.value);
+                                formik.setFieldValue("currentAddressCity", e.target.value);
+                              }}
+                              value={currentAddressSelectedCity}
+                              className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                            >
+                              {cities.map((city) => (
+                                <option key={city.city_name} value={city.city_name}>
+                                  {city.city_name}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
+                      )}
 
 
-                  {currentAddressLocation === "india" && (
-                    <div className="w-full fade-in flex flex-col gap-3 sm:flex-row md:gap-8">
-                      {/* State */}
-                      <div className="w-full flex gap-2 items-center justify-center">
-                        <label
-                          htmlFor="currentAddressState"
-                          className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
-                        >
-                          State:
-                        </label>
-                        <select
-                          id="currentAddressState"
-                          name="currentAddressState"
-                          onChange={(e) => {
-                            setCurrentAddressSelectedState(e.target.value);
-                            formik.setFieldValue("currentAddressState", e.target.value);
-                          }}
-                          value={currentAddressSelectedState}
-                          className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                        >
-                          <option value="" disabled>
-                            Select a state
-                          </option>
-                          {Object.keys(indiaStates).map((state) => (
-                            <option key={state} value={state}>
-                              {state}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-
-                      {/* City */}
-                      <div className="w-full flex gap-2 items-center justify-center">
-                        <label
-                          htmlFor="currentAddressCity"
-                          className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
-                        >
-                          City
-                        </label>
-                        <select
-                          id="currentAddressCity"
-                          name="currentAddressCity"
-
-                          onChange={(e) => {
-                            setCurrentAddressSelectedCity(e.target.value);
-                            formik.setFieldValue("currentAddressCity", e.target.value);
-                          }}
-                          value={currentAddressSelectedCity}
-                          className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                        >
-                          <option value="" disabled>
-                            Select a City
-                          </option>
-                          {nativePlaceSelectedState &&
-                            indiaStates[nativePlaceSelectedState].map((district) => (
-                              <option key={district} value={district}>
-                                {district}
+                      {currentAddressLocation === "india" && (
+                        <div className="w-full fade-in flex flex-col gap-3 sm:flex-row md:gap-8">
+                          {/* State */}
+                          <div className="w-full flex gap-2 items-center justify-center">
+                            <label
+                              htmlFor="currentAddressState"
+                              className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
+                            >
+                              State* :
+                            </label>
+                            <select
+                              id="currentAddressState"
+                              name="currentAddressState"
+                              onChange={(e) => {
+                                setCurrentAddressSelectedState(e.target.value);
+                                formik.setFieldValue("currentAddressState", e.target.value);
+                              }}
+                              value={currentAddressSelectedState}
+                              className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                            >
+                              <option value="" disabled>
+                                Select a state
                               </option>
-                            ))}
-                        </select>
-                      </div>
-                    </div>
+                              {Object.keys(indiaStates).map((state) => (
+                                <option key={state} value={state}>
+                                  {state}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+
+                          {/* City */}
+                          <div className="w-full flex gap-2 items-center justify-center">
+                            <label
+                              htmlFor="currentAddressCity"
+                              className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
+                            >
+                              City* :
+                            </label>
+                            <select
+                              id="currentAddressCity"
+                              name="currentAddressCity"
+                              // value={formik.values.currentAddressCity}
+                              onChange={(e) => {
+                                setCurrentAddressSelectedCity(e.target.value);
+                                formik.setFieldValue("currentAddressCity", e.target.value);
+                              }}
+
+                              className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                            >
+                              <option value="" disabled>
+                                Select a City
+                              </option>
+                              {currentAddressSelectedState &&
+                                indiaStates[currentAddressSelectedState].map((district) => (
+                                  <option key={district} value={district}>
+                                    {district}
+                                  </option>
+                                ))}
+                            </select>
+                          </div>
+                        </div>
+                      )}
+                    </>
                   )}
                 </>
               )}
-
             </div>
 
           )}
@@ -1403,7 +1576,7 @@ function Registration() {
                     htmlFor="heightFeet"
                     className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
                   >
-                    Height (in feet):
+                    Height (in feet)* :
                   </label>
                   <input
                     id="heightFeet"
@@ -1423,7 +1596,7 @@ function Registration() {
                     htmlFor="complexion"
                     className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
                   >
-                    Complexion:
+                    Complexion* :
                   </label>
                   <select
                     id="complexion"
@@ -1448,7 +1621,7 @@ function Registration() {
                     htmlFor="education"
                     className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
                   >
-                    Education:
+                    Education* :
                   </label>
                   <select
                     id="education"
@@ -1476,7 +1649,7 @@ function Registration() {
                         htmlFor="profession"
                         className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
                       >
-                        Profession:
+                        Profession* :
                       </label>
                       <select
                         id="profession"
@@ -1499,7 +1672,7 @@ function Registration() {
                           htmlFor="otherProfession"
                           className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
                         >
-                          Detail:
+                          Detail* :
                         </label>
                         <input
                           id="otherProfession"
@@ -1520,7 +1693,7 @@ function Registration() {
                       htmlFor="otherEducation"
                       className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
                     >
-                      Education Detail:
+                      Education Detail* :
                     </label>
                     <input
                       id="otherEducation"
@@ -1544,7 +1717,7 @@ function Registration() {
                     htmlFor="occupation"
                     className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
                   >
-                    Occupation:
+                    Occupation* :
                   </label>
                   <select
                     id="occupation"
@@ -1569,7 +1742,7 @@ function Registration() {
                         htmlFor="serviceType"
                         className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
                       >
-                        Service Type:
+                        Service Type* :
                       </label>
                       <select
                         id="serviceType"
@@ -1590,7 +1763,7 @@ function Registration() {
                           htmlFor="serviceDetails"
                           className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
                         >
-                          Service Details
+                          Service Details*
                         </label>
                         <input
                           id="serviceDetails"
@@ -1611,7 +1784,7 @@ function Registration() {
                       htmlFor="businessDetails"
                       className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
                     >
-                      Business Details
+                      Business Details* :
                     </label>
                     <input
                       id="businessDetails"
@@ -1630,7 +1803,7 @@ function Registration() {
                       htmlFor="selfEmployedDetails"
                       className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
                     >
-                      Self Employed Details
+                      Self Employed Details* :
                     </label>
                     <input
                       id="selfEmployedDetails"
@@ -1652,7 +1825,7 @@ function Registration() {
                   htmlFor="incomeBracket"
                   className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
                 >
-                  Income Bracket:
+                  Income Bracket* :
                 </label>
                 <select
                   id="incomeBracket"
@@ -1679,7 +1852,7 @@ function Registration() {
                 <div className="w-full flex gap-2 items-center justify-center">
                   <fieldset className="w-full flex gap-4 items-center justify-start">
                     <p className="font-semibold text-sm font-Poppins self-start tracking-wide sm:text-base whitespace-nowrap  text-[#444]">
-                      Marital Status:
+                      Marital Status* :
                     </p>
                     <div className="flex flex-col gap-2">
                       <div className="flex gap-2 hover:cursor-pointer">
@@ -1743,7 +1916,7 @@ function Registration() {
                   {" "}
                   <fieldset className="w-full flex gap-4 items-center justify-start">
                     <p className="font-semibold text-sm font-Poppins self-start tracking-wide sm:text-base whitespace-nowrap  text-[#444]">
-                      PwD:
+                      PwD* :
                     </p>
                     <div className="flex flex-col gap-2">
                       <div className="flex gap-2 hover:cursor-pointer">
@@ -1788,7 +1961,7 @@ function Registration() {
               {/* File Upload */}
 
               <div>
-                <label htmlFor="file">Upload File:</label>
+                <label htmlFor="file">Upload File* :</label>
                 <input
                   id="file"
                   name="file"
@@ -1803,7 +1976,7 @@ function Registration() {
 
               <div>
                 <div>
-                  <label htmlFor="image1">Upload Image 1:</label>
+                  <label htmlFor="image1">Upload Image 1* :</label>
                   <input
                     id="image1"
                     name="image1"
@@ -1817,7 +1990,7 @@ function Registration() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="image2">Upload Image 2:</label>
+                  <label htmlFor="image2">Upload Image 2* :</label>
                   <input
                     id="image2"
                     name="image2"
@@ -1856,7 +2029,7 @@ function Registration() {
                     htmlFor="phoneNumber1"
                     className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
                   >
-                    Phone Number 1:
+                    Phone Number 1* :
                   </label>
                   <input
                     id="phoneNumber1"
@@ -1876,7 +2049,7 @@ function Registration() {
                     htmlFor="phoneNumber2"
                     className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
                   >
-                    Phone Number 2:
+                    Phone Number 2* :
                   </label>
                   <input
                     id="phoneNumber2"
@@ -1897,7 +2070,7 @@ function Registration() {
                   htmlFor="email"
                   className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
                 >
-                  Email:
+                  Email* :
                 </label>
                 <input
                   id="email"
@@ -1944,9 +2117,7 @@ function Registration() {
                   }`}
               >
                 <button
-                  onClick={() => {
-                    nextStep();
-                  }}
+                  onClick={nextStep}
                   type="button"
                   className="group flex w-full items-center gap-2 justify-center max-w-[150px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 "
                 >
@@ -1966,10 +2137,12 @@ function Registration() {
                 </button>
               </div>
             )}
+
             {step === 6 && (
               <button
                 type="submit"
                 className="group flex w-full items-center gap-2 justify-center max-w-[150px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 "
+                onClick={nextStep}
               >
                 Submit
               </button>
@@ -1977,7 +2150,7 @@ function Registration() {
           </div>
         </form>
       </div>
-    </div> 
+    </div>
   );
 }
 

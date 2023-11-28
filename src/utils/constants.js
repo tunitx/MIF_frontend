@@ -28,28 +28,30 @@ import aboutus_women_entrepreneur from "../../assests/images/aboutus_women_entre
 // export const GET_AVAILABLE_MEMBERTYPES_LIST =
 //   "http://localhost:3000/member/typesList";
 
+export const BASE_URL = process.env.BASE_URL || "http://bababatuni.in/api/";
+
 export const GET_ALL_PRESS =
-  "https://marvaadi-backend-api.onrender.com/press/all";
-export const POST_PRESS = "https://marvaadi-backend-api.onrender.com/press/new";
+  BASE_URL+"press/all";
+export const POST_PRESS = BASE_URL+"press/new";
 export const GET_YEARS_LIST =
-  "https://marvaadi-backend-api.onrender.com/press/yearsList";
+  BASE_URL+"press/yearsList";
 export const POST_MEMBER_DETAILS =
-  "https://marvaadi-backend-api.onrender.com/postMemberDetails";
+ BASE_URL+"postMemberDetails";
 export const GET_ALL_MEMBER =
-  "https://marvaadi-backend-api.onrender.com/getMemberDetails";
+  BASE_URL+"getMemberDetails";
 
 export const GET_ADVERTISMENTS =
-  "https://marvaadi-backend-api.onrender.com/advertisment/all";
+  BASE_URL+"advertisment/all";
 export const POST_ADVERTISMENT =
-  "https://marvaadi-backend-api.onrender.com/advertisment/new";
+ BASE_URL+"advertisment/new";
 
 export const GET_MEMBERTYPES_LIST =
-  "https://marvaadi-backend-api.onrender.com/member/memberType/all";
+ BASE_URL+"member/memberType/all";
 export const POST_MEMBERTYPE =
-  "https://marvaadi-backend-api.onrender.com/member/memberType/new";
+  BASE_URL+"member/memberType/new";
 
 export const GET_AVAILABLE_MEMBERTYPES_LIST =
-  "https://marvaadi-backend-api.onrender.com/member/typesList";
+ BASE_URL+"member/typesList";
 
 export const trusteeMembers = [
   {

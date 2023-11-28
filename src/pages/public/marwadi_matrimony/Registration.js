@@ -35,7 +35,7 @@ async function getNewToken() {
 setInterval(getNewToken, 20 * 60 * 60 * 1000);
 
 function Registration() {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(4);
   const [location, setLocation] = useState("");
   const [countries, setCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState("");
@@ -46,6 +46,12 @@ function Registration() {
   const [caste, setCaste] = useState("");
   const [subcaste, setSubcaste] = useState("");
   const [gotra, setGotra] = useState("");
+
+  const [biodataFile, setBiodataFile] = useState(null);
+
+  const [image1File, setImage1File] = useState(null);
+  const [image2File, setImage2File] = useState(null);
+  const [image3File, setImage3File] = useState(null);
 
   const castes = Object.keys(bioData);
   const subcastes = caste ? Object.keys(bioData[caste]) : [];
@@ -125,16 +131,16 @@ function Registration() {
     onSubmit: async (values) => {
       const formData = new FormData();
 
-      // for (const key in values) {
-      //   formData.append(key, values[key]);
-      // }
-      // for (let pair of formData.entries()) {
-      //   console.log(pair[0] + ", " + pair[1]);
-      // }
+      for (const key in values) {
+        formData.append(key, values[key]);
+      }
+      for (let pair of formData.entries()) {
+        console.log(pair[0] + ", " + pair[1]);
+      }
 
       console.log(values);
 
-      return;
+      // return;
 
       try {
         const response = await fetch(
@@ -1096,62 +1102,189 @@ function Registration() {
 
               {/* File Upload */}
 
-              <div>
-                <label htmlFor="file">Upload File:</label>
-                <input
-                  id="file"
-                  name="file"
-                  type="file"
-                  onChange={(event) => {
-                    formik.setFieldValue("file", event.currentTarget.files[0]);
-                  }}
-                />
+              <div className="flex  justify-between items-center min-h-fit  w-full">
+                <div className="flex flex-col gap-2">
+                  <label
+                    htmlFor="file"
+                    className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
+                  >
+                    Upload Biodata:
+                  </label>
+                  <input
+                    style={{
+                      display: "none",
+                    }}
+                    id="file"
+                    name="file"
+                    type="file"
+                    onChange={(event) => {
+                      formik.setFieldValue(
+                        "file",
+                        event.currentTarget.files[0]
+                      );
+                      setBiodataFile(event.currentTarget.files[0]);
+                    }}
+                  />
+                  <label
+                    htmlFor="file"
+                    className="rounded-md bg-[#EF4D48] px-3 py-2 text-sm text-center font-semibold text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  >
+                    Select File
+                  </label>
+                </div>
+                {biodataFile ? (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="2rem"
+                    viewBox="0 0 512 512"
+                    fill="#EF4D48"
+                    className="fade-in"
+                  >
+                    {/*!Font Awesome Free 6.5.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.*/}
+                    <path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z" />
+                  </svg>
+                ) : null}
               </div>
 
               {/* Image Upload */}
 
-              <div>
-                <div>
-                  <label htmlFor="image1">Upload Image 1:</label>
-                  <input
-                    id="image1"
-                    name="image1"
-                    type="file"
-                    onChange={(event) => {
-                      formik.setFieldValue(
-                        "image1",
-                        event.currentTarget.files[0]
-                      );
-                    }}
-                  />
+              <div className="w-full flex flex-col gap-4">
+                {/* Image 1 */}
+
+                <div className="flex  justify-between items-center min-h-fit  w-full">
+                  <div className="flex flex-row items-center gap-2">
+                    <label
+                      htmlFor="image1"
+                      className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
+                    >
+                      Upload Image 1:
+                    </label>
+                    <input
+                      style={{
+                        display: "none",
+                      }}
+                      id="image1"
+                      name="image1"
+                      type="file"
+                      onChange={(event) => {
+                        formik.setFieldValue(
+                          "image1",
+                          event.currentTarget.files[0]
+                        );
+                        setImage1File(event.currentTarget.files[0]);
+                      }}
+                    />
+                    <label
+                      htmlFor="image1"
+                      className="rounded-md bg-[#EF4D48] px-8 py-2 text-sm text-center font-semibold text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    >
+                      Select File
+                    </label>
+                  </div>
+                  {image1File ? (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      height="2rem"
+                      viewBox="0 0 512 512"
+                      fill="#EF4D48"
+                      className="fade-in"
+                    >
+                      {/*!Font Awesome Free 6.5.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.*/}
+                      <path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z" />
+                    </svg>
+                  ) : null}
                 </div>
-                <div>
-                  <label htmlFor="image2">Upload Image 2:</label>
-                  <input
-                    id="image2"
-                    name="image2"
-                    type="file"
-                    onChange={(event) => {
-                      formik.setFieldValue(
-                        "image2",
-                        event.currentTarget.files[0]
-                      );
-                    }}
-                  />
+
+                {/* Image 2 */}
+
+                <div className="flex  justify-between items-center min-h-fit  w-full">
+                  <div className="flex flex-row items-center gap-2">
+                    <label
+                      htmlFor="image2"
+                      className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
+                    >
+                      Upload Image 2:
+                    </label>
+                    <input
+                      style={{
+                        display: "none",
+                      }}
+                      id="image2"
+                      name="image2"
+                      type="file"
+                      onChange={(event) => {
+                        formik.setFieldValue(
+                          "image2",
+                          event.currentTarget.files[0]
+                        );
+                        setImage2File(event.currentTarget.files[0]);
+                      }}
+                    />
+                    <label
+                      htmlFor="image2"
+                      className="rounded-md bg-[#EF4D48] px-8 py-2 text-sm text-center font-semibold text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    >
+                      Select File
+                    </label>
+                  </div>
+                  {image2File ? (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      height="2rem"
+                      viewBox="0 0 512 512"
+                      fill="#EF4D48"
+                      className="fade-in"
+                    >
+                      {/*!Font Awesome Free 6.5.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.*/}
+                      <path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z" />
+                    </svg>
+                  ) : null}
                 </div>
-                <div>
-                  <label htmlFor="image3">Upload Image 3:</label>
-                  <input
-                    id="image3"
-                    name="image3"
-                    type="file"
-                    onChange={(event) => {
-                      formik.setFieldValue(
-                        "image3",
-                        event.currentTarget.files[0]
-                      );
-                    }}
-                  />
+
+                {/* Image 3 */}
+
+                <div className="flex  justify-between items-center min-h-fit  w-full">
+                  <div className="flex flex-row items-center gap-2">
+                    <label
+                      htmlFor="image3"
+                      className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
+                    >
+                      Upload Image 3:
+                    </label>
+                    <input
+                      style={{
+                        display: "none",
+                      }}
+                      id="image3"
+                      name="image3"
+                      type="file"
+                      onChange={(event) => {
+                        formik.setFieldValue(
+                          "image3",
+                          event.currentTarget.files[0]
+                        );
+                        setImage3File(event.currentTarget.files[0]);
+                      }}
+                    />
+                    <label
+                      htmlFor="image3"
+                      className="rounded-md bg-[#EF4D48] px-8 py-2 text-sm text-center font-semibold text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    >
+                      Select File
+                    </label>
+                  </div>
+                  {image3File ? (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      height="2rem"
+                      viewBox="0 0 512 512"
+                      fill="#EF4D48"
+                      className="fade-in"
+                    >
+                      {/*!Font Awesome Free 6.5.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.*/}
+                      <path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z" />
+                    </svg>
+                  ) : null}
                 </div>
               </div>
 

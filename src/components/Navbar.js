@@ -422,7 +422,7 @@ export default function Navbar() {
                         leaveFrom="transform opacity-100 scale-100"
                         leaveTo="transform opacity-0 scale-95"
                       >
-                        <Menu.Items className="absolute left-0 shadow-xl flex flex-col z-[100] mt-2 w-fit min-w-[150px]  origin-top-right rounded-md bg-white py-1  ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <Menu.Items className="absolute left-0 shadow-xl flex flex-col z-[100] mt-2 w-fit min-w-[110px]  origin-top-right rounded-md bg-white py-1  ring-1 ring-black ring-opacity-5 focus:outline-none">
                           {item.subNames.map((subName) => {
                             // SECOND LEVEL DROPDOWN
 
@@ -455,7 +455,7 @@ export default function Navbar() {
                                           item.current
                                             ? "text-[#453E3E]"
                                             : "text-[#453E3E]",
-                                          "rounded-md px-3 py-2 text-sm font-medium flex w-full justify-between gap-1 whitespace-nowrap"
+                                          "rounded-md px-3 py-2 text-sm font-medium flex w-full justify-between  whitespace-nowrap"
                                         )}
                                         aria-current={
                                           item.current ? "page" : undefined
@@ -481,7 +481,7 @@ export default function Navbar() {
                                   >
                                     <Menu.Items
                                       data-okay="aklsdjfadnfkj"
-                                      className="absolute top-0 left-full flex flex-col z-10 ml-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                      className="absolute top-0 left-full flex flex-col z-10 ml-2 w-fit origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                                     >
                                       {subName.subNames.map((innreSubName) => {
                                         // console.log(innreSubName);

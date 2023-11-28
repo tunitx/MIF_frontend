@@ -3,10 +3,15 @@ import { Formik } from "formik";
 import MembersContext from "../../../utils/context/Members";
 import axios from "axios";
 import { POST_ADVERTISMENT } from "../../../utils/constants";
+import AdminContext from "../../../utils/context/Admincontext";
 
 const FormAddAdvertisment = () => {
   const [show, setShow] = useState(false);
-  const { membersList, setMembersList } = useContext(MembersContext);
+
+  const { admin, setAdmin } = useContext(AdminContext);
+
+  // console.log(admin);
+
   const [selectedFile, setFile] = useState(null);
 
   const [error, setError] = useState(null);
@@ -52,6 +57,7 @@ const FormAddAdvertisment = () => {
           const response = await axios.post(POST_ADVERTISMENT, reqBody, {
             headers: {
               "Content-Type": "multipart/form-data",
+              Authorization: `bearer ${admin?.token}`,
             },
           });
 

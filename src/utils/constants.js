@@ -12,155 +12,26 @@ import aboutus_skill_development from "../../assests/images/aboutus_skill-develo
 import aboutus_social_care from "../../assests/images/aboutus_social-care.png";
 import aboutus_women_entrepreneur from "../../assests/images/aboutus_women_entrepreneur.png";
 
-// export const GET_ALL_PRESS = "http://localhost:3000/press/all";
-// export const POST_PRESS = "http://localhost:3000/press/new";
-// export const GET_YEARS_LIST = "http://localhost:3000/press/yearsList";
-// export const POST_MEMBER_DETAILS = "http://localhost:3000/postMemberDetails";
-// export const GET_ALL_MEMBER = "http://localhost:3000/getMemberDetails";
-
-// export const GET_ADVERTISMENTS = "http://localhost:3000/advertisment/all";
-// export const POST_ADVERTISMENT = "http://localhost:3000/advertisment/new";
-
-// export const GET_MEMBERTYPES_LIST =
-//   "http://localhost:3000/member/memberType/all";
-// export const POST_MEMBERTYPE = "http://localhost:3000/member/memberType/new";
-
-// export const GET_AVAILABLE_MEMBERTYPES_LIST =
-//   "http://localhost:3000/member/typesList";
-
 export const BASE_URL = process.env.BASE_URL || "http://bababatuni.in/api/";
 
-export const GET_ALL_PRESS =
-  BASE_URL+"press/all";
-export const POST_PRESS = BASE_URL+"press/new";
-export const GET_YEARS_LIST =
-  BASE_URL+"press/yearsList";
-export const POST_MEMBER_DETAILS =
- BASE_URL+"postMemberDetails";
-export const GET_ALL_MEMBER =
-  BASE_URL+"getMemberDetails";
+export const GET_ALL_PRESS = BASE_URL + "press/all";
+export const POST_PRESS = BASE_URL + "press/new";
+export const GET_YEARS_LIST = BASE_URL + "press/yearsList";
+export const POST_MEMBER_DETAILS = BASE_URL + "postMemberDetails";
+export const GET_ALL_MEMBER = BASE_URL + "getMemberDetails";
 
-export const GET_ADVERTISMENTS =
-  BASE_URL+"advertisment/all";
-export const POST_ADVERTISMENT =
- BASE_URL+"advertisment/new";
+export const GET_ADVERTISMENTS = BASE_URL + "advertisment/all";
+export const POST_ADVERTISMENT = BASE_URL + "advertisment/new";
 
-export const GET_MEMBERTYPES_LIST =
- BASE_URL+"member/memberType/all";
-export const POST_MEMBERTYPE =
-  BASE_URL+"member/memberType/new";
+export const GET_MEMBERTYPES_LIST = BASE_URL + "member/memberType/all";
+export const POST_MEMBERTYPE = BASE_URL + "member/memberType/new";
 
-export const GET_AVAILABLE_MEMBERTYPES_LIST =
- BASE_URL+"member/typesList";
+export const GET_AVAILABLE_MEMBERTYPES_LIST = BASE_URL + "member/typesList";
 
-export const trusteeMembers = [
-  {
-    name: "Vijay Garg",
-    profession: "Chartered Accountant",
-  },
-  {
-    name: "Prashant Agarwal",
-    profession: "Insolvency Professional",
-  },
-  {
-    name: "Mahesh Deora",
-    profession: "Chartered Accountant",
-  },
-  {
-    name: "Shri Niwas Khetawat",
-    profession: "Real Estate Business",
-  },
-  {
-    name: "Sushil Kumar Jalan",
-    profession: "Motivational Speaker",
-  },
-  {
-    name: "Smt. Kusum Jalan",
-    profession: "Paper Business",
-  },
-  {
-    name: "Vinod Kumar Singhal",
-    profession: "Chartered Accountant",
-  },
-  {
-    name: "Kailash Chandra Lohiya",
-    profession: "Chartered Accountant",
-  },
-  {
-    name: "Jitendra Agarwal",
-    profession: "Chartered Accountant",
-  },
-  {
-    name: "Ritu Sharma",
-    profession: "Astrologer",
-  },
-  {
-    name: "Mukesh Verma",
-    profession: "Business",
-  },
-  {
-    name: "Mahendra Khandelwal",
-    profession: "Company Secretary",
-  },
-  {
-    name: "Sunil Agarwal",
-    profession: "Business",
-  },
-];
+export const SIGN_IN_URL = BASE_URL + "signin";
 
-export const advisoryMembers = [
-  {
-    name: "Satish Kumar Gupta",
-    profession: "Chartered Accountant",
-  },
-];
-
-export const activeLifeMembers = [
-  {
-    name: "Abhishek Khandelwal",
-    profession: "Tax Consultant",
-  },
-  {
-    name: "Shantanu Singh",
-    profession: "Consultant on Foreign Study",
-  },
-  {
-    name: "Ashok Kumawat",
-    profession: "Gems & Jewellery Business",
-  },
-  {
-    name: "Mahesh Kumar Tiwari",
-    profession: "Advocate",
-  },
-  {
-    name: "Shubham Khandelwal",
-    profession: "Tax Consultant",
-  },
-  {
-    name: "Abhishek Soni",
-    profession: "Tax Consultant",
-  },
-  {
-    name: "Ashok Kumar Jalan",
-    profession: "Paper Business",
-  },
-  {
-    name: "Dinesh Kumar Jain",
-    profession: "Chartered Accountant",
-  },
-  {
-    name: "Bhagwati Prasad Kyal",
-    profession: "Chartered Accountant",
-  },
-  {
-    name: "Saurabh Agarwal",
-    profession: "Chartered Accountant",
-  },
-  {
-    name: "Laxmi Narayan Kumawat",
-    profession: "Lift Elevator Supplier",
-  },
-];
+export const POST_BIODATA = BASE_URL + "postMarriageDetails";
+export const GET_BIODATAS = BASE_URL + "getBioDataByFilters";
 
 export const responsive = {
   superLargeDesktop: {

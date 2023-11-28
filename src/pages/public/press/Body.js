@@ -54,9 +54,13 @@ const Body = () => {
   function structurePressData(allPressData, yearsListData) {
     const structuredData = {};
 
+    console.log(yearsListData);
+
     for (let year of yearsListData) {
       structuredData[year] = [];
     }
+
+    console.log(allPressData);
 
     for (let press of allPressData) {
       structuredData[press.year].push(press);

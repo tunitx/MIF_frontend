@@ -67,6 +67,7 @@ const FormAddMemberType = () => {
           resetForm();
           // setFile(null);
         } catch (error) {
+          setSubmitting(false);
           // setFile(null);
           resetForm();
           setError(error.message);

@@ -33,6 +33,9 @@ export const SIGN_IN_URL = BASE_URL + "signin";
 export const POST_BIODATA = BASE_URL + "postMarriageDetails";
 export const GET_BIODATAS = BASE_URL + "getBioDataByFilters";
 
+export const POST_CONTACT_QUERY = BASE_URL + "contactQueries/new";
+export const GET_CONTACT_QUERIES = BASE_URL + "contactQueries/all";
+
 export const responsive = {
   superLargeDesktop: {
     breakpoint: { max: 4000, min: 3000 },

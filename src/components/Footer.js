@@ -1,8 +1,102 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import marwadi_logo from "../../assests/images/marwari_logo_pro.png";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
+  const [visitorCount, setVisitorCount] = useState(0);
+
+  // useEffect(() => {
+  //   const analyticsreporting = google.analyticsreporting("v4");
+
+  //   analyticsreporting.reports.batchGet(
+  //     {
+  //       auth: "AIzaSyBBSEXO_KIWP_1MxMDhxFJcUIBHOfw0ZxY",
+  //       resource: {
+  //         reportRequests: [
+  //           {
+  //             viewId: 417113977,
+  //             dateRanges: [
+  //               {
+  //                 startDate: "30daysAgo",
+  //                 endDate: "today",
+  //               },
+  //             ],
+  //             metrics: [
+  //               {
+  //                 expression: "ga:users",
+  //               },
+  //             ],
+  //           },
+  //         ],
+  //       },
+  //     },
+  //     (err, response) => {
+  //       if (err) {
+  //         console.error("API error", err);
+  //         return;
+  //       }
+
+  //       console.log(response);
+
+  //       // const report = response.data.reports[0];
+  //       // const userCount = report.data.totals[0].values[0];
+
+  //       // setVisitorCount(userCount);
+  //     }
+  //   );
+  // }, []);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     let api;
+  //     google.auth
+  //       .getClient({
+  //         scopes: ["https://www.googleapis.com/auth/analytics.readonly"],
+  //       })
+  //       .then((auth) => {
+  //         api = google.analyticsreporting({ version: "v4", auth });
+  //         const batchGet = promisify(api.reports.batchGet.bind(api.reports));
+  //         return batchGet({
+  //           requestBody: {
+  //             reportRequests: [
+  //               {
+  //                 viewId: process.env.VIEW_ID, // Replace with your Google Analytics view ID
+  //                 dateRanges: [
+  //                   {
+  //                     startDate: "7daysAgo",
+  //                     endDate: "today",
+  //                   },
+  //                 ],
+  //                 metrics: [
+  //                   {
+  //                     expression: "ga:sessions",
+  //                   },
+  //                 ],
+  //               },
+  //             ],
+  //           },
+  //         });
+  //       })
+  //       .then(({ data: { reports } }) => {
+  //         console.log(data);
+  //         // const visitorsCount = reports[0].data.totals[0].values[0];
+  //         // console.log(`Visitors count: ${visitorsCount}`);
+  //         // wss.clients.forEach(client => {
+  //         //   if (client.readyState === WebSocket.OPEN) {
+  //         //     client.send(visitorsCount);
+  //         //   }
+  //         // });
+  //       })
+  //       .catch((err) => {
+  //         console.error(err);
+  //       });
+
+  //     // res.status(200).send('Webhook received');
+  //   };
+
+  //   fetchData();
+  // }, []); // Empty dependency array to ensure the effect runs only once
+
   return (
     <div className="w-full flex flex-col bg-[#5C5D5C] text-[#F6F7F8] sm:items-center">
       <div className="w-full flex flex-col sm:flex-row px-5 py-16 gap-8 max-w-6xl">

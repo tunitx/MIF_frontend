@@ -24,7 +24,7 @@ const Advertisment = () => {
 
   const [advertisments, setAdvertisments] = useState([]);
 
-  console.log(advertisments);
+  // console.log(advertisments);
 
   useEffect(() => {
     async function getAdvertisments() {
@@ -47,10 +47,10 @@ const Advertisment = () => {
       });
   }, []);
 
-  if (!advertisments) return;
+  if (!advertisments || advertisments?.length === 0) return;
 
   return (
-    <div className="w-full relative max-w-5xl">
+    <div className="w-full relative max-w-5xl my-10">
       <Carousel
         responsive={responsive}
         autoPlay={true}

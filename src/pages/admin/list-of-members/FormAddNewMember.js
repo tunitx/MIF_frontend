@@ -6,6 +6,7 @@ import {
   GET_MEMBERTYPES_LIST,
 } from "../../../utils/constants";
 import axios from "axios";
+import AdminContext from "../../../utils/context/Admincontext";
 
 const FormAddNewMember = () => {
   const [selectedFile, setFile] = useState(null);
@@ -14,6 +15,9 @@ const FormAddNewMember = () => {
   const [message, setMessage] = useState(null);
 
   const [memberTypeList, setMemberTypeList] = useState([]);
+
+  const { admin, setAdmin } = useContext(AdminContext);
+
   // console.log(memberTypeList);
 
   useEffect(() => {
@@ -71,6 +75,7 @@ const FormAddNewMember = () => {
           const response = await axios.post(POST_MEMBER_DETAILS, reqBody, {
             headers: {
               "Content-Type": "multipart/form-data",
+              Authorization: `bearer ${admin?.token}`,
             },
           });
           if (response.status === 201) {

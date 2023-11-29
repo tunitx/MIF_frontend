@@ -10,7 +10,14 @@ const Section = ({
 }) => {
   return (
     <div className="w-full ">
-      <div className="bg-[#EF4D48] p-4 flex justify-between items-center gap-2 w-full">
+      <div
+        className="bg-[#EF4D48] p-4 flex justify-between items-center gap-2 w-full hover:cursor-pointer"
+        onClick={() => {
+          visibleComponent === index
+            ? setVisibleComponent(null)
+            : setVisibleComponent(index);
+        }}
+      >
         <svg
           fill="#fff"
           height="2rem"
@@ -31,14 +38,7 @@ const Section = ({
           </g>
         </svg>
 
-        <p
-          onClick={() => {
-            visibleComponent === index
-              ? setVisibleComponent(null)
-              : setVisibleComponent(index);
-          }}
-          className="text-white font-Poppins font-medium text-[15px] leading-5 text-left w-full hover:cursor-pointer"
-        >
+        <p className="text-white font-Poppins font-medium text-[15px] leading-5 text-left w-full hover:cursor-pointer">
           {question}
         </p>
         <svg
@@ -49,12 +49,11 @@ const Section = ({
           className="font-bold"
           fill="#fff"
         >
-          {/* <style dangerouslySetInnerHTML={{ __html: "svg{fill:#ffffff}" }} /> */}
           <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z" />
         </svg>
       </div>
       {visibleComponent === index ? (
-        <div className="shadow-box_shadow_marwadi p-4 font-normal font-Poppins">
+        <div className="shadow-box_shadow_marwadi p-4 font-normal font-Poppins fade-in">
           <p className="text-[#333] text-sm">{answer}</p>
         </div>
       ) : null}

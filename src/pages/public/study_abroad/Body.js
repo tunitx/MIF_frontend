@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Body = () => {
   return (
@@ -17,9 +18,11 @@ const Body = () => {
             className="w-full h-auto min-h-[512px]"
           ></iframe>
           <div className="w-full justify-center flex">
-            <button className="flex  justify-center max-w-[200px] rounded-md bg-[#EF4D48] px-8 py-3 text-lg font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 ">
-              Learn More
-            </button>
+            <Link to="/disclaimer">
+              <button className="flex  justify-center max-w-[200px] rounded-md bg-[#EF4D48] px-8 py-3 text-lg font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 ">
+                Learn More
+              </button>
+            </Link>
           </div>
         </div>
       </div>

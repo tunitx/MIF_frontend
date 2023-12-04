@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Header from "../../../components/matrimony/Header";
 import { Link } from "react-router-dom";
 import ConsentAddBiodata from "./ConsentAddBiodata";
+import ConsentSearchBiodata from "./ConsentSearchBiodata";
 
 const Home = () => {
   const [action, setAction] = useState(null);
@@ -34,7 +35,11 @@ const Home = () => {
         </div>
       </div>
 
-      {action !== null ? <ConsentAddBiodata redirect={action} /> : null}
+      {action === "/matrimony/add-biodata" ? (
+        <ConsentAddBiodata />
+      ) : action === "/matrimony/search-biodata" ? (
+        <ConsentSearchBiodata />
+      ) : null}
     </div>
   );
 };

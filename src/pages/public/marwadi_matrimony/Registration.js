@@ -869,24 +869,53 @@ function Registration() {
                         id="surname"
                         name="surname"
                         type="text"
+                        // onChange={(e) => {
+                        //   let a = e.target.value;
+                        //   a = a.replace(/\b\w/g, (match) =>
+                        //     match.toUpperCase()
+                        //   );
+                        //   formik.setFieldValue("surname", a);
+                        //   // formik.handleChange(e);
+                        //   // console.log("asdfds");
+                        //   const val = getGotra(e.target.value);
+                        //   console.log(val);
+                        //   if (val) {
+                        //     setFoundCaste(val.caste);
+                        //     setFoundGotra(val.surname);
+                        //     setFoundSubcaste(val.subcaste);
+                        //     setGotra(val.surname);
+                        //     setCaste(val.caste);
+                        //     setSubcaste(val.subcaste);
+                        //   }
+                        // }}
+
                         onChange={(e) => {
                           let a = e.target.value;
                           a = a.replace(/\b\w/g, (match) =>
                             match.toUpperCase()
                           );
-                          formik.setFieldValue("surname", a);
-                          // formik.handleChange(e);
-                          // console.log("asdfds");
-                          const val = getGotra(e.target.value);
-                          console.log(val);
-                          if (val) {
-                            setFoundCaste(val.caste);
-                            setFoundGotra(val.surname);
-                            setFoundSubcaste(val.subcaste);
-                            setGotra(val.surname);
-                            setCaste(val.caste);
-                            setSubcaste(val.subcaste);
+                          // formik.setFieldValue("surname", a);
+                          formik.handleChange(e);
+                          if (e.target.value === "") {
+                            setFoundCaste("");
+                            setFoundGotra("");
+                            setFoundSubcaste("");
+                            setGotra("");
+                            setCaste("");
+                            setSubcaste("");
+                          } else {
+                            const val = getGotra(e.target.value);
+                            console.log(val);
+                            if (val) {
+                              setFoundCaste(val.caste);
+                              setFoundGotra(val.surname);
+                              setFoundSubcaste(val.subcaste);
+                              setGotra(val.surname);
+                              setCaste(val.caste);
+                              setSubcaste(val.subcaste);
+                            }
                           }
+                          // console.log("asdfds");
                         }}
                         value={formik.values.surname}
                         placeholder="surname"

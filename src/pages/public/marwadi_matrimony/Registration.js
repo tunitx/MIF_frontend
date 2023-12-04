@@ -3059,7 +3059,7 @@ function Registration() {
                               // a = a.replace(/\b\w/g, (match) =>
                               //   match.toUpperCase()
                               // );
-                              formik.setFieldValue("fatherOccupation", a);
+                              formik.setFieldValue("fatherPhone", a);
                             }}
                             value={formik.values.fatherPhone}
                             placeholder="Phone Number"

@@ -28,10 +28,14 @@ export const POST_MEMBERTYPE = BASE_URL + "member/memberType/new";
 
 export const GET_AVAILABLE_MEMBERTYPES_LIST = BASE_URL + "member/typesList";
 
-export const SIGN_IN_URL = BASE_URL + "signin";
+export const SIGN_IN_URL = BASE_URL + "admin/signin";
 
 export const POST_BIODATA = BASE_URL + "postMarriageDetails";
 export const GET_BIODATAS = BASE_URL + "getBioDataByFilters";
+
+export const POST_CONTACT_QUERY = BASE_URL + "contactQueries/new";
+export const GET_CONTACT_QUERIES = BASE_URL + "contactQueries/all";
+export const DELETE_CONTACT_QUERY = BASE_URL + "contactQueries/"; //here id is req, the route is /contactQueries/:id
 
 export const responsive = {
   superLargeDesktop: {

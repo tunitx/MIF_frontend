@@ -35,6 +35,8 @@ import path from "path-browserify";
 import Registration from "./src/pages/public/marwadi_matrimony/Registration";
 import SearchBiodata from "./src/pages/public/marwadi_matrimony/SearchBiodata";
 import Disclaimer from "./src/pages/public/disclaimer/Disclaimer";
+import ContactQueries from "./src/pages/admin/contact_queries/ContactQueries";
+import AdminHome from "./src/pages/admin/home/Home";
 
 const appRoutes = createBrowserRouter([
   {
@@ -130,6 +132,10 @@ const appRoutes = createBrowserRouter([
         element: <Admin />,
         children: [
           {
+            path: "/admin",
+            element: <AdminHome />,
+          },
+          {
             path: "press",
             element: <AdminPress />,
           },
@@ -140,6 +146,10 @@ const appRoutes = createBrowserRouter([
           {
             path: "advertisment-board",
             element: <AdminAdvertismentBoard />,
+          },
+          {
+            path: "contact-queries",
+            element: <ContactQueries />,
           },
         ],
       },

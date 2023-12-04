@@ -8,6 +8,7 @@ import indiaStates from "../../../utils/indiaStates";
 import { Slider } from "@mui/material";
 import BiodataCard from "./BiodataCard";
 import { GET_BIODATAS } from "../../../utils/constants";
+import Popup from "./Popup";
 
 const heights = [
   "Less than 4 fts.",
@@ -32,6 +33,8 @@ function SearchBiodata() {
   const subcastes = caste ? Object.keys(bioData[caste]) : [];
 
   const [searchedBiodatas, setSearchedBiodatas] = useState(null);
+
+  const [noresponseError, setNoResponseError] = useState(null);
 
   const formik = useFormik({
     initialValues: {
@@ -84,11 +87,18 @@ function SearchBiodata() {
             method: "GET",
           }
         );
+
+        if (response.status === 500) {
+          setNoResponseError(true);
+        }
+
         const data = await response.json();
         setSearchedBiodatas(data);
         console.log("hi");
         console.log(data);
       } catch (error) {
+        setNoResponseError(true);
+
         console.error(error);
       }
     },
@@ -172,6 +182,7 @@ function SearchBiodata() {
                       } `}
                       onClick={() => {
                         formik.setFieldValue("gender", "male");
+                        setStep((s) => s + 1);
                       }}
                     >
                       <g>
@@ -219,6 +230,7 @@ function SearchBiodata() {
                       }`}
                       onClick={() => {
                         formik.setFieldValue("gender", "female");
+                        setStep((s) => s + 1);
                       }}
                     >
                       <g>
@@ -488,7 +500,7 @@ function SearchBiodata() {
                   </button>
                 </div>
               )}
-              {step < 3 && (
+              {step < 3 && step > 1 && (
                 <div
                   className={`w-full  flex ${
                     step === 1
@@ -572,6 +584,14 @@ function SearchBiodata() {
           </div>
         </div>
       )}
+
+      {noresponseError === true ? (
+        <Popup
+          message={"Unexpected error occurred, please try again..."}
+          redirect={"/matrimony"}
+          buttontext={"Try Again"}
+        />
+      ) : null}
     </div>
   );
 }

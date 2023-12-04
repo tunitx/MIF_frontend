@@ -49,7 +49,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .fade-in {
-  animation: fadeIn 500ms ease-in-out; /* Adjust the duration and timing function as needed */
+  animation: fadeIn 400ms ease-in-out; /* Adjust the duration and timing function as needed */
 }
 
 @keyframes fadeOut {

@@ -68,7 +68,7 @@ const FormAddNewPress = () => {
                   Upload News ➡
                 </p>
               </h2>
-              <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-lg">
+              <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-lg fade-in">
                 <form
                   className="space-y-6"
                   onSubmit={formik.handleSubmit}

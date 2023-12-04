@@ -11,13 +11,17 @@ function classNames(...classes) {
 }
 
 const navigation = [
-  { name: "Home", href: "/admin", current: true },
+  { name: "Home", href: "/admin", current: false },
   { name: "List Of Members", href: "/admin/list-of-members", current: false },
   { name: "Press", href: "/admin/press", current: false },
   {
     name: "Advertisment Board",
     href: "/admin/advertisment-board",
     current: false,
+  },
+  {
+    name: "Contact Queries",
+    href: "/admin/contact-queries",
   },
 ];
 
@@ -32,7 +36,7 @@ export default function AdminNavbar() {
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-8 ">
-            <div className="relative flex h-16 items-center justify-between">
+            <div className="relative flex sm:h-fit min-h-[64px] h-16 items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
                 <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
@@ -47,7 +51,7 @@ export default function AdminNavbar() {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="hidden  sm:block">
-                  <div className="flex space-x-4">
+                  <div className="flex  flex-wrap">
                     {navigation.map((item) => (
                       <Link
                         key={item.name}
@@ -56,7 +60,7 @@ export default function AdminNavbar() {
                           item.current
                             ? "bg-gray-900 text-white"
                             : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                          "rounded-md px-3 py-2 text-sm font-medium"
+                          "rounded-md px-3 py-2 text-sm font-medium whitespace-nowrap"
                         )}
                         aria-current={item.current ? "page" : undefined}
                       >
@@ -83,7 +87,7 @@ export default function AdminNavbar() {
                       localStorage.removeItem("admin");
                     }}
                     type="button"
-                    className="relative border border-white rounded-lg px-4 bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none  focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                    className="relative border whitespace-nowrap border-white rounded-lg px-4 bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none  focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                   >
                     Sign Out
                   </button>

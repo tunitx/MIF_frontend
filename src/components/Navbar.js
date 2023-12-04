@@ -353,13 +353,18 @@ export default function Navbar() {
                   </div>
                 </div>
               </div>
-              <div>
+              <div className="flex sm:flex-row flex-col-reverse gap-3 justify-center items-center ">
+                <Link to={"/matrimony"}>
+                  <button className="flex w-full justify-center max-w-[200px] rounded-md bg-[#EF4D48] px-3 sm:py-3 py-2  text-sm sm:text-base font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ">
+                    Marwadi Matrimony
+                  </button>
+                </Link>
                 <Link
                   to={
                     "https://app.marwadiinternationalfederation.com/advance-search"
                   }
                 >
-                  <button className="flex w-full justify-center max-w-[200px] rounded-md bg-[#EF4D48] px-3 sm:py-3 py-2  text-base sm:text-lg font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ">
+                  <button className="flex w-full justify-center max-w-[200px] rounded-md bg-[#EF4D48] px-3 sm:py-3 py-2 text-sm sm:text-base  font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ">
                     Find Marwadi
                   </button>
                 </Link>

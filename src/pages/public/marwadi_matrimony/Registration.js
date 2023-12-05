@@ -80,7 +80,7 @@ function Registration() {
   const [showImageInput, setShowImageInput] = useState(1);
 
   // TICKET ISSUE : 4
-
+  const [casteInput, setCasteInput] = useState("");
   // const [currentAddressOption, setCurrentAddressOption] = useState("Different");
   const [foundGotra, setFoundGotra] = useState("");
   const [foundSubcaste, setFoundSubcaste] = useState("");
@@ -696,9 +696,8 @@ function Registration() {
           formikRef.current = formik;
           return (
             <div
-              className={`w-full  max-w-6xl flex flex-col  items-center justify-center p-5 ${
-                formik.isSubmitting ? "opacity-50" : ""
-              }`}
+              className={`w-full  max-w-6xl flex flex-col  items-center justify-center p-5 ${formik.isSubmitting ? "opacity-50" : ""
+                }`}
             >
               <MultiStepProgressBar page={step} />
               <form
@@ -721,11 +720,10 @@ function Registration() {
                           // height={532}
                           viewBox="0 0 532 532"
                           xmlnsXlink="http://www.w3.org/1999/xlink"
-                          className={`fade-in w-full hover:cursor-pointer bg-[#f7f3f5] box-border shadow-xl delay-150 duration-300 transition-transform border-2 border-orange-500 rounded-full p-2 ${
-                            formik.values.gender === "male"
-                              ? ""
-                              : "border-none hover:scale-110"
-                          } `}
+                          className={`fade-in w-full hover:cursor-pointer bg-[#f7f3f5] box-border shadow-xl delay-150 duration-300 transition-transform border-2 border-orange-500 rounded-full p-2 ${formik.values.gender === "male"
+                            ? ""
+                            : "border-none hover:scale-110"
+                            } `}
                           onClick={() => {
                             formik.setFieldValue("gender", "male");
                             setStep((s) => s + 1);
@@ -777,11 +775,10 @@ function Registration() {
                           // height={532}
                           viewBox="0 0 532 532"
                           xmlnsXlink="http://www.w3.org/1999/xlink"
-                          className={`fade-in w-full hover:cursor-pointer bg-[#f7f3f5] box-border delay-150 shadow-xl duration-300 transition-transform border-2 border-orange-500 rounded-full p-2 ${
-                            formik.values.gender === "female"
-                              ? ""
-                              : "border-none hover:scale-110"
-                          }`}
+                          className={`fade-in w-full hover:cursor-pointer bg-[#f7f3f5] box-border delay-150 shadow-xl duration-300 transition-transform border-2 border-orange-500 rounded-full p-2 ${formik.values.gender === "female"
+                            ? ""
+                            : "border-none hover:scale-110"
+                            }`}
                           onClick={() => {
                             formik.setFieldValue("gender", "female");
                             setStep((s) => s + 1);
@@ -876,7 +873,7 @@ function Registration() {
                           );
                           // formik.setFieldValue("surname", a);
                           formik.handleChange(e);
-                          if(e.target.value===""){
+                          if (e.target.value === "") {
                             setFoundCaste("");
                             setFoundGotra("");
                             setFoundSubcaste("");
@@ -884,7 +881,7 @@ function Registration() {
                             setCaste("");
                             setSubcaste("");
                           }
-                          else{
+                          else {
                             const val = getGotra(e.target.value);
                             console.log(val);
                             if (val) {
@@ -897,7 +894,7 @@ function Registration() {
                             }
                           }
                           // console.log("asdfds");
-                         
+
                         }}
                         value={formik.values.surname}
                         placeholder="surname"
@@ -906,112 +903,172 @@ function Registration() {
                     </div>
 
                     {step === 2 && (
+                      
                       <div className="w-full flex flex-col gap-3 sm:flex-row md:gap-8">
-                        {/* Caste Dropdown */}
+                        {caste !== "Others" ? (
+                          <>
+                            {/* Caste Dropdown */}
+                            <div className="w-full flex gap-2 items-center justify-center">
+                              <label htmlFor="caste" className="font-semibold text-sm font-Poppins tracking-wide sm:text-base whitespace-nowrap text-[#444]">
+                                CASTE* :
+                              </label>
+                              <select
+                                id="caste"
+                                name="caste"
+                                onChange={(e) => {
+                                  setCaste(e.target.value);
+                                  if (e.target.value === "Others") {
+                                    setCasteInput("");
+                                  } else {
+                                    setCasteInput(e.target.value);
+                                  }
+                                  formik.setFieldValue("caste", e.target.value);
+                                }}
 
-                        <div className="w-full flex gap-2 items-center justify-center">
-                          <label
-                            htmlFor="caste"
-                            className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
-                          >
-                            CASTE* :
-                          </label>
-                          <select
-                            id="caste"
-                            name="caste"
-                            onChange={(e) => {
-                              setCaste(e.target.value);
-                              formik.setFieldValue("caste", e.target.value);
-                            }}
-                            value={caste}
-                            placeholder="Caste"
-                            className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                          >
-                            <option value="" disabled>
-                              Select Caste
-                            </option>
-                            {foundCaste && (
-                              <option value={foundCaste}>{foundCaste}</option>
-                            )}
-                            {castes.map((c) => (
-                              <option key={c} value={c}>
-                                {c}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
+                                value={caste}
+                                placeholder="Caste"
+                                className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                              >
+                                <option value="" disabled>
+                                  Select Caste
+                                </option>
+                                {foundCaste && <option value={foundCaste}>{foundCaste}</option>}
+                                {castes.map((c) => (
+                                  <option key={c} value={c}>
+                                    {c}
+                                  </option>
+                                ))}
+                                <option value="Others">Others</option>
+                              </select>
+                            </div>
+                            {/* SubCaste Dropdown */}
+                            <div className="w-full flex gap-2 items-center justify-center">
+                              <label
+                                htmlFor="subcaste"
+                                className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
+                              >
+                                SUBCASTE* :
+                              </label>
+                              <select
+                                // disabled={caste === "" ? true : false}
+                                id="subcaste"
+                                name="subcaste"
+                                onChange={(e) => {
+                                  setSubcaste(e.target.value);
+                                  formik.setFieldValue("subcaste", e.target.value);
+                                }}
+                                value={subcaste}
+                                className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                              >
+                                <option value="" disabled>
+                                  Select Subcaste
+                                </option>
+                                {foundSubcaste && (
+                                  <option value={foundSubcaste}>
+                                    {foundSubcaste}
+                                  </option>
+                                )}
+                                {subcastes.map((s) => (
+                                  <option key={s} value={s}>
+                                    {s}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
 
-                        {/* SubCaste Dropdown */}
+                            {/* Gotra DropDown */}
+                            <div className="w-full flex gap-2 items-center justify-center">
+                              <label
+                                htmlFor="gotra"
+                                className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
+                              >
+                                GOTRA* :
+                              </label>
+                              <select
+                                // disabled={
+                                //   caste === "" || subcaste?.length === 0 ? true : false
+                                // }
+                                id="gotra"
+                                name="gotra"
+                                onChange={(e) => {
+                                  setGotra(e.target.value);
+                                  formik.setFieldValue("gotra", e.target.value);
+                                }}
+                                value={gotra}
+                                className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                              >
+                                <option value="" disabled>
+                                  Select Gotra* :
+                                </option>
+                                {foundGotra && (
+                                  <option value={gotra}>{gotra}</option>
+                                )}
+                                {gotras.map((g) => (
+                                  <option key={g} value={g}>
+                                    {g}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            {/* Caste Input */}
+                            <div className="w-full flex gap-2 items-center justify-center">
+                              <label htmlFor="caste" className="font-semibold text-sm font-Poppins tracking-wide sm:text-base whitespace-nowrap text-[#444]">
+                                CASTE* :
+                              </label>
+                              <input
+                                id="caste"
+                                name="caste"
+                                onChange={(e) => {
+                                 
+                                  setCasteInput(e.target.value);
+                                  formik.setFieldValue("caste", e.target.value);
+                                }}
+                                value={casteInput}
+                                placeholder="Caste"
+                                className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                              />
+                            </div>
 
-                        <div className="w-full flex gap-2 items-center justify-center">
-                          <label
-                            htmlFor="subcaste"
-                            className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
-                          >
-                            SUBCASTE* :
-                          </label>
-                          <select
-                            // disabled={caste === "" ? true : false}
-                            id="subcaste"
-                            name="subcaste"
-                            onChange={(e) => {
-                              setSubcaste(e.target.value);
-                              formik.setFieldValue("subcaste", e.target.value);
-                            }}
-                            value={subcaste}
-                            className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                          >
-                            <option value="" disabled>
-                              Select Subcaste
-                            </option>
-                            {foundSubcaste && (
-                              <option value={foundSubcaste}>
-                                {foundSubcaste}
-                              </option>
-                            )}
-                            {subcastes.map((s) => (
-                              <option key={s} value={s}>
-                                {s}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
+                            {/* SubCaste Input */}
+                            <div className="w-full flex gap-2 items-center justify-center">
+                              <label htmlFor="subcaste" className="font-semibold text-sm font-Poppins tracking-wide sm:text-base whitespace-nowrap text-[#444]">
+                                SUBCASTE* :
+                              </label>
+                              <input
+                                id="subcaste"
+                                name="subcaste"
+                                onChange={(e) => {
+                                  setSubcaste(e.target.value);
+                                  formik.setFieldValue("subcaste", e.target.value);
+                                }}
+                                value={subcaste}
+                                placeholder="Subcaste"
+                                className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                              />
+                            </div>
 
-                        {/* Gotra DropDown */}
-
-                        <div className="w-full flex gap-2 items-center justify-center">
-                          <label
-                            htmlFor="gotra"
-                            className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
-                          >
-                            GOTRA* :
-                          </label>
-                          <select
-                            // disabled={
-                            //   caste === "" || subcaste?.length === 0 ? true : false
-                            // }
-                            id="gotra"
-                            name="gotra"
-                            onChange={(e) => {
-                              setGotra(e.target.value);
-                              formik.setFieldValue("gotra", e.target.value);
-                            }}
-                            value={gotra}
-                            className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                          >
-                            <option value="" disabled>
-                              Select Gotra* :
-                            </option>
-                            {foundGotra && (
-                              <option value={gotra}>{gotra}</option>
-                            )}
-                            {gotras.map((g) => (
-                              <option key={g} value={g}>
-                                {g}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
+                            {/* Gotra Input */}
+                            <div className="w-full flex gap-2 items-center justify-center">
+                              <label htmlFor="gotra" className="font-semibold text-sm font-Poppins tracking-wide sm:text-base whitespace-nowrap text-[#444]">
+                                GOTRA* :
+                              </label>
+                              <input
+                                id="gotra"
+                                name="gotra"
+                                onChange={(e) => {
+                                  setGotra(e.target.value);
+                                  formik.setFieldValue("gotra", e.target.value);
+                                }}
+                                value={gotra}
+                                placeholder="Gotra"
+                                className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                              />
+                            </div>
+                          </>
+                        )}
                       </div>
                     )}
 
@@ -3290,7 +3347,7 @@ function Registration() {
                                               onChange={formik.handleChange}
                                               value={
                                                 formik.values.paternalUncleAunt[
-                                                  index
+                                                index
                                                 ]
                                               }
                                               placeholder="Uncle-Aunt"
@@ -3305,16 +3362,16 @@ function Registration() {
                                   {/* <div className="w-full justify-center sm:justify-start flex"> */}
                                   {formik.values.paternalUncleAunt.length <
                                     3 && (
-                                    <button
-                                      onClick={() => arrayHelpers.push("")}
-                                      type="button"
-                                      className="group flex w-full items-center gap-2 justify-center max-w-[100px] rounded-md bg-[#EF4D48] px-2 py-2 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2"
-                                    >
-                                      {/* <p className="transition duration-150 delay-150"> */}
-                                      Add more
-                                      {/* </p> */}
-                                    </button>
-                                  )}
+                                      <button
+                                        onClick={() => arrayHelpers.push("")}
+                                        type="button"
+                                        className="group flex w-full items-center gap-2 justify-center max-w-[100px] rounded-md bg-[#EF4D48] px-2 py-2 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2"
+                                      >
+                                        {/* <p className="transition duration-150 delay-150"> */}
+                                        Add more
+                                        {/* </p> */}
+                                      </button>
+                                    )}
                                   {/* </div> */}
                                 </div>
                               )}
@@ -3423,7 +3480,7 @@ function Registration() {
                                               onChange={formik.handleChange}
                                               value={
                                                 formik.values.maternalUncleAunt[
-                                                  index
+                                                index
                                                 ]
                                               }
                                               placeholder="Uncle-Aunt"
@@ -3438,16 +3495,16 @@ function Registration() {
                                   {/* <div className="w-full justify-center sm:justify-start flex"> */}
                                   {formik.values.maternalUncleAunt.length <
                                     3 && (
-                                    <button
-                                      onClick={() => arrayHelpers.push("")}
-                                      type="button"
-                                      className="group flex w-full items-center gap-2 justify-center max-w-[100px] rounded-md bg-[#EF4D48] px-2 py-2 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2"
-                                    >
-                                      {/* <p className="transition duration-150 delay-150"> */}
-                                      Add more
-                                      {/* </p> */}
-                                    </button>
-                                  )}
+                                      <button
+                                        onClick={() => arrayHelpers.push("")}
+                                        type="button"
+                                        className="group flex w-full items-center gap-2 justify-center max-w-[100px] rounded-md bg-[#EF4D48] px-2 py-2 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2"
+                                      >
+                                        {/* <p className="transition duration-150 delay-150"> */}
+                                        Add more
+                                        {/* </p> */}
+                                      </button>
+                                    )}
                                   {/* </div> */}
                                 </div>
                               )}
@@ -3607,11 +3664,10 @@ function Registration() {
                   )}
                   {step < 8 && step > 1 && (
                     <div
-                      className={`w-full  flex ${
-                        step === 1
-                          ? "justify-center"
-                          : "sm:justify-end justify-center"
-                      }`}
+                      className={`w-full  flex ${step === 1
+                        ? "justify-center"
+                        : "sm:justify-end justify-center"
+                        }`}
                     >
                       <button
                         onClick={() => {

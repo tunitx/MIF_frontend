@@ -39,7 +39,7 @@ const Body = () => {
             </p>
           </div>
           <div>
-            <div className="mapouter">
+            <div className="mapouter fade-in">
               <div className="gmap_canvas">
                 <iframe
                   //   width={600}

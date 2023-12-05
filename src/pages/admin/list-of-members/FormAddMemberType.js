@@ -67,6 +67,7 @@ const FormAddMemberType = () => {
           resetForm();
           // setFile(null);
         } catch (error) {
+          setSubmitting(false);
           // setFile(null);
           resetForm();
           setError(error.message);
@@ -86,7 +87,7 @@ const FormAddMemberType = () => {
                   Add Member Type ➡
                 </p>
               </h2>
-              <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-lg">
+              <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-lg fade-in">
                 <form
                   className="space-y-6"
                   onSubmit={formik.handleSubmit}

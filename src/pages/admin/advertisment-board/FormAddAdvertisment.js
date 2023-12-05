@@ -82,7 +82,7 @@ const FormAddAdvertisment = () => {
     >
       {(formik) => {
         return (
-          <div className={` ${formik.isSubmitting ? "opacity-50" : ""}`}>
+          <div className={` ${formik.isSubmitting ? "opacity-50" : ""} `}>
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
               <h2 className="text-[#EF4D48] text-xl font-Poppins  font-bold w-full text-start md:text-2xl lg:text-3xl ">
                 <p className="border rounded-md border-[#333] p-3 w-fit">
@@ -91,7 +91,7 @@ const FormAddAdvertisment = () => {
               </h2>
               <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-lg">
                 <form
-                  className="space-y-6"
+                  className="space-y-6 fade-in"
                   onSubmit={formik.handleSubmit}
                   encType="multipart/form-data"
                 >

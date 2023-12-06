@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import FormAddNewMember from "./FormAddNewMember";
 import { Outlet } from "react-router-dom";
 import FormAddMemberType from "./FormAddMemberType";
+import Members from "./Members";
+import Presses from "../press/Allpress";
+import Advertisements from "../advertisment-board/Advertisements";
 
 const ListOfMembers = () => {
   const [show, setShow] = useState("addMember");
@@ -26,9 +29,42 @@ const ListOfMembers = () => {
           >
             Add Member Type
           </button>
+
+          <button
+            onClick={() => {
+              setShow("allMembers");
+            }}
+            className="flex w-full justify-center max-w-[210px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 whitespace-nowrap"
+          >
+            All Members
+          </button>
+          <button
+            onClick={() => {
+              setShow("allPress");
+            }}
+            className="flex w-full justify-center max-w-[210px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 whitespace-nowrap"
+          >
+            All Press
+          </button>
+          <button
+            onClick={() => {
+              setShow("allAdvertisements");
+            }}
+            className="flex w-full justify-center max-w-[210px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 whitespace-nowrap"
+          >
+            All advertisements
+          </button>
+
         </div>
       </div>
-      {show === "addMember" ? <FormAddNewMember /> : <FormAddMemberType />}
+      {/* {show === "addMember" ? <FormAddNewMember /> : show === "addMemberType" ? <FormAddMemberType /> : <Members />} */}
+      {
+  show === "addMember" ? <FormAddNewMember /> :
+  show === "addMemberType" ? <FormAddMemberType /> :
+  show === "allPress" ? <Presses /> :
+  show === "allAdvertisements" ? <Advertisements /> :
+  <Members />
+}
     </div>
   );
 };

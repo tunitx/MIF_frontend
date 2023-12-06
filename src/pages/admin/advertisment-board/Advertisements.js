@@ -370,6 +370,7 @@ const Advertisement = ({ member, onEdit, onDelete,  pfp, setPfp }) => {
 
                   <p className="group-hover:-translate-x-1 transition duration-150 delay-150">
                     Edit
+                   
                   </p>{" "}
                 </button>
               </div>

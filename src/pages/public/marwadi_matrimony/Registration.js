@@ -934,12 +934,12 @@ function Registration() {
                                 </option>
                                 {foundCaste && <option value={foundCaste}>{foundCaste}</option>}
                                 {!foundCaste && (
-  castes.map((c) => (
-    <option key={c} value={c}>
-      {c}
-    </option>
-  ))
-)}
+                                  castes.map((c) => (
+                                    <option key={c} value={c}>
+                                      {c}
+                                    </option>
+                                  ))
+                                )}
 
                                 <option value="Others">Others</option>
                               </select>

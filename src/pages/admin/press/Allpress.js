@@ -51,7 +51,10 @@ const Press = ({ member, onDelete }) => {
             <p className="font-Poppins text-center text-2xl font-semibold text-[#EF4D48]">Month: {member.month}</p>
             <p className="font-Poppins text-center text-2xl font-semibold text-[#EF4D48]">Year: {member.year}</p>
           </div>
-          <div className="w-full justify-center sm:justify-start flex">
+
+          <div flex gap-2>
+
+          <div className={`w-full justify-center sm:justify-start flex`}>
             <button
               onClick={() => {
                 Swal.fire({
@@ -81,6 +84,9 @@ const Press = ({ member, onDelete }) => {
               </p>
             </button>
           </div>
+
+          </div>
+        
         </div>
       </div>
     );

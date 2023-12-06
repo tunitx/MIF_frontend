@@ -903,7 +903,7 @@ function Registration() {
                     </div>
 
                     {step === 2 && (
-                      
+
                       <div className="w-full flex flex-col gap-3 sm:flex-row md:gap-8">
                         {caste !== "Others" ? (
                           <>
@@ -933,11 +933,14 @@ function Registration() {
                                   Select Caste
                                 </option>
                                 {foundCaste && <option value={foundCaste}>{foundCaste}</option>}
-                                {castes.map((c) => (
-                                  <option key={c} value={c}>
-                                    {c}
-                                  </option>
-                                ))}
+                                {!foundCaste && (
+  castes.map((c) => (
+    <option key={c} value={c}>
+      {c}
+    </option>
+  ))
+)}
+
                                 <option value="Others">Others</option>
                               </select>
                             </div>
@@ -1022,7 +1025,7 @@ function Registration() {
                                 id="caste"
                                 name="caste"
                                 onChange={(e) => {
-                                 
+
                                   setCasteInput(e.target.value);
                                   formik.setFieldValue("caste", e.target.value);
                                 }}

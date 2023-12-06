@@ -117,7 +117,7 @@ const Member = ({ member, onEdit, onDelete, memberTypes, pfp,setPfp }) => {
 
       {isEditing ? (
         <>
-          <div className="w-fit p-3 border border-indigo-900 rounded-md flex flex-col gap-5 justify-center items-center max-w-[800px] g" >
+          <div className="w-fit p-3 border border-indigo-900 rounded-md flex flex-col gap-5 justify-center items-center max-w-[800px] " >
 
 
 

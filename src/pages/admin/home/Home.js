@@ -5,7 +5,8 @@ import Advertisements from "../advertisment-board/Advertisements";
 import Presses from "../press/Allpress";
 import FormAddNewMember from "../list-of-members/FormAddNewMember";
 import FormAddMemberType from "../list-of-members/FormAddMemberType";
-
+import FormAddNewPress from "../press/FormAddNewPress";
+import FormAddAdvertisement from "../advertisment-board/FormAddAdvertisment";
 const Home = () => {
 
   const [show, setShow] = useState('');
@@ -66,6 +67,22 @@ const Home = () => {
             >
               All advertisements
             </button>
+            <button
+              onClick={() => {
+                setShow("addNewPress");
+              }}
+              className="flex w-full justify-center max-w-[210px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 whitespace-nowrap"
+            >
+              Add Press
+            </button>
+            <button
+              onClick={() => {
+                setShow("addAdvertisement");
+              }}
+              className="flex w-full justify-center max-w-[210px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 whitespace-nowrap"
+            >
+              Add Advertisement
+            </button>
 
           </div>
         </div>
@@ -76,7 +93,9 @@ const Home = () => {
               show === "allPress" ? <Presses /> :
                 show === "allAdvertisements" ? <Advertisements /> :
                   show === "allMembers" ? <Members /> :
-                    null
+                    show === "addAdvertisement" ? <FormAddAdvertisement /> :
+                      show === "addNewPress" ? <FormAddNewPress /> :
+                        null
         }
       </div>
 

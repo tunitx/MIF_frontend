@@ -2,9 +2,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { BASE_URL } from '../../../utils/constants';
 
 const api = axios.create({
-  baseURL: 'http://localhost:3000'
+  baseURL: BASE_URL || 'http://localhost:3000',
 });
 
 const Members = () => {

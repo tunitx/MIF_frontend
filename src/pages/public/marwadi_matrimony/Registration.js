@@ -51,7 +51,7 @@ function Registration() {
 
   const formikRef = useRef();
 
-  const [step, setStep] = useState(6);
+  const [step, setStep] = useState(1);
   const [location, setLocation] = useState("");
   const [countries, setCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState("");
@@ -948,6 +948,7 @@ function Registration() {
                         //   }
                         // }}
 
+                      
                         onChange={(e) => {
                           let a = e.target.value;
                           a = a.replace(/\b\w/g, (match) =>
@@ -955,7 +956,6 @@ function Registration() {
                           );
                           // formik.setFieldValue("surname", a);
                           formik.handleChange(e);
-                          if (e.target.value === "") {
                           if (e.target.value === "") {
                             setFoundCaste("");
                             setFoundGotra("");

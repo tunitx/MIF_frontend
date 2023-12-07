@@ -53,7 +53,7 @@ const Signin = () => {
         //   signIN({ jwtToken: resData.token, user: resData.userWithProfiles })
         // );
         localStorage.setItem("admin", JSON.stringify(resData));
-        setAdmin(resBody);
+        setAdmin(resData);
         navigate("/admin");
       } else {
         setEmail("");

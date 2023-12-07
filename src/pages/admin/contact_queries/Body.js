@@ -8,6 +8,7 @@ import QueriesTable from "./QueriesTable";
 const Body = () => {
   const contact = useSelector((store) => store.ContactQueriesSlice);
   const { admin } = useContext(AdminContext);
+  // console.log(admin);
 
   const dispatch = useDispatch();
 

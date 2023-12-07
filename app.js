@@ -24,8 +24,11 @@ dotenv.config();
 import Matrimony_Home from "./src/pages/public/marwadi_matrimony/Home";
 
 // admin
-
+// import Adverisement from "./src/pages/admin/advertisment-board/Advertisment";
+import Advertisements from "./src/pages/admin/advertisment-board/Advertisements";
+import Presses from "./src/pages/admin/press/Allpress";
 import Admin from "./src/Admin";
+import Members from "./src/pages/admin/list-of-members/Members";
 import AdminPress from "./src/pages/admin/press/Press";
 import AdminListOfMembers from "./src/pages/admin/list-of-members/ListOfMembers";
 import AdminAdvertismentBoard from "./src/pages/admin/advertisment-board/AdvertismentBoard";
@@ -151,6 +154,20 @@ const appRoutes = createBrowserRouter([
             path: "contact-queries",
             element: <ContactQueries />,
           },
+          {
+            path: "members",
+            element: <Members />,
+          },
+          {
+            path: "advertisements",
+            element: <Advertisements />,
+          },
+          {
+            path: "all-press",
+            element: <Presses />,
+          },
+
+
         ],
       },
     ],

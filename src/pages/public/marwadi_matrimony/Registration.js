@@ -1,5 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useFormik, Formik, FieldArray, Field } from "formik";
+import {
+  useFormik,
+  Formik,
+  FieldArray,
+  Field,
+  ErrorMessage,
+  getIn,
+} from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import bioData from "../../../utils/biodata";
@@ -44,7 +51,7 @@ function Registration() {
 
   const formikRef = useRef();
 
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(6);
   const [location, setLocation] = useState("");
   const [countries, setCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState("");
@@ -94,6 +101,43 @@ function Registration() {
   const [showPopup, setShowPopup] = useState(null);
 
   const [minDOB, setMinDOB] = useState("");
+
+  const [validateFirstPhoneNumber, setValidateFirstPhonenumber] =
+    useState(null);
+
+  const [validateOverallPhoneNumbers, setValidateOverallPhoneNumbers] =
+    useState(null);
+
+  function phoneNumberValidator(numbers) {
+    if (numbers[0].length === 0) {
+      setValidateFirstPhonenumber("*Required");
+
+      return false;
+    } else if (numbers[0].toString().length !== 10) {
+      setValidateFirstPhonenumber("*Number should of length 10");
+
+      return false;
+    }
+
+    for (let i = 1; i < numbers.length; i++) {
+      if (
+        numbers[i].toString().length === 0 ||
+        numbers[i].toString().lenght === 10
+      ) {
+      } else {
+        setValidateOverallPhoneNumbers(
+          "*Phone numbers from 2, are optional, so either left them empty, or enter a valid number of length 10"
+        );
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [step]);
 
   const castes = Object.keys(bioData);
   const subcastes =
@@ -316,7 +360,7 @@ function Registration() {
     // TICKET ISSUE : 11
 
     // phoneNumber1: Yup.string().required("Required"),
-    phoneNumbers: Yup.array().of(Yup.number()).min(1),
+    phoneNumbers: Yup.array().of(Yup.string()).min(1),
     emails: Yup.array().of(Yup.string().email()).notRequired(),
     disabilityMeasure: Yup.string().when("pwd", {
       is: "no",
@@ -471,7 +515,8 @@ function Registration() {
         // TICKET ISSUE : 8
 
         // formik.values.image2 &&
-        formik.values.phoneNumbers.length > 0
+        formik.values.phoneNumbers.length > 0 &&
+        phoneNumberValidator(formik.values.phoneNumbers)
         // TICKET ISSUE : 11
 
         // formik.values.phoneNumber2 &&
@@ -583,6 +628,21 @@ function Registration() {
     setStep((prevStep) => prevStep - 1);
   };
 
+  const ErrorMessagePhoneNumber = ({ name }) => (
+    <Field
+      name={name}
+      render={({ form }) => {
+        const error = getIn(form.errors, name);
+        const touch = getIn(form.touched, name);
+        return touch && error ? (
+          <p className="mt-1 text-sm fade-in font-mono leading-6 text-[#EF4D48]">
+            {error}
+          </p>
+        ) : null;
+      }}
+    />
+  );
+
   return (
     <div className="w-full flex justify-center my-4">
       <Formik
@@ -625,6 +685,8 @@ function Registration() {
           image1: null,
           image2: null,
           image3: null,
+
+          willingForInterCast: false,
 
           disabilityMeasure: "",
           hobbies: "",
@@ -866,6 +928,26 @@ function Registration() {
                         id="surname"
                         name="surname"
                         type="text"
+                        // onChange={(e) => {
+                        //   let a = e.target.value;
+                        //   a = a.replace(/\b\w/g, (match) =>
+                        //     match.toUpperCase()
+                        //   );
+                        //   formik.setFieldValue("surname", a);
+                        //   // formik.handleChange(e);
+                        //   // console.log("asdfds");
+                        //   const val = getGotra(e.target.value);
+                        //   console.log(val);
+                        //   if (val) {
+                        //     setFoundCaste(val.caste);
+                        //     setFoundGotra(val.surname);
+                        //     setFoundSubcaste(val.subcaste);
+                        //     setGotra(val.surname);
+                        //     setCaste(val.caste);
+                        //     setSubcaste(val.subcaste);
+                        //   }
+                        // }}
+
                         onChange={(e) => {
                           let a = e.target.value;
                           a = a.replace(/\b\w/g, (match) =>
@@ -873,6 +955,7 @@ function Registration() {
                           );
                           // formik.setFieldValue("surname", a);
                           formik.handleChange(e);
+                          if (e.target.value === "") {
                           if (e.target.value === "") {
                             setFoundCaste("");
                             setFoundGotra("");
@@ -2376,7 +2459,7 @@ function Registration() {
                         htmlFor="preference"
                         className="font-semibold text-sm font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left"
                       >
-                        Preference :
+                        Preferences (if any) :
                       </label>
                       <input
                         id="preference"
@@ -2421,6 +2504,34 @@ function Registration() {
                         placeholder="Hobbies"
                         className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
                       />
+                    </div>
+
+                    {/* Other Caste Checkbox */}
+
+                    <div className="w-full flex gap-2 items-start justify-center">
+                      <fieldset className="w-full flex gap-4 items-center justify-start">
+                        <div className="flex gap-2 hover:cursor-pointer">
+                          <input
+                            type="checkbox"
+                            name="willingForInterCast"
+                            id="willingForInterCast"
+                            checked={formik.values.willingForInterCast}
+                            onChange={() => {
+                              formik.setFieldValue(
+                                "willingForInterCast",
+                                !formik.values.willingForInterCast
+                              );
+                            }}
+                          />
+                          <label
+                            htmlFor="willingForInterCast"
+                            className="font-semibold text-sm hover:cursor-pointer font-Poppins self-start tracking-wide sm:text-base whitespace-nowrap  text-[#444]"
+                          >
+                            Are you willing to explore matches
+                            outside your caste?
+                          </label>{" "}
+                        </div>
+                      </fieldset>
                     </div>
 
                     {/* Marital Status And Pwd */}
@@ -2881,29 +2992,51 @@ function Registration() {
                           name="phoneNumbers"
                           render={(arrayHelpers) => (
                             <div className="w-full flex flex-col gap-3">
-                              <div className="w-full flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:justify-start items-center">
+                              <div className="w-full flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:justify-start items-start">
                                 {formik.values.phoneNumbers &&
                                   formik.values.phoneNumbers.map(
                                     (number, index) => (
-                                      <div
-                                        key={index}
-                                        className=" w-full max-w-sm"
-                                      >
-                                        <input
-                                          name={`phoneNumbers.${index}`}
-                                          type="number"
-                                          onChange={formik.handleChange}
-                                          value={
-                                            formik.values.phoneNumbers[index]
-                                          }
-                                          placeholder="123-456-7890"
-                                          className="grow border fade-in w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                                        />
-                                        {/* <Field name={`phoneNumbers.${index}`} /> */}
+                                      <div className="w-full flex flex-col max-w-sm">
+                                        <div
+                                          key={index}
+                                          className="w-full max-w-sm flex flex-col sm:flex-row justify-center gap-2 items-center"
+                                        >
+                                          <label className="font-semibold text-sm font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left">
+                                            {index + 1} :
+                                          </label>
+                                          <input
+                                            name={`phoneNumbers.${index}`}
+                                            type="number"
+                                            onChange={formik.handleChange}
+                                            value={
+                                              formik.values.phoneNumbers[index]
+                                            }
+                                            placeholder="123-456-7890"
+                                            className="grow border fade-in w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                                          />
+                                        </div>
+                                        {index === 0 &&
+                                        validateFirstPhoneNumber ? (
+                                          <p className="mt-1 fade-in text-sm fade-in font-mono leading-6 text-[#EF4D48]">
+                                            {validateFirstPhoneNumber}
+                                          </p>
+                                        ) : null}
                                       </div>
                                     )
                                   )}
                               </div>
+
+                              {/* <ErrorMessage
+                  name="phoneNumbers"
+                  className="mt-1 text-sm fade-in font-mono leading-6 text-[#EF4D48]"
+                  component="p"
+                /> */}
+
+                              {validateOverallPhoneNumbers ? (
+                                <p className="mt-1 fade-in text-sm fade-in font-mono leading-6 text-[#EF4D48]">
+                                  {validateOverallPhoneNumbers}
+                                </p>
+                              ) : null}
 
                               {/* <div className="w-full justify-center sm:justify-start flex"> */}
                               <button
@@ -3101,7 +3234,7 @@ function Registration() {
                               // a = a.replace(/\b\w/g, (match) =>
                               //   match.toUpperCase()
                               // );
-                              formik.setFieldValue("fatherOccupation", a);
+                              formik.setFieldValue("fatherPhone", a);
                             }}
                             value={formik.values.fatherPhone}
                             placeholder="Phone Number"

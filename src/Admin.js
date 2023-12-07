@@ -11,7 +11,7 @@ const Admin = () => {
   useEffect(() => {
     const local_admin = JSON.parse(localStorage.getItem("admin"));
 
-    if (local_admin) {
+    if (local_admin && local_admin.token) {
       setAdmin(local_admin);
     }
     setChecked(true);

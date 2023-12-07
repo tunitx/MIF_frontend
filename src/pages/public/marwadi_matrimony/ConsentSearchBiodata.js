@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const ConsentAddBiodata = () => {
+const ConsentSearchBiodata = () => {
   const navigate = useNavigate();
 
   return (
@@ -9,41 +9,31 @@ const ConsentAddBiodata = () => {
       <div className="w-full flex flex-col gap-8 justify-center items-center  h-screen rounded-md overflow-y-auto">
         <div className="shadow-xl fade-in bg-[#f7f3f5] rounded-md p-8  flex  w-fit flex-col justify-center items-center  overflow-y-auto h-fit gap-7 max-w-3xl ">
           <p className="text-sm  font-Poppins font-semibold text-[#444] ">
-            By submitting your biodata or personal information on this platform,
-            you acknowledge and agree to the following terms:
+            By searching biodata or personal information on this platform, you
+            acknowledge and agree to the following terms:
           </p>
 
           <ul className="text-sm flex flex-col gap-2 max-h-96 overflow-y-auto">
             <l1>
-              Marwadi International Federation and its affiliated members
-              operate as a platform acting as a bridge for matrimonial purposes.
-              We do not independently verify the accuracy or authenticity of the
-              information provided by users.
+              Marwadi International Federation and its affiliated members act
+              solely as a platform for showcasing biodata and do not
+              independently verify the accuracy or authenticity of the shared
+              information.
             </l1>
             <l1>
-              Users are solely responsible for the accuracy, completeness, and
-              truthfulness of the information they provide on this platform.
+              Users are responsible for evaluating and verifying the details
+              provided in the biodata before making any decisions or
+              commitments.
             </l1>
             <l1>
-              Marwadi International Federation and its members do not undertake
-              any responsibility for verifying the details provided by users,
-              including but not limited to, personal background, identity, or
-              any other information shared on this platform.
+              It is crucial to exercise discretion and caution while using this
+              search feature and interacting with the biodata available on this
+              platform.
             </l1>
             <l1>
-              Users are encouraged to exercise caution and discretion while
-              interacting with other users and making decisions based on the
-              information available on this platform.
-            </l1>
-            <l1>
-              It is the user's responsibility to update or remove their
-              information if it becomes outdated, inaccurate, or if they no
-              longer require the services provided by this platform.
-            </l1>
-            <l1>
-              Marwadi International Federation and its members shall not be
-              liable for any consequences arising from the use or reliance on
-              the information provided by users on this platform.
+              Marwadi International Federation and its members shall not be held
+              liable for any outcomes resulting from the use or reliance on the
+              information provided in the biodata.
             </l1>
           </ul>
 
@@ -57,7 +47,7 @@ const ConsentAddBiodata = () => {
             <button
               className="group flex w-full sm:w-fit whitespace-nowrap items-center gap-2 justify-center max-w-[170px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 "
               onClick={() => {
-                navigate(`/matrimony/add-biodata`);
+                navigate(`/matrimony/search-biodata`);
               }}
             >
               Okay, go on.
@@ -77,4 +67,4 @@ const ConsentAddBiodata = () => {
   );
 };
 
-export default ConsentAddBiodata;
+export default ConsentSearchBiodata;

@@ -71,14 +71,14 @@ const Advertisements = () => {
     <div className="w-fit flex flex-row gap-5 flex-wrap max-w-[100%]">
       {members.map((member, index) => (
         <div key={index}>
-          <Advertisement member={member} onEdit={handleEdit} onDelete={handleDelete}  pfp={pfp} setPfp={setPfp} />
+          <Advertisement member={member} onEdit={handleEdit} onDelete={handleDelete} pfp={pfp} setPfp={setPfp} />
         </div>
       ))}
     </div>
   );
 };
 
-const Advertisement = ({ member, onEdit, onDelete,  pfp, setPfp }) => {
+const Advertisement = ({ member, onEdit, onDelete, pfp, setPfp }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedMember, setEditedMember] = useState({ ...member });
 
@@ -119,6 +119,43 @@ const Advertisement = ({ member, onEdit, onDelete,  pfp, setPfp }) => {
               </label>
 
               <input name="title" className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm" value={editedMember.title} onChange={handleInputChange} placeholder="Title" />
+            </div>
+
+            <div className="w-full flex gap-2 items-center justify-center">
+              <label htmlFor="slugs" className="font-semibold text-sm font-Poppins tracking-wide sm:text-base whitespace-nowrap text-[#444]">
+                Slugs* :
+              </label>
+              <select
+                name="slugs"
+                multiple
+                onChange={(e) => {
+                  const selectedOptions = Array.from(e.target.selectedOptions).map(o => o.value);
+                  let event;
+                  if (selectedOptions.includes('all')) {
+                    event = {
+                      target: {
+                        name: e.target.name,
+                        value: ['/matrimony', '/press', '/list-of-members'],
+                      },
+                    };
+                  } else {
+                    event = {
+                      target: {
+                        name: e.target.name,
+                        value: selectedOptions,
+                      },
+                    };
+                  }
+                  handleInputChange(event);
+                }}
+                value={editedMember.slugs}
+                className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+              >
+                <option value="all">All</option>
+                <option value="/matrimony">Matrimony</option>
+                <option value="/press">Press</option>
+                <option value="/list-of-members">/list-of-members</option>
+              </select>
             </div>
 
             <div className="w-full flex gap-2 items-center justify-center">
@@ -270,15 +307,26 @@ const Advertisement = ({ member, onEdit, onDelete,  pfp, setPfp }) => {
             </div>
 
             <div className="w-full flex flex-row justify-center">
-                <p className="w-full text-center font-lg font-Poppins font-bold text-gray-900">
-                  Description :
+              <p className="w-full text-center font-lg font-Poppins font-bold text-gray-900">
+                Description :
+              </p>
+              <p className="w-full text-center font-sm text-gray-700 font-normal">
+                {member.description}
+              </p>
+            </div>
+            <div className="w-full flex flex-col justify-center">
+              <p className="w-full text-center font-lg font-Poppins font-bold text-gray-900">
+                Slugs:
+              </p>
+              { member.slugs &&  member.slugs.map((slug, index) => (
+                <p key={index} className="w-full text-center font-sm text-gray-700 font-normal">
+                  {slug}
                 </p>
-                <p className="w-full text-center font-sm text-gray-700 font-normal">
-                  {member.description}
-                </p>
-              </div>
+              ))}
+            </div>
+
             <div className="w-full flex flex-row gap-2 justify-center">
-              
+
               <div className="w-full flex flex-col justify-center">
                 <p className="w-full text-center font-lg font-Poppins font-bold text-gray-900">
                   Fb:
@@ -333,10 +381,10 @@ const Advertisement = ({ member, onEdit, onDelete,  pfp, setPfp }) => {
                   {member.email}
                 </p>
               </div>
-              
+
             </div>
             <div className="w-full flex flex-row gap-2 justify-center">
-            <div className="w-full flex flex-col justify-center">
+              <div className="w-full flex flex-col justify-center">
                 <p className="w-full text-center font-lg font-Poppins font-bold text-gray-900">
                   Youtube :
                 </p>
@@ -352,9 +400,9 @@ const Advertisement = ({ member, onEdit, onDelete,  pfp, setPfp }) => {
                   {member.website}
                 </p>
               </div>
-              
 
-              </div>
+
+            </div>
 
             <div className="flex gap-2">
               <div
@@ -370,7 +418,7 @@ const Advertisement = ({ member, onEdit, onDelete,  pfp, setPfp }) => {
 
                   <p className="group-hover:-translate-x-1 transition duration-150 delay-150">
                     Edit
-                   
+
                   </p>{" "}
                 </button>
               </div>

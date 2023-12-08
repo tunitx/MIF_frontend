@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Swal from 'sweetalert2';
 
 import { GET_ALL_PRESS, GET_YEARS_LIST } from "../../../utils/constants";
 import ImagePreview from "./ImagePreview";
@@ -35,6 +36,9 @@ const Body = () => {
 
   // console.log(showImage);
 
+  // useEffect(() => {
+   
+  // }, [setShowImage]);
   function updatesShowPress(forYear, forMonth) {
     if (allPress[forYear]) {
       if (forMonth === "all") {
@@ -192,7 +196,14 @@ const Body = () => {
                     className="w-full min-[450px]:w-1/2 sm:w-1/3 lg:w-1/4 border-[3px] h-80 overflow-hidden p-3 flex items-center group relative hover:cursor-pointer "
                     key={i}
                     onClick={() => {
-                      setShowImage(e);
+                      // setShowImage(e);
+                      Swal.fire({
+                        imageUrl: e.imageURL,
+                        imageWidth: 500,
+                        imageHeight: 500,
+                        imageAlt: 'Custom image',
+                        confirmButtonText: 'Close'
+                      });
                     }}
                   >
                     <div className="absolute inset-0 bg-[#323233] opacity-0 group-hover:opacity-80 transition-opacity duration-300 rounded-md"></div>
@@ -205,13 +216,13 @@ const Body = () => {
           </div>
         </div>
       </div>
-      {showImage && (
+      {/* {showImage && (
         <ImagePreview
           data={showImage}
           showImage={showImage}
           setShowImage={setShowImage}
         />
-      )}
+      )} */}
     </div>
   );
 };

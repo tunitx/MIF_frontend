@@ -23,6 +23,7 @@ const Advertisment = () => {
   };
 
   const [advertisments, setAdvertisments] = useState([]);
+  const slugs = [];
 
   // console.log(advertisments);
 
@@ -40,7 +41,7 @@ const Advertisment = () => {
 
     getAdvertisments()
       .then((data) => {
-        setAdvertisments(data);
+        setAdvertisments(data); 
       })
       .catch((e) => {
         setAdvertisments([]);

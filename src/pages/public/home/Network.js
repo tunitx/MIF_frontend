@@ -23,7 +23,7 @@ const Network = () => {
               <p className="text-[#2B161B] text-xl font-bold font-PlayFair  text-center">
                 Rajasthan
               </p>
-              <p className="text-xl font-normal">50 Districts</p>
+              <p className="text-xl font-normal">53 Districts</p>
             </div>
           </div>
           <div className="india  flex flex-col items-center gap-6 ">
@@ -64,7 +64,7 @@ const Network = () => {
               <p className="text-[#2B161B] text-xl font-bold font-PlayFair  text-center">
                 Overall
               </p>
-              <p className="text-xl font-normal">1500+ Team Members</p>
+              <p className="text-xl font-normal">2000+ Team Members</p>
             </div>
           </div>
         </div>

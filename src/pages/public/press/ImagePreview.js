@@ -1,9 +1,21 @@
 import React from "react";
+import Swal from 'sweetalert2';
+import { useEffect } from 'react';
 
 const ImagePreview = ({ data, showImage, setShowImage }) => {
   const { imageURL } = data;
 
   // console.log(data);
+  useEffect(() => {
+    Swal.fire({
+      imageUrl: imageURL,
+      imageWidth: 400,
+      imageHeight: 400,
+      imageAlt: 'Custom image',
+    });
+  }, [imageURL]);
+    
+  
 
   return (
     <div className="fixed flex flex-col justify-center items-center gap-8  w-screen h-screen top-0 left-0 bg-[#323233] overflow-y-auto overflow-x-auto p-5 bg-opacity-90 z-50">
@@ -26,7 +38,7 @@ const ImagePreview = ({ data, showImage, setShowImage }) => {
         </div>
 
         <div className="w-full justify-center flex items-center">
-          <img src={imageURL} alt="image" className="" />
+        <img src={imageURL} alt="image" className="" />
         </div>
       </div>
     </div>

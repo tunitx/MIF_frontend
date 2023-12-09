@@ -61,7 +61,7 @@ RUN npm install -g serve
 # EXPOSE 1234
 ENV PORT=3000
 
-ARG BASE_URL="http://bababatuni.in/api/"
+ARG BASE_URL
 ENV BASE_URL=${BASE_URL}
 # Command to serve the built React app using serve
 # CMD ["serve", "-s", "dist", "-l", "1234"]

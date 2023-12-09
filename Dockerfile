@@ -62,7 +62,7 @@ RUN npm install -g serve
 ENV PORT=3000
 
 # ARG BASE_URL
-ENV BASE_URL="http://bababatuni.in/api/"
+# ENV BASE_URL="http://bababatuni.in/api/"
 # Command to serve the built React app using serve
 # CMD ["serve", "-s", "dist", "-l", "1234"]
 CMD serve -s dist -l $PORT

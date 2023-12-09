@@ -5,6 +5,7 @@ import ConsentAddBiodata from "./ConsentAddBiodata";
 import ConsentSearchBiodata from "./ConsentSearchBiodata";
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import { BASE_URL } from "../../../utils/constants";
 
 const Home = () => {
   const [action, setAction] = useState(null);
@@ -53,7 +54,7 @@ const Home = () => {
             },
           }).then((result) => {
             if (result.isConfirmed) {
-              axios.post('http://localhost:3000/marriage-user/signup', result.value)
+              axios.post(`${BASE_URL}/marriage-user/signup`, result.value)
                 .then(response => {
                   if (response.data.error) {
                     throw new Error(response.data.error);
@@ -91,7 +92,7 @@ const Home = () => {
             },
           }).then((result) => {
             if (result.isConfirmed) {
-              axios.post('http://localhost:3000/marriage-user/signin', result.value)
+              axios.post(`${BASE_URL}/marriage-user/signin`, result.value)
                 .then(response => {
                   if (response.data.error) {
                     throw new Error(response.data.error);

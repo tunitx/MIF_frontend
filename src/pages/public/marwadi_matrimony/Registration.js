@@ -758,8 +758,9 @@ function Registration() {
           formikRef.current = formik;
           return (
             <div
-              className={`w-full  max-w-6xl flex flex-col  items-center justify-center p-5 ${formik.isSubmitting ? "opacity-50" : ""
-                }`}
+              className={`w-full  max-w-6xl flex flex-col  items-center justify-center p-5 ${
+                formik.isSubmitting ? "opacity-50" : ""
+              }`}
             >
               <MultiStepProgressBar page={step} />
               <form
@@ -782,10 +783,11 @@ function Registration() {
                           // height={532}
                           viewBox="0 0 532 532"
                           xmlnsXlink="http://www.w3.org/1999/xlink"
-                          className={`fade-in w-full hover:cursor-pointer bg-[#f7f3f5] box-border shadow-xl delay-150 duration-300 transition-transform border-2 border-orange-500 rounded-full p-2 ${formik.values.gender === "male"
-                            ? ""
-                            : "border-none hover:scale-110"
-                            } `}
+                          className={`fade-in w-full hover:cursor-pointer bg-[#f7f3f5] box-border shadow-xl delay-150 duration-300 transition-transform border-2 border-orange-500 rounded-full p-2 ${
+                            formik.values.gender === "male"
+                              ? ""
+                              : "border-none hover:scale-110"
+                          } `}
                           onClick={() => {
                             formik.setFieldValue("gender", "male");
                             setStep((s) => s + 1);
@@ -837,10 +839,11 @@ function Registration() {
                           // height={532}
                           viewBox="0 0 532 532"
                           xmlnsXlink="http://www.w3.org/1999/xlink"
-                          className={`fade-in w-full hover:cursor-pointer bg-[#f7f3f5] box-border delay-150 shadow-xl duration-300 transition-transform border-2 border-orange-500 rounded-full p-2 ${formik.values.gender === "female"
-                            ? ""
-                            : "border-none hover:scale-110"
-                            }`}
+                          className={`fade-in w-full hover:cursor-pointer bg-[#f7f3f5] box-border delay-150 shadow-xl duration-300 transition-transform border-2 border-orange-500 rounded-full p-2 ${
+                            formik.values.gender === "female"
+                              ? ""
+                              : "border-none hover:scale-110"
+                          }`}
                           onClick={() => {
                             formik.setFieldValue("gender", "female");
                             setStep((s) => s + 1);
@@ -950,12 +953,8 @@ function Registration() {
 
                       
                         onChange={(e) => {
-                          let a = e.target.value;
-                          a = a.replace(/\b\w/g, (match) =>
-                            match.toUpperCase()
-                          );
-                          // formik.setFieldValue("surname", a);
                           formik.handleChange(e);
+
                           if (e.target.value === "") {
                             setFoundCaste("");
                             setFoundGotra("");
@@ -979,20 +978,21 @@ function Registration() {
                           // console.log("asdfds");
 
                         }}
-                        value={formik.values.surname}
                         placeholder="surname"
                         className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
                       />
                     </div>
 
                     {step === 2 && (
-
                       <div className="w-full flex flex-col gap-3 sm:flex-row md:gap-8">
                         {caste !== "Others" ? (
                           <>
                             {/* Caste Dropdown */}
                             <div className="w-full flex gap-2 items-center justify-center">
-                              <label htmlFor="caste" className="font-semibold text-sm font-Poppins tracking-wide sm:text-base whitespace-nowrap text-[#444]">
+                              <label
+                                htmlFor="caste"
+                                className="font-semibold text-sm font-Poppins tracking-wide sm:text-base whitespace-nowrap text-[#444]"
+                              >
                                 CASTE* :
                               </label>
                               <select
@@ -1007,7 +1007,6 @@ function Registration() {
                                   }
                                   formik.setFieldValue("caste", e.target.value);
                                 }}
-
                                 value={caste}
                                 placeholder="Caste"
                                 className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
@@ -1015,14 +1014,17 @@ function Registration() {
                                 <option value="" disabled>
                                   Select Caste
                                 </option>
-                                {foundCaste && <option value={foundCaste}>{foundCaste}</option>}
-                                {!foundCaste && (
+                                {foundCaste && (
+                                  <option value={foundCaste}>
+                                    {foundCaste}
+                                  </option>
+                                )}
+                                {!foundCaste &&
                                   castes.map((c) => (
                                     <option key={c} value={c}>
                                       {c}
                                     </option>
-                                  ))
-                                )}
+                                  ))}
 
                                 <option value="Others">Others</option>
                               </select>
@@ -1041,7 +1043,10 @@ function Registration() {
                                 name="subcaste"
                                 onChange={(e) => {
                                   setSubcaste(e.target.value);
-                                  formik.setFieldValue("subcaste", e.target.value);
+                                  formik.setFieldValue(
+                                    "subcaste",
+                                    e.target.value
+                                  );
                                 }}
                                 value={subcaste}
                                 className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
@@ -1101,14 +1106,16 @@ function Registration() {
                           <>
                             {/* Caste Input */}
                             <div className="w-full flex gap-2 items-center justify-center">
-                              <label htmlFor="caste" className="font-semibold text-sm font-Poppins tracking-wide sm:text-base whitespace-nowrap text-[#444]">
+                              <label
+                                htmlFor="caste"
+                                className="font-semibold text-sm font-Poppins tracking-wide sm:text-base whitespace-nowrap text-[#444]"
+                              >
                                 CASTE* :
                               </label>
                               <input
                                 id="caste"
                                 name="caste"
                                 onChange={(e) => {
-
                                   setCasteInput(e.target.value);
                                   formik.setFieldValue("caste", e.target.value);
                                 }}
@@ -1120,7 +1127,10 @@ function Registration() {
 
                             {/* SubCaste Input */}
                             <div className="w-full flex gap-2 items-center justify-center">
-                              <label htmlFor="subcaste" className="font-semibold text-sm font-Poppins tracking-wide sm:text-base whitespace-nowrap text-[#444]">
+                              <label
+                                htmlFor="subcaste"
+                                className="font-semibold text-sm font-Poppins tracking-wide sm:text-base whitespace-nowrap text-[#444]"
+                              >
                                 SUBCASTE* :
                               </label>
                               <input
@@ -1128,7 +1138,10 @@ function Registration() {
                                 name="subcaste"
                                 onChange={(e) => {
                                   setSubcaste(e.target.value);
-                                  formik.setFieldValue("subcaste", e.target.value);
+                                  formik.setFieldValue(
+                                    "subcaste",
+                                    e.target.value
+                                  );
                                 }}
                                 value={subcaste}
                                 placeholder="Subcaste"
@@ -1138,7 +1151,10 @@ function Registration() {
 
                             {/* Gotra Input */}
                             <div className="w-full flex gap-2 items-center justify-center">
-                              <label htmlFor="gotra" className="font-semibold text-sm font-Poppins tracking-wide sm:text-base whitespace-nowrap text-[#444]">
+                              <label
+                                htmlFor="gotra"
+                                className="font-semibold text-sm font-Poppins tracking-wide sm:text-base whitespace-nowrap text-[#444]"
+                              >
                                 GOTRA* :
                               </label>
                               <input
@@ -3483,7 +3499,7 @@ function Registration() {
                                               onChange={formik.handleChange}
                                               value={
                                                 formik.values.paternalUncleAunt[
-                                                index
+                                                  index
                                                 ]
                                               }
                                               placeholder="Uncle-Aunt"
@@ -3498,16 +3514,16 @@ function Registration() {
                                   {/* <div className="w-full justify-center sm:justify-start flex"> */}
                                   {formik.values.paternalUncleAunt.length <
                                     3 && (
-                                      <button
-                                        onClick={() => arrayHelpers.push("")}
-                                        type="button"
-                                        className="group flex w-full items-center gap-2 justify-center max-w-[100px] rounded-md bg-[#EF4D48] px-2 py-2 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2"
-                                      >
-                                        {/* <p className="transition duration-150 delay-150"> */}
-                                        Add more
-                                        {/* </p> */}
-                                      </button>
-                                    )}
+                                    <button
+                                      onClick={() => arrayHelpers.push("")}
+                                      type="button"
+                                      className="group flex w-full items-center gap-2 justify-center max-w-[100px] rounded-md bg-[#EF4D48] px-2 py-2 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2"
+                                    >
+                                      {/* <p className="transition duration-150 delay-150"> */}
+                                      Add more
+                                      {/* </p> */}
+                                    </button>
+                                  )}
                                   {/* </div> */}
                                 </div>
                               )}
@@ -3616,7 +3632,7 @@ function Registration() {
                                               onChange={formik.handleChange}
                                               value={
                                                 formik.values.maternalUncleAunt[
-                                                index
+                                                  index
                                                 ]
                                               }
                                               placeholder="Uncle-Aunt"
@@ -3631,16 +3647,16 @@ function Registration() {
                                   {/* <div className="w-full justify-center sm:justify-start flex"> */}
                                   {formik.values.maternalUncleAunt.length <
                                     3 && (
-                                      <button
-                                        onClick={() => arrayHelpers.push("")}
-                                        type="button"
-                                        className="group flex w-full items-center gap-2 justify-center max-w-[100px] rounded-md bg-[#EF4D48] px-2 py-2 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2"
-                                      >
-                                        {/* <p className="transition duration-150 delay-150"> */}
-                                        Add more
-                                        {/* </p> */}
-                                      </button>
-                                    )}
+                                    <button
+                                      onClick={() => arrayHelpers.push("")}
+                                      type="button"
+                                      className="group flex w-full items-center gap-2 justify-center max-w-[100px] rounded-md bg-[#EF4D48] px-2 py-2 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2"
+                                    >
+                                      {/* <p className="transition duration-150 delay-150"> */}
+                                      Add more
+                                      {/* </p> */}
+                                    </button>
+                                  )}
                                   {/* </div> */}
                                 </div>
                               )}
@@ -3800,10 +3816,11 @@ function Registration() {
                   )}
                   {step < 8 && step > 1 && (
                     <div
-                      className={`w-full  flex ${step === 1
-                        ? "justify-center"
-                        : "sm:justify-end justify-center"
-                        }`}
+                      className={`w-full  flex ${
+                        step === 1
+                          ? "justify-center"
+                          : "sm:justify-end justify-center"
+                      }`}
                     >
                       <button
                         onClick={() => {

@@ -1,4 +1,5 @@
 import React from "react";
+import Swal from "sweetalert2";
 
 const ImagePreview = ({ data, showImage, setShowImage }) => {
   const { imageURL } = data;
@@ -25,8 +26,22 @@ const ImagePreview = ({ data, showImage, setShowImage }) => {
           </svg>
         </div>
 
-        <div className="w-full justify-center flex items-center">
-          <img src={imageURL} alt="image" className="" />
+        <div className="w-full h-full justify-center  items-center">
+          <img src={imageURL} alt="image" className="h-[80%] w-auto" />
+          {/* <img
+            src={imageURL}
+            alt="image"
+            className=""
+            onClick={() => {
+             
+            }}
+          /> */}
+          {/* {Swal.fire({
+            imageUrl: imageURL,
+            imageWidth: 400,
+            imageHeight: 400,
+            imageAlt: "Custom image",
+          })} */}
         </div>
       </div>
     </div>

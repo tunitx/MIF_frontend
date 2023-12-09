@@ -54,10 +54,10 @@ const BiodataCard = ({ data }) => {
   ageInYear = calculateAge(dob);
 
   return (
-    <div className="w-full flex flex-col gap-4">
+    <div className="sm:w-1/2 w-full lg:w-1/3 2xl:w-1/4  flex flex-col gap-4 h-full">
       <div className="w-full p-3 border border-indigo-900 rounded-md flex flex-col gap-5 justify-center items-center">
-        <div className="p-5 pb-0 min-w-[100px] min-h-[200px]">
-          <img src={image1} className="rounded-md" />
+        <div className="p-5 pb-0 h-52 w-52">
+          <img src={image1} className="rounded-md h-52 w-52 overflow-hidden" />
         </div>
 
         {/* Name, Age, Gotra, Height and Complexion */}

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { companies, GET_ADVERTISMENTS } from "../utils/constants";
 import Carousel from "react-multi-carousel";
+import { useLocation } from "react-router-dom";
 
 const Advertisment = () => {
   const responsive = {
@@ -22,9 +23,13 @@ const Advertisment = () => {
     },
   };
 
+  // const advertismentSlugs = ['/matrimony', '/press', '/list-of-members', 'all'];
+
+  const location = useLocation();
+
   const [advertisments, setAdvertisments] = useState([]);
 
-  // console.log(advertisments);
+  const [showAdver, setShowAdver] = useState([]);
 
   useEffect(() => {
     async function getAdvertisments() {
@@ -47,6 +52,19 @@ const Advertisment = () => {
       });
   }, []);
 
+  useEffect(() => {
+    setShowAdver(advertisments);
+  }, [advertisments]);
+
+  useEffect(() => {
+    const adver = advertisments.filter((ad) => {
+      if (ad?.slugs?.includes("all")) return true;
+      return ad?.slugs?.includes(location.pathname);
+    });
+
+    setShowAdver(adver);
+  }, [location, advertisments]);
+
   if (!advertisments || advertisments?.length === 0) return;
 
   return (
@@ -64,7 +82,7 @@ const Advertisment = () => {
         containerClass="mb-10"
         itemClass="flex justify-center items-center"
       >
-        {advertisments.map((advertisment) => {
+        {showAdver.map((advertisment) => {
           return (
             <div
               key={advertisment._id}

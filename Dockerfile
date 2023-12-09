@@ -10,8 +10,8 @@ ARG BASE_URL="http://bababatuni.in/api/"
 ENV BASE_URL=${BASE_URL}
 # CMD ["npx","parcel","index.html","--port","${PORT}"]
 #CMD npx parcel serve index.html --port $PORT
-CMD npx parcel build index.html --port $PORT
-
+CMD npx parcel build index.html #--port $PORT
+CMD npx parcel index.html --port $PORT
 # # node block
 
 # FROM node:alpine3.16 as nodework

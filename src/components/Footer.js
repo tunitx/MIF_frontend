@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 
 const Footer = () => {
-  const [visitorCount, setVisitorCount] = useState(0);
+  const [visitorCount, setVisitorCount] = useState(5567);
 
   // useEffect(() => {
   //   const fetchData = async () => {

@@ -54,7 +54,7 @@ const Home = () => {
             },
           }).then((result) => {
             if (result.isConfirmed) {
-              axios.post(`${BASE_URL}/marriage-user/signup`, result.value)
+              axios.post(`${BASE_URL}marriage-user/signup`, result.value)
                 .then(response => {
                   if (response.data.error) {
                     throw new Error(response.data.error);
@@ -92,7 +92,7 @@ const Home = () => {
             },
           }).then((result) => {
             if (result.isConfirmed) {
-              axios.post(`${BASE_URL}/marriage-user/signin`, result.value)
+              axios.post(`${BASE_URL}marriage-user/signin`, result.value)
                 .then(response => {
                   if (response.data.error) {
                     throw new Error(response.data.error);

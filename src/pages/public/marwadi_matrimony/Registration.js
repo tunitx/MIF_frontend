@@ -17,9 +17,9 @@ import { useNavigate } from "react-router-dom";
 import Popup from "./Popup";
 import MultiStepProgressBar from "./progressBar/MultiStepProgressBar";
 
-import { matrimonySignIn } from "../../../utils/store/slices/matrimonyUserSlice";
-import { Provider, useDispatch, useSelector } from "react-redux";
-import store from "../../../utils/store/store";
+// import { matrimonySignIn } from "../../../utils/store/slices/matrimonyUserSlice";
+// import { Provider, useDispatch, useSelector } from "react-redux";
+// import store from "../../../utils/store/store";
 
 const config = {
   headers: {
@@ -51,24 +51,24 @@ async function getNewToken() {
 getNewToken();
 let res = {};
 function Registration() {
-  const matrimonyUserStore = useSelector((store) => store.MatrimonyUserSlice);
+  // const matrimonyUserStore = useSelector((store) => store.MatrimonyUserSlice);
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  // const navigate = useNavigate();
+  // // const navigate = useNavigate();
 
-  const [checked, setChecked] = useState(false);
+  // const [checked, setChecked] = useState(false);
 
-  console.log(matrimonyUserStore);
+  // console.log(matrimonyUserStore);
 
-  useEffect(() => {
-    const temp = JSON.parse(localStorage.getItem("matrimonyUser"));
+  // useEffect(() => {
+  //   const temp = JSON.parse(localStorage.getItem("matrimonyUser"));
 
-    if (temp && temp?.matrimonyUser && temp?.matrimonyUserToken) {
-      dispatch(matrimonySignIn(temp));
-    }
-    setChecked(true);
-  });
+  //   if (temp && temp?.matrimonyUser && temp?.matrimonyUserToken) {
+  //     dispatch(matrimonySignIn(temp));
+  //   }
+  //   setChecked(true);
+  // });
 
   const navigate = useNavigate();
 
@@ -319,47 +319,47 @@ function Registration() {
     }
   }, [foundCaste]);
 
-  if (!checked) return <div></div>;
+  // if (!checked) return <div></div>;
 
-  if (
-    matrimonyUserStore?.matrimonyUser === null ||
-    matrimonyUserStore?.matrimonyUserToken === null
-  ) {
-    return (
-      <div className=" z-50 fixed flex flex-col justify-center gap-8 items-center w-screen h-screen top-0 left-0 bg-[#323233] bg-opacity-90 overflow-x-auto py-5 px-5">
-        <div className="w-full flex flex-col gap-8 justify-center items-center">
-          <div className="shadow-xl fade-in bg-[#f7f3f5] rounded-md p-8 flex max-w-full w-fit flex-col justify-center items-center gap-5 min-w-[350px]">
-            <p className="text-xl font-Poppins ">Proceed as : </p>
+  // if (
+  //   matrimonyUserStore?.matrimonyUser === null ||
+  //   matrimonyUserStore?.matrimonyUserToken === null
+  // ) {
+  //   return (
+  //     <div className=" z-50 fixed flex flex-col justify-center gap-8 items-center w-screen h-screen top-0 left-0 bg-[#323233] bg-opacity-90 overflow-x-auto py-5 px-5">
+  //       <div className="w-full flex flex-col gap-8 justify-center items-center">
+  //         <div className="shadow-xl fade-in bg-[#f7f3f5] rounded-md p-8 flex max-w-full w-fit flex-col justify-center items-center gap-5 min-w-[350px]">
+  //           <p className="text-xl font-Poppins ">Proceed as : </p>
 
-            <button
-              className="group flex w-full items-center gap-2 justify-center max-w-[150px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 "
-              onClick={() => {
-                // navigate(`${redirect}`);
-              }}
-            >
-              New User
-            </button>
-            <button
-              className="group flex w-full items-center gap-2 justify-center max-w-[150px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 "
-              onClick={() => {
-                // navigate(`${redirect}`);
-              }}
-            >
-              Existing User
-            </button>
-            <button
-              className="group flex w-full items-center gap-2 justify-center max-w-[150px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 "
-              onClick={() => {
-                // navigate(`${redirect}`);
-              }}
-            >
-              Guest User
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  //           <button
+  //             className="group flex w-full items-center gap-2 justify-center max-w-[150px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 "
+  //             onClick={() => {
+  //               // navigate(`${redirect}`);
+  //             }}
+  //           >
+  //             New User
+  //           </button>
+  //           <button
+  //             className="group flex w-full items-center gap-2 justify-center max-w-[150px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 "
+  //             onClick={() => {
+  //               // navigate(`${redirect}`);
+  //             }}
+  //           >
+  //             Existing User
+  //           </button>
+  //           <button
+  //             className="group flex w-full items-center gap-2 justify-center max-w-[150px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 "
+  //             onClick={() => {
+  //               // navigate(`${redirect}`);
+  //             }}
+  //           >
+  //             Guest User
+  //           </button>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   function getGotra(surname) {
     let result = {};
@@ -1016,7 +1016,6 @@ function Registration() {
                         //   }
                         // }}
 
-                      
                         onChange={(e) => {
                           formik.handleChange(e);
 
@@ -1027,8 +1026,7 @@ function Registration() {
                             setGotra("");
                             setCaste("");
                             setSubcaste("");
-                          }
-                          else {
+                          } else {
                             const val = getGotra(e.target.value);
                             console.log(val);
                             if (val) {
@@ -1041,7 +1039,6 @@ function Registration() {
                             }
                           }
                           // console.log("asdfds");
-
                         }}
                         placeholder="surname"
                         className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"

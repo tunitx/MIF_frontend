@@ -42,7 +42,7 @@ RUN npm install
 COPY . .
 
 # Build the React app in production mode using Parcel
-RUN npx parcel build index.html --out-dir /app/dist --no-source-maps
+RUN npx parcel build index.html --no-source-maps
 
 # Stage 2: Serve the built React app with Parcel
 FROM node:alpine

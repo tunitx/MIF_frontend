@@ -43,6 +43,8 @@ RUN npm install
 # Copy the entire project
 COPY . .
 
+ARG BASE_URL
+ENV BASE_URL="http://bababatuni.in/api/"
 # Build the React app in production mode using Parcel
 RUN npx parcel build index.html --no-source-maps
 
@@ -61,8 +63,7 @@ RUN npm install -g serve
 # EXPOSE 1234
 ENV PORT=3000
 
-ARG BASE_URL
-ENV BASE_URL="http://bababatuni.in/api/"
+
 # Command to serve the built React app using serve
 # CMD ["serve", "-s", "dist", "-l", "1234"]
 CMD serve -s dist -l $PORT 

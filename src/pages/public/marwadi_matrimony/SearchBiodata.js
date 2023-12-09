@@ -636,7 +636,7 @@ function SearchBiodata() {
           </div>
 
           {filteredBiodatas && (
-            <div className="w-full flex sm:flex-row flex-col gap-8  justify-center">
+            <div className="w-full flex lg:flex-row flex-col gap-8  justify-center">
               <FilterSection
                 filteredBiodatas={filteredBiodatas}
                 setFilteredBioDatas={setFilteredBioDatas}
@@ -656,7 +656,7 @@ function SearchBiodata() {
                     </div>
                   </div>
                 ) : (
-                  <div className="w-full flex flex-col max-w-sm gap-4 justify-center items-center">
+                  <div className="w-full flex flex-row flex-wrap  gap-4 justify-center items-center">
                     {filteredBiodatas.map((biodata) => {
                       return <BiodataCard key={biodata._id} data={biodata} />;
                     })}

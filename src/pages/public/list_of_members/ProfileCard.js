@@ -12,7 +12,9 @@ const ProfileCard = ({ data, showCard, setShowCard }) => {
     profession,
     pfp,
   } = data;
+  console.log(memberType);
   return (
+   
     <div className=" z-50 fixed flex flex-col justify-center gap-8 items-center w-screen h-screen top-0 left-0 bg-[#323233] bg-opacity-90 overflow-x-auto py-5 px-5">
       <div className="w-full flex flex-col gap-8 justify-center items-center">
         <div
@@ -36,11 +38,13 @@ const ProfileCard = ({ data, showCard, setShowCard }) => {
             <h1 className="text-[#fff] font-semibold text-xl sm:text-2xl font-Poppins w-full text-center whitespace-nowrap">
               {/* Trustee Member */}
               {/* TRUSTEE MEMBERS */}
-              {memberType === "advisoryMember"
+              {/* {memberType === "advisoryMember"
                 ? "ADVISORY MEMBER"
                 : memberType === "trusteeMember"
                 ? "TRUSTEE MEMBER"
-                : "ACTIVE LIFE MEMBER"}
+
+                : "ACTIVE LIFE MEMBER"} */}
+                {memberType.name.toUpperCase()}
             </h1>
           </div>
           <div className="w-full p-5 flex justify-center items-center flex-col gap-4">

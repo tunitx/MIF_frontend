@@ -32,6 +32,8 @@ const FormAddAdvertisment = () => {
         whatsapp: "",
         youtube: "",
         website: "",
+        slugs: [],
+
       }}
       onSubmit={async (values, { setSubmitting, resetForm }) => {
         // console.log(values);
@@ -49,6 +51,7 @@ const FormAddAdvertisment = () => {
         reqBody.append("whatsapp", values.whatsapp);
         reqBody.append("youtube", values.youtube);
         reqBody.append("website", values.website);
+        reqBody.append("slugs", JSON.stringify(values.slugs));
 
         setError(null);
         setMessage(null);
@@ -131,6 +134,7 @@ const FormAddAdvertisment = () => {
                     </div>
                   </div>
 
+
                   {/* BUSINESS TITLE */}
 
                   <div>
@@ -150,6 +154,33 @@ const FormAddAdvertisment = () => {
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
                     </div>
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <label
+                      htmlFor="slugs"
+                      className="block text-sm font-medium leading-6 text-gray-900"
+                    >
+                      Routes
+                    </label>
+                    <select
+                      name="slugs"
+                      multiple
+                      onChange={(e) => {
+                        if (Array.from(e.target.selectedOptions).map(o => o.value).includes('all')) {
+                          formik.setFieldValue('slugs', ['/about', '/', '/list-of-members']);
+                        } else {
+                          formik.handleChange(e);
+                        }
+                      }}
+                      value={formik.values.slugs}
+                      className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                    >
+                      <option value="/about">/about</option>
+                      <option value="/">/</option>
+                      <option value="/list-of-members">/list-of-members</option>
+                      <option value="all">All</option>
+                    </select>
                   </div>
 
                   {/* BUSINESS DESCRIPTION */}

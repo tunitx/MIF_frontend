@@ -996,7 +996,27 @@ function Registration() {
                         id="surname"
                         name="surname"
                         type="text"
-                        value={formik.values.surname}
+                        // onChange={(e) => {
+                        //   let a = e.target.value;
+                        //   a = a.replace(/\b\w/g, (match) =>
+                        //     match.toUpperCase()
+                        //   );
+                        //   formik.setFieldValue("surname", a);
+                        //   // formik.handleChange(e);
+                        //   // console.log("asdfds");
+                        //   const val = getGotra(e.target.value);
+                        //   console.log(val);
+                        //   if (val) {
+                        //     setFoundCaste(val.caste);
+                        //     setFoundGotra(val.surname);
+                        //     setFoundSubcaste(val.subcaste);
+                        //     setGotra(val.surname);
+                        //     setCaste(val.caste);
+                        //     setSubcaste(val.subcaste);
+                        //   }
+                        // }}
+
+                      
                         onChange={(e) => {
                           formik.handleChange(e);
 
@@ -1007,7 +1027,8 @@ function Registration() {
                             setGotra("");
                             setCaste("");
                             setSubcaste("");
-                          } else {
+                          }
+                          else {
                             const val = getGotra(e.target.value);
                             console.log(val);
                             if (val) {
@@ -1019,6 +1040,8 @@ function Registration() {
                               setSubcaste(val.subcaste);
                             }
                           }
+                          // console.log("asdfds");
+
                         }}
                         placeholder="surname"
                         className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"

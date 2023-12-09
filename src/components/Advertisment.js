@@ -28,6 +28,7 @@ const Advertisment = () => {
   const location = useLocation();
 
   const [advertisments, setAdvertisments] = useState([]);
+  const slugs = [];
 
   const [showAdver, setShowAdver] = useState([]);
 
@@ -45,7 +46,7 @@ const Advertisment = () => {
 
     getAdvertisments()
       .then((data) => {
-        setAdvertisments(data);
+        setAdvertisments(data); 
       })
       .catch((e) => {
         setAdvertisments([]);

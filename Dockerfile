@@ -61,11 +61,11 @@ RUN npm install -g serve
 # EXPOSE 1234
 ENV PORT=3000
 
-# ARG BASE_URL
-# ENV BASE_URL="http://bababatuni.in/api/"
+ARG BASE_URL
+ENV BASE_URL="http://bababatuni.in/api/"
 # Command to serve the built React app using serve
 # CMD ["serve", "-s", "dist", "-l", "1234"]
-CMD serve -s dist -l $PORT ${BASE_URL:-"http://bababatuni.in/api/"}
+CMD serve -s dist -l $PORT 
 
 
 # Run the built React app with Parcel's server

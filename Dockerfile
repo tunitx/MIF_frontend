@@ -44,7 +44,7 @@ RUN npm install
 COPY . .
 
 ARG BASE_URL
-ENV BASE_URL="http://bababatuni.in/api/"
+ENV BASE_URL="https://bababatuni.in/api/"
 # Build the React app in production mode using Parcel
 RUN npx parcel build index.html --no-source-maps
 

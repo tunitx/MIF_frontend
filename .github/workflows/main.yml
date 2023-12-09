@@ -3,7 +3,7 @@ name: Build and push image to ECR
 on:
   push:
     branches:
-      - tutnitx_stage
+      - main
 
 jobs:
   build:

@@ -77,7 +77,13 @@ const Advertisements = () => {
     <div className="w-fit flex flex-row gap-5 flex-wrap max-w-[100%]">
       {members.map((member, index) => (
         <div key={index}>
-          <Advertisement member={member} onEdit={handleEdit} onDelete={handleDelete} pfp={pfp} setPfp={setPfp} />
+          <Advertisement
+            member={member}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+            pfp={pfp}
+            setPfp={setPfp}
+          />
         </div>
       ))}
     </div>
@@ -135,20 +141,26 @@ const Advertisement = ({ member, onEdit, onDelete, pfp, setPfp }) => {
             </div>
 
             <div className="w-full flex gap-2 items-center justify-center">
-              <label htmlFor="slugs" className="font-semibold text-sm font-Poppins tracking-wide sm:text-base whitespace-nowrap text-[#444]">
+              <label
+                htmlFor="slugs"
+                className="font-semibold text-sm font-Poppins tracking-wide sm:text-base whitespace-nowrap text-[#444]"
+              >
                 Slugs* :
               </label>
               <select
                 name="slugs"
                 multiple
                 onChange={(e) => {
-                  const selectedOptions = Array.from(e.target.selectedOptions).map(o => o.value);
+                  const selectedOptions = Array.from(
+                    e.target.selectedOptions
+                  ).map((o) => o.value);
+                  console.log(selectedOptions);
                   let event;
-                  if (selectedOptions.includes('all')) {
+                  if (selectedOptions.includes("all")) {
                     event = {
                       target: {
                         name: e.target.name,
-                        value: ['/matrimony', '/press', '/list-of-members'],
+                        value: ["/matrimony", "/press", "/list-of-members"],
                       },
                     };
                   } else {
@@ -218,9 +230,17 @@ const Advertisement = ({ member, onEdit, onDelete, pfp, setPfp }) => {
                 onChange={handleInputChange}
                 placeholder="Facebook"
               />
+              <input
+                className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                name="facebook"
+                value={editedMember.facebook}
+                onChange={handleInputChange}
+                placeholder="Facebook"
+              />
             </div>
 
             <div className="w-full flex gap-2 items-center justify-center">
+
               <label
                 htmlFor="playStore"
                 className="font-semibold text-sm font-Poppins tracking-wide sm:text-base whitespace-nowrap text-[#444]"
@@ -234,9 +254,17 @@ const Advertisement = ({ member, onEdit, onDelete, pfp, setPfp }) => {
                 onChange={handleInputChange}
                 placeholder="PlayStore"
               />
+              <input
+                className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                name="playStore"
+                value={editedMember.playStore}
+                onChange={handleInputChange}
+                placeholder="PlayStore"
+              />
             </div>
 
             <div className="w-full flex gap-2 items-center justify-center">
+             
               <label
                 htmlFor="instagram"
                 className="font-semibold text-sm font-Poppins tracking-wide sm:text-base whitespace-nowrap text-[#444]"
@@ -250,9 +278,17 @@ const Advertisement = ({ member, onEdit, onDelete, pfp, setPfp }) => {
                 onChange={handleInputChange}
                 placeholder="Instagram"
               />
+              <input
+                className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                name="instagram"
+                value={editedMember.instagram}
+                onChange={handleInputChange}
+                placeholder="Instagram"
+              />
             </div>
 
             <div className="w-full flex gap-2 items-center justify-center">
+             
               <label
                 htmlFor="phone"
                 className="font-semibold text-sm font-Poppins tracking-wide sm:text-base whitespace-nowrap text-[#444]"
@@ -420,7 +456,6 @@ const Advertisement = ({ member, onEdit, onDelete, pfp, setPfp }) => {
               </p>
             </div>
             <div className="w-full flex flex-row gap-2 justify-center">
-
               <div className="w-full flex flex-col justify-center">
                 <p className="w-full text-center font-lg font-Poppins font-bold text-gray-900">
                   Fb:
@@ -462,7 +497,6 @@ const Advertisement = ({ member, onEdit, onDelete, pfp, setPfp }) => {
               </div>
             </div>
 
-
             <div className="w-full flex flex-row gap-2 justify-center">
               <div className="w-full flex flex-col justify-center">
                 <p className="w-full text-center font-lg font-Poppins font-bold text-gray-900">
@@ -488,7 +522,6 @@ const Advertisement = ({ member, onEdit, onDelete, pfp, setPfp }) => {
                   {member.email}
                 </p>
               </div>
-
             </div>
             <div className="w-full flex flex-row gap-2 justify-center">
               <div className="w-full flex flex-col justify-center">
@@ -507,8 +540,6 @@ const Advertisement = ({ member, onEdit, onDelete, pfp, setPfp }) => {
                   {member.website}
                 </p>
               </div>
-
-
             </div>
 
             <div className="flex gap-2">
@@ -522,7 +553,6 @@ const Advertisement = ({ member, onEdit, onDelete, pfp, setPfp }) => {
                 >
                   <p className="group-hover:-translate-x-1 transition duration-150 delay-150">
                     Edit
-
                   </p>{" "}
                 </button>
               </div>

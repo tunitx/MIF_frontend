@@ -33,11 +33,8 @@ const FormAddAdvertisment = () => {
         youtube: "",
         website: "",
         slugs: [],
-
       }}
       onSubmit={async (values, { setSubmitting, resetForm }) => {
-        // console.log(values);
-
         const reqBody = new FormData();
         reqBody.append("businessImage", values.businessImage);
         reqBody.append("title", values.title);
@@ -134,7 +131,6 @@ const FormAddAdvertisment = () => {
                     </div>
                   </div>
 
-
                   {/* BUSINESS TITLE */}
 
                   <div>
@@ -156,6 +152,8 @@ const FormAddAdvertisment = () => {
                     </div>
                   </div>
 
+                  {/* Slugs */}
+
                   <div className="flex flex-col gap-2">
                     <label
                       htmlFor="slugs"
@@ -167,8 +165,16 @@ const FormAddAdvertisment = () => {
                       name="slugs"
                       multiple
                       onChange={(e) => {
-                        if (Array.from(e.target.selectedOptions).map(o => o.value).includes('all')) {
-                          formik.setFieldValue('slugs', ['/about', '/', '/list-of-members']);
+                        if (
+                          Array.from(e.target.selectedOptions)
+                            .map((o) => o.value)
+                            .includes("all")
+                        ) {
+                          formik.setFieldValue("slugs", [
+                            "/about",
+                            "/",
+                            "/list-of-members",
+                          ]);
                         } else {
                           formik.handleChange(e);
                         }

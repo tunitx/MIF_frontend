@@ -25,7 +25,11 @@ const FilterSection = ({
 
   const filterBtnRef = useRef();
 
-  const [showFilters, setShowFilters] = useState(false);
+  const [showFilters, setShowFilters] = useState(() => {
+    if (window.innerWidth >= 768) {
+      return true;
+    } else return false;
+  });
 
   const handleComplexionChange = (tone) => {
     const newComplexion = new Set(complexion);
@@ -147,14 +151,26 @@ const FilterSection = ({
     pwd,
   ]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      setShowFilters(window.innerWidth >= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
-    <div className="lg:w-fit w-full flex-row flex-wrap fade-in flex lg:flex-col gap-5 lg:max-w-sm font-Poppins ">
+    <div className="md:w-fit w-full  flex-row flex-wrap fade-in flex md:flex-col gap-5 md:max-w-[200px] item font-Poppins ">
       <button
         ref={filterBtnRef}
         onClick={() => {
           setShowFilters((p) => !p);
         }}
-        className="flex  justify-center  w-fit rounded-md bg-[#EF4D48] px-7 sm:py-3 py-2 text-sm sm:text-base  font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 "
+        className="flex  justify-center md:hidden w-fit  rounded-md bg-[#EF4D48] px-7 sm:py-3 py-2 text-sm sm:text-base  font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 "
       >
         Filters
       </button>

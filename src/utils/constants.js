@@ -12,7 +12,7 @@ import aboutus_skill_development from "../../assests/images/aboutus_skill-develo
 import aboutus_social_care from "../../assests/images/aboutus_social-care.png";
 import aboutus_women_entrepreneur from "../../assests/images/aboutus_women_entrepreneur.png";
 
-export const BASE_URL = process.env.BASE_URL || "http://bababatuni.in/api/";
+export const BASE_URL = process.env.BASE_URL || "https://bababatuni.in/api/";
 
 export const GET_ALL_PRESS = BASE_URL + "press/all";
 export const POST_PRESS = BASE_URL + "press/new";

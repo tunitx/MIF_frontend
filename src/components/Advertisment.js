@@ -46,7 +46,7 @@ const Advertisment = () => {
 
     getAdvertisments()
       .then((data) => {
-        setAdvertisments(data); 
+        setAdvertisments(data);
       })
       .catch((e) => {
         setAdvertisments([]);
@@ -67,6 +67,7 @@ const Advertisment = () => {
   }, [location, advertisments]);
 
   if (!advertisments || advertisments?.length === 0) return;
+  if (!showAdver || showAdver?.length === 0) return;
 
   return (
     <div className="w-full relative max-w-5xl my-10">

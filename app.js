@@ -188,6 +188,10 @@ const appRoutes = createBrowserRouter([
             path: "press-cutout",
             element: <PressCutout />,
           },
+          {
+            path: "all-adv",
+            element: <Advertisements/>,
+          },
         ],
       },
     ],

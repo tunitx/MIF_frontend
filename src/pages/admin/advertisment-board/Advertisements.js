@@ -74,23 +74,66 @@ const Advertisements = () => {
   };
 
   return (
-    <div className="w-fit flex flex-row gap-5 flex-wrap max-w-[100%]">
-      {members.map((member, index) => (
-        <div key={index}>
-          <Advertisement
-            member={member}
-            onEdit={handleEdit}
-            onDelete={handleDelete}
-            pfp={pfp}
-            setPfp={setPfp}
-          />
-        </div>
-      ))}
+    // <div className="w-fit flex flex-row gap-5 flex-wrap max-w-[100%]">
+    //   {members.map((member, index) => (
+    //     <div key={index}>
+    //       <Advertisement
+    //         member={member}
+    //         onEdit={handleEdit}
+    //         onDelete={handleDelete}
+    //         pfp={pfp}
+    //         setPfp={setPfp}
+    //       />
+    //     </div>
+    //   ))}
+    // </div>
+    <div className="overflow-x-auto fade-in w-full flex justify-center">
+
+      <table className="w-full border-2 border-[#305D2B] max-w-7xl">
+        <thead className="w-full">
+          <tr className="bg-[#305D2B] text-white w-full">
+            <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
+              Image
+            </th>
+            <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
+              Title
+            </th>
+            {/* Add more header columns as needed */}
+            <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
+              Edit
+            </th>
+            <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
+              Delete
+            </th>
+          </tr>
+        </thead>
+        <>
+          <tbody className="w-full">
+
+
+            {members.map((member, index, _id) => (
+              // <tr key={index}>
+
+              <Advertisement
+                member={member}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+                pfp={pfp}
+                setPfp={setPfp}
+                _id={_id}
+              />
+
+
+            ))}
+          </tbody>
+        </>
+      </table>
     </div>
+
   );
 };
 
-const Advertisement = ({ member, onEdit, onDelete, pfp, setPfp }) => {
+const Advertisement = ({ member, onEdit, onDelete, pfp, setPfp, _id }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedMember, setEditedMember] = useState({ ...member });
 
@@ -119,7 +162,8 @@ const Advertisement = ({ member, onEdit, onDelete, pfp, setPfp }) => {
   };
 
   return (
-    <div className="w-fit flex flex-row gap-5 max-w-[700px]">
+  <>
+  
       {isEditing ? (
         <>
           <div className="w-fit p-3 border border-indigo-900 rounded-md flex flex-col gap-5 justify-center items-center max-w-[800px] g">
@@ -194,17 +238,17 @@ const Advertisement = ({ member, onEdit, onDelete, pfp, setPfp }) => {
                       target: {
                         name: e.target.name,
                         value: ["/about",
-                        "/",
-                        "/list-of-members",
-                        "/press",
-                        "/faqs",
-                        "/free-website",
-                        "/matrimony/biodata",
-                        "/matrimony/search-biodata",
-                        "/gallery",
-                        "/matrimony/add-biodata",
-                        "/membership-and-fees",
-                        "/study-abroad"],
+                          "/",
+                          "/list-of-members",
+                          "/press",
+                          "/faqs",
+                          "/free-website",
+                          "/matrimony/biodata",
+                          "/matrimony/search-biodata",
+                          "/gallery",
+                          "/matrimony/add-biodata",
+                          "/membership-and-fees",
+                          "/study-abroad"],
                       },
                     };
                   } else {
@@ -499,90 +543,66 @@ const Advertisement = ({ member, onEdit, onDelete, pfp, setPfp }) => {
         </>
       ) : (
         <>
-          <div className="overflow-x-auto fade-in w-full flex justify-center">
-            <table className="w-full border-2 border-[#305D2B] max-w-7xl">
-              <thead className="w-full">
-                <tr className="bg-[#305D2B] text-white w-full">
-                  <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
-                    Image
-                  </th>
-                  <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
-                    Title
-                  </th>
-                  {/* <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
-                    Description
-                  </th> */}
-                  <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
-                    Edit
-                  </th>
-                  <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
-                    Delete
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
+          <tr
+            key={_id}
+            className=" border-b border-[#EF4D48] w-full align-middle"
+          >
 
-                <tr>
-                  <td className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
-                    <img src={member.businessImage} alt="" className="object-cover rounded-full w-24 h-24" />
-                  </td>
-                  <td className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
-                    {member.title}
-                  </td>
-                  {/* <td className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
-                    {member.description}
-                  </td> */}
-                  <td className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
-                    <button
-                      onClick={() => {
-                        setIsEditing(true);
-                      }}
-                      type="button"
-                      className="group flex w-full items-center gap-2 justify-center max-w-[150px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 "
-                    >
-                      <p className="group-hover:-translate-x-1 transition duration-150 delay-150">
-                        Edit
-                      </p>{" "}
-                    </button>
-                  </td>
-                  <td className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
-                    <button
-                      onClick={() => {
-                        Swal.fire({
-                          title: "Are you sure?",
-                          text: "You won't be able to revert this!",
-                          icon: "warning",
-                          showCancelButton: true,
-                          confirmButtonColor: "#3085d6",
-                          cancelButtonColor: "#d33",
-                          confirmButtonText: "Yes, delete it!",
-                        }).then((result) => {
-                          if (result.isConfirmed) {
-                            onDelete(member._id);
-                            Swal.fire(
-                              "Deleted!",
-                              "Your file has been deleted.",
-                              "success"
-                            );
-                          }
-                        });
-                      }}
-                      type="button"
-                      className="group flex w-full items-center gap-2 justify-center max-w-[150px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 "
-                    >
-                      <p className="group-hover:-translate-x-1 transition duration-150 delay-150">
-                        Delete
-                      </p>{" "}
-                    </button>
-                  </td>
-                </tr>
+            <td className="  p-2 border-r border-[#EF4D48]  text-center   text-[#333] whitespace-nowrap font-bold font-Poppins">
+              <img src={member.businessImage} alt="" className="object-cover rounded-full w-24 h-24" />
+            </td>
+            <td className="p-2 border-r border-[#EF4D48]  text-center   text-[#333] whitespace-nowrap font-bold font-Poppins">
+              {member.title}
+            </td>
+            {/* Add more body columns as needed */}
+            <td className="p-2 border-r border-[#EF4D48]  text-center   text-[#333] whitespace-nowrap font-bold font-Poppins">
+              <button
+                onClick={() => {
+                  setIsEditing(true);
+                }}
+                type="button"
+                className="group flex w-full items-center gap-2 justify-center max-w-[150px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 "
+              >
+                <p className="group-hover:-translate-x-1 transition duration-150 delay-150">
+                  Edit
+                </p>{" "}
+              </button>
+            </td>
+            <td className="p-2 border-r border-[#EF4D48]  text-center   text-[#333] whitespace-nowrap font-bold font-Poppins">
+              <button
+               onClick={() => {
+                Swal.fire({
+                  title: "Are you sure?",
+                  text: "You won't be able to revert this!",
+                  icon: "warning",
+                  showCancelButton: true,
+                  confirmButtonColor: "#3085d6",
+                  cancelButtonColor: "#d33",
+                  confirmButtonText: "Yes, delete it!",
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    onDelete(member._id);
+                    Swal.fire(
+                      "Deleted!",
+                      "Your file has been deleted.",
+                      "success"
+                    );
+                  }
+                });
+              }}
+                type="button"
+                className="group flex w-full items-center gap-2 justify-center max-w-[150px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 "
+              >
+                <p className="group-hover:-translate-x-1 transition duration-150 delay-150">
+                  Delete
+                </p>{" "}
+              </button>
+            </td>
+          </tr>
 
-              </tbody>
-            </table>
-          </div>
         </>
       )}
-    </div>
+    </>
   );
 };
 

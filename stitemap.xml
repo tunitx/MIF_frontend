@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+    <!-- Homepage -->
+    <url>
+        <loc>https://bababatuni.in</loc>
+    </url>
+
+    <!-- About Page -->
+    <url>
+        <loc>https://bababatuni.in/about</loc>
+    </url>
+
+    <!-- List of Members Page -->
+    <url>
+        <loc>https://bababatuni.in/list-of-members</loc>
+    </url>
+
+    <!-- Press Page -->
+    <url>
+        <loc>https://bababatuni.in/press</loc>
+    </url>
+
+    <!-- Matrimony Page -->
+    <url>
+        <loc>https://bababatuni.in/matrimony</loc>
+    </url>
+
+    <!-- Gallery Page -->
+    <url>
+        <loc>https://bababatuni.in/gallery</loc>
+    </url>
+
+    <!-- Mission and Vision Page -->
+    <url>
+        <loc>https://bababatuni.in/mission-and-vision</loc>
+    </url>
+
+    <!-- Study Abroad Page -->
+    <url>
+        <loc>https://bababatuni.in/study-abroad</loc>
+    </url>
+
+    <!-- Disclaimer Page -->
+    <url>
+        <loc>https://bababatuni.in/disclaimer</loc>
+    </url>
+
+    <!-- FAQs Page -->
+    <url>
+        <loc>https://bababatuni.in/faqs</loc>
+    </url>
+
+    <!-- Contact Page -->
+    <url>
+        <loc>https://bababatuni.in/contact</loc>
+    </url>
+
+    <!-- MIF Core Members Page -->
+    <url>
+        <loc>https://bababatuni.in/mif-core-members</loc>
+    </url>
+
+    <!-- Government Registration Page -->
+    <url>
+        <loc>https://bababatuni.in/government-registration</loc>
+    </url>
+
+    <!-- Free Website Page -->
+    <url>
+        <loc>https://bababatuni.in/free-website</loc>
+    </url>
+
+    <!-- Book Marwadi Vyapari Page -->
+    <url>
+        <loc>https://bababatuni.in/book-marwadi-vyapari</loc>
+    </url>
+
+    <!-- Membership and Fees Page -->
+    <url>
+        <loc>https://bababatuni.in/membership-and-fees</loc>
+    </url>
+
+</urlset>

@@ -1,7 +1,7 @@
 import React from "react";
 import benefits1 from "../../../../assests/images/benefits1.png.webp";
-import benefits2 from "../../../../assests/images/benefits2.png";
-import benefits3 from "../../../../assests/images/benefits3.png";
+import benefits2 from "../../../../assests/images/benefits2.webp";
+import benefits3 from "../../../../assests/images/benefits3.webp";
 import CarouselImage from "../../../components/CarouselImage";
 import Carousel from "react-multi-carousel";
 import { responsive } from "../../../utils/constants";

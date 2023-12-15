@@ -91,12 +91,6 @@ function Registration() {
 
   // TICKET ISSUE : 6
 
-  // const [nativePlaceLocation, setNativePlaceLocation] = useState("");
-  // const [nativePlaceSelectedCountry, setNativePlaceSelectedCountry] =
-  //   useState("");
-  // const [nativePlaceSelectedState, setNativePlaceSelectedState] = useState("");
-  // const [nativePlaceSelectedCity, setNativePlaceSelectedCity] = useState("");
-  // const [nativeAddressOption, setNativeAddressOption] = useState("Different");
   const [currentAddressLocation, setCurrentAddressLocation] = useState("");
   const [currentAddressSelectedCountry, setCurrentAddressSelectedCountry] =
     useState("");
@@ -124,6 +118,9 @@ function Registration() {
   const [showPopup, setShowPopup] = useState(null);
 
   const [minDOB, setMinDOB] = useState("");
+
+  const [showPaternal, setShowPaternal] = useState(false);
+  const [showMaternal, setShowMaternal] = useState(false);
 
   const [validateFirstPhoneNumber, setValidateFirstPhonenumber] =
     useState(null);
@@ -249,49 +246,6 @@ function Registration() {
     }
   }, [location]);
 
-  // useEffect(() => {
-  //   if (nativePlaceLocation === "abroad") {
-  //     axios
-  //       .get("https://www.universal-tutorial.com/api/countries", config)
-  //       .then((response) => {
-  //         console.log(response.data);
-  //         setCountries(response.data);
-  //       })
-  //       .catch((error) => {
-  //         console.log("Error fetching countries: ", error);
-  //       });
-  //   }
-  // }, [nativePlaceLocation]);
-
-  // useEffect(() => {
-  //   if (nativePlaceSelectedCountry) {
-  //     axios
-  //       .get(
-  //         `https://www.universal-tutorial.com/api/states/${nativePlaceSelectedCountry}`,
-  //         config
-  //       )
-  //       .then((response) => setStates(response.data));
-  //   }
-  // }, [nativePlaceSelectedCountry]);
-
-  // useEffect(() => {
-  //   if (nativePlaceSelectedState) {
-  //     axios
-  //       .get(
-  //         `https://www.universal-tutorial.com/api/cities/${nativePlaceSelectedState}`,
-  //         config
-  //       )
-  //       .then((response) => setCities(response.data));
-  //   }
-  // }, [nativePlaceSelectedState]);
-
-  // useEffect(() => {
-  //   if (nativePlaceLocation === "india") {
-  //     setNativePlaceSelectedCountry("india");
-  //     formik.setFieldValue("nativePlaceCountry", "india");
-  //   }
-  // }, [nativePlaceLocation]);
-
   useEffect(() => {
     if (currentAddressLocation === "india") {
       setCurrentAddressSelectedCountry("india");
@@ -319,47 +273,7 @@ function Registration() {
     }
   }, [foundCaste]);
 
-  // if (!checked) return <div></div>;
 
-  // if (
-  //   matrimonyUserStore?.matrimonyUser === null ||
-  //   matrimonyUserStore?.matrimonyUserToken === null
-  // ) {
-  //   return (
-  //     <div className=" z-50 fixed flex flex-col justify-center gap-8 items-center w-screen h-screen top-0 left-0 bg-[#323233] bg-opacity-90 overflow-x-auto py-5 px-5">
-  //       <div className="w-full flex flex-col gap-8 justify-center items-center">
-  //         <div className="shadow-xl fade-in bg-[#f7f3f5] rounded-md p-8 flex max-w-full w-fit flex-col justify-center items-center gap-5 min-w-[350px]">
-  //           <p className="text-xl font-Poppins ">Proceed as : </p>
-
-  //           <button
-  //             className="group flex w-full items-center gap-2 justify-center max-w-[150px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 "
-  //             onClick={() => {
-  //               // navigate(`${redirect}`);
-  //             }}
-  //           >
-  //             New User
-  //           </button>
-  //           <button
-  //             className="group flex w-full items-center gap-2 justify-center max-w-[150px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 "
-  //             onClick={() => {
-  //               // navigate(`${redirect}`);
-  //             }}
-  //           >
-  //             Existing User
-  //           </button>
-  //           <button
-  //             className="group flex w-full items-center gap-2 justify-center max-w-[150px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 "
-  //             onClick={() => {
-  //               // navigate(`${redirect}`);
-  //             }}
-  //           >
-  //             Guest User
-  //           </button>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   );
-  // }
 
   function getGotra(surname) {
     let result = {};
@@ -516,7 +430,8 @@ function Registration() {
       if (
         formik.values.currentAddressLocation &&
         formik.values.currentAddressState &&
-        formik.values.currentAddressCity
+        formik.values.currentAddressCity &&
+        formik.values.currentAddressScope
       ) {
         setStep((prevStep) => prevStep + 1);
       } else {
@@ -794,12 +709,22 @@ function Registration() {
           console.log(values);
 
           // return;
+          const jwtToken = localStorage.getItem('jwtToken');
+
+          let fetchOptions = {
+            method: "POST",
+            body: formData,
+          };
+
+          if (jwtToken) {
+            fetchOptions.headers = {
+              'authorization': `Bearer ${jwtToken}`
+            };
+          }
+
 
           try {
-            const response = await fetch(POST_BIODATA, {
-              method: "POST",
-              body: formData,
-            });
+            const response = await fetch(POST_BIODATA,fetchOptions);
 
             setSubmitting(false);
             if (response.status === 200) {
@@ -823,9 +748,8 @@ function Registration() {
           formikRef.current = formik;
           return (
             <div
-              className={`w-full  max-w-6xl flex flex-col  items-center justify-center p-5 ${
-                formik.isSubmitting ? "opacity-50" : ""
-              }`}
+              className={`w-full  max-w-6xl flex flex-col  items-center justify-center p-5 ${formik.isSubmitting ? "opacity-50" : ""
+                }`}
             >
               <MultiStepProgressBar page={step} />
               <form
@@ -848,11 +772,10 @@ function Registration() {
                           // height={532}
                           viewBox="0 0 532 532"
                           xmlnsXlink="http://www.w3.org/1999/xlink"
-                          className={`fade-in w-full hover:cursor-pointer bg-[#f7f3f5] box-border shadow-xl delay-150 duration-300 transition-transform border-2 border-orange-500 rounded-full p-2 ${
-                            formik.values.gender === "male"
+                          className={`fade-in w-full hover:cursor-pointer bg-[#f7f3f5] box-border shadow-xl delay-150 duration-300 transition-transform border-2 border-orange-500 rounded-full p-2 ${formik.values.gender === "male"
                               ? ""
                               : "border-none hover:scale-110"
-                          } `}
+                            } `}
                           onClick={() => {
                             formik.setFieldValue("gender", "male");
                             setStep((s) => s + 1);
@@ -904,11 +827,10 @@ function Registration() {
                           // height={532}
                           viewBox="0 0 532 532"
                           xmlnsXlink="http://www.w3.org/1999/xlink"
-                          className={`fade-in w-full hover:cursor-pointer bg-[#f7f3f5] box-border delay-150 shadow-xl duration-300 transition-transform border-2 border-orange-500 rounded-full p-2 ${
-                            formik.values.gender === "female"
+                          className={`fade-in w-full hover:cursor-pointer bg-[#f7f3f5] box-border delay-150 shadow-xl duration-300 transition-transform border-2 border-orange-500 rounded-full p-2 ${formik.values.gender === "female"
                               ? ""
                               : "border-none hover:scale-110"
-                          }`}
+                            }`}
                           onClick={() => {
                             formik.setFieldValue("gender", "female");
                             setStep((s) => s + 1);
@@ -1378,24 +1300,6 @@ function Registration() {
                       <>
                         {/* At Step : 3,  commented the textarea field of current Address. TICKET ISSUE : 4*/}
 
-                        {/* <div className="CurrentAddressTushar w-full flex flex-col sm:flex-row justify-center gap-2 items-center">
-                    <label
-                      htmlFor="currentAddress"
-                      className="font-semibold text-sm self-start font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left"
-                    >
-                      Current Address* :
-                    </label>
-                    <textarea
-                      id="currentAddress"
-                      name="currentAddress"
-                      type="text"
-                      onChange={formik.handleChange}
-                      value={formik.values.currentAddress}
-                      placeholder="Address"
-                      className="grow border h-28 w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                    />
-                  </div> */}
-
                         {location === "abroad" && (
                           <div className="w-full fade-in flex flex-col gap-3 sm:flex-row md:gap-8">
                             {/* Country */}
@@ -1635,316 +1539,10 @@ function Registration() {
                         className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
                       />
                     </div>
-
-                    {/* <div className="w-full flex flex-col sm:flex-row justify-start gap-2 items-center">
-                <label
-                  htmlFor="nativeAddressOption"
-                  className="font-semibold text-sm font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left"
-                >
-                  Native Address* :
-                </label>
-                <select
-                  id="nativeAddressOption"
-                  name="nativeAddressOption"
-                  onChange={(e) => {
-                    setNativeAddressOption(e.target.value);
-                    if (e.target.value === "SameAsCurrentAddress") {
-                      formik.values.nativePlaceLocation =
-                        formik.values.currentAddressLocation;
-                      formik.values.nativePlaceCountry =
-                        formik.values.currentAddressCountry;
-                      formik.values.nativePlaceState =
-                        formik.values.currentAddressState;
-                      formik.values.nativePlaceCity =
-                        formik.values.currentAddressCity;
-                      formik.values.nativePlaceCurrentAddress =
-                        formik.values.currentAddressScope;
-                    } else if (e.target.value === "SameAsPlaceOfBirth") {
-                      formik.values.nativePlaceLocation =
-                        formik.values.location;
-                      formik.values.nativePlaceCountry = formik.values.country;
-                      formik.values.nativePlaceState = formik.values.state;
-                      formik.values.nativePlaceCity = formik.values.city;
-                      formik.values.nativePlaceCurrentAddress =
-                        formik.values.currentAddress;
-                    }
-                  }}
-                  value={nativeAddressOption}
-                  className="w-full sm:w-1/2 border rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                >
-                  <option value="Different">Different</option>
-                  <option value="SameAsPlaceOfBirth">
-                    Same as Place of Birth
-                  </option>
-                  <option value="SameAsCurrentAddress">
-                    Same as Current Address
-                  </option>
-                </select>
-              </div> */}
-
-                    {/* {nativeAddressOption === "Different" && (
-                <>
-                  <div className="w-full flex gap-2 items-center justify-center sm:justify-start">
-                    <label
-                      htmlFor="nativePlaceLocation"
-                      className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] text-left"
-                    >
-                      Address* :
-                    </label>
-                    <select
-                      id="nativePlaceLocation"
-                      name="nativePlaceLocation"
-                      value={formik.values.nativePlaceLocation}
-                      onChange={(e) => {
-                        setNativePlaceLocation(e.target.value);
-                        formik.setFieldValue(
-                          "nativePlaceLocation",
-                          e.target.value
-                        );
-                      }}
-                      className="w-full sm:w-1/2 border  rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                    >
-                      <option value="">Select Location</option>
-                      <option value="india">India</option>
-                      <option value="abroad">Abroad</option>
-                    </select>
-                  </div> */}
-
-                    {/* {nativePlaceLocation && (
-                    <>
-                      <div className="w-full flex flex-col sm:flex-row justify-center gap-2 items-center">
-                        <label
-                          htmlFor="nativePlaceCurrentAddress"
-                          className="font-semibold text-sm self-start font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left"
-                        >
-                          Current Address at Native Place* :
-                        </label>
-                        <textarea
-                          id="nativePlaceCurrentAddress"
-                          name="nativePlaceCurrentAddress"
-                          type="text"
-                          onChange={formik.handleChange}
-                          value={formik.values.nativePlaceCurrentAddress}
-                          placeholder="Address"
-                          className="grow border h-28 w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                        />
-                      </div> */}
-
-                    {/* {nativePlaceLocation === "abroad" && (
-                        <div className="w-full fade-in flex flex-col gap-3 sm:flex-row md:gap-8"> */}
-                    {/* Country */}
-
-                    {/* <div className="w-full flex gap-2 items-center justify-center">
-                            <label
-                              htmlFor="nativePlaceCountry"
-                              className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
-                            >
-                              Country* :
-                            </label>
-                            <select
-                              id="nativePlaceCountry"
-                              name="nativePlaceCountry"
-                              onChange={(e) => {
-                                setNativePlaceSelectedCountry(e.target.value);
-                                formik.setFieldValue(
-                                  "nativePlaceCountry",
-                                  e.target.value
-                                );
-                              }}
-                              value={nativePlaceSelectedCountry}
-                              className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                            >
-                              {countries.map((country) => (
-                                <option
-                                  key={country.country_name}
-                                  value={country.country_name}
-                                >
-                                  {country.country_name}
-                                </option>
-                              ))}
-                            </select>
-                          </div> */}
-
-                    {/* State */}
-
-                    {/* <div className="w-full flex gap-2 items-center justify-center">
-                            <label
-                              htmlFor="nativePlaceState"
-                              className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
-                            >
-                              State* :
-                            </label>
-                            <select
-                              id="nativePlaceState"
-                              name="nativePlaceState"
-                              onChange={(e) => {
-                                setNativePlaceSelectedState(e.target.value);
-                                formik.setFieldValue(
-                                  "nativePlaceState",
-                                  e.target.value
-                                );
-                              }}
-                              value={nativePlaceSelectedState}
-                              className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                            >
-                              {states.map((state) => (
-                                <option
-                                  key={state.state_name}
-                                  value={state.state_name}
-                                >
-                                  {state.state_name}
-                                </option>
-                              ))}
-                            </select>
-                          </div> */}
-
-                    {/* City */}
-                    {/* 
-                          <div className="w-full flex gap-2 items-center justify-center">
-                            <label
-                              htmlFor="nativePlaceCity"
-                              className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
-                            >
-                              City* :
-                            </label>
-                            <select
-                              id="nativePlaceCity"
-                              name="nativePlaceCity"
-                              onChange={(e) => {
-                                setNativePlaceSelectedCity(e.target.value);
-                                formik.setFieldValue(
-                                  "nativePlaceCity",
-                                  e.target.value
-                                );
-                              }}
-                              value={nativePlaceSelectedCity}
-                              className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                            >
-                              {cities.map((city) => (
-                                <option
-                                  key={city.city_name}
-                                  value={city.city_name}
-                                >
-                                  {city.city_name}
-                                </option>
-                              ))}
-                            </select>
-                          </div> */}
-                    {/* </div>
-                      )} */}
-
-                    {/* {nativePlaceLocation === "india" && (
-                        <div className="w-full fade-in flex flex-col gap-3 sm:flex-row md:gap-8"> */}
-                    {/* State */}
-                    {/* <div className="w-full flex gap-2 items-center justify-center">
-                            <label
-                              htmlFor="nativePlaceState"
-                              className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
-                            >
-                              State* :
-                            </label>
-                            <select
-                              id="nativePlaceState"
-                              name="nativePlaceState"
-                              onChange={(e) => {
-                                setNativePlaceSelectedState(e.target.value);
-                                formik.setFieldValue(
-                                  "nativePlaceState",
-                                  e.target.value
-                                );
-                              }}
-                              value={formik.values.nativePlaceState}
-                              className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                            >
-                              <option value="" disabled>
-                                Select a state
-                              </option>
-                              {Object.keys(indiaStates).map((state) => (
-                                <option key={state} value={state}>
-                                  {state}
-                                </option>
-                              ))}
-                            </select>
-                          </div> */}
-
-                    {/* City */}
-                    {/* <div className="w-full flex gap-2 items-center justify-center">
-                            <label
-                              htmlFor="nativePlaceCity"
-                              className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
-                            >
-                              City*
-                            </label>
-                            <select
-                              id="nativePlaceCity"
-                              name="nativePlaceCity"
-                              value={formik.values.nativePlaceCity}
-                              onChange={(e) => {
-                                setNativePlaceSelectedCity(e.target.value);
-                                formik.setFieldValue(
-                                  "nativePlaceCity",
-                                  e.target.value
-                                );
-                              }}
-                              className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                            >
-                              <option value="" disabled>
-                                Select a City
-                              </option>
-                              {nativePlaceSelectedState &&
-                                indiaStates[nativePlaceSelectedState].map(
-                                  (district) => (
-                                    <option key={district} value={district}>
-                                      {district}
-                                    </option>
-                                  )
-                                )}
-                            </select>
-                          </div> */}
-                    {/* </div>
-                      )}
-                    </>
-                  )}
-                </>
-              )}*/}
                   </div>
                 )}
                 {step === 4 && (
                   <div className="w-full fade-in gap-8 flex flex-col justify-center items-center">
-                    {/* <div className="w-full flex flex-col sm:flex-row justify-start gap-2 items-center">
-                <label
-                  htmlFor="currentAddressOption"
-                  className="font-semibold text-sm font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left"
-                >
-                  Present Address* :
-                </label>
-                <select
-                  id="nativeAddressOption"
-                  name="nativeAddressOption"
-                  onChange={(e) => {
-                    setCurrentAddressOption(e.target.value);
-
-                    if (e.target.value === "SameAsPlaceOfBirth") {
-                      formik.values.currentAddressLocation =
-                        formik.values.location;
-                      formik.values.currentAddressCountry =
-                        formik.values.country;
-                      formik.values.currentAddressState = formik.values.state;
-                      formik.values.currentAddressCity = formik.values.city;
-                      formik.values.currentAddressScope =
-                        formik.values.currentAddress;
-                    }
-                  }}
-                  value={currentAddressOption}
-                  className="w-full sm:w-1/2 border rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                >
-                  <option value="Different">Different</option>
-                  <option value="SameAsPlaceOfBirth">
-                    Same as Place of Birth
-                  </option>
-                </select>
-              </div> */}
-
                     {/* TICKET ISSUE : 5, changed current address to present address and removed the option of present address being same as birth address.*/}
 
                     <>
@@ -2160,7 +1758,7 @@ function Registration() {
                                 <select
                                   id="currentAddressCity"
                                   name="currentAddressCity"
-                                  // value={formik.values.currentAddressCity}
+                                  value={formik.values.currentAddressCity}
                                   onChange={(e) => {
                                     setCurrentAddressSelectedCity(
                                       e.target.value
@@ -3094,7 +2692,7 @@ function Registration() {
                                           />
                                         </div>
                                         {index === 0 &&
-                                        validateFirstPhoneNumber ? (
+                                          validateFirstPhoneNumber ? (
                                           <p className="mt-1 fade-in text-sm fade-in font-mono leading-6 text-[#EF4D48]">
                                             {validateFirstPhoneNumber}
                                           </p>
@@ -3464,268 +3062,298 @@ function Registration() {
 
                     {/* Paternal Family */}
 
-                    <div className="w-full flex flex-col gap-5 border border-indigo-700 rounded-md p-5 md:gap-8">
-                      <p className="w-full text-center font-Poppins text-sm font-semibold text-[#EF4D48]">
-                        Paternal Family
+                    <div className="w-full flex flex-col gap-5   md:gap-8">
+                      <p
+                        className="w-full text-center hover:cursor-pointer flex gap-3 font-Poppins text-sm items-center font-semibold text-[#EF4D48]"
+                        onClick={() => {
+                          setShowPaternal((p) => !p);
+                        }}
+                      >
+                        <span>Paternal Family</span>{" "}
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          height="1rem"
+                          className="fill-[#EF4D48]"
+                          viewBox="0 0 448 512"
+                        >
+                          {/*!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.*/}
+                          <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z" />
+                        </svg>
                       </p>
 
-                      <div className="w-full flex flex-col  justify-center items-center gap-3">
-                        {/* Paternal GrandParent */}
+                      {showPaternal && (
+                        <div className="w-full flex flex-col fade-in  justify-center items-center gap-3">
+                          {/* Paternal GrandParent */}
 
-                        <div className="w-full flex flex-col sm:flex-row justify-center items-center gap-3">
-                          {/* Paternal GrandFather Name */}
+                          <div className="w-full flex flex-col sm:flex-row justify-center items-center gap-3">
+                            {/* Paternal GrandFather Name */}
 
-                          <div className="w-full flex flex-col sm:flex-row justify-center gap-2 items-center">
-                            <label
-                              htmlFor="paternalGrandFatherName"
-                              className="font-semibold text-sm font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left"
-                            >
-                              GrandFather's Name :
-                            </label>
-                            <input
-                              id="paternalGrandFatherName"
-                              name="paternalGrandFatherName"
-                              type="text"
-                              onChange={(e) => {
-                                let a = e.target.value;
-                                a = a.replace(/\b\w/g, (match) =>
-                                  match.toUpperCase()
-                                );
-                                formik.setFieldValue(
-                                  "paternalGrandFatherName",
-                                  a
-                                );
-                              }}
-                              value={formik.values.paternalGrandFatherName}
-                              placeholder="Name"
-                              className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                            />
+                            <div className="w-full flex flex-col sm:flex-row justify-center gap-2 items-center">
+                              <label
+                                htmlFor="paternalGrandFatherName"
+                                className="font-semibold text-sm font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left"
+                              >
+                                GrandFather's Name :
+                              </label>
+                              <input
+                                id="paternalGrandFatherName"
+                                name="paternalGrandFatherName"
+                                type="text"
+                                onChange={(e) => {
+                                  let a = e.target.value;
+                                  a = a.replace(/\b\w/g, (match) =>
+                                    match.toUpperCase()
+                                  );
+                                  formik.setFieldValue(
+                                    "paternalGrandFatherName",
+                                    a
+                                  );
+                                }}
+                                value={formik.values.paternalGrandFatherName}
+                                placeholder="Name"
+                                className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                              />
+                            </div>
+
+                            {/* Paternal GrandMother Name */}
+
+                            <div className="w-full flex flex-col sm:flex-row justify-center gap-2 items-center">
+                              <label
+                                htmlFor="paternalGrandMotherName"
+                                className="font-semibold text-sm font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left"
+                              >
+                                GrandMother's Name :
+                              </label>
+                              <input
+                                id="paternalGrandMotherName"
+                                name="paternalGrandMotherName"
+                                type="text"
+                                onChange={(e) => {
+                                  let a = e.target.value;
+                                  // a = a.replace(/\b\w/g, (match) =>
+                                  //   match.toUpperCase()
+                                  // );
+                                  formik.setFieldValue(
+                                    "paternalGrandMotherName",
+                                    a
+                                  );
+                                }}
+                                value={formik.values.paternalGrandMotherName}
+                                placeholder="Name"
+                                className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                              />
+                            </div>
                           </div>
 
-                          {/* Paternal GrandMother Name */}
+                          {/* Paternal Uncle-Aunt */}
 
-                          <div className="w-full flex flex-col sm:flex-row justify-center gap-2 items-center">
-                            <label
-                              htmlFor="paternalGrandMotherName"
-                              className="font-semibold text-sm font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left"
-                            >
-                              GrandMother's Name :
-                            </label>
-                            <input
-                              id="paternalGrandMotherName"
-                              name="paternalGrandMotherName"
-                              type="text"
-                              onChange={(e) => {
-                                let a = e.target.value;
-                                // a = a.replace(/\b\w/g, (match) =>
-                                //   match.toUpperCase()
-                                // );
-                                formik.setFieldValue(
-                                  "paternalGrandMotherName",
-                                  a
-                                );
-                              }}
-                              value={formik.values.paternalGrandMotherName}
-                              placeholder="Name"
-                              className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                            />
-                          </div>
-                        </div>
+                          <div className="w-full flex flex-col gap-3 sm:flex-row md:gap-8">
+                            <div className="w-full flex gap-2 flex-col items-center justify-center">
+                              <label
+                                htmlFor="paternalUncleAunt"
+                                className="font-semibold w-full text-left text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
+                              >
+                                Uncle-Aunt :
+                              </label>
 
-                        {/* Paternal Uncle-Aunt */}
+                              <FieldArray
+                                name="paternalUncleAunt"
+                                render={(arrayHelpers) => (
+                                  <div className="w-full flex flex-col gap-3">
+                                    <div className="w-full flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:justify-start items-center">
+                                      {formik.values.paternalUncleAunt &&
+                                        formik.values.paternalUncleAunt.map(
+                                          (email, index) => (
+                                            <div
+                                              key={index}
+                                              className=" w-full max-w-sm"
+                                            >
+                                              <input
+                                                name={`paternalUncleAunt.${index}`}
+                                                type="text"
+                                                onChange={formik.handleChange}
+                                                value={
+                                                  formik.values
+                                                    .paternalUncleAunt[index]
+                                                }
+                                                placeholder="Uncle-Aunt"
+                                                className="grow border fade-in w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                                              />
+                                              {/* <Field name={`phoneNumbers.${index}`} /> */}
+                                            </div>
+                                          )
+                                        )}
+                                    </div>
 
-                        <div className="w-full flex flex-col gap-3 sm:flex-row md:gap-8">
-                          <div className="w-full flex gap-2 flex-col items-center justify-center">
-                            <label
-                              htmlFor="paternalUncleAunt"
-                              className="font-semibold w-full text-left text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
-                            >
-                              Uncle-Aunt :
-                            </label>
-
-                            <FieldArray
-                              name="paternalUncleAunt"
-                              render={(arrayHelpers) => (
-                                <div className="w-full flex flex-col gap-3">
-                                  <div className="w-full flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:justify-start items-center">
-                                    {formik.values.paternalUncleAunt &&
-                                      formik.values.paternalUncleAunt.map(
-                                        (email, index) => (
-                                          <div
-                                            key={index}
-                                            className=" w-full max-w-sm"
-                                          >
-                                            <input
-                                              name={`paternalUncleAunt.${index}`}
-                                              type="text"
-                                              onChange={formik.handleChange}
-                                              value={
-                                                formik.values.paternalUncleAunt[
-                                                  index
-                                                ]
-                                              }
-                                              placeholder="Uncle-Aunt"
-                                              className="grow border fade-in w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                                            />
-                                            {/* <Field name={`phoneNumbers.${index}`} /> */}
-                                          </div>
-                                        )
+                                    {/* <div className="w-full justify-center sm:justify-start flex"> */}
+                                    {formik.values.paternalUncleAunt.length <
+                                      3 && (
+                                        <button
+                                          onClick={() => arrayHelpers.push("")}
+                                          type="button"
+                                          className="group flex w-full items-center gap-2 justify-center max-w-[100px] rounded-md bg-[#EF4D48] px-2 py-2 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2"
+                                        >
+                                          {/* <p className="transition duration-150 delay-150"> */}
+                                          Add more
+                                          {/* </p> */}
+                                        </button>
                                       )}
+                                    {/* </div> */}
                                   </div>
-
-                                  {/* <div className="w-full justify-center sm:justify-start flex"> */}
-                                  {formik.values.paternalUncleAunt.length <
-                                    3 && (
-                                    <button
-                                      onClick={() => arrayHelpers.push("")}
-                                      type="button"
-                                      className="group flex w-full items-center gap-2 justify-center max-w-[100px] rounded-md bg-[#EF4D48] px-2 py-2 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2"
-                                    >
-                                      {/* <p className="transition duration-150 delay-150"> */}
-                                      Add more
-                                      {/* </p> */}
-                                    </button>
-                                  )}
-                                  {/* </div> */}
-                                </div>
-                              )}
-                            />
+                                )}
+                              />
+                            </div>
                           </div>
                         </div>
-                      </div>
+                      )}
                     </div>
 
                     {/* Maternal Family */}
 
-                    <div className="w-full flex flex-col gap-5 border border-indigo-700 rounded-md p-5 md:gap-8">
-                      <p className="w-full text-center  font-Poppins text-sm font-semibold text-[#EF4D48]">
-                        Maternal Family
+                    <div className="w-full flex flex-col gap-5  md:gap-8">
+                      <p
+                        className="w-full text-center hover:cursor-pointer flex gap-3 font-Poppins text-sm items-center font-semibold text-[#EF4D48]"
+                        onClick={() => {
+                          setShowMaternal((p) => !p);
+                        }}
+                      >
+                        <span> Maternal Family</span>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          height="1rem"
+                          className="fill-[#EF4D48]"
+                          viewBox="0 0 448 512"
+                        >
+                          {/*!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.*/}
+                          <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z" />
+                        </svg>
                       </p>
 
-                      <div className="w-full flex flex-col  justify-center items-center gap-3">
-                        {/* Maternal GrandParent */}
+                      {showMaternal && (
+                        <div className="w-full flex flex-col  justify-center items-center gap-3">
+                          {/* Maternal GrandParent */}
 
-                        <div className="w-full flex flex-col sm:flex-row justify-center items-center gap-3">
-                          {/* Maternal GrandFather Name */}
+                          <div className="w-full flex flex-col sm:flex-row justify-center items-center gap-3">
+                            {/* Maternal GrandFather Name */}
 
-                          <div className="w-full flex flex-col sm:flex-row justify-center gap-2 items-center">
-                            <label
-                              htmlFor="maternalGrandFatherName"
-                              className="font-semibold text-sm font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left"
-                            >
-                              GrandFather's Name :
-                            </label>
-                            <input
-                              id="maternalGrandFatherName"
-                              name="maternalGrandFatherName"
-                              type="text"
-                              onChange={(e) => {
-                                let a = e.target.value;
-                                a = a.replace(/\b\w/g, (match) =>
-                                  match.toUpperCase()
-                                );
-                                formik.setFieldValue(
-                                  "maternalGrandFatherName",
-                                  a
-                                );
-                              }}
-                              value={formik.values.maternalGrandFatherName}
-                              placeholder="Name"
-                              className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                            />
+                            <div className="w-full flex flex-col sm:flex-row justify-center gap-2 items-center">
+                              <label
+                                htmlFor="maternalGrandFatherName"
+                                className="font-semibold text-sm font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left"
+                              >
+                                GrandFather's Name :
+                              </label>
+                              <input
+                                id="maternalGrandFatherName"
+                                name="maternalGrandFatherName"
+                                type="text"
+                                onChange={(e) => {
+                                  let a = e.target.value;
+                                  a = a.replace(/\b\w/g, (match) =>
+                                    match.toUpperCase()
+                                  );
+                                  formik.setFieldValue(
+                                    "maternalGrandFatherName",
+                                    a
+                                  );
+                                }}
+                                value={formik.values.maternalGrandFatherName}
+                                placeholder="Name"
+                                className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                              />
+                            </div>
+
+                            {/* Maternal GrandMother Name */}
+
+                            <div className="w-full flex flex-col sm:flex-row justify-center gap-2 items-center">
+                              <label
+                                htmlFor="maternalGrandMotherName"
+                                className="font-semibold text-sm font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left"
+                              >
+                                GrandMother's Name :
+                              </label>
+                              <input
+                                id="maternalGrandMotherName"
+                                name="maternalGrandMotherName"
+                                type="text"
+                                onChange={(e) => {
+                                  let a = e.target.value;
+                                  // a = a.replace(/\b\w/g, (match) =>
+                                  //   match.toUpperCase()
+                                  // );
+                                  formik.setFieldValue(
+                                    "maternalGrandMotherName",
+                                    a
+                                  );
+                                }}
+                                value={formik.values.maternalGrandMotherName}
+                                placeholder="Name"
+                                className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                              />
+                            </div>
                           </div>
 
-                          {/* Maternal GrandMother Name */}
+                          {/* Maternal Uncle-Aunt */}
 
-                          <div className="w-full flex flex-col sm:flex-row justify-center gap-2 items-center">
-                            <label
-                              htmlFor="maternalGrandMotherName"
-                              className="font-semibold text-sm font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left"
-                            >
-                              GrandMother's Name :
-                            </label>
-                            <input
-                              id="maternalGrandMotherName"
-                              name="maternalGrandMotherName"
-                              type="text"
-                              onChange={(e) => {
-                                let a = e.target.value;
-                                // a = a.replace(/\b\w/g, (match) =>
-                                //   match.toUpperCase()
-                                // );
-                                formik.setFieldValue(
-                                  "maternalGrandMotherName",
-                                  a
-                                );
-                              }}
-                              value={formik.values.maternalGrandMotherName}
-                              placeholder="Name"
-                              className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                            />
-                          </div>
-                        </div>
+                          <div className="w-full flex flex-col gap-3 sm:flex-row md:gap-8">
+                            <div className="w-full flex gap-2 flex-col items-center justify-center">
+                              <label
+                                htmlFor="maternalUncleAunt"
+                                className="font-semibold w-full text-left text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
+                              >
+                                Uncle-Aunt :
+                              </label>
 
-                        {/* Maternal Uncle-Aunt */}
+                              <FieldArray
+                                name="maternalUncleAunt"
+                                render={(arrayHelpers) => (
+                                  <div className="w-full flex flex-col gap-3">
+                                    <div className="w-full flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:justify-start items-center">
+                                      {formik.values.maternalUncleAunt &&
+                                        formik.values.maternalUncleAunt.map(
+                                          (email, index) => (
+                                            <div
+                                              key={index}
+                                              className=" w-full max-w-sm"
+                                            >
+                                              <input
+                                                name={`maternalUncleAunt.${index}`}
+                                                type="text"
+                                                onChange={formik.handleChange}
+                                                value={
+                                                  formik.values
+                                                    .maternalUncleAunt[index]
+                                                }
+                                                placeholder="Uncle-Aunt"
+                                                className="grow border fade-in w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                                              />
+                                              {/* <Field name={`phoneNumbers.${index}`} /> */}
+                                            </div>
+                                          )
+                                        )}
+                                    </div>
 
-                        <div className="w-full flex flex-col gap-3 sm:flex-row md:gap-8">
-                          <div className="w-full flex gap-2 flex-col items-center justify-center">
-                            <label
-                              htmlFor="maternalUncleAunt"
-                              className="font-semibold w-full text-left text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
-                            >
-                              Uncle-Aunt :
-                            </label>
-
-                            <FieldArray
-                              name="maternalUncleAunt"
-                              render={(arrayHelpers) => (
-                                <div className="w-full flex flex-col gap-3">
-                                  <div className="w-full flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:justify-start items-center">
-                                    {formik.values.maternalUncleAunt &&
-                                      formik.values.maternalUncleAunt.map(
-                                        (email, index) => (
-                                          <div
-                                            key={index}
-                                            className=" w-full max-w-sm"
-                                          >
-                                            <input
-                                              name={`maternalUncleAunt.${index}`}
-                                              type="text"
-                                              onChange={formik.handleChange}
-                                              value={
-                                                formik.values.maternalUncleAunt[
-                                                  index
-                                                ]
-                                              }
-                                              placeholder="Uncle-Aunt"
-                                              className="grow border fade-in w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                                            />
-                                            {/* <Field name={`phoneNumbers.${index}`} /> */}
-                                          </div>
-                                        )
+                                    {/* <div className="w-full justify-center sm:justify-start flex"> */}
+                                    {formik.values.maternalUncleAunt.length <
+                                      3 && (
+                                        <button
+                                          onClick={() => arrayHelpers.push("")}
+                                          type="button"
+                                          className="group flex w-full items-center gap-2 justify-center max-w-[100px] rounded-md bg-[#EF4D48] px-2 py-2 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2"
+                                        >
+                                          {/* <p className="transition duration-150 delay-150"> */}
+                                          Add more
+                                          {/* </p> */}
+                                        </button>
                                       )}
+                                    {/* </div> */}
                                   </div>
-
-                                  {/* <div className="w-full justify-center sm:justify-start flex"> */}
-                                  {formik.values.maternalUncleAunt.length <
-                                    3 && (
-                                    <button
-                                      onClick={() => arrayHelpers.push("")}
-                                      type="button"
-                                      className="group flex w-full items-center gap-2 justify-center max-w-[100px] rounded-md bg-[#EF4D48] px-2 py-2 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2"
-                                    >
-                                      {/* <p className="transition duration-150 delay-150"> */}
-                                      Add more
-                                      {/* </p> */}
-                                    </button>
-                                  )}
-                                  {/* </div> */}
-                                </div>
-                              )}
-                            />
+                                )}
+                              />
+                            </div>
                           </div>
                         </div>
-                      </div>
+                      )}
                     </div>
                   </div>
                 )}
@@ -3878,11 +3506,10 @@ function Registration() {
                   )}
                   {step < 8 && step > 1 && (
                     <div
-                      className={`w-full  flex ${
-                        step === 1
+                      className={`w-full  flex ${step === 1
                           ? "justify-center"
                           : "sm:justify-end justify-center"
-                      }`}
+                        }`}
                     >
                       <button
                         onClick={() => {

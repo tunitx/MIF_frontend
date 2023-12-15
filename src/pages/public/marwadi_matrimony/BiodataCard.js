@@ -54,9 +54,9 @@ const BiodataCard = ({ data }) => {
   ageInYear = calculateAge(dob);
 
   return (
-    <div className="sm:w-1/2 w-full lg:w-1/3 2xl:w-1/4  flex flex-col gap-4 h-full">
-      <div className="w-full p-3 border border-indigo-900 rounded-md flex flex-col gap-5 justify-center items-center">
-        <div className="p-5 pb-0 h-52 w-52">
+    <div className="w-full flex flex-col gap-4 min-h-full ">
+      <div className="w-full min-h-full p-3 border border-indigo-900 rounded-md flex flex-col gap-5 justify-start items-center">
+        <div className="h-52 w-52 mt-2">
           <img src={image1} className="rounded-md h-52 w-52 overflow-hidden" />
         </div>
 
@@ -156,16 +156,14 @@ const BiodataCard = ({ data }) => {
         <div className="w-full flex flex-col gap-2 justify-center">
           {/* Native Place */}
 
-          {nativePlace && nativePlace !== "" && (
-            <div className="w-full flex flex-col justify-center">
-              <p className="w-full text-center font-lg font-Poppins font-bold text-gray-900">
-                Native Place :
-              </p>
-              <p className="w-full text-justify font-sm text-gray-700 font-normal">
-                {nativePlace}
-              </p>
-            </div>
-          )}
+          <div className="w-full flex flex-col justify-center">
+            <p className="w-full text-center font-lg font-Poppins font-bold text-gray-900">
+              Native Place :
+            </p>
+            <p className="w-full text-center font-sm text-gray-700 font-normal">
+              {nativePlace !== "" ? nativePlace : "-"}
+            </p>
+          </div>
 
           {/* Present Address */}
 
@@ -173,22 +171,20 @@ const BiodataCard = ({ data }) => {
             <p className="w-full text-center font-lg font-Poppins font-bold text-gray-900">
               Present Address :
             </p>
-            <p className="w-full text-justify font-sm text-gray-700 font-normal">
+            <p className="w-full text-center font-sm text-gray-700 font-normal">
               {currentAddressScope}, {currentAddressCity}, {currentAddressState}
               , {currentAddressCountry}
             </p>
           </div>
 
-          {preference && preference !== "" && (
-            <div className="w-full flex flex-col justify-center">
-              <p className="w-full text-center font-lg font-Poppins font-bold text-gray-900">
-                Preference :
-              </p>
-              <p className="w-full text-justify font-sm text-gray-700 font-normal">
-                {preference}
-              </p>
-            </div>
-          )}
+          <div className="w-full flex flex-col justify-center">
+            <p className="w-full text-center font-lg font-Poppins font-bold text-gray-900">
+              Preference :
+            </p>
+            <p className="w-full text-center font-sm text-gray-700 font-normal">
+              {preference !== "" ? preference : "-"}
+            </p>
+          </div>
         </div>
       </div>
     </div>

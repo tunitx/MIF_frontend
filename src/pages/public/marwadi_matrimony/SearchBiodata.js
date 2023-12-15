@@ -41,8 +41,6 @@ function SearchBiodata() {
 
   const [minAge, setMinAge] = useState(null);
 
-  console.log(searchedBiodatas);
-
   useEffect(() => {
     setFilteredBioDatas(searchedBiodatas);
   }, [searchedBiodatas]);
@@ -636,7 +634,7 @@ function SearchBiodata() {
           </div>
 
           {filteredBiodatas && (
-            <div className="w-full flex lg:flex-row flex-col gap-8  justify-center">
+            <div className="w-full flex md:flex-row flex-col gap-8  justify-center">
               <FilterSection
                 filteredBiodatas={filteredBiodatas}
                 setFilteredBioDatas={setFilteredBioDatas}
@@ -645,7 +643,7 @@ function SearchBiodata() {
 
               <div className="w-full flex justify-center items-center">
                 {filteredBiodatas && filteredBiodatas?.length === 0 ? (
-                  <div className="w-full flex flex-col justify-center items-center gap-8">
+                  <div className="w-full fade-in flex flex-col justify-center items-center gap-8">
                     <div className="w-full flex flex-col justify-center items-center gap-2">
                       <p className="w-full text-center font-Poppins text-xl font-semibold text-[#EF4D48]">
                         Sorry, no Biodata available...
@@ -656,7 +654,7 @@ function SearchBiodata() {
                     </div>
                   </div>
                 ) : (
-                  <div className="w-full flex flex-row flex-wrap  gap-4 justify-center items-center">
+                  <div className="w-full grid grid-col-1 sm:grid-cols-2 lg:grid-cols-3   gap-4">
                     {filteredBiodatas.map((biodata) => {
                       return <BiodataCard key={biodata._id} data={biodata} />;
                     })}

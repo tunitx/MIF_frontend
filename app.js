@@ -22,6 +22,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import Matrimony_Home from "./src/pages/public/marwadi_matrimony/Home";
+import BiodataTable from "./src/pages/public/marwadi_matrimony/MarriageUserBiodataCard";
 
 // admin
 // import Adverisement from "./src/pages/admin/advertisment-board/Advertisment";
@@ -125,6 +126,10 @@ const appRoutes = createBrowserRouter([
               {
                 path: "search-biodata",
                 element: <SearchBiodata />,
+              },
+              {
+                path: "biodata",
+                element: <BiodataTable />,
               },
             ],
           },

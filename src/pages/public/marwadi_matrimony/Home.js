@@ -6,8 +6,14 @@ import ConsentSearchBiodata from "./ConsentSearchBiodata";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { BASE_URL } from "../../../utils/constants";
+// import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 
 const Home = () => {
+  // const history = useHistory();
+  const navigate = useNavigate();
+
   const [action, setAction] = useState(null);
   const handleActionState = (path) => {
     setAction(path);
@@ -140,19 +146,33 @@ const Home = () => {
           >
             <span>Search</span> <strong>BioData</strong>
           </button>
-          {localStorage.getItem("jwtToken") && (
-            <button
-              className="flex gap-2  justify-center font-Poppins rounded-md bg-indigo-600 px-5 py-4 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              onClick={() => {
-                Swal.fire("Logged out", "Please sign in/sign up", "info");
-                localStorage.removeItem("jwtToken");
 
-                setAction(action === null ? undefined : null);
-                handleAction("/matrimony/add-biodata", "loggedOut");
-              }}
-            >
-              <span>Log out</span>
-            </button>
+
+
+          {localStorage.getItem("jwtToken") && (
+            <>
+              <button
+                onClick={() => {
+                  navigate("/matrimony/biodata");
+                }}
+                className="flex gap-2  justify-center font-Poppins rounded-md bg-indigo-600 px-5 py-4 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              >
+                <span>View</span> <strong>BioDatas</strong>
+              </button>
+
+              {/* <button
+            className="flex gap-2  justify-center font-Poppins rounded-md bg-indigo-600 px-5 py-4 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            onClick={() => {
+              Swal.fire("Logged out", "Please sign in/sign up", "info");
+              localStorage.removeItem("jwtToken");
+
+              setAction(action === null ? undefined : null);
+              handleAction("/matrimony/add-biodata", "loggedOut");
+            }}
+          >
+            <span>Log out</span>
+          </button> */}
+            </>
           )}
         </div>
       </div>

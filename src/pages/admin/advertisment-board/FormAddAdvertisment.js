@@ -33,11 +33,8 @@ const FormAddAdvertisment = () => {
         youtube: "",
         website: "",
         slugs: [],
-
       }}
       onSubmit={async (values, { setSubmitting, resetForm }) => {
-        // console.log(values);
-
         const reqBody = new FormData();
         reqBody.append("businessImage", values.businessImage);
         reqBody.append("title", values.title);
@@ -134,7 +131,6 @@ const FormAddAdvertisment = () => {
                     </div>
                   </div>
 
-
                   {/* BUSINESS TITLE */}
 
                   <div>
@@ -156,6 +152,8 @@ const FormAddAdvertisment = () => {
                     </div>
                   </div>
 
+                  {/* Slugs */}
+
                   <div className="flex flex-col gap-2">
                     <label
                       htmlFor="slugs"
@@ -167,8 +165,25 @@ const FormAddAdvertisment = () => {
                       name="slugs"
                       multiple
                       onChange={(e) => {
-                        if (Array.from(e.target.selectedOptions).map(o => o.value).includes('all')) {
-                          formik.setFieldValue('slugs', ['/about', '/', '/list-of-members']);
+                        if (
+                          Array.from(e.target.selectedOptions)
+                            .map((o) => o.value)
+                            .includes("all")
+                        ) {
+                          formik.setFieldValue("slugs", [
+                            "/about",
+                            "/",
+                            "/list-of-members",
+                            "/press",
+                            "/faqs",
+                            "/free-website",
+                            "/matrimony/biodata",
+                            "/matrimony/search-biodata",
+                            "/gallery",
+                            "/matrimony/add-biodata",
+                            "/membership-and-fees",
+                            "/study-abroad",
+                          ]);
                         } else {
                           formik.handleChange(e);
                         }
@@ -179,6 +194,15 @@ const FormAddAdvertisment = () => {
                       <option value="/about">/about</option>
                       <option value="/">/</option>
                       <option value="/list-of-members">/list-of-members</option>
+                      <option value="/press">/press </option>
+                      <option value="/gallery">/gallery</option>
+                      <option value="/study-abroad">/study-abroad</option>
+                      <option value="/free-website">/free-website</option>
+                      <option value="/faqs">/faqs</option>
+                      <option value="/membership-and-fees">/membership-and-fees</option>
+                      <option value="/matrimony/add-biodata">/matrimony/add-biodata</option>
+                      <option value="/matrimony/biodata">/matrimony/biodata</option>
+                      <option value="/matrimony/search-biodata">/matrimony/search-biodata</option>
                       <option value="all">All</option>
                     </select>
                   </div>

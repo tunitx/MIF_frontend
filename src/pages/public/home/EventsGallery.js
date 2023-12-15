@@ -3,8 +3,8 @@ import Carousel from "react-multi-carousel";
 import events1 from "../../../../assests/images/events1.jpeg.webp";
 import events2 from "../../../../assests/images/events2.jpeg.webp";
 import events3 from "../../../../assests/images/events3.jpeg.webp";
-import events4 from "../../../../assests/images/events4.jpeg";
-import events5 from "../../../../assests/images/events5.jpeg";
+import events4 from "../../../../assests/images/events4.webp";
+import events5 from "../../../../assests/images/events5.webp";
 import Advertisment from "../../../components/Advertisment";
 import { Link } from "react-router-dom";
 

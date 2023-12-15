@@ -41,6 +41,8 @@ import SearchBiodata from "./src/pages/public/marwadi_matrimony/SearchBiodata";
 import Disclaimer from "./src/pages/public/disclaimer/Disclaimer";
 import ContactQueries from "./src/pages/admin/contact_queries/ContactQueries";
 import AdminHome from "./src/pages/admin/home/Home";
+import PressClip from "./src/pages/admin/pressClip/PressClip";
+import PressCutout from "./src/pages/admin/pressCutout/PressCutout";
 
 const appRoutes = createBrowserRouter([
   {
@@ -159,20 +161,26 @@ const appRoutes = createBrowserRouter([
             path: "contact-queries",
             element: <ContactQueries />,
           },
-          {
-            path: "members",
-            element: <Members />,
-          },
-          {
-            path: "advertisements",
-            element: <Advertisements />,
-          },
+          // {
+          //   path: "members",
+          //   element: <Members />,
+          // },
+          // {
+          //   path: "advertisements",
+          //   element: <Advertisements />,
+          // },
           {
             path: "all-press",
             element: <Presses />,
           },
-
-
+          {
+            path: "press-clip",
+            element: <PressClip />,
+          },
+          {
+            path: "press-cutout",
+            element: <PressCutout />,
+          },
         ],
       },
     ],

@@ -1,6 +1,6 @@
 import React from "react";
-import rajasthan_img from "../../../../assests/images/rajasthan.png";
-import india_img from "../../../../assests/images/network_india.png";
+import rajasthan_img from "../../../../assests/images/rajasthan.webp";
+import india_img from "../../../../assests/images/network_india.webp";
 import network_overall_img from "../../../../assests/images/network_overall.svg";
 import network_overseas_img from "../../../../assests/images/network-overseas.svg";
 

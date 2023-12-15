@@ -1,16 +1,12 @@
-import company1 from "../../assests/images/company1.png.webp";
-import company2 from "../../assests/images/company2.jpeg.webp";
-import company3 from "../../assests/images/company3.jpeg.webp";
-
-import aboutus_economy from "../../assests/images/aboutus_economy.png";
-import aboutus_entrepreneur from "../../assests/images/aboutus_entrepreneur.png";
-import aboutus_network from "../../assests/images/aboutus_network.png";
-import aboutus_networking from "../../assests/images/aboutus_networking.png";
-import aboutus_team from "../../assests/images/aboutus_team.png";
-import aboutus_entrepreneur from "../../assests/images/aboutus_entrepreneur.png";
-import aboutus_skill_development from "../../assests/images/aboutus_skill-development.png";
-import aboutus_social_care from "../../assests/images/aboutus_social-care.png";
-import aboutus_women_entrepreneur from "../../assests/images/aboutus_women_entrepreneur.png";
+import aboutus_economy from "../../assests/images/aboutus_economy.webp";
+import aboutus_entrepreneur from "../../assests/images/aboutus_entrepreneur.webp";
+import aboutus_network from "../../assests/images/aboutus_network.webp";
+import aboutus_networking from "../../assests/images/aboutus_networking.webp";
+import aboutus_team from "../../assests/images/aboutus_team.webp";
+import aboutus_entrepreneur from "../../assests/images/aboutus_entrepreneur.webp";
+import aboutus_skill_development from "../../assests/images/aboutus_skill-development.webp";
+import aboutus_social_care from "../../assests/images/aboutus_social-care.webp";
+import aboutus_women_entrepreneur from "../../assests/images/aboutus_women_entrepreneur.webp";
 
 export const BASE_URL = process.env.BASE_URL || "http://bababatuni.in/api/";
 
@@ -36,6 +32,14 @@ export const GET_BIODATAS = BASE_URL + "getBioDataByFilters";
 export const POST_CONTACT_QUERY = BASE_URL + "contactQueries/new";
 export const GET_CONTACT_QUERIES = BASE_URL + "contactQueries/all";
 export const DELETE_CONTACT_QUERY = BASE_URL + "contactQueries/"; //here id is req, the route is /contactQueries/:id
+
+export const POST_PRESS_CLIP = BASE_URL + "pressClip/new";
+export const GET_PRESS_CLIPS = BASE_URL + "pressClip/all";
+export const DELETE_PRESS_CLIP = BASE_URL + "pressClip/";
+
+export const POST_PRESS_CUTOUT = BASE_URL + "pressCutout/new";
+export const GET_PRESS_CUTOUTS = BASE_URL + "pressCutout/all";
+export const DELETE_PRESS_CUTOUT = BASE_URL + "pressCutout/";
 
 export const responsive = {
   superLargeDesktop: {
@@ -105,27 +109,6 @@ export const REGISTRATIONS = [
     ministry: "MINISTRY OF COMMERCE & INDUSTRY, GOVT. OF INDIA",
     docLink:
       "https://drive.google.com/file/d/1Mg5_MxnpC9SnqmBtCfQdUixcgZ2PE782/preview",
-  },
-];
-
-export const companies = [
-  {
-    img: company1,
-    title: "Smart E Invites",
-    description:
-      "Say goodbye to boring, generic invitations and hello to the artfully crafted and environmentally responsible cards from Smart E Invites. Our digital ecards showcase a feast of designs, patterns, fonts, and colors that are sure to leave a lasting impression. Modern way of invitation",
-  },
-  {
-    img: company2,
-    title: "Voice of Today Astro",
-    description:
-      "Voice of Today is an eminent professional with +32 years of experience in finance and IT risk who is here to help you pave your path to success through authentic predictions and guidance. They are also known as India's first Corporate Astrologer  with innumerable success stories.",
-  },
-  {
-    img: company3,
-    title: "Jeevan Lakshya Foundation",
-    description:
-      "Drenching the humanity with ray of LOVE, UNITY, EDUCATION and HOPE. JLF- A Ray of Sunshine, A Drop of Rain.JLF is a charitable trust organization dedicated to making a positive impact on society by addressing various social, economic, and environmental issues.",
   },
 ];
 

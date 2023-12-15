@@ -26,15 +26,13 @@ const Table = ({ data, setFilteredList, nameSorting, professionSorting }) => {
           <thead className="w-full">
             <tr className="bg-[#305D2B] text-white w-full">
               <th className="p-3 text-center border-white border-r font-bold font-Poppins  w-1/3">
-                <div className="w-full flex items-center">
-                  <p
-                    className="w-full"
-                    onClick={() => {
-                      sortHandler("name", sortName, setSortName);
-                    }}
-                  >
-                    Name
-                  </p>
+                <div
+                  className="w-full flex items-center hover:cursor-pointer"
+                  onClick={() => {
+                    sortHandler("name", sortName, setSortName);
+                  }}
+                >
+                  <p className="w-full">Name</p>
                   <div>
                     {sortName === null ? (
                       <svg
@@ -75,19 +73,17 @@ const Table = ({ data, setFilteredList, nameSorting, professionSorting }) => {
                 </div>
               </th>
               <th className="p-3 text-center border-white border-r font-bold font-Poppins  w-1/3">
-                <div className="w-full flex items-center">
-                  <p
-                    className="w-full"
-                    onClick={() => {
-                      sortHandler(
-                        "profession",
-                        sortProfession,
-                        setSortProfession
-                      );
-                    }}
-                  >
-                    Profession
-                  </p>
+                <div
+                  className="w-full flex items-center hover:cursor-pointer"
+                  onClick={() => {
+                    sortHandler(
+                      "profession",
+                      sortProfession,
+                      setSortProfession
+                    );
+                  }}
+                >
+                  <p className="w-full">Profession</p>
                   <div>
                     {sortProfession === null ? (
                       <svg

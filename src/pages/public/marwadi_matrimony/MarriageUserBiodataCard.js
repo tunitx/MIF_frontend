@@ -2,15 +2,23 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import Registration from './Registration';
+import { BASE_URL } from '../../../utils/constants';
+const api = axios.create({
+  baseURL: BASE_URL ,
+});
+
 
 const BiodataTable = () => {
   const [biodatas, setBiodatas] = useState([]);
   const [editingBiodata, setEditingBiodata] = useState(null);
 
+
   useEffect(() => {
     const token = localStorage.getItem('jwtToken');
     if (token) {
-      axios.get('http://localhost:3000/getBiodatas', { headers: { 'authorization': `Bearer ${token}` } })
+      api.get('getBiodatas',
+
+        { headers: { 'authorization': `Bearer ${token}` } })
         .then(response => {
           setBiodatas(response.data);
         })

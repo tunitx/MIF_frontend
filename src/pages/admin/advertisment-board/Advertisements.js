@@ -509,9 +509,9 @@ const Advertisement = ({ member, onEdit, onDelete, pfp, setPfp }) => {
                   <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
                     Title
                   </th>
-                  <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
+                  {/* <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
                     Description
-                  </th>
+                  </th> */}
                   <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
                     Edit
                   </th>
@@ -529,9 +529,9 @@ const Advertisement = ({ member, onEdit, onDelete, pfp, setPfp }) => {
                   <td className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
                     {member.title}
                   </td>
-                  <td className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
+                  {/* <td className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
                     {member.description}
-                  </td>
+                  </td> */}
                   <td className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
                     <button
                       onClick={() => {

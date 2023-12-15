@@ -277,10 +277,10 @@ const Member = ({ member, onEdit, onDelete, memberTypes, pfp, setPfp }) => {
                 Native Place
                 </th>
                 <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
-                Native Place
+               Edit
                 </th>
                 <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
-                Native Place
+                Delete
                 </th>
               </tr>
             </thead>

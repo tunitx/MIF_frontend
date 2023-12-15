@@ -43,47 +43,47 @@ const BiodataTable = () => {
   };
 
   return (
-    <div className="overflow-x-auto fade-in w-full flex justify-center">
-         {editingBiodata ? (
-      <Registration biodata={editingBiodata} setEditingBiodata={setEditingBiodata} />
-    ) :  (
-      <table className="w-full border-2 border-[#305D2B] max-w-7xl">
-        <thead className="w-full">
-          <tr className="bg-[#305D2B] text-white w-full">
-            <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
-              Name
-            </th>
-            <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
-              Created At
-            </th>
-            <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
-              
-            </th>
-            <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
-              
-            </th>
-          </tr>
-        </thead>
-        <tbody className="w-full">
-          {biodatas.map(biodata => (
-            <tr key={biodata._id} className="border-b border-[#EF4D48] w-full align-middle">
-              <td className="p-2 border-r border-[#EF4D48] text-center text-[#333] whitespace-nowrap font-bold font-Poppins">
-                {biodata.firstName} {biodata.surname}
-              </td>
-              <td className="p-2 border-r border-[#EF4D48] text-center text-[#333] whitespace-nowrap font-Poppins">
-                {biodata.timestamp.slice(0,10)}
-              </td>
-              <td className="p-2 border-r border-[#EF4D48] text-center text-[#333] whitespace-nowrap font-Poppins">
-                <button onClick={() => handleEdit(biodata)}>Edit</button>
-              </td>
-              <td className="p-2 border-r border-[#EF4D48] text-center text-[#333] whitespace-nowrap font-Poppins">
-                <button onClick={() => handleView(biodata)}>View</button>
-              </td>
+    <div className="overflow-x-auto fade-in w-full flex justify-center mb-44">
+      {editingBiodata ? (
+        <Registration biodata={editingBiodata} setEditingBiodata={setEditingBiodata} />
+      ) : (
+        <table className="w-full border-2 border-[#305D2B] max-w-7xl">
+          <thead className="w-full">
+            <tr className="bg-[#305D2B] text-white w-full">
+              <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
+                Name
+              </th>
+              <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
+                Created At
+              </th>
+              <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
+
+              </th>
+              <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
+
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-       )}
+          </thead>
+          <tbody className="w-full">
+            {biodatas.map(biodata => (
+              <tr key={biodata._id} className="border-b border-[#EF4D48] w-full align-middle">
+                <td className="p-2 border-r border-[#EF4D48] text-center text-[#333] whitespace-nowrap font-bold font-Poppins">
+                  {biodata.firstName} {biodata.surname}
+                </td>
+                <td className="p-2 border-r border-[#EF4D48] text-center text-[#333] whitespace-nowrap font-Poppins">
+                  {biodata.timestamp.slice(0, 10)}
+                </td>
+                <td className="p-2 border-r border-[#EF4D48] text-center text-[#333] whitespace-nowrap font-Poppins">
+                  <button onClick={() => handleEdit(biodata)}>Edit</button>
+                </td>
+                <td className="p-2 border-r border-[#EF4D48] text-center text-[#333] whitespace-nowrap font-Poppins">
+                  <button onClick={() => handleView(biodata)}>View</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React from "react";
-import marwadi_logo from "../../../../assests/images/marwari_logo_pro.png";
+import marwadi_logo from "../../../../assests/images/marwari_logo_pro.webp";
 import { Link } from "react-router-dom";
 
 const MissionVisionSection = () => {

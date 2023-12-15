@@ -4,10 +4,10 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        header_bg: "url('./assests/images/header_bg.jpeg')",
-        ca_vijayGarg: "url('./assests/images/CA_Vijay.jpg')",
-        globe_study: "url('./assests/images/globel_study_abroad.jpg')",
-        matrimony: "url('./assests/images/MIF Martimony.jpg')",
+        header_bg: "url('./assests/images/header_bg.webp')",
+        ca_vijayGarg: "url('./assests/images/CA_Vijay.webp')",
+        globe_study: "url('./assests/images/globel_study_abroad.webp')",
+        matrimony: "url('./assests/images/MIF Martimony.webp')",
       },
       fontFamily: {
         PlayFair: ["Playfair Display", "sans-serif"],

@@ -1,5 +1,4 @@
 import React from "react";
-import CA_Vijay from "../../../../assests/images/CA_Vijay.jpg";
 
 const ProfileCard = ({ data, showCard, setShowCard }) => {
   const {
@@ -14,7 +13,6 @@ const ProfileCard = ({ data, showCard, setShowCard }) => {
   } = data;
   console.log(memberType);
   return (
-   
     <div className=" z-50 fixed flex flex-col justify-center gap-8 items-center w-screen h-screen top-0 left-0 bg-[#323233] bg-opacity-90 overflow-x-auto py-5 px-5">
       <div className="w-full flex flex-col gap-8 justify-center items-center">
         <div
@@ -44,13 +42,13 @@ const ProfileCard = ({ data, showCard, setShowCard }) => {
                 ? "TRUSTEE MEMBER"
 
                 : "ACTIVE LIFE MEMBER"} */}
-                {memberType.name.toUpperCase()}
+              {memberType.name.toUpperCase()}
             </h1>
           </div>
           <div className="w-full p-5 flex justify-center items-center flex-col gap-4">
             <div className="w-fit  rounded-lg  shadow-box_shadow_marwadi_LOM">
               <img
-                src={pfp ? pfp : CA_Vijay}
+                src={pfp}
                 alt=""
                 className=" rounded-lg w-36 h-36 sm:w-40 sm:h-40"
               />

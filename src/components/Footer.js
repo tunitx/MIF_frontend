@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import marwadi_logo from "../../assests/images/marwari_logo_pro.png";
+import marwadi_logo from "../../assests/images/marwari_logo_pro.webp";
 import { Link } from "react-router-dom";
-
 
 const Footer = () => {
   const [visitorCount, setVisitorCount] = useState(6384);
@@ -20,7 +19,7 @@ const Footer = () => {
   //           requestBody: {
   //             reportRequests: [
   //               {
-  //                 viewId: process.env.VIEW_ID, 
+  //                 viewId: process.env.VIEW_ID,
   //                 dateRanges: [
   //                   {
   //                     startDate: "7daysAgo",
@@ -29,7 +28,7 @@ const Footer = () => {
   //                 ],
   //                 metrics: [
   //                   {
-  //                     expression: "ga:users", 
+  //                     expression: "ga:users",
   //                   },
   //                 ],
   //               },
@@ -46,9 +45,9 @@ const Footer = () => {
   //         console.error(err);
   //       });
   //   };
-  
+
   //   fetchData();
-  // }, []); 
+  // }, []);
   return (
     <div className="w-full flex flex-col bg-[#5C5D5C] text-[#F6F7F8] sm:items-center">
       <div className="w-full flex flex-col sm:flex-row px-5 py-16 gap-8 max-w-6xl">

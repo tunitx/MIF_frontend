@@ -1,5 +1,5 @@
 import React from "react";
-import ca_vijayGarg from "../../../../assests/images/CA_Vijay.jpg";
+import ca_vijayGarg from "../../../../assests/images/CA_Vijay.webp";
 
 const FounderSection = () => {
   return (

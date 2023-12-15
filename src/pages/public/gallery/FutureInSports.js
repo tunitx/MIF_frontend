@@ -1,8 +1,8 @@
 import React from "react";
-import events4 from "../../../../assests/images/events4.jpeg";
-import events5 from "../../../../assests/images/events5.jpeg";
-import future_in_sports2 from "../../../../assests/images/future_in_sports2.jpeg";
-import future_in_sports3 from "../../../../assests/images/future_in_sports3.jpeg";
+import events4 from "../../../../assests/images/events4.webp";
+import events5 from "../../../../assests/images/events5.webp";
+import future_in_sports2 from "../../../../assests/images/future_in_sports2.webp";
+import future_in_sports3 from "../../../../assests/images/future_in_sports3.webp";
 import Carousel from "react-multi-carousel";
 
 const FutureInSports = () => {

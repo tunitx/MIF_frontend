@@ -23,17 +23,25 @@ const navigation = [
     name: "Contact Queries",
     href: "/admin/contact-queries",
   },
-  {
-    name: "All members",
-    href: "/admin/members",
-  },
-  {
-    name: "All Advertisements",
-    href: "/admin/advertisements",
-  },
+  // {
+  //   name: "All members",
+  //   href: "/admin/members",
+  // },
+  // {
+  //   name: "All Advertisements",
+  //   href: "/admin/advertisements",
+  // },
   {
     name: "All Press",
     href: "/admin/all-press",
+  },
+  {
+    name: "Press Clips",
+    href: "/admin/press-clip",
+  },
+  {
+    name: "Press Cutout",
+    href: "/admin/press-cutout",
   },
 ];
 

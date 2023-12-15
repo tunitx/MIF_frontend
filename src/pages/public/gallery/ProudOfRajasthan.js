@@ -2,7 +2,7 @@ import React from "react";
 import Carousel from "react-multi-carousel";
 import events2 from "../../../../assests/images/events2.jpeg.webp";
 import events3 from "../../../../assests/images/events3.jpeg.webp";
-import proud_of_rajasthan3 from "../../../../assests/images/proud_of_rajasthan3.jpeg";
+import proud_of_rajasthan3 from "../../../../assests/images/proud_of_rajasthan3.webp";
 
 const ProudOfRajasthan = () => {
   const imagesSlides = [events2, events3, proud_of_rajasthan3];

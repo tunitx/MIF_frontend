@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import marwadi_logo_navbar from "../../assests/images/marwari_logo_pro.png";
+import marwadi_logo_navbar from "../../assests/images/marwari_logo_pro.webp";
 import { ChevronDownIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
 

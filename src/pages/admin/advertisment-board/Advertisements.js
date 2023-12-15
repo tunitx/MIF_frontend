@@ -150,6 +150,39 @@ const Advertisement = ({ member, onEdit, onDelete, pfp, setPfp }) => {
               <select
                 name="slugs"
                 multiple
+                // onChange={(e) => {
+                //   const selectedOptions = Array.from(e.target.selectedOptions).map(o => o.value);
+                //   let event;
+                //   if (selectedOptions.includes('all')) {
+                //     event = {
+                //       target: {
+                //         name: e.target.name,
+                //         value: ['/', '/matrimony', '/press', '/list-of-members'],
+                //       },
+                //     };
+                //   } else {
+                //     event = {
+                //       target: {
+                //         name: e.target.name,
+                //         value: selectedOptions.map(option => {
+                //           switch (option) {
+                //             case '/matrimony':
+                //               return '/matrimony';
+                //             case '/press':
+                //               return '/press';
+                //             case '/list-of-members':
+                //               return '/list-of-members';
+                //             default:
+                //               return '/';
+                //           }
+                //         }),
+                //       },
+                //     };
+                //   }
+                //   handleInputChange(event);
+                // }}
+                // value={editedMember.slugs}
+
                 onChange={(e) => {
                   const selectedOptions = Array.from(
                     e.target.selectedOptions
@@ -160,7 +193,18 @@ const Advertisement = ({ member, onEdit, onDelete, pfp, setPfp }) => {
                     event = {
                       target: {
                         name: e.target.name,
-                        value: ["/matrimony", "/press", "/list-of-members"],
+                        value: ["/about",
+                        "/",
+                        "/list-of-members",
+                        "/press",
+                        "/faqs",
+                        "/free-website",
+                        "/matrimony/biodata",
+                        "/matrimony/search-biodata",
+                        "/gallery",
+                        "/matrimony/add-biodata",
+                        "/membership-and-fees",
+                        "/study-abroad"],
                       },
                     };
                   } else {
@@ -176,10 +220,19 @@ const Advertisement = ({ member, onEdit, onDelete, pfp, setPfp }) => {
                 value={editedMember.slugs}
                 className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
               >
-                <option value="all">All</option>
-                <option value="/matrimony">Matrimony</option>
-                <option value="/press">Press</option>
+                <option value="/about">/about</option>
+                <option value="/">/</option>
                 <option value="/list-of-members">/list-of-members</option>
+                <option value="/press">/press </option>
+                <option value="/gallery">/gallery</option>
+                <option value="/study-abroad">/study-abroad</option>
+                <option value="/free-website">/free-website</option>
+                <option value="/faqs">/faqs</option>
+                <option value="/membership-and-fees">/membership-and-fees</option>
+                <option value="/matrimony/add-biodata">/matrimony/add-biodata</option>
+                <option value="/matrimony/biodata">/matrimony/biodata</option>
+                <option value="/matrimony/search-biodata">/matrimony/search-biodata</option>
+                <option value="all">All</option>
               </select>
             </div>
 
@@ -230,9 +283,17 @@ const Advertisement = ({ member, onEdit, onDelete, pfp, setPfp }) => {
                 onChange={handleInputChange}
                 placeholder="Facebook"
               />
+              <input
+                className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                name="facebook"
+                value={editedMember.facebook}
+                onChange={handleInputChange}
+                placeholder="Facebook"
+              />
             </div>
 
             <div className="w-full flex gap-2 items-center justify-center">
+
               <label
                 htmlFor="playStore"
                 className="font-semibold text-sm font-Poppins tracking-wide sm:text-base whitespace-nowrap text-[#444]"
@@ -246,9 +307,31 @@ const Advertisement = ({ member, onEdit, onDelete, pfp, setPfp }) => {
                 onChange={handleInputChange}
                 placeholder="PlayStore"
               />
+              <input
+                className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                name="playStore"
+                value={editedMember.playStore}
+                onChange={handleInputChange}
+                placeholder="PlayStore"
+              />
             </div>
-
             <div className="w-full flex gap-2 items-center justify-center">
+              <label
+                htmlFor="whatsapp"
+                className="font-semibold text-sm font-Poppins tracking-wide sm:text-base whitespace-nowrap text-[#444]"
+              >
+                WhatsApp :
+              </label>
+              <input
+                className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                name="whatsapp"
+                value={editedMember.whatsapp}
+                onChange={handleInputChange}
+                placeholder="whatsapp"
+              />
+            </div>
+            <div className="w-full flex gap-2 items-center justify-center">
+
               <label
                 htmlFor="instagram"
                 className="font-semibold text-sm font-Poppins tracking-wide sm:text-base whitespace-nowrap text-[#444]"
@@ -262,9 +345,17 @@ const Advertisement = ({ member, onEdit, onDelete, pfp, setPfp }) => {
                 onChange={handleInputChange}
                 placeholder="Instagram"
               />
+              <input
+                className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                name="instagram"
+                value={editedMember.instagram}
+                onChange={handleInputChange}
+                placeholder="Instagram"
+              />
             </div>
 
             <div className="w-full flex gap-2 items-center justify-center">
+
               <label
                 htmlFor="phone"
                 className="font-semibold text-sm font-Poppins tracking-wide sm:text-base whitespace-nowrap text-[#444]"
@@ -273,10 +364,27 @@ const Advertisement = ({ member, onEdit, onDelete, pfp, setPfp }) => {
               </label>
               <input
                 className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                name="phoneNumber"
+                name="phone"
                 value={editedMember.phone}
                 onChange={handleInputChange}
                 placeholder="Phone Number"
+              />
+            </div>
+
+
+            <div className="w-full flex gap-2 items-center justify-center">
+              <label
+                htmlFor="whatsapp"
+                className="font-semibold text-sm font-Poppins tracking-wide sm:text-base whitespace-nowrap text-[#444]"
+              >
+                Whatsapp* :
+              </label>
+              <input
+                className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                name="whatsapp"
+                value={editedMember.whatsapp}
+                onChange={handleInputChange}
+                placeholder="Whatsapp"
               />
             </div>
 
@@ -391,149 +499,86 @@ const Advertisement = ({ member, onEdit, onDelete, pfp, setPfp }) => {
         </>
       ) : (
         <>
-          <div className="w-fit p-3 border border-indigo-900 rounded-md flex flex-col gap-5 justify-center items-center w-90%">
-            <div className="p-5 pb-0 min-w-[100px] min-h-[200px]">
-              <img
-                src={member.businessImage}
-                alt="Profile"
-                className="rounded-md"
-              />
-            </div>
-            <div className="w-full flex-col flex  justify-center text-center">
-              <p className="font-Poppins  text-center text-2xl font-semibold text-[#EF4D48]">
-                {" "}
-                Title: {member.title}
-              </p>
-            </div>
-
-            <div className="w-full flex flex-row justify-center">
-              <p className="w-full text-center font-lg font-Poppins font-bold text-gray-900">
-                Description :
-              </p>
-              <p className="w-full text-center font-sm text-gray-700 font-normal">
-                {member.description}
-              </p>
-            </div>
-            <div className="w-full flex flex-row gap-2 justify-center">
-              <div className="w-full flex flex-col justify-center">
-                <p className="w-full text-center font-lg font-Poppins font-bold text-gray-900">
-                  Fb:
-                </p>
-                <p className="w-full text-center font-sm text-gray-700 font-normal">
-                  {member.facebook}
-                </p>
-              </div>
-
-              <div className="w-full flex flex-col justify-center">
-                <p className="w-full text-center font-lg font-Poppins font-bold text-gray-900">
-                  PlayStore:
-                </p>
-                <p className="w-full text-center font-sm text-gray-700 font-normal">
-                  {member.playStore}
-                </p>
-              </div>
-
-              <div className="w-full flex flex-col justify-center">
-                <p className="w-full text-center font-lg font-Poppins font-bold text-gray-900">
-                  Instagram:
-                </p>
-                <p className="w-full text-center font-sm text-gray-700 font-normal">
-                  {member.instagram}
-                </p>
-              </div>
-            </div>
-
-            <div className="w-full flex flex-row gap-2 justify-center">
-              <div className="w-full flex flex-col justify-center">
-                <p className="w-full text-center font-lg font-Poppins font-bold text-gray-900">
-                  Phone :
-                </p>
-                <p className="w-full text-center font-sm text-gray-700 font-normal">
-                  {member.phone}
-                </p>
-              </div>
-              <div className="w-full flex flex-col justify-center">
-                <p className="w-full text-center font-lg font-Poppins font-bold text-gray-900">
-                  Whatsapp :
-                </p>
-                <p className="w-full text-center font-sm text-gray-700 font-normal">
-                  {member.whatsapp}
-                </p>
-              </div>
-              <div className="w-full flex flex-col justify-center">
-                <p className="w-full text-center font-lg font-Poppins font-bold text-gray-900">
-                  Email :
-                </p>
-                <p className="w-full text-center font-sm text-gray-700 font-normal">
-                  {member.email}
-                </p>
-              </div>
-            </div>
-            <div className="w-full flex flex-row gap-2 justify-center">
-              <div className="w-full flex flex-col justify-center">
-                <p className="w-full text-center font-lg font-Poppins font-bold text-gray-900">
-                  Youtube :
-                </p>
-                <p className="w-full text-center font-sm text-gray-700 font-normal">
-                  {member.youtube}
-                </p>
-              </div>
-              <div className="w-full flex flex-col justify-center">
-                <p className="w-full text-center font-lg font-Poppins font-bold text-gray-900">
-                  Website :
-                </p>
-                <p className="w-full text-center font-sm text-gray-700 font-normal">
-                  {member.website}
-                </p>
-              </div>
-            </div>
-
-            <div className="flex gap-2">
-              <div className={`w-full justify-center sm:justify-start flex`}>
-                <button
-                  onClick={() => {
-                    setIsEditing(true);
-                  }}
-                  type="button"
-                  className="group flex w-full items-center gap-2 justify-center max-w-[150px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 "
-                >
-                  <p className="group-hover:-translate-x-1 transition duration-150 delay-150">
+          <div className="overflow-x-auto fade-in w-full flex justify-center">
+            <table className="w-full border-2 border-[#305D2B] max-w-7xl">
+              <thead className="w-full">
+                <tr className="bg-[#305D2B] text-white w-full">
+                  <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
+                    Image
+                  </th>
+                  <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
+                    Title
+                  </th>
+                  <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
+                    Description
+                  </th>
+                  <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
                     Edit
-                  </p>{" "}
-                </button>
-              </div>
-
-              <div className={`w-full justify-center sm:justify-start flex`}>
-                <button
-                  onClick={() => {
-                    Swal.fire({
-                      title: "Are you sure?",
-                      text: "You won't be able to revert this!",
-                      icon: "warning",
-                      showCancelButton: true,
-                      confirmButtonColor: "#3085d6",
-                      cancelButtonColor: "#d33",
-                      confirmButtonText: "Yes, delete it!",
-                    }).then((result) => {
-                      if (result.isConfirmed) {
-                        onDelete(member._id);
-                        Swal.fire(
-                          "Deleted!",
-                          "Your file has been deleted.",
-                          "success"
-                        );
-                      }
-                    });
-                  }}
-                  type="button"
-                  className="group flex w-full items-center gap-2 justify-center max-w-[150px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 "
-                >
-                  <p className="group-hover:-translate-x-1 transition duration-150 delay-150">
+                  </th>
+                  <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
                     Delete
-                  </p>{" "}
-                </button>
-              </div>
-            </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+
+                <tr>
+                  <td className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
+                    <img src={member.businessImage} alt="" className="object-cover rounded-full w-24 h-24" />
+                  </td>
+                  <td className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
+                    {member.title}
+                  </td>
+                  <td className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
+                    {member.description}
+                  </td>
+                  <td className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
+                    <button
+                      onClick={() => {
+                        setIsEditing(true);
+                      }}
+                      type="button"
+                      className="group flex w-full items-center gap-2 justify-center max-w-[150px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 "
+                    >
+                      <p className="group-hover:-translate-x-1 transition duration-150 delay-150">
+                        Edit
+                      </p>{" "}
+                    </button>
+                  </td>
+                  <td className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
+                    <button
+                      onClick={() => {
+                        Swal.fire({
+                          title: "Are you sure?",
+                          text: "You won't be able to revert this!",
+                          icon: "warning",
+                          showCancelButton: true,
+                          confirmButtonColor: "#3085d6",
+                          cancelButtonColor: "#d33",
+                          confirmButtonText: "Yes, delete it!",
+                        }).then((result) => {
+                          if (result.isConfirmed) {
+                            onDelete(member._id);
+                            Swal.fire(
+                              "Deleted!",
+                              "Your file has been deleted.",
+                              "success"
+                            );
+                          }
+                        });
+                      }}
+                      type="button"
+                      className="group flex w-full items-center gap-2 justify-center max-w-[150px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 "
+                    >
+                      <p className="group-hover:-translate-x-1 transition duration-150 delay-150">
+                        Delete
+                      </p>{" "}
+                    </button>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
           </div>
         </>
       )}

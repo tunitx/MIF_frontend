@@ -12,7 +12,7 @@ const Members = () => {
   const [members, setMembers] = useState([]);
   const [memberTypes, setMemberTypes] = useState([]);
   const [pfp, setPfp] = useState(null);
-  
+
 
   useEffect(() => {
     api.get('/getMemberDetails')
@@ -76,17 +76,17 @@ const Members = () => {
   };
 
   return (
-    <div className="w-fit flex flex-row gap-5 flex-wrap max-w-[100%]">
+    <div className="w-fit flex flex-colgap-5 flex-wrap max-w-[100%]">
       {members.map((member, index) => (
         <div key={index}>
-          <Member member={member} onEdit={handleEdit} onDelete={handleDelete} memberTypes={memberTypes} pfp ={pfp} setPfp={setPfp} />
+          <Member member={member} onEdit={handleEdit} onDelete={handleDelete} memberTypes={memberTypes} pfp={pfp} setPfp={setPfp} />
         </div>
       ))}
     </div>
   );
 };
 
-const Member = ({ member, onEdit, onDelete, memberTypes, pfp,setPfp }) => {
+const Member = ({ member, onEdit, onDelete, memberTypes, pfp, setPfp }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedMember, setEditedMember] = useState({ ...member });
 
@@ -129,23 +129,23 @@ const Member = ({ member, onEdit, onDelete, memberTypes, pfp,setPfp }) => {
               <input name="name" className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm" value={editedMember.name} onChange={handleInputChange} placeholder="Name" />
             </div>
             <div className="w-full flex gap-2 items-center justify-center">
-            <label
-                                  htmlFor="memberType"
-                                  className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
-                                >Select Member Type*:</label>
-           
-            <select
-              name="memberType"
-              value={editedMember.memberType._id}
-              onChange={handleInputChange}
-              className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-            >
-              {memberTypes.map((type) => (
-                <option key={type._id} value={type._id}>
-                  {type.name}
-                </option>
-              ))}
-            </select>
+              <label
+                htmlFor="memberType"
+                className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
+              >Select Member Type*:</label>
+
+              <select
+                name="memberType"
+                value={editedMember.memberType._id}
+                onChange={handleInputChange}
+                className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+              >
+                {memberTypes.map((type) => (
+                  <option key={type._id} value={type._id}>
+                    {type.name}
+                  </option>
+                ))}
+              </select>
 
             </div>
 
@@ -198,17 +198,17 @@ const Member = ({ member, onEdit, onDelete, memberTypes, pfp,setPfp }) => {
               <input type="file" name="pfp" onChange={handleFileChange} />
 
               {pfp ? (
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          height="2rem"
-                          viewBox="0 0 512 512"
-                          // fill="#EF4D48"
-                          className="fade-in fill-green-700"
-                        >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="2rem"
+                  viewBox="0 0 512 512"
+                  // fill="#EF4D48"
+                  className="fade-in fill-green-700"
+                >
 
-                          <path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z" />
-                        </svg>
-                      ) : null}
+                  <path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z" />
+                </svg>
+              ) : null}
             </div>
             <div className="flex gap-2">
 
@@ -257,92 +257,50 @@ const Member = ({ member, onEdit, onDelete, memberTypes, pfp,setPfp }) => {
         </>
       ) : (
         <>
-          <div className="w-fit p-3 border border-indigo-900 rounded-md flex flex-col gap-5 justify-center items-center w-100%">
-            <div className="p-5 pb-0 min-w-[100px] min-h-[200px]">
-              <img src={member.pfp} alt="Profile" className="rounded-md" />
-            </div>
-            <div className="w-full flex-col flex  justify-center text-center">
-              <p className="font-Poppins  text-center text-2xl font-semibold text-[#EF4D48]" >NAME: {member.name}</p>
-            </div>
-            <div className="w-full flex flex-col gap-2 justify-center">
-              <div className="w-full flex flex-col justify-center">
-                <p className="w-full text-center font-lg font-Poppins font-bold text-gray-900">
-                  Profession :
-                </p>
-                <p className="w-full text-center font-sm text-gray-700 font-normal">
-                  {member.profession}
-                </p>
-              </div>
-              <div className="w-full flex flex-col justify-center">
-                <p className="w-full text-center font-lg font-Poppins font-bold text-gray-900">
-                  Member Type :
-                </p>
-                <p className="w-full text-center font-sm text-gray-700 font-normal">
-                  {member.memberType.name}
-                </p>
-              </div>
-
-              <div className="w-full flex flex-col justify-center">
-                <p className="w-full text-center font-lg font-Poppins font-bold text-gray-900">
-                  Native Place :
-                </p>
-                <p className="w-full text-center font-sm text-gray-700 font-normal">
-                  {member.nativePlace}
-                </p>
-              </div>
-
-              <div className="w-full flex flex-col justify-center">
-                <p className="w-full text-center font-lg font-Poppins font-bold text-gray-900">
-                  Present Address :
-                </p>
-                <p className="w-full text-center font-sm text-gray-700 font-normal">
-                  {member.address}
-                </p>
-              </div>
-            </div>
-
-            <div className="w-full flex flex-row justify-evenly items-center">
-
-              <div>
-                <a href={`mailto:${member.email}`} className="hover:cursor-pointer">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    height="1.5em"
-                    viewBox="0 0 512 512"
-                    fill="#EF4D48"
-                    className="group-hover:fill-white"
-                  >
-                    <path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z" />
-                  </svg>
-                </a>
-              </div>
-
-              <div>
-                <a
-                  href={`tel:${member.phoneNumber}`}
-                  className="hover:cursor-pointer"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    height="1.5em"
-                    viewBox="0 0 512 512"
-                    fill="#EF4D48"
-                    className="group-hover:fill-white"
-                  >
-                   
-                    <path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z" />
-                  </svg>
-                </a>
-
-
-             
-              </div>
-
-            </div>
-            <div className="flex gap-2">
-              <div
-                className={`w-full justify-center sm:justify-start flex`}
-              >
+         
+          <table className="w-full border-2 border-[#305D2B] max-w-7xl">
+            <thead className="w-full">
+              <tr className="bg-[#305D2B] text-white w-full">
+                <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
+                  Image
+                </th>
+                <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
+                  Name
+                </th>
+                <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
+                Profession
+                </th>
+                <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
+                  Member Type
+                </th>
+                <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
+                Native Place
+                </th>
+                <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
+                Native Place
+                </th>
+                <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
+                Native Place
+                </th>
+              </tr>
+            </thead>
+            <tr>
+              <td className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
+              <img src={member.pfp} alt="" className="object-cover rounded-full w-24 h-24" />
+              </td>
+              <td className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
+                {member.name}
+              </td>
+              <td className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
+                {member.profession}
+              </td>
+              <td className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
+                {member.memberType.name}
+              </td>
+              <td className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
+                {member.nativePlace}
+              </td>
+              <td className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
                 <button
                   onClick={() => {
                     setIsEditing(true);
@@ -350,16 +308,12 @@ const Member = ({ member, onEdit, onDelete, memberTypes, pfp,setPfp }) => {
                   type="button"
                   className="group flex w-full items-center gap-2 justify-center max-w-[150px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 "
                 >
-
                   <p className="group-hover:-translate-x-1 transition duration-150 delay-150">
                     Edit
                   </p>{" "}
                 </button>
-              </div>
-
-              <div
-                className={`w-full justify-center sm:justify-start flex`}
-              >
+              </td>
+              <td className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">
                 <button
                   onClick={() => {
                     Swal.fire({
@@ -384,24 +338,24 @@ const Member = ({ member, onEdit, onDelete, memberTypes, pfp,setPfp }) => {
                   type="button"
                   className="group flex w-full items-center gap-2 justify-center max-w-[150px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 "
                 >
-
                   <p className="group-hover:-translate-x-1 transition duration-150 delay-150">
                     Delete
                   </p>{" "}
                 </button>
-              </div>
-            </div>
+              </td>
+            </tr>
 
-          </div>
-        </>
-      )
+            </table>
+            
+          </>
+          )
       }
-    </div>
+        </div>
 
-  );
+      );
 
 };
 
-export default Members;
+      export default Members;
 
 

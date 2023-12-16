@@ -275,25 +275,48 @@ function Registration() {
 
 
 
+  // function getGotra(surname) {
+  //   let result = {};
+  //   Object.entries(bioData.Baniya).forEach(([key, values]) => {
+  //     if (
+  //       values
+  //         .map((value) => value.toLowerCase())
+  //         .includes(surname.toLowerCase())
+
+  //     ) {
+  //       result = {
+  //         caste: "Baniya",
+  //         subcaste: key,
+  //         surname: values
+  //           .map((value) => value.toLowerCase())
+  //           .find((value) => value.includes(surname.toLowerCase())),
+
+  //       };
+  //     }
+  //   });
+  //   console.log(result);
+  //   res = result;
+  //   return result;
+  // }
   function getGotra(surname) {
     let result = {};
-    Object.entries(bioData.baniya).forEach(([key, values]) => {
+    Object.entries(bioData.Baniya).forEach(([key, values]) => {
       if (
         values
           .map((value) => value.toLowerCase())
           .includes(surname.toLowerCase())
       ) {
+        const foundSurname = values
+          .map((value) => value.toLowerCase())
+          .find((value) => value.includes(surname.toLowerCase()));
+        const capitalizedSurname = foundSurname.charAt(0).toUpperCase() + foundSurname.slice(1);
         result = {
-          caste: "baniya",
+          caste: "Baniya",
           subcaste: key,
-          surname: values
-            .map((value) => value.toLowerCase())
-            .find((value) => value.includes(surname.toLowerCase())),
+          surname: capitalizedSurname,
         };
       }
     });
-    console.log(result);
-    res = result;
     return result;
   }
   const validationSchema = Yup.object().shape({
@@ -724,7 +747,7 @@ function Registration() {
 
 
           try {
-            const response = await fetch(POST_BIODATA,fetchOptions);
+            const response = await fetch(POST_BIODATA, fetchOptions);
 
             setSubmitting(false);
             if (response.status === 200) {
@@ -773,8 +796,8 @@ function Registration() {
                           viewBox="0 0 532 532"
                           xmlnsXlink="http://www.w3.org/1999/xlink"
                           className={`fade-in w-full hover:cursor-pointer bg-[#f7f3f5] box-border shadow-xl delay-150 duration-300 transition-transform border-2 border-orange-500 rounded-full p-2 ${formik.values.gender === "male"
-                              ? ""
-                              : "border-none hover:scale-110"
+                            ? ""
+                            : "border-none hover:scale-110"
                             } `}
                           onClick={() => {
                             formik.setFieldValue("gender", "male");
@@ -828,8 +851,8 @@ function Registration() {
                           viewBox="0 0 532 532"
                           xmlnsXlink="http://www.w3.org/1999/xlink"
                           className={`fade-in w-full hover:cursor-pointer bg-[#f7f3f5] box-border delay-150 shadow-xl duration-300 transition-transform border-2 border-orange-500 rounded-full p-2 ${formik.values.gender === "female"
-                              ? ""
-                              : "border-none hover:scale-110"
+                            ? ""
+                            : "border-none hover:scale-110"
                             }`}
                           onClick={() => {
                             formik.setFieldValue("gender", "female");
@@ -918,27 +941,11 @@ function Registration() {
                         id="surname"
                         name="surname"
                         type="text"
-                        // onChange={(e) => {
-                        //   let a = e.target.value;
-                        //   a = a.replace(/\b\w/g, (match) =>
-                        //     match.toUpperCase()
-                        //   );
-                        //   formik.setFieldValue("surname", a);
-                        //   // formik.handleChange(e);
-                        //   // console.log("asdfds");
-                        //   const val = getGotra(e.target.value);
-                        //   console.log(val);
-                        //   if (val) {
-                        //     setFoundCaste(val.caste);
-                        //     setFoundGotra(val.surname);
-                        //     setFoundSubcaste(val.subcaste);
-                        //     setGotra(val.surname);
-                        //     setCaste(val.caste);
-                        //     setSubcaste(val.subcaste);
-                        //   }
-                        // }}
 
                         onChange={(e) => {
+                          const capitalizedInput = e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1);
+                          e.target.value = capitalizedInput;
+
                           formik.handleChange(e);
 
                           if (e.target.value === "") {
@@ -3507,8 +3514,8 @@ function Registration() {
                   {step < 8 && step > 1 && (
                     <div
                       className={`w-full  flex ${step === 1
-                          ? "justify-center"
-                          : "sm:justify-end justify-center"
+                        ? "justify-center"
+                        : "sm:justify-end justify-center"
                         }`}
                     >
                       <button

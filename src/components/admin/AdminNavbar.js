@@ -47,6 +47,10 @@ const navigation = [
     name: "Advertisements",
     href: "/admin/all-adv",
   },
+  {
+    name: "Matrimony",
+    href: "/admin/matrimony-users",
+  },
 ];
 
 export default function AdminNavbar() {

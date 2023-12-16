@@ -28,10 +28,10 @@ const Home = () => {
       Swal.fire({
         title: "Are you a new user?",
         showDenyButton: true,
-        showCancelButton: true,
+        
         confirmButtonText: "Sign Up",
         denyButtonText: "Sign In",
-        cancelButtonText: "Guest",
+       
       }).then((result) => {
         if (result.isConfirmed) {
           Swal.fire({
@@ -46,17 +46,28 @@ const Home = () => {
             denyButtonText: "Back",
             preConfirm: () => {
               const name = Swal.getPopup().querySelector("#swal-input1").value;
-              const phoneNumber =
-                Swal.getPopup().querySelector("#swal-input2").value;
+              const phoneNumber = Swal.getPopup().querySelector("#swal-input2").value;
               const email = Swal.getPopup().querySelector("#swal-input3").value; //? Email is optional
-              const password =
-                Swal.getPopup().querySelector("#swal-input4").value;
-              if (!name || !phoneNumber || !password) {
-                Swal.showValidationMessage(
-                  `Please enter your name, phone number, and password`
-                );
+              const password = Swal.getPopup().querySelector("#swal-input4").value;
+            
+              // Validation for phone number
+              const phoneNumberPattern = /^[0-9]{10}$/; // Adjust this pattern to match the phone number format you want
+              if (!phoneNumberPattern.test(phoneNumber)) {
+                Swal.showValidationMessage(`Please enter a valid phone number`);
                 return false;
               }
+            
+              // Validation for password
+              if (password.length < 6) {
+                Swal.showValidationMessage(`Password should be at least 6 characters`);
+                return false;
+              }
+            
+              if (!name || !phoneNumber || !password) {
+                Swal.showValidationMessage(`Please enter your name, phone number, and password`);
+                return false;
+              }
+            
               return { name, phoneNumber, email, password };
             },
           }).then((result) => {
@@ -92,16 +103,27 @@ const Home = () => {
             showDenyButton: true,
             denyButtonText: "Back",
             preConfirm: () => {
-              const phoneNumber =
-                Swal.getPopup().querySelector("#swal-input1").value;
-              const password =
-                Swal.getPopup().querySelector("#swal-input2").value;
-              if (!phoneNumber || !password) {
-                Swal.showValidationMessage(
-                  `Please enter both phone number and password`
-                );
+              const phoneNumber = Swal.getPopup().querySelector("#swal-input1").value;
+              const password = Swal.getPopup().querySelector("#swal-input2").value;
+          
+              // Validation for phone number
+              const phoneNumberPattern = /^[0-9]{10}$/; // Adjust this pattern to match the phone number format you want
+              if (!phoneNumberPattern.test(phoneNumber)) {
+                Swal.showValidationMessage(`Please enter a valid phone number`);
                 return false;
               }
+          
+              // Validation for password
+              if (password.length < 6) {
+                Swal.showValidationMessage(`Password should be at least 6 characters`);
+                return false;
+              }
+          
+              if (!phoneNumber || !password) {
+                Swal.showValidationMessage(`Please enter both phone number and password`);
+                return false;
+              }
+          
               return { phoneNumber, password };
             },
           }).then((result) => {
@@ -150,7 +172,7 @@ const Home = () => {
 
           <button
             onClick={() => {
-              handleActionState("/matrimony/search-biodata");
+              handleAction("/matrimony/search-biodata");
             }}
             className="flex gap-2  justify-center  font-Poppins rounded-md bg-indigo-600 px-5 py-4 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >

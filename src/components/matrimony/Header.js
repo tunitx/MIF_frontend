@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useContext } from "react";
 import UserContext from "../../utils/context/UserContext";
 import Swal from "sweetalert2";
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
+  const navigate = useNavigate()
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
@@ -25,6 +27,21 @@ const Header = () => {
   return (
     <div className="w-full flex justify-center p-5 mt-10">
       <div className="w-full max-w-6xl flex justify-center items-center flex-col gap-4">
+      <div className="absolute top-4 right-10">
+  {localStorage.getItem("jwtToken")  && (
+    <button className="flex w-full justify-center max-w-[200px] rounded-md bg-[#EF4D48] px-3 sm:py-3 py-2  text-sm sm:text-base font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 "
+      onClick={() => {
+        Swal.fire("Logged out", "Please sign in/sign up", "info");
+        localStorage.removeItem("jwtToken");
+        localStorage.removeItem("userName"); // remove the userName from local storage
+        setUserName(null);
+        navigate('/matrimony'); 
+      }}
+    >
+      <span>Log out</span>
+    </button>
+  )}
+</div>
         <p className="w-fit font-PlayFair border-2 px-3 py-2 text-xl font-bold border-orange-400 md:text-2xl xl:text-4xl">
           {" "}
           Marwadi Matrimony

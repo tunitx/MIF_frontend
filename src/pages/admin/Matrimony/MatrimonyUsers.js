@@ -10,8 +10,14 @@ const MarriageUsers = () => {
     const [viewingBiodata, setViewingBiodata] = useState(null);
     const [biodataView, setBiodataView] = useState(false);
     const [isBiodataCardOpen, setBiodataCardOpen] = useState(false);
+    const [openCardId, setOpenCardId] = useState(null);
 
-    const handleToggleBiodataCard = (biodata) => {
+    const handleToggleBiodataCard = (biodata, id) => {
+        if (openCardId === id) {
+            setOpenCardId(null); // if the card is already open, close it
+          } else {
+            setOpenCardId(id); // otherwise, open the card
+          }
         if (isBiodataCardOpen) {
 
         } else {
@@ -43,10 +49,10 @@ const MarriageUsers = () => {
 
     return (
         <>
-         <div className="overflow-x-auto fade-in w-full flex justify-center mb-24">
-         <p className=" text-gray-900 font-bold text-2x font-Poppins text-lg ">Matrimony Users Details</p>
-            
-         </div>
+            <div className="overflow-x-auto fade-in w-full flex justify-center mb-24">
+                <p className=" text-gray-900 font-bold text-2x font-Poppins text-lg ">Matrimony Users Details</p>
+
+            </div>
 
             <div className="overflow-x-auto fade-in w-full flex justify-center mb-24">
 
@@ -111,9 +117,9 @@ const MarriageUsers = () => {
             </div>
 
             <div className="overflow-x-auto fade-in w-full flex justify-center mb-24">
+                <table className="w-full border-2 border-[#305D2B] max-w-7xl">
 
-                {viewingBiodata && viewingBiodata.map((biodata, index) => (
-                    <table key={index} className="w-full border-2 border-[#305D2B] max-w-7xl">
+                    {viewingBiodata && viewingBiodata.length>0 && (
                         <thead className="w-full">
                             <tr className="bg-[#305D2B] text-white w-full">
                                 <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">First Name</th>
@@ -123,8 +129,11 @@ const MarriageUsers = () => {
                                 <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">View</th>
                             </tr>
                         </thead>
-                        <tbody className="w-full">
-                            <tr className="border-b border-[#EF4D48] w-full align-middle">
+                    )}
+
+                    <tbody className="w-full">
+                        {viewingBiodata && viewingBiodata.map((biodata, index) => (
+                            <tr key={index} className="border-b border-[#EF4D48] w-full align-middle">
                                 <td className="p-2 border-r border-[#EF4D48] text-center text-[#333] whitespace-nowrap font-bold font-Poppins">{biodata.firstName}</td>
                                 <td className="p-2 border-r border-[#EF4D48] text-center text-[#333] whitespace-nowrap font-bold font-Poppins">{biodata.surname}</td>
                                 <td className="p-2 border-r border-[#EF4D48] text-center text-[#333] whitespace-nowrap font-bold font-Poppins">{new Date(biodata.timestamp).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' })}</td>
@@ -135,14 +144,14 @@ const MarriageUsers = () => {
                                     }}>Close this table</button>
                                 </td>
                                 <td className="p-2 border-r border-[#EF4D48] text-center text-[#333] whitespace-nowrap font-bold font-Poppins">
-                                    <button onClick={() => handleToggleBiodataCard(biodata)}>
-                                        {isBiodataCardOpen ? 'Close Biodata Card' : 'View Biodata Card'}
+                                    <button onClick={() => handleToggleBiodataCard(biodata, biodata._id)}>
+                                    {openCardId === biodata._id ? 'Close Biodata Card' : 'View Biodata Card'}
                                     </button>
                                 </td>
                             </tr>
-                        </tbody>
-                    </table>
-                ))}
+                        ))}
+                    </tbody>
+                </table>
             </div>
             <div className="w-full grid grid-col-1 sm:grid-cols-2 lg:grid-cols-3   gap-4">
 

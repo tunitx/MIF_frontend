@@ -1,6 +1,27 @@
-import React from "react";
+import React, { useEffect, useState, useContext } from "react";
+import UserContext from "../../utils/context/UserContext";
+import Swal from "sweetalert2";
 
 const Header = () => {
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+  const { userName, setUserName } = useContext(UserContext);
+
+  useEffect(() => {
+    const handleStorageChange = (e) => {
+      if (e.key === 'userName') {
+        setUserName(localStorage.getItem('userName'));
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
+  console.log(userName);
   return (
     <div className="w-full flex justify-center p-5 mt-10">
       <div className="w-full max-w-6xl flex justify-center items-center flex-col gap-4">
@@ -8,9 +29,14 @@ const Header = () => {
           {" "}
           Marwadi Matrimony
         </p>
+        {userName && (
+          <h1 className="font-Poppins text-4xl font-bold text-red-500 text-center">
+            Welcome, {capitalizeFirstLetter(userName)}
+          </h1>
+        )}
         <div>
 
-          
+
         </div>
         <div className="flex relative">
           <div className="flex items-center gap-[2px]">

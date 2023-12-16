@@ -23,6 +23,7 @@ dotenv.config();
 
 import Matrimony_Home from "./src/pages/public/marwadi_matrimony/Home";
 import BiodataTable from "./src/pages/public/marwadi_matrimony/MarriageUserBiodataCard";
+import FranchiseRegistration from "./src/pages/public/marwadi_matrimony/FranchiseDetails";
 
 // admin
 // import Adverisement from "./src/pages/admin/advertisment-board/Advertisment";
@@ -43,6 +44,8 @@ import ContactQueries from "./src/pages/admin/contact_queries/ContactQueries";
 import AdminHome from "./src/pages/admin/home/Home";
 import PressClip from "./src/pages/admin/pressClip/PressClip";
 import PressCutout from "./src/pages/admin/pressCutout/PressCutout";
+
+
 
 const appRoutes = createBrowserRouter([
   {
@@ -76,6 +79,10 @@ const appRoutes = createBrowserRouter([
           {
             path: "/about",
             element: <About />,
+          },
+          {
+            path: "/franchise-registration",
+            element: <FranchiseRegistration />,
           },
           {
             path: "/membership-and-fees",
@@ -180,6 +187,10 @@ const appRoutes = createBrowserRouter([
           {
             path: "press-cutout",
             element: <PressCutout />,
+          },
+          {
+            path: "all-adv",
+            element: <Advertisements/>,
           },
         ],
       },

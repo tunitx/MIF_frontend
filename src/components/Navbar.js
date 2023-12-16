@@ -1,9 +1,13 @@
 import { Fragment } from "react";
+import Swal from "sweetalert2";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import marwadi_logo_navbar from "../../assests/images/marwari_logo_pro.webp";
 import { ChevronDownIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
-import { Link } from "react-router-dom";
+import { Link, Location } from "react-router-dom";
+import React, { useEffect, useState, useContext } from "react";
+import UserContext from "../utils/context/UserContext";
+
 
 const navigation = [
   { name: "Home", href: "/", current: true },
@@ -151,8 +155,10 @@ const navigation = [
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
-
+import { Link, useLocation } from "react-router-dom";
 export default function Navbar() {
+  const location = useLocation();
+  const { userName, setUserName } = useContext(UserContext);
   return (
     <Disclosure as="nav" className="bg-[#FFFEFE] font-Poppins ">
       {({ open }) => (
@@ -353,6 +359,21 @@ export default function Navbar() {
                   </div>
                 </div>
               </div>
+              <div className="flex sm:flex-row flex-col-reverse gap-3 justify-center items-center mr-5 ">
+                {localStorage.getItem("jwtToken") && location.pathname === "/matrimony" && (
+ <button className="flex w-full justify-center max-w-[200px] rounded-md bg-[#EF4D48] px-3 sm:py-3 py-2  text-sm sm:text-base font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 "
+                    onClick={() => {
+                      Swal.fire("Logged out", "Please sign in/sign up", "info");
+                      localStorage.removeItem("jwtToken");
+                      localStorage.removeItem("userName"); // remove the userName from local storage
+                      setUserName(null);
+                    }}
+                  >
+                    <span>Log out</span>
+                  </button>
+                )}
+              </div>
+
               <div className="flex sm:flex-row flex-col-reverse gap-3 justify-center items-center ">
                 <Link to={"/matrimony"}>
                   <button className="flex w-full justify-center max-w-[200px] rounded-md bg-[#EF4D48] px-3 sm:py-3 py-2  text-sm sm:text-base font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ">
@@ -364,10 +385,14 @@ export default function Navbar() {
                     "https://app.marwadiinternationalfederation.com/advance-search"
                   }
                 >
-                  <button className="flex w-full justify-center max-w-[200px] rounded-md bg-[#EF4D48] px-3 sm:py-3 py-2 text-sm sm:text-base  font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ">
+                  <button className="flex w-full justify-center max-w-[200px] rounded-md bg-[#EF4D48] px-3 sm:py-3 py-2  text-sm sm:text-base font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ">
                     Find Marwadi
                   </button>
+
                 </Link>
+
+
+
               </div>
             </div>
           </div>

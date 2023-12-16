@@ -9,6 +9,7 @@ const api = axios.create({
 
 const Presses = () => {
   const [members, setMembers] = useState([]);
+ 
 
   useEffect(() => {
     api
@@ -43,11 +44,20 @@ const Presses = () => {
   );
 };
 const Press = ({ member, onDelete }) => {
+  const viewImage = () => {
+    Swal.fire({
+      imageUrl: member.imageURL,
+      imageAlt: 'Profile',
+    });
+  };
   return (
     <div className="w-fit flex flex-row gap-5 max-w-[700px]">
       <div className="w-fit p-3 border border-indigo-900 rounded-md flex flex-col gap-5 justify-center items-center w-90%">
         <div className="p-5 pb-0 min-w-[100px] min-h-[200px]">
-          <img src={member.imageURL} alt="Profile" className="rounded-md" />
+          <img src={member.imageURL} alt="Profile" className="w-42 h-32 " />
+          <button onClick={viewImage} className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            View
+          </button>
         </div>
         <div className="w-full flex-col flex justify-center text-center">
           <p className="font-Poppins text-center text-2xl font-semibold text-[#EF4D48]">

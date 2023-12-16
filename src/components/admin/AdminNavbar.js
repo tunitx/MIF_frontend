@@ -43,6 +43,10 @@ const navigation = [
     name: "Press Cutout",
     href: "/admin/press-cutout",
   },
+  {
+    name: "Advertisements",
+    href: "/admin/all-adv",
+  },
 ];
 
 export default function AdminNavbar() {

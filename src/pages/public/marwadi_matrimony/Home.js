@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Header from "../../../components/matrimony/Header";
 import { Link, useNavigate } from "react-router-dom";
 import ConsentAddBiodata from "./ConsentAddBiodata";
@@ -8,10 +8,12 @@ import axios from "axios";
 import { BASE_URL } from "../../../utils/constants";
 // import { useHistory } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import UserContext from "../../../utils/context/UserContext";
 
 
 const Home = () => {
   // const history = useHistory();
+  const { setUserName } = useContext(UserContext);
   const navigate = useNavigate();
 
   const [action, setAction] = useState(null);
@@ -66,8 +68,11 @@ const Home = () => {
                     throw new Error(response.data.error);
                   }
                   const token = response.data.token;
-                  console.log(token);
+                  // console.log(token);
+                  const name = result.value.name;
                   localStorage.setItem("jwtToken", token);
+                  localStorage.setItem("userName", name);
+                  setUserName(name);
                   setAction(path);
                 })
                 .catch((error) => {
@@ -107,8 +112,13 @@ const Home = () => {
                   if (response.data.error) {
                     throw new Error(response.data.error);
                   }
+                  console.log(response.data);
                   const token = response.data.token;
+                  const name = response.data.user.name;
+                 
                   localStorage.setItem("jwtToken", token);
+                  localStorage.setItem("userName", name);
+                  setUserName(name);
                   setAction(path);
                 })
                 .catch((error) => {
@@ -147,8 +157,6 @@ const Home = () => {
             <span>Search</span> <strong>BioData</strong>
           </button>
 
-
-
           {localStorage.getItem("jwtToken") && (
             <>
               <button
@@ -160,18 +168,7 @@ const Home = () => {
                 <span>View</span> <strong>BioDatas</strong>
               </button>
 
-              {/* <button
-            className="flex gap-2  justify-center font-Poppins rounded-md bg-indigo-600 px-5 py-4 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            onClick={() => {
-              Swal.fire("Logged out", "Please sign in/sign up", "info");
-              localStorage.removeItem("jwtToken");
-
-              setAction(action === null ? undefined : null);
-              handleAction("/matrimony/add-biodata", "loggedOut");
-            }}
-          >
-            <span>Log out</span>
-          </button> */}
+             
             </>
           )}
         </div>

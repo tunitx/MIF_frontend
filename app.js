@@ -7,118 +7,125 @@ import Public from "./src/Public";
 import dotenv from "dotenv";
 dotenv.config();
 
-// import ListOfMembers from "./src/pages/public/list_of_members/ListOfMembers";
-const ListOfMembers = lazy(() => {
-  return import("./src/pages/public/list_of_members/ListOfMembers");
-});
+import ListOfMembers from "./src/pages/public/list_of_members/ListOfMembers";
 
-// import Press from "./src/pages/public/press/Press";
+// const ListOfMembers = lazy(() => {
+//   return import("./src/pages/public/list_of_members/ListOfMembers");
+// });
 
-const Press = lazy(() => {
-  return import("./src/pages/public/press/Press");
-});
+import Press from "./src/pages/public/press/Press";
 
-// import MissionAndVision from "./src/pages/public/mission-and-vision/MissionAndVision";
+// const Press = lazy(() => {
+//   return import("./src/pages/public/press/Press");
+// });
 
-const MissionAndVision = lazy(() => {
-  return import("./src/pages/public/mission-and-vision/MissionAndVision");
-});
+import MissionAndVision from "./src/pages/public/mission-and-vision/MissionAndVision";
 
-// import Gallery from "./src/pages/public/gallery/Gallery";
+// const MissionAndVision = lazy(() => {
+//   return import("./src/pages/public/mission-and-vision/MissionAndVision");
+// });
 
-const Gallery = lazy(() => {
-  return import("./src/pages/public/gallery/Gallery");
-});
+import Gallery from "./src/pages/public/gallery/Gallery";
 
-// import About from "./src/pages/public/about/About";
+// const Gallery = lazy(() => {
+//   return import("./src/pages/public/gallery/Gallery");
+// });
 
-const About = lazy(() => {
-  return import("./src/pages/public/about/About");
-});
+import About from "./src/pages/public/about/About";
 
-// import MembershipAndFees from "./src/pages/public/membership_and_fees/MembershipAndFees";
+// const About = lazy(() => {
+//   return import("./src/pages/public/about/About");
+// });
 
-const MembershipAndFees = lazy(() => {
-  return import("./src/pages/public/membership_and_fees/MembershipAndFees");
-});
+import MembershipAndFees from "./src/pages/public/membership_and_fees/MembershipAndFees";
 
-// import StudyAbroad from "./src/pages/public/study_abroad/StudyAbroad";
+// const MembershipAndFees = lazy(() => {
+//   return import("./src/pages/public/membership_and_fees/MembershipAndFees");
+// });
 
-const StudyAbroad = lazy(() => {
-  return import("./src/pages/public/study_abroad/StudyAbroad");
-});
+import StudyAbroad from "./src/pages/public/study_abroad/StudyAbroad";
 
-// import FAQ from "./src/pages/public/faqs/FAQ";
+// const StudyAbroad = lazy(() => {
+//   return import("./src/pages/public/study_abroad/StudyAbroad");
+// });
 
-const FAQ = lazy(() => {
-  return import("./src/pages/public/faqs/FAQ");
-});
+import FAQ from "./src/pages/public/faqs/FAQ";
 
-// import FreeWebsite from "./src/pages/public/free_website/FreeWebsite";
+// const FAQ = lazy(() => {
+//   return import("./src/pages/public/faqs/FAQ");
+// });
 
-const FreeWebsite = lazy(() => {
-  return import("./src/pages/public/free_website/FreeWebsite");
-});
+import FreeWebsite from "./src/pages/public/free_website/FreeWebsite";
 
-// import BookMarwadiVyapari from "./src/pages/public/book_marwadi_vyapari/BookMarwadiVyapari";
+// const FreeWebsite = lazy(() => {
+//   return import("./src/pages/public/free_website/FreeWebsite");
+// });
 
-const BookMarwadiVyapari = lazy(() => {
-  return import("./src/pages/public/book_marwadi_vyapari/BookMarwadiVyapari");
-});
+import BookMarwadiVyapari from "./src/pages/public/book_marwadi_vyapari/BookMarwadiVyapari";
 
-// import GovRegistration from "./src/pages/public/government_registration/GovRegistration";
+// const BookMarwadiVyapari = lazy(() => {
+//   return import("./src/pages/public/book_marwadi_vyapari/BookMarwadiVyapari");
+// });
 
-const GovRegistration = lazy(() => {
-  return import("./src/pages/public/government_registration/GovRegistration");
-});
+import GovRegistration from "./src/pages/public/government_registration/GovRegistration";
 
-// import CoreMembersMIF from "./src/pages/public/mif_core_members/CoreMembersMIF";
+// const GovRegistration = lazy(() => {
+//   return import("./src/pages/public/government_registration/GovRegistration");
+// });
 
-const CoreMembersMIF = lazy(() => {
-  return import("./src/pages/public/mif_core_members/CoreMembersMIF");
-});
+import CoreMembersMIF from "./src/pages/public/mif_core_members/CoreMembersMIF";
 
-// import Matrimony_Home from "./src/pages/public/marwadi_matrimony/Home";
+// const CoreMembersMIF = lazy(() => {
+//   return import("./src/pages/public/mif_core_members/CoreMembersMIF");
+// });
 
-const Matrimony_Home = lazy(() => {
-  return import("./src/pages/public/marwadi_matrimony/Home");
-});
+import Matrimony_Home from "./src/pages/public/marwadi_matrimony/Home";
 
-// import BiodataTable from "./src/pages/public/marwadi_matrimony/MarriageUserBiodataCard";
+// const Matrimony_Home = lazy(() => {
+//   return import("./src/pages/public/marwadi_matrimony/Home");
+// });
 
-const BiodataTable = lazy(() => {
-  return import("./src/pages/public/marwadi_matrimony/MarriageUserBiodataCard");
-});
+import BiodataTable from "./src/pages/public/marwadi_matrimony/MarriageUserBiodataCard";
 
-// import Contact from "./src/pages/public/contact/Contact";
+// const BiodataTable = lazy(() => {
+//   return import("./src/pages/public/marwadi_matrimony/MarriageUserBiodataCard");
+// });
 
-const Contact = lazy(() => {
-  return import("./src/pages/public/contact/Contact");
-});
+import Contact from "./src/pages/public/contact/Contact";
 
-// import Matrimony from "./src/pages/public/marwadi_matrimony/Matrimony";
+// const Contact = lazy(() => {
+//   return import("./src/pages/public/contact/Contact");
+// });
 
-const Matrimony = lazy(() => {
-  return import("./src/pages/public/marwadi_matrimony/Matrimony");
-});
+import Matrimony from "./src/pages/public/marwadi_matrimony/Matrimony";
 
-// import Registration from "./src/pages/public/marwadi_matrimony/Registration";
+// const Matrimony = lazy(() => {
+//   return import("./src/pages/public/marwadi_matrimony/Matrimony");
+// });
 
-const Registration = lazy(() => {
-  return import("./src/pages/public/marwadi_matrimony/Registration");
-});
+import Registration from "./src/pages/public/marwadi_matrimony/Registration";
 
-// import SearchBiodata from "./src/pages/public/marwadi_matrimony/SearchBiodata";
+// const Registration = lazy(() => {
+//   return import("./src/pages/public/marwadi_matrimony/Registration");
+// });
 
-const SearchBiodata = lazy(() => {
-  return import("./src/pages/public/marwadi_matrimony/SearchBiodata");
-});
+import SearchBiodata from "./src/pages/public/marwadi_matrimony/SearchBiodata";
 
-// import Disclaimer from "./src/pages/public/disclaimer/Disclaimer";
+// const SearchBiodata = lazy(() => {
+//   return import("./src/pages/public/marwadi_matrimony/SearchBiodata");
+// });
 
-const Disclaimer = lazy(() => {
-  return import("./src/pages/public/disclaimer/Disclaimer");
-});
+import Disclaimer from "./src/pages/public/disclaimer/Disclaimer";
+
+// const Disclaimer = lazy(() => {
+//   return import("./src/pages/public/disclaimer/Disclaimer");
+// });
+
+import FranchiseDetails from "./src/pages/public/marwadi_matrimony/FranchiseDetails";
+
+// const FranchiseDetails = lazy(()=>{
+//   return import("./src/pages/public/marwadi_matrimony/FranchiseDetails");
+// })
 
 // admin
 
@@ -184,6 +191,14 @@ const appRoutes = createBrowserRouter([
             element: (
               <Suspense>
                 <About />
+              </Suspense>
+            ),
+          },
+          {
+            path: "/franchise-registration",
+            element: (
+              <Suspense>
+                <FranchiseDetails />
               </Suspense>
             ),
           },
@@ -346,6 +361,10 @@ const appRoutes = createBrowserRouter([
           {
             path: "press-cutout",
             element: <PressCutout />,
+          },
+          {
+            path: "all-adv",
+            element: <Advertisements />,
           },
         ],
       },

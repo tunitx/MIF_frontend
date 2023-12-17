@@ -141,6 +141,7 @@ import AdminHome from "./src/pages/admin/home/Home";
 import PressClip from "./src/pages/admin/pressClip/PressClip";
 import PressCutout from "./src/pages/admin/pressCutout/PressCutout";
 import MarriageUsers from "./src/pages/admin/Matrimony/MatrimonyUsers";
+import Advertisements from "./src/pages/admin/advertisment-board/Advertisements";
 
 const appRoutes = createBrowserRouter([
   {

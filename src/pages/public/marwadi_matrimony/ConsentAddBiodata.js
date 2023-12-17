@@ -13,38 +13,38 @@ const ConsentAddBiodata = () => {
             you acknowledge and agree to the following terms:
           </p>
 
-          <ul className="text-sm flex flex-col gap-2 max-h-96 overflow-y-auto">
-            <l1>
+          <ul className="text-sm flex flex-col gap-2 max-h-96 overflow-y-auto list-disc">
+            <li>
               Marwadi International Federation and its affiliated members
               operate as a platform acting as a bridge for matrimonial purposes.
               We do not independently verify the accuracy or authenticity of the
               information provided by users.
-            </l1>
-            <l1>
+            </li>
+            <li>
               Users are solely responsible for the accuracy, completeness, and
               truthfulness of the information they provide on this platform.
-            </l1>
-            <l1>
+            </li>
+            <li>
               Marwadi International Federation and its members do not undertake
               any responsibility for verifying the details provided by users,
               including but not limited to, personal background, identity, or
               any other information shared on this platform.
-            </l1>
-            <l1>
+            </li>
+            <li>
               Users are encouraged to exercise caution and discretion while
               interacting with other users and making decisions based on the
               information available on this platform.
-            </l1>
-            <l1>
+            </li>
+            <li>
               It is the user's responsibility to update or remove their
               information if it becomes outdated, inaccurate, or if they no
               longer require the services provided by this platform.
-            </l1>
-            <l1>
+            </li>
+            <li>
               Marwadi International Federation and its members shall not be
               liable for any consequences arising from the use or reliance on
               the information provided by users on this platform.
-            </l1>
+            </li>
           </ul>
 
           {/* {agreed === false ? (

@@ -6,12 +6,9 @@ const Header = () => {
       <div className="w-full max-w-6xl flex justify-center items-center flex-col gap-4">
         <p className="w-fit font-PlayFair border-2 px-3 py-2 text-xl font-bold border-orange-400 md:text-2xl xl:text-4xl">
           {" "}
-          Marwadi Matrimony
+          MIF Marwadi Matrimony
         </p>
-        <div>
-
-          
-        </div>
+        <div></div>
         <div className="flex relative">
           <div className="flex items-center gap-[2px]">
             <div className="h-1 rounded-l-lg bg-[#000] w-16"></div>

@@ -1,44 +1,134 @@
-import react, { useContext } from "react";
+import react, { useContext, lazy, Suspense } from "react";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import ReactDOM from "react-dom/client";
 import AppLayout from "./src/AppLayout";
 import Home from "./src/pages/public/home/Home";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import ListOfMembers from "./src/pages/public/list_of_members/ListOfMembers";
-import FormAddNewMember from "./src/pages/admin/list-of-members/FormAddNewMember";
-import Press from "./src/pages/public/press/Press";
-import MissionAndVision from "./src/pages/public/mission-and-vision/MissionAndVision";
-import Gallery from "./src/pages/public/gallery/Gallery";
-import About from "./src/pages/public/about/About";
-import MembershipAndFees from "./src/pages/public/membership_and_fees/MembershipAndFees";
-import StudyAbroad from "./src/pages/public/study_abroad/StudyAbroad";
-import FAQ from "./src/pages/public/faqs/FAQ";
-import FreeWebsite from "./src/pages/public/free_website/FreeWebsite";
-import BookMarwadiVyapari from "./src/pages/public/book_marwadi_vyapari/BookMarwadiVyapari";
-import FormAddAdvertisment from "./src/pages/admin/advertisment-board/FormAddAdvertisment";
-import GovRegistration from "./src/pages/public/government_registration/GovRegistration";
-import CoreMembersMIF from "./src/pages/public/mif_core_members/CoreMembersMIF";
 import Public from "./src/Public";
 import dotenv from "dotenv";
 dotenv.config();
 
-import Matrimony_Home from "./src/pages/public/marwadi_matrimony/Home";
-import BiodataTable from "./src/pages/public/marwadi_matrimony/MarriageUserBiodataCard";
+// import ListOfMembers from "./src/pages/public/list_of_members/ListOfMembers";
+const ListOfMembers = lazy(() => {
+  return import("./src/pages/public/list_of_members/ListOfMembers");
+});
+
+// import Press from "./src/pages/public/press/Press";
+
+const Press = lazy(() => {
+  return import("./src/pages/public/press/Press");
+});
+
+// import MissionAndVision from "./src/pages/public/mission-and-vision/MissionAndVision";
+
+const MissionAndVision = lazy(() => {
+  return import("./src/pages/public/mission-and-vision/MissionAndVision");
+});
+
+// import Gallery from "./src/pages/public/gallery/Gallery";
+
+const Gallery = lazy(() => {
+  return import("./src/pages/public/gallery/Gallery");
+});
+
+// import About from "./src/pages/public/about/About";
+
+const About = lazy(() => {
+  return import("./src/pages/public/about/About");
+});
+
+// import MembershipAndFees from "./src/pages/public/membership_and_fees/MembershipAndFees";
+
+const MembershipAndFees = lazy(() => {
+  return import("./src/pages/public/membership_and_fees/MembershipAndFees");
+});
+
+// import StudyAbroad from "./src/pages/public/study_abroad/StudyAbroad";
+
+const StudyAbroad = lazy(() => {
+  return import("./src/pages/public/study_abroad/StudyAbroad");
+});
+
+// import FAQ from "./src/pages/public/faqs/FAQ";
+
+const FAQ = lazy(() => {
+  return import("./src/pages/public/faqs/FAQ");
+});
+
+// import FreeWebsite from "./src/pages/public/free_website/FreeWebsite";
+
+const FreeWebsite = lazy(() => {
+  return import("./src/pages/public/free_website/FreeWebsite");
+});
+
+// import BookMarwadiVyapari from "./src/pages/public/book_marwadi_vyapari/BookMarwadiVyapari";
+
+const BookMarwadiVyapari = lazy(() => {
+  return import("./src/pages/public/book_marwadi_vyapari/BookMarwadiVyapari");
+});
+
+// import GovRegistration from "./src/pages/public/government_registration/GovRegistration";
+
+const GovRegistration = lazy(() => {
+  return import("./src/pages/public/government_registration/GovRegistration");
+});
+
+// import CoreMembersMIF from "./src/pages/public/mif_core_members/CoreMembersMIF";
+
+const CoreMembersMIF = lazy(() => {
+  return import("./src/pages/public/mif_core_members/CoreMembersMIF");
+});
+
+// import Matrimony_Home from "./src/pages/public/marwadi_matrimony/Home";
+
+const Matrimony_Home = lazy(() => {
+  return import("./src/pages/public/marwadi_matrimony/Home");
+});
+
+// import BiodataTable from "./src/pages/public/marwadi_matrimony/MarriageUserBiodataCard";
+
+const BiodataTable = lazy(() => {
+  return import("./src/pages/public/marwadi_matrimony/MarriageUserBiodataCard");
+});
+
+// import Contact from "./src/pages/public/contact/Contact";
+
+const Contact = lazy(() => {
+  return import("./src/pages/public/contact/Contact");
+});
+
+// import Matrimony from "./src/pages/public/marwadi_matrimony/Matrimony";
+
+const Matrimony = lazy(() => {
+  return import("./src/pages/public/marwadi_matrimony/Matrimony");
+});
+
+// import Registration from "./src/pages/public/marwadi_matrimony/Registration";
+
+const Registration = lazy(() => {
+  return import("./src/pages/public/marwadi_matrimony/Registration");
+});
+
+// import SearchBiodata from "./src/pages/public/marwadi_matrimony/SearchBiodata";
+
+const SearchBiodata = lazy(() => {
+  return import("./src/pages/public/marwadi_matrimony/SearchBiodata");
+});
+
+// import Disclaimer from "./src/pages/public/disclaimer/Disclaimer";
+
+const Disclaimer = lazy(() => {
+  return import("./src/pages/public/disclaimer/Disclaimer");
+});
 
 // admin
-// import Adverisement from "./src/pages/admin/advertisment-board/Advertisment";
-import Advertisements from "./src/pages/admin/advertisment-board/Advertisements";
+
 import Presses from "./src/pages/admin/press/Allpress";
 import Admin from "./src/Admin";
 import Members from "./src/pages/admin/list-of-members/Members";
 import AdminPress from "./src/pages/admin/press/Press";
 import AdminListOfMembers from "./src/pages/admin/list-of-members/ListOfMembers";
 import AdminAdvertismentBoard from "./src/pages/admin/advertisment-board/AdvertismentBoard";
-import Contact from "./src/pages/public/contact/Contact";
-import Matrimony from "./src/pages/public/marwadi_matrimony/Matrimony";
 import path from "path-browserify";
-import Registration from "./src/pages/public/marwadi_matrimony/Registration";
-import SearchBiodata from "./src/pages/public/marwadi_matrimony/SearchBiodata";
-import Disclaimer from "./src/pages/public/disclaimer/Disclaimer";
 import ContactQueries from "./src/pages/admin/contact_queries/ContactQueries";
 import AdminHome from "./src/pages/admin/home/Home";
 import PressClip from "./src/pages/admin/pressClip/PressClip";
@@ -59,79 +149,155 @@ const appRoutes = createBrowserRouter([
           },
           {
             path: "/list-of-members",
-            element: <ListOfMembers />,
+            element: (
+              <Suspense fallback={<div></div>}>
+                <ListOfMembers />
+              </Suspense>
+            ),
           },
           {
             path: "/press",
-            element: <Press />,
+            element: (
+              <Suspense>
+                <Press />
+              </Suspense>
+            ),
           },
           {
             path: "/mission-and-vision",
-            element: <MissionAndVision />,
+            element: (
+              <Suspense>
+                <MissionAndVision />
+              </Suspense>
+            ),
           },
           {
             path: "/gallery",
-            element: <Gallery />,
+            element: (
+              <Suspense>
+                <Gallery />
+              </Suspense>
+            ),
           },
           {
             path: "/about",
-            element: <About />,
+            element: (
+              <Suspense>
+                <About />
+              </Suspense>
+            ),
           },
           {
             path: "/membership-and-fees",
-            element: <MembershipAndFees />,
+            element: (
+              <Suspense>
+                <MembershipAndFees />
+              </Suspense>
+            ),
           },
           {
             path: "/study-abroad",
-            element: <StudyAbroad />,
+            element: (
+              <Suspense>
+                <StudyAbroad />
+              </Suspense>
+            ),
           },
           {
             path: "/disclaimer",
-            element: <Disclaimer />,
+            element: (
+              <Suspense>
+                <Disclaimer />
+              </Suspense>
+            ),
           },
           {
             path: "/faqs",
-            element: <FAQ />,
+            element: (
+              <Suspense>
+                <FAQ />
+              </Suspense>
+            ),
           },
           {
             path: "/free-website",
-            element: <FreeWebsite />,
+            element: (
+              <Suspense>
+                <FreeWebsite />
+              </Suspense>
+            ),
           },
           {
             path: "/book-marwadi-vyapari",
-            element: <BookMarwadiVyapari />,
+            element: (
+              <Suspense>
+                <BookMarwadiVyapari />
+              </Suspense>
+            ),
           },
           {
             path: "/government-registration",
-            element: <GovRegistration />,
+            element: (
+              <Suspense>
+                <GovRegistration />
+              </Suspense>
+            ),
           },
           {
             path: "/mif-core-members",
-            element: <CoreMembersMIF />,
+            element: (
+              <Suspense>
+                <CoreMembersMIF />
+              </Suspense>
+            ),
           },
           {
             path: "/contact",
-            element: <Contact />,
+            element: (
+              <Suspense>
+                <Contact />
+              </Suspense>
+            ),
           },
           {
             path: "/matrimony",
-            element: <Matrimony />,
+            element: (
+              <Suspense>
+                <Matrimony />
+              </Suspense>
+            ),
             children: [
               {
                 path: "/matrimony",
-                element: <Matrimony_Home />,
+                element: (
+                  <Suspense>
+                    <Matrimony_Home />
+                  </Suspense>
+                ),
               },
               {
                 path: "add-biodata",
-                element: <Registration />,
+                element: (
+                  <Suspense>
+                    <Registration />
+                  </Suspense>
+                ),
               },
               {
                 path: "search-biodata",
-                element: <SearchBiodata />,
+                element: (
+                  <Suspense>
+                    <SearchBiodata />
+                  </Suspense>
+                ),
               },
               {
                 path: "biodata",
-                element: <BiodataTable />,
+                element: (
+                  <Suspense>
+                    <BiodataTable />
+                  </Suspense>
+                ),
               },
             ],
           },

@@ -66,8 +66,13 @@ const BiodataCard = ({ data }) => {
   return (
     <div className="w-full fade-in shadow-md flex flex-col gap-4 min-h-full ">
       <div className="w-full min-h-full p-3 border border-indigo-900 rounded-md flex flex-col gap-5 justify-start items-center">
-        <div className="h-52 w-52 p-2 overflow-hidden rounded-md flex justify-center items-center ">
-          <img src={image1} className="rounded-md shadow-lg" />
+        <div className="h-52 w-52 p-2 overflow-hidden rounded-md flex justify-center items-start">
+          {/* <div className="my-auto"> */}
+          <img
+            src={image1}
+            className="rounded-md shadow-lg object-contain my-auto"
+          />
+          {/* </div>{" "} */}
         </div>
 
         {/* Name, Age, Gotra, Height and Complexion */}

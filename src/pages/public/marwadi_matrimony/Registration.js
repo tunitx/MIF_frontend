@@ -2558,7 +2558,7 @@ function Registration() {
                               type="file"
                               // TICKET ISSUE : 8
 
-                              accept="image/png, image/jpeg"
+                              accept="image/png, image/jpeg, image/webp"
                               onChange={(event) => {
                                 formik.setFieldValue(
                                   "image1",

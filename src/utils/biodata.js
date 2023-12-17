@@ -1,19 +1,26 @@
 export default {
-  baniya: {
-    aggarwal: [
-      "goyal",
-      "bansal",
-      "kucchal",
-      "Kansal",
-      "Jindal",
-      "Mittal",
-      "Tayal",
+  Baniya: {
+    Agarwal: [
+      "Airan",
+      "Bansal",
       "Bindal",
-      "Singhal",
+      "Bhandal",
+      "Dharan",
       "Garg",
-      "Gupta",
+      "Goyal",
+      "Goyan",
+      "Jindal",
+      "Kansal",
+      "Kuchhal",
+      "Madhukul",
+      "Mangal",
+      "Mittal",
+      "Nangal",
+      "Singhal",
+      "Tayal",
+      "Tingal",
     ],
-    maheswari: [
+    Maheswari: [
       "Ajmera",
       "Asava",
       "Attal",
@@ -33,7 +40,7 @@ export default {
       "Bhattad",
       "Bhutada",
     ],
-    khandelwal: [],
-    mahawar: [],
+    Khandelwal: [],
+    Mahawar: [],
   },
 };

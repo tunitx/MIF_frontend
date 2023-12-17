@@ -274,25 +274,49 @@ function Registration() {
     }
   }, [foundCaste]);
 
+  // function getGotra(surname) {
+  //   let result = {};
+  //   Object.entries(bioData.Baniya).forEach(([key, values]) => {
+  //     if (
+  //       values
+  //         .map((value) => value.toLowerCase())
+  //         .includes(surname.toLowerCase())
+
+  //     ) {
+  //       result = {
+  //         caste: "Baniya",
+  //         subcaste: key,
+  //         surname: values
+  //           .map((value) => value.toLowerCase())
+  //           .find((value) => value.includes(surname.toLowerCase())),
+
+  //       };
+  //     }
+  //   });
+  //   console.log(result);
+  //   res = result;
+  //   return result;
+  // }
   function getGotra(surname) {
     let result = {};
-    Object.entries(bioData.baniya).forEach(([key, values]) => {
+    Object.entries(bioData.Baniya).forEach(([key, values]) => {
       if (
         values
           .map((value) => value.toLowerCase())
           .includes(surname.toLowerCase())
       ) {
+        const foundSurname = values
+          .map((value) => value.toLowerCase())
+          .find((value) => value.includes(surname.toLowerCase()));
+        const capitalizedSurname =
+          foundSurname.charAt(0).toUpperCase() + foundSurname.slice(1);
         result = {
-          caste: "baniya",
+          caste: "Baniya",
           subcaste: key,
-          surname: values
-            .map((value) => value.toLowerCase())
-            .find((value) => value.includes(surname.toLowerCase())),
+          surname: capitalizedSurname,
         };
       }
     });
-    console.log(result);
-    res = result;
     return result;
   }
   const validationSchema = Yup.object().shape({
@@ -919,27 +943,12 @@ function Registration() {
                         id="surname"
                         name="surname"
                         type="text"
-                        // onChange={(e) => {
-                        //   let a = e.target.value;
-                        //   a = a.replace(/\b\w/g, (match) =>
-                        //     match.toUpperCase()
-                        //   );
-                        //   formik.setFieldValue("surname", a);
-                        //   // formik.handleChange(e);
-                        //   // console.log("asdfds");
-                        //   const val = getGotra(e.target.value);
-                        //   console.log(val);
-                        //   if (val) {
-                        //     setFoundCaste(val.caste);
-                        //     setFoundGotra(val.surname);
-                        //     setFoundSubcaste(val.subcaste);
-                        //     setGotra(val.surname);
-                        //     setCaste(val.caste);
-                        //     setSubcaste(val.subcaste);
-                        //   }
-                        // }}
-
                         onChange={(e) => {
+                          const capitalizedInput =
+                            e.target.value.charAt(0).toUpperCase() +
+                            e.target.value.slice(1);
+                          e.target.value = capitalizedInput;
+
                           formik.handleChange(e);
 
                           if (e.target.value === "") {

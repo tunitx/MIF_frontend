@@ -140,6 +140,7 @@ import ContactQueries from "./src/pages/admin/contact_queries/ContactQueries";
 import AdminHome from "./src/pages/admin/home/Home";
 import PressClip from "./src/pages/admin/pressClip/PressClip";
 import PressCutout from "./src/pages/admin/pressCutout/PressCutout";
+import MarriageUsers from "./src/pages/admin/Matrimony/MatrimonyUsers";
 
 const appRoutes = createBrowserRouter([
   {
@@ -341,6 +342,10 @@ const appRoutes = createBrowserRouter([
           {
             path: "contact-queries",
             element: <ContactQueries />,
+          },
+          {
+            path: "matrimony-users",
+            element: <MarriageUsers />,
           },
           // {
           //   path: "members",

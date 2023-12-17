@@ -139,7 +139,7 @@ const navigation = [
         name: "Social Networking",
         subNames: [
           {
-            name: "Marwadi Matrimony",
+            name: "MIF Marwadi Matrimony",
             href: "/matrimony",
           },
         ],
@@ -359,25 +359,12 @@ export default function Navbar() {
                   </div>
                 </div>
               </div>
-              <div className="flex sm:flex-row flex-col-reverse gap-3 justify-center items-center mr-5 ">
-                {localStorage.getItem("jwtToken") && location.pathname === "/matrimony" && (
- <button className="flex w-full justify-center max-w-[200px] rounded-md bg-[#EF4D48] px-3 sm:py-3 py-2  text-sm sm:text-base font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 "
-                    onClick={() => {
-                      Swal.fire("Logged out", "Please sign in/sign up", "info");
-                      localStorage.removeItem("jwtToken");
-                      localStorage.removeItem("userName"); // remove the userName from local storage
-                      setUserName(null);
-                    }}
-                  >
-                    <span>Log out</span>
-                  </button>
-                )}
-              </div>
+             
 
               <div className="flex sm:flex-row flex-col-reverse gap-3 justify-center items-center ">
                 <Link to={"/matrimony"}>
-                  <button className="flex w-full justify-center max-w-[200px] rounded-md bg-[#EF4D48] px-3 sm:py-3 py-2  text-sm sm:text-base font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ">
-                    Marwadi Matrimony
+                  <button className="flex w-full justify-center max-w-[220px] rounded-md bg-[#EF4D48] px-3 sm:py-3 py-2  text-sm sm:text-base font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ">
+                    MIF Marwadi Matrimony
                   </button>
                 </Link>
                 <Link

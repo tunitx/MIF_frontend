@@ -14,7 +14,7 @@ const MIF_news = ({ exploreMore }) => {
   if (clips === null || cutouts === null) return;
 
   return (
-    <div className="w-full px-5 py-12 flex justify-center items-center">
+    <div className="w-full fade-in px-5 py-12 flex justify-center items-center">
       <div className="flex flex-col gap-4 sm:gap-12 max-w-6xl">
         <h2 className="text-[#2B161B] font-PlayFair text-xl font-bold text-center md:text-2xl lg:text-4xl">
           MIF in News

@@ -53,22 +53,32 @@ const BiodataCard = ({ data }) => {
 
   ageInYear = calculateAge(dob);
 
+  function capitalize(str) {
+    if (!str) return "";
+    const a = str.charAt(0).toUpperCase() + str.slice(1, str.length);
+    return a;
+  }
+
+  const formatedGotra = capitalize(gotra);
+
+  const formatedComplexion = capitalize(complexion);
+
   return (
-    <div className="w-full flex flex-col gap-4 min-h-full ">
+    <div className="w-full fade-in shadow-md flex flex-col gap-4 min-h-full ">
       <div className="w-full min-h-full p-3 border border-indigo-900 rounded-md flex flex-col gap-5 justify-start items-center">
-        <div className="h-52 w-52 mt-2">
-          <img src={image1} className="rounded-md h-52 w-52 overflow-hidden" />
+        <div className="h-52 w-52 p-2 overflow-hidden rounded-md flex justify-center items-center ">
+          <img src={image1} className="rounded-md shadow-lg" />
         </div>
 
         {/* Name, Age, Gotra, Height and Complexion */}
 
         <div className="w-full flex-col flex  justify-center text-center">
           <p className="font-Poppins text-2xl font-semibold text-[#EF4D48]">
-            {`${firstName} ${surname}`}
+            {`${firstName} ${capitalize(surname)}`}
           </p>
           <p className="font-Poppins text-sm text-gray-800">
-            ({gotra}, {ageInYear}yr., {(heightInCms / 30.48).toFixed(2)} ft,{" "}
-            {complexion})
+            ({formatedGotra}, {ageInYear}yr., {(heightInCms / 30.48).toFixed(2)}{" "}
+            ft, {formatedComplexion});
           </p>
         </div>
         {/* Svg section of phone, emial */}
@@ -98,7 +108,7 @@ const BiodataCard = ({ data }) => {
 
           {/* Email */}
 
-          {emails.length > 0 && (
+          {emails.length > 0 && emails[0].length > 0 && (
             <div>
               <a href={`mailto:${emails[0]}`} className="hover:cursor-pointer">
                 <svg
@@ -142,11 +152,9 @@ const BiodataCard = ({ data }) => {
               Occupation :
             </p>
             <p className="w-full text-center font-sm text-gray-700 font-normal">
-              {occupation === "Service"
+              {occupation === "Service/Job"
                 ? `${serviceType}`
-                : occupation === "Business"
-                ? "Business"
-                : "Self Employed"}
+                : `${occupation}`}
             </p>
           </div>
         </div>

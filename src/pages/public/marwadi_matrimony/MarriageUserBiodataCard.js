@@ -32,30 +32,7 @@ const BiodataTable = () => {
   };
 
   const handleView = (biodata) => {
-    // Swal.fire({
-    //   title: biodata.firstName + " " + biodata.surname,
-    //   html: `
-    //   <div className="flex flex-col items-center space-y-2">
-    //   <img src= ${
-    //     biodata.image1
-    //   } alt="Profile Photo" className="w-24 h-24 object-cover rounded-full" />
-    //   <p className="text-sm text-gray-600">Phone Numbers: ${biodata.phoneNumbers.join(
-    //     ", "
-    //   )}</p>
-    //   <p className="text-sm text-gray-600">Emails: ${biodata.emails.join(
-    //     ", "
-    //   )}</p>
-    //   <p className="text-sm text-gray-600">Current Address: ${
-    //     biodata.currentAddressCity
-    //   }, ${biodata.currentAddressState}, ${biodata.currentAddressCountry}</p>
-    //   <p className="text-sm text-gray-600">Education: ${biodata.education}</p>
-    //   <p className="text-sm text-gray-600">Profession: ${biodata.profession}</p>
-    //   <p className="text-sm text-gray-600">Service Details: ${
-    //     biodata.serviceDetails
-    //   }</p>
-    // </div>
-    //   `,
-    // });
+
     setSelectedBiodata(biodata);
   };
 
@@ -68,7 +45,7 @@ const BiodataTable = () => {
             biodata={editingBiodata}
             setEditingBiodata={setEditingBiodata}
           />
-        ) : (
+        ) : biodatas.length > 0 ?  (
           <table className="w-full border-2 border-[#305D2B] max-w-7xl">
             <thead className="w-full">
               <tr className="bg-[#305D2B] text-white w-full">
@@ -91,9 +68,7 @@ const BiodataTable = () => {
                   <td className="p-2 border-r border-[#EF4D48] text-center text-[#333] whitespace-nowrap font-bold font-Poppins">
                     {biodata.firstName} {biodata.surname}
                   </td>
-                  <td className="p-2 border-r border-[#EF4D48] text-center text-[#333] whitespace-nowrap font-Poppins">
-                    {biodata.timestamp.slice(0, 10)}
-                  </td>
+                  <td className="p-2 border-r border-[#EF4D48] text-center text-[#333] whitespace-nowrap font-bold font-Poppins">{new Date(biodata.timestamp).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' })}</td>
                   <td className="p-2 border-r border-[#EF4D48] text-center text-[#333] whitespace-nowrap font-Poppins">
                     <button onClick={() => handleEdit(biodata)}>Edit</button>
                   </td>
@@ -113,6 +88,8 @@ const BiodataTable = () => {
               ))}
             </tbody>
           </table>
+        ): (
+          <p className="text-red-500 text-lg">You have not created any bio data's yet :)</p>
         )}
 
 
@@ -123,7 +100,7 @@ const BiodataTable = () => {
         {selectedBiodata && <BiodataCard data={selectedBiodata} />}
 
       </div>
-      {/* <div className="flex justify-center">
+      <div className="flex justify-center">
       {selectedBiodata && (
         <button
           onClick={() => setSelectedBiodata(null)}
@@ -133,7 +110,7 @@ const BiodataTable = () => {
         </button>
       
       )}
-        </div> */}
+        </div>
     </>
 
   );

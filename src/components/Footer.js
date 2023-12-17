@@ -200,7 +200,13 @@ const Footer = () => {
           <div>
             <span className="text-[#263b78] text-[14px]">
               Designed and Developed by{" "}
-              <a className="text-[#ff0000]">Khojo Right Now</a>
+              <a
+                className="text-[#ff0000]"
+                href="https://khojorightnow.com/"
+                target="_blank"
+              >
+                Khojo Right Now
+              </a>
             </span>
           </div>
         </div>

@@ -16,6 +16,7 @@ import { POST_BIODATA } from "../../../utils/constants";
 import { useNavigate } from "react-router-dom";
 import Popup from "./Popup";
 import MultiStepProgressBar from "./progressBar/MultiStepProgressBar";
+import MatrimonyLoader from "../../../components/MatrimonyLoader";
 
 // import { matrimonySignIn } from "../../../utils/store/slices/matrimonyUserSlice";
 // import { Provider, useDispatch, useSelector } from "react-redux";
@@ -273,27 +274,49 @@ function Registration() {
     }
   }, [foundCaste]);
 
+  // function getGotra(surname) {
+  //   let result = {};
+  //   Object.entries(bioData.Baniya).forEach(([key, values]) => {
+  //     if (
+  //       values
+  //         .map((value) => value.toLowerCase())
+  //         .includes(surname.toLowerCase())
 
+  //     ) {
+  //       result = {
+  //         caste: "Baniya",
+  //         subcaste: key,
+  //         surname: values
+  //           .map((value) => value.toLowerCase())
+  //           .find((value) => value.includes(surname.toLowerCase())),
 
+  //       };
+  //     }
+  //   });
+  //   console.log(result);
+  //   res = result;
+  //   return result;
+  // }
   function getGotra(surname) {
     let result = {};
-    Object.entries(bioData.baniya).forEach(([key, values]) => {
+    Object.entries(bioData.Baniya).forEach(([key, values]) => {
       if (
         values
           .map((value) => value.toLowerCase())
           .includes(surname.toLowerCase())
       ) {
+        const foundSurname = values
+          .map((value) => value.toLowerCase())
+          .find((value) => value.includes(surname.toLowerCase()));
+        const capitalizedSurname =
+          foundSurname.charAt(0).toUpperCase() + foundSurname.slice(1);
         result = {
-          caste: "baniya",
+          caste: "Baniya",
           subcaste: key,
-          surname: values
-            .map((value) => value.toLowerCase())
-            .find((value) => value.includes(surname.toLowerCase())),
+          surname: capitalizedSurname,
         };
       }
     });
-    console.log(result);
-    res = result;
     return result;
   }
   const validationSchema = Yup.object().shape({
@@ -709,7 +732,7 @@ function Registration() {
           console.log(values);
 
           // return;
-          const jwtToken = localStorage.getItem('jwtToken');
+          const jwtToken = localStorage.getItem("jwtToken");
 
           let fetchOptions = {
             method: "POST",
@@ -718,13 +741,12 @@ function Registration() {
 
           if (jwtToken) {
             fetchOptions.headers = {
-              'authorization': `Bearer ${jwtToken}`
+              authorization: `Bearer ${jwtToken}`,
             };
           }
 
-
           try {
-            const response = await fetch(POST_BIODATA,fetchOptions);
+            const response = await fetch(POST_BIODATA, fetchOptions);
 
             setSubmitting(false);
             if (response.status === 200) {
@@ -748,13 +770,14 @@ function Registration() {
           formikRef.current = formik;
           return (
             <div
-              className={`w-full  max-w-6xl flex flex-col  items-center justify-center p-5 ${formik.isSubmitting ? "opacity-50" : ""
-                }`}
+              className={`w-full  max-w-6xl flex flex-col  items-center justify-center p-5 `}
             >
               <MultiStepProgressBar page={step} />
               <form
                 onSubmit={formik.handleSubmit}
-                className="w-full flex flex-col justify-center mt-10 items-center gap-16 max-w-4xl"
+                className={`w-full flex flex-col justify-center mt-10 items-center gap-16 max-w-4xl ${
+                  formik.isSubmitting ? "opacity-50" : ""
+                }`}
               >
                 {step === 1 && (
                   <div className="w-full max-w-full flex flex-col justify-between items-center gap-14">
@@ -772,10 +795,11 @@ function Registration() {
                           // height={532}
                           viewBox="0 0 532 532"
                           xmlnsXlink="http://www.w3.org/1999/xlink"
-                          className={`fade-in w-full hover:cursor-pointer bg-[#f7f3f5] box-border shadow-xl delay-150 duration-300 transition-transform border-2 border-orange-500 rounded-full p-2 ${formik.values.gender === "male"
+                          className={`fade-in w-full hover:cursor-pointer bg-[#f7f3f5] box-border shadow-xl delay-150 duration-300 transition-transform border-2 border-orange-500 rounded-full p-2 ${
+                            formik.values.gender === "male"
                               ? ""
                               : "border-none hover:scale-110"
-                            } `}
+                          } `}
                           onClick={() => {
                             formik.setFieldValue("gender", "male");
                             setStep((s) => s + 1);
@@ -827,10 +851,11 @@ function Registration() {
                           // height={532}
                           viewBox="0 0 532 532"
                           xmlnsXlink="http://www.w3.org/1999/xlink"
-                          className={`fade-in w-full hover:cursor-pointer bg-[#f7f3f5] box-border delay-150 shadow-xl duration-300 transition-transform border-2 border-orange-500 rounded-full p-2 ${formik.values.gender === "female"
+                          className={`fade-in w-full hover:cursor-pointer bg-[#f7f3f5] box-border delay-150 shadow-xl duration-300 transition-transform border-2 border-orange-500 rounded-full p-2 ${
+                            formik.values.gender === "female"
                               ? ""
                               : "border-none hover:scale-110"
-                            }`}
+                          }`}
                           onClick={() => {
                             formik.setFieldValue("gender", "female");
                             setStep((s) => s + 1);
@@ -918,27 +943,12 @@ function Registration() {
                         id="surname"
                         name="surname"
                         type="text"
-                        // onChange={(e) => {
-                        //   let a = e.target.value;
-                        //   a = a.replace(/\b\w/g, (match) =>
-                        //     match.toUpperCase()
-                        //   );
-                        //   formik.setFieldValue("surname", a);
-                        //   // formik.handleChange(e);
-                        //   // console.log("asdfds");
-                        //   const val = getGotra(e.target.value);
-                        //   console.log(val);
-                        //   if (val) {
-                        //     setFoundCaste(val.caste);
-                        //     setFoundGotra(val.surname);
-                        //     setFoundSubcaste(val.subcaste);
-                        //     setGotra(val.surname);
-                        //     setCaste(val.caste);
-                        //     setSubcaste(val.subcaste);
-                        //   }
-                        // }}
-
                         onChange={(e) => {
+                          const capitalizedInput =
+                            e.target.value.charAt(0).toUpperCase() +
+                            e.target.value.slice(1);
+                          e.target.value = capitalizedInput;
+
                           formik.handleChange(e);
 
                           if (e.target.value === "") {
@@ -1972,13 +1982,17 @@ function Registration() {
                           <option value="" disabled>
                             Select Occupation
                           </option>
-                          <option value="Service">Service/Job</option>
+                          <option value="Service/Job">Service/Job</option>
                           <option value="Business">Business</option>
                           <option value="Self Employed">Self Employed</option>
+                          <option value="Defence">Defence</option>
+                          <option value="Not Working/Studying">
+                            Not Working/Studying
+                          </option>
                         </select>
                       </div>
 
-                      {formik.values.occupation === "Service" && (
+                      {formik.values.occupation === "Service/Job" && (
                         <div className="w-full fade-in flex flex-col gap-3 sm:flex-row md:gap-8">
                           <div className="w-full fade-in flex gap-2 items-center justify-center">
                             <label
@@ -1995,10 +2009,10 @@ function Registration() {
                               className="w-full  border  rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
                             >
                               <option value="">Select Service Type</option>
-                              <option value="Government">
+                              <option value="Government/Semi-government">
                                 Government/Semi-government
                               </option>
-                              <option value="Private">
+                              <option value="Corporate/MNC's/Private">
                                 Corporate/MNC's/Private{" "}
                               </option>
                             </select>
@@ -2089,6 +2103,66 @@ function Registration() {
                             }}
                             value={formik.values.selfEmployedDetails}
                             placeholder="Employement Details"
+                            className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                          />
+                        </div>
+                      )}
+
+                      {formik.values.occupation === "Defence" && (
+                        <div className="w-full fade-in flex gap-2 items-center justify-center">
+                          <label
+                            htmlFor="defenceDetails"
+                            className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
+                          >
+                            Defence Details* :
+                          </label>
+                          <input
+                            id="defenceDetails"
+                            name="defenceDetails"
+                            type="text"
+                            onChange={(e) => {
+                              let a = e.target.value;
+
+                              const capitalizedValue =
+                                a.charAt(0).toUpperCase() + a.slice(1);
+
+                              formik.setFieldValue(
+                                "defenceDetails",
+                                capitalizedValue
+                              );
+                            }}
+                            value={formik.values.defenceDetails}
+                            placeholder="Defence Details"
+                            className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                          />
+                        </div>
+                      )}
+
+                      {formik.values.occupation === "Not Working/Studying" && (
+                        <div className="w-full fade-in flex gap-2 items-center justify-center">
+                          <label
+                            htmlFor="notWorkingOrStudyingDetails"
+                            className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
+                          >
+                            Details* :
+                          </label>
+                          <input
+                            id="notWorkingOrStudyingDetails"
+                            name="notWorkingOrStudyingDetails"
+                            type="text"
+                            onChange={(e) => {
+                              let a = e.target.value;
+
+                              const capitalizedValue =
+                                a.charAt(0).toUpperCase() + a.slice(1);
+
+                              formik.setFieldValue(
+                                "notWorkingOrStudyingDetails",
+                                capitalizedValue
+                              );
+                            }}
+                            value={formik.values.notWorkingOrStudyingDetails}
+                            placeholder="Details"
                             className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
                           />
                         </div>
@@ -2201,7 +2275,7 @@ function Registration() {
                           />
                           <label
                             htmlFor="willingForInterCast"
-                            className="font-semibold text-sm hover:cursor-pointer font-Poppins self-start tracking-wide sm:text-base whitespace-nowrap  text-[#444]"
+                            className="font-semibold text-sm hover:cursor-pointer font-Poppins self-start tracking-wide sm:text-base sm:whitespace-nowrap  text-[#444]"
                           >
                             Are you willing to explore matches
                             outside your caste?
@@ -2436,7 +2510,7 @@ function Registration() {
                         />
                         <label
                           htmlFor="file"
-                          className="rounded-md bg-[#EF4D48] px-3 py-2 text-sm text-center font-semibold text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                          className="rounded-md bg-[#EF4D48] max-w-[250px] px-3 py-2 text-sm text-center font-semibold text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                         >
                           Select File
                         </label>
@@ -2633,9 +2707,7 @@ function Registration() {
                       {/* TICKET ISSUE : 8 */}
 
                       {showImageInput < 3 && (
-                        <div
-                          className={`w-full justify-center sm:justify-start flex`}
-                        >
+                        <div className={`w-full justify-start flex`}>
                           <button
                             onClick={() => {
                               setShowImageInput((s) => s + 1);
@@ -2675,7 +2747,7 @@ function Registration() {
                                       <div className="w-full flex flex-col max-w-sm">
                                         <div
                                           key={index}
-                                          className="w-full max-w-sm flex flex-col sm:flex-row justify-center gap-2 items-center"
+                                          className="w-full max-w-sm flex flex-row justify-center gap-2 items-center"
                                         >
                                           <label className="font-semibold text-sm font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left">
                                             {index + 1} :
@@ -2692,7 +2764,7 @@ function Registration() {
                                           />
                                         </div>
                                         {index === 0 &&
-                                          validateFirstPhoneNumber ? (
+                                        validateFirstPhoneNumber ? (
                                           <p className="mt-1 fade-in text-sm fade-in font-mono leading-6 text-[#EF4D48]">
                                             {validateFirstPhoneNumber}
                                           </p>
@@ -3188,16 +3260,16 @@ function Registration() {
                                     {/* <div className="w-full justify-center sm:justify-start flex"> */}
                                     {formik.values.paternalUncleAunt.length <
                                       3 && (
-                                        <button
-                                          onClick={() => arrayHelpers.push("")}
-                                          type="button"
-                                          className="group flex w-full items-center gap-2 justify-center max-w-[100px] rounded-md bg-[#EF4D48] px-2 py-2 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2"
-                                        >
-                                          {/* <p className="transition duration-150 delay-150"> */}
-                                          Add more
-                                          {/* </p> */}
-                                        </button>
-                                      )}
+                                      <button
+                                        onClick={() => arrayHelpers.push("")}
+                                        type="button"
+                                        className="group flex w-full items-center gap-2 justify-center max-w-[100px] rounded-md bg-[#EF4D48] px-2 py-2 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2"
+                                      >
+                                        {/* <p className="transition duration-150 delay-150"> */}
+                                        Add more
+                                        {/* </p> */}
+                                      </button>
+                                    )}
                                     {/* </div> */}
                                   </div>
                                 )}
@@ -3336,16 +3408,16 @@ function Registration() {
                                     {/* <div className="w-full justify-center sm:justify-start flex"> */}
                                     {formik.values.maternalUncleAunt.length <
                                       3 && (
-                                        <button
-                                          onClick={() => arrayHelpers.push("")}
-                                          type="button"
-                                          className="group flex w-full items-center gap-2 justify-center max-w-[100px] rounded-md bg-[#EF4D48] px-2 py-2 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2"
-                                        >
-                                          {/* <p className="transition duration-150 delay-150"> */}
-                                          Add more
-                                          {/* </p> */}
-                                        </button>
-                                      )}
+                                      <button
+                                        onClick={() => arrayHelpers.push("")}
+                                        type="button"
+                                        className="group flex w-full items-center gap-2 justify-center max-w-[100px] rounded-md bg-[#EF4D48] px-2 py-2 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2"
+                                      >
+                                        {/* <p className="transition duration-150 delay-150"> */}
+                                        Add more
+                                        {/* </p> */}
+                                      </button>
+                                    )}
                                     {/* </div> */}
                                   </div>
                                 )}
@@ -3506,10 +3578,11 @@ function Registration() {
                   )}
                   {step < 8 && step > 1 && (
                     <div
-                      className={`w-full  flex ${step === 1
+                      className={`w-full  flex ${
+                        step === 1
                           ? "justify-center"
                           : "sm:justify-end justify-center"
-                        }`}
+                      }`}
                     >
                       <button
                         onClick={() => {
@@ -3548,6 +3621,7 @@ function Registration() {
                   )}
                 </div>
               </form>
+
               <div>
                 {showPopup === null ? null : showPopup === "success" ? (
                   <Popup
@@ -3563,6 +3637,7 @@ function Registration() {
                   />
                 )}
               </div>
+              {formik.isSubmitting ? <MatrimonyLoader /> : null}
             </div>
           );
         }}

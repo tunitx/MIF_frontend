@@ -3258,18 +3258,18 @@ function Registration() {
                                     </div>
 
                                     {/* <div className="w-full justify-center sm:justify-start flex"> */}
-                                    {formik.values.paternalUncleAunt.length <
-                                      3 && (
-                                      <button
-                                        onClick={() => arrayHelpers.push("")}
-                                        type="button"
-                                        className="group flex w-full items-center gap-2 justify-center max-w-[100px] rounded-md bg-[#EF4D48] px-2 py-2 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2"
-                                      >
-                                        {/* <p className="transition duration-150 delay-150"> */}
-                                        Add more
-                                        {/* </p> */}
-                                      </button>
-                                    )}
+                                    {/* {formik.values.paternalUncleAunt.length <
+                                      3 && ( */}
+                                    <button
+                                      onClick={() => arrayHelpers.push("")}
+                                      type="button"
+                                      className="group flex w-full items-center gap-2 justify-center max-w-[100px] rounded-md bg-[#EF4D48] px-2 py-2 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2"
+                                    >
+                                      {/* <p className="transition duration-150 delay-150"> */}
+                                      Add more
+                                      {/* </p> */}
+                                    </button>
+                                    {/* )} */}
                                     {/* </div> */}
                                   </div>
                                 )}
@@ -3406,18 +3406,18 @@ function Registration() {
                                     </div>
 
                                     {/* <div className="w-full justify-center sm:justify-start flex"> */}
-                                    {formik.values.maternalUncleAunt.length <
-                                      3 && (
-                                      <button
-                                        onClick={() => arrayHelpers.push("")}
-                                        type="button"
-                                        className="group flex w-full items-center gap-2 justify-center max-w-[100px] rounded-md bg-[#EF4D48] px-2 py-2 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2"
-                                      >
-                                        {/* <p className="transition duration-150 delay-150"> */}
-                                        Add more
-                                        {/* </p> */}
-                                      </button>
-                                    )}
+                                    {/* {formik.values.maternalUncleAunt.length <
+                                      3 && ( */}
+                                    <button
+                                      onClick={() => arrayHelpers.push("")}
+                                      type="button"
+                                      className="group flex w-full items-center gap-2 justify-center max-w-[100px] rounded-md bg-[#EF4D48] px-2 py-2 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2"
+                                    >
+                                      {/* <p className="transition duration-150 delay-150"> */}
+                                      Add more
+                                      {/* </p> */}
+                                    </button>
+                                    {/* )} */}
                                     {/* </div> */}
                                   </div>
                                 )}

@@ -208,7 +208,10 @@ const Body = () => {
                   >
                     <div className="absolute inset-0 bg-[#323233] opacity-0 group-hover:opacity-80 transition-opacity duration-300 rounded-md"></div>
 
-                    <img src={e.imageURL} className="w-full " />
+                    <img
+                      src={e.imageURL}
+                      className="h-full w-full object-cover"
+                    />
                   </div>
                 );
               })}

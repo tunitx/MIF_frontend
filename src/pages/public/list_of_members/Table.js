@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { sortAscending, sortDescending } from "../../../utils/sort";
 import ProfileCard from "./ProfileCard";
+import { capitalizeSentence } from "../../../utils/helper";
 
 const Table = ({ data, setFilteredList, nameSorting, professionSorting }) => {
   const { sortName, setSortName } = nameSorting;
@@ -132,10 +133,10 @@ const Table = ({ data, setFilteredList, nameSorting, professionSorting }) => {
             {data?.map((item, index) => (
               <tr key={index} className="border-b border-[#EF4D48] w-full">
                 <td className="p-2 border-r border-[#EF4D48]  text-center w-1/3  text-[#333] whitespace-nowrap font-bold font-Poppins">
-                  {item.name}
+                  {item.name.toUpperCase()}
                 </td>
                 <td className="p-2 border-r border-[#EF4D48]  text-center w-1/3  text-[#333] whitespace-nowrap font-Poppins font-medium ">
-                  {item.profession}
+                  {capitalizeSentence(item.profession)}
                 </td>
                 <td className="p-2  text-center w-full whitespace-nowrap px-auto flex justify-center items-center hover:cursor-pointer">
                   <svg

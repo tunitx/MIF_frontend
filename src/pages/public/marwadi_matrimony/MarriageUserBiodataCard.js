@@ -4,13 +4,18 @@ import Swal from "sweetalert2";
 import Registration from "./Registration";
 import { BASE_URL } from "../../../utils/constants";
 import BiodataCard from "./BiodataCard";
+import EditBioData from "./EditBioData";
+// import {BASE_URL} from "../../../utils/constants";
+const api = axios.create({
+  baseURL: BASE_URL,
+});
 
 const BiodataTable = () => {
   const [biodatas, setBiodatas] = useState([]);
   const [selectedBiodata, setSelectedBiodata] = useState(null);
 
   const [editingBiodata, setEditingBiodata] = useState(null);
-
+  
   useEffect(() => {
     const token = localStorage.getItem("jwtToken");
     if (token) {
@@ -36,12 +41,45 @@ const BiodataTable = () => {
     setSelectedBiodata(biodata);
   };
 
+  const handleDiscard = async (biodata) => {
+    const result = await Swal.fire({
+      title: 'Would you like to delete this Bio Data?',
+      
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Delete',
+      cancelButtonText: 'Edit Bio Data'
+    })
+  
+    if (result.isConfirmed) {
+      try {
+        await axios.post(`${BASE_URL}discardBioData/${biodata._id}`);
+        Swal.fire(
+          'Discarded!',
+          'The biodata has been discarded.',
+          'success'
+        )
+        // Refresh the biodatas or remove the discarded one from the state here
+      } catch (error) {
+        Swal.fire(
+          'Error!',
+          'There was an error discarding the biodata.',
+          'error'
+        )
+      }
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+      handleEdit(biodata);
+    }
+  }
+
   return (
     <>
 
       <div className="overflow-x-auto fade-in w-full flex justify-center mb-44">
         {editingBiodata ? (
-          <Registration
+          <EditBioData
             biodata={editingBiodata}
             setEditingBiodata={setEditingBiodata}
           />
@@ -60,7 +98,7 @@ const BiodataTable = () => {
               </tr>
             </thead>
             <tbody className="w-full">
-              {biodatas.map((biodata) => (
+            {biodatas.filter(biodata => !biodata.discard).map((biodata) =>  (
                 <tr
                   key={biodata._id}
                   className="border-b border-[#EF4D48] w-full align-middle"
@@ -70,7 +108,10 @@ const BiodataTable = () => {
                   </td>
                   <td className="p-2 border-r border-[#EF4D48] text-center text-[#333] whitespace-nowrap font-bold font-Poppins">{new Date(biodata.timestamp).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' })}</td>
                   <td className="p-2 border-r border-[#EF4D48] text-center text-[#333] whitespace-nowrap font-Poppins">
-                    <button onClick={() => handleEdit(biodata)}>Edit</button>
+                    <button onClick={() => {
+                     
+                      handleDiscard(biodata)
+                    }}>Edit</button>
                   </td>
                   <td className="p-2 border-r border-[#EF4D48] text-center text-[#333] whitespace-nowrap font-Poppins">
                     {selectedBiodata ? (

@@ -27,6 +27,7 @@ export const GET_AVAILABLE_MEMBERTYPES_LIST = BASE_URL + "member/typesList";
 export const SIGN_IN_URL = BASE_URL + "admin/signin";
 
 export const POST_BIODATA = BASE_URL + "postMarriageDetails";
+export const EDIT_BIODATA = BASE_URL + "editMarriageDetails";
 export const GET_BIODATAS = BASE_URL + "getBioDataByFilters";
 
 export const POST_CONTACT_QUERY = BASE_URL + "contactQueries/new";

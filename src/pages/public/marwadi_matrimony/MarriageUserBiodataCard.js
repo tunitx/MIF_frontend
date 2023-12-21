@@ -29,6 +29,8 @@ const BiodataTable = () => {
         .catch((error) => {
           console.error("Error fetching biodata", error);
         });
+    } else {
+      navigate("/matrimony");
     }
   }, []);
 
@@ -37,7 +39,6 @@ const BiodataTable = () => {
   };
 
   const handleView = (biodata) => {
-
     setSelectedBiodata(biodata);
   };
 
@@ -76,14 +77,13 @@ const BiodataTable = () => {
 
   return (
     <>
-
       <div className="overflow-x-auto fade-in w-full flex justify-center mb-44">
         {editingBiodata ? (
           <EditBioData
             biodata={editingBiodata}
             setEditingBiodata={setEditingBiodata}
           />
-        ) : biodatas.length > 0 ?  (
+        ) : biodatas.length > 0 ? (
           <table className="w-full border-2 border-[#305D2B] max-w-7xl">
             <thead className="w-full">
               <tr className="bg-[#305D2B] text-white w-full">
@@ -106,7 +106,17 @@ const BiodataTable = () => {
                   <td className="p-2 border-r border-[#EF4D48] text-center text-[#333] whitespace-nowrap font-bold font-Poppins">
                     {biodata.firstName} {biodata.surname}
                   </td>
-                  <td className="p-2 border-r border-[#EF4D48] text-center text-[#333] whitespace-nowrap font-bold font-Poppins">{new Date(biodata.timestamp).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' })}</td>
+                  <td className="p-2 border-r border-[#EF4D48] text-center text-[#333] whitespace-nowrap font-bold font-Poppins">
+                    {new Date(biodata.timestamp).toLocaleString("en-IN", {
+                      timeZone: "Asia/Kolkata",
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      second: "2-digit",
+                    })}
+                  </td>
                   <td className="p-2 border-r border-[#EF4D48] text-center text-[#333] whitespace-nowrap font-Poppins">
                     <button onClick={() => {
                      
@@ -115,10 +125,7 @@ const BiodataTable = () => {
                   </td>
                   <td className="p-2 border-r border-[#EF4D48] text-center text-[#333] whitespace-nowrap font-Poppins">
                     {selectedBiodata ? (
-                      <button
-                        onClick={() => setSelectedBiodata(null)}
-                        
-                      >
+                      <button onClick={() => setSelectedBiodata(null)}>
                         Close
                       </button>
                     ) : (
@@ -129,31 +136,27 @@ const BiodataTable = () => {
               ))}
             </tbody>
           </table>
-        ): (
-          <p className="text-red-500 text-lg">You have not created any bio data's yet :)</p>
+        ) : (
+          <p className="text-red-500 text-lg">
+            You have not created any bio data's yet :)
+          </p>
         )}
-
-
       </div>
 
       <div className="w-full grid grid-col-1 sm:grid-cols-2 lg:grid-cols-3   gap-4">
-
         {selectedBiodata && <BiodataCard data={selectedBiodata} />}
-
       </div>
       <div className="flex justify-center">
-      {selectedBiodata && (
-        <button
-          onClick={() => setSelectedBiodata(null)}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >
-          Close Biodata
-        </button>
-      
-      )}
-        </div>
+        {selectedBiodata && (
+          <button
+            onClick={() => setSelectedBiodata(null)}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Close Biodata
+          </button>
+        )}
+      </div>
     </>
-
   );
 };
 

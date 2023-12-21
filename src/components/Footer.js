@@ -185,9 +185,9 @@ const Footer = () => {
               Nagar Thana, near Rajasthan Vidhan Sabha, Jaipur, Rajasthan 302015
             </p>
           </div>
-          <div>
+          {/* <div>
             <p className="text-center"> Total Users : {visitorCount}</p>
-          </div>
+          </div> */}
         </div>
       </div>
       <div className="w-full bg-[#020c1d] flex justify-center">

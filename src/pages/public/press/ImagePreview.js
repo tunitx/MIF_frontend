@@ -3,21 +3,11 @@ import Swal from "sweetalert2";
 import { useEffect } from "react";
 
 const ImagePreview = ({ data, showImage, setShowImage }) => {
-  const { imageURL } = data;
-
-  // console.log(data);
-  // useEffect(() => {
-  //   Swal.fire({
-  //     imageUrl: imageURL,
-  //     imageWidth: 400,
-  //     imageHeight: 400,
-  //     imageAlt: "Custom image",
-  //   });
-  // }, [imageURL]);
+  // const { imageURL } = data;
 
   return (
     <div className="fixed fade-in flex flex-col justify-center items-center gap-8  w-screen h-screen top-0 left-0 bg-[#323233] overflow-y-auto overflow-x-auto p-5 bg-opacity-90 z-50">
-      <div className="w-full flex flex-row-reverse gap-4 justify-center items-center">
+      <div className="w-full h-full flex sm:flex-row-reverse flex-col gap-4 justify-center items-center">
         <div
           className="self-start flex justify-center  hover:cursor-pointer group mt-2"
           onClick={() => {
@@ -35,8 +25,12 @@ const ImagePreview = ({ data, showImage, setShowImage }) => {
           </svg>
         </div>
 
-        <div className="w-fit max-h-[500px] rounded-md max-w-full overflow-x-auto overflow-y-auto">
-          <img src={imageURL} alt="image" className="" />
+        <div className="w-fit sm:h-full h-fit rounded-lg">
+          <img
+            src={data?.imageURL}
+            alt="image"
+            className="rounded-lg max-h-[85vh] my-auto "
+          />
         </div>
       </div>
     </div>

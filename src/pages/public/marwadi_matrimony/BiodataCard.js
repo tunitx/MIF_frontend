@@ -1,6 +1,6 @@
 import React from "react";
 
-const BiodataCard = ({ data }) => {
+const BiodataCard = ({ data, setShowImage, setShowBiodataFrame }) => {
   const {
     image1,
     firstName,
@@ -66,14 +66,29 @@ const BiodataCard = ({ data }) => {
   return (
     <div className="w-full fade-in shadow-md flex flex-col gap-4 min-h-full ">
       <div className="w-full min-h-full p-3 border border-indigo-900 rounded-md flex flex-col gap-5 justify-start items-center">
-        <div className="h-52 w-52 p-2 overflow-hidden rounded-md flex justify-center items-center ">
-          <img src={image1} className="rounded-md shadow-lg" />
+        <div
+          className="h-52 w-52  overflow-hidden rounded-md flex justify-center shadow-lg hover:shadow-2xl z-20 items-start hover:cursor-pointer"
+          onClick={() => {
+            setShowImage(() => ({ imageURL: image1 }));
+          }}
+        >
+          {/* <div className="my-auto"> */}
+          <img
+            src={image1}
+            className="rounded-md shadow-lg object-contain my-auto "
+          />
+          {/* </div>{" "} */}
         </div>
 
         {/* Name, Age, Gotra, Height and Complexion */}
 
         <div className="w-full flex-col flex  justify-center text-center">
-          <p className="font-Poppins text-2xl font-semibold text-[#EF4D48]">
+          <p
+            className="font-Poppins text-2xl font-semibold text-[#EF4D48] hover:cursor-pointer"
+            onClick={() => {
+              setShowBiodataFrame(data);
+            }}
+          >
             {`${firstName} ${capitalize(surname)}`}
           </p>
           <p className="font-Poppins text-sm text-gray-800">
@@ -127,7 +142,7 @@ const BiodataCard = ({ data }) => {
 
         {/* Education, Occupation */}
 
-        <div className="flex flex-col w-11/12 gap-4 justify-center items-start border border-indigo-800  rounded-md p-2">
+        <div className="flex flex-col w-11/12 shadow-lg gap-4 justify-center items-start border border-indigo-800  rounded-md p-2">
           {/* Education */}
 
           <div className="w-full flex flex-col justify-center">

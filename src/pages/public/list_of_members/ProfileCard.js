@@ -1,4 +1,5 @@
 import React from "react";
+import { capitalizeSentence } from "../../../utils/helper";
 
 const ProfileCard = ({ data, showCard, setShowCard }) => {
   const {
@@ -34,14 +35,6 @@ const ProfileCard = ({ data, showCard, setShowCard }) => {
         <div className="w-full  border-4 rounded-b-xl border-[#EF4D48] font-Poppins max-w-md  min-w-[350px] box-border  bg-gradient-to-r from-[#FFDD57] to-[#FE954C]">
           <div className="flex justify-center items-center w-full rounded-b-2xl bg-[#EF4D48] p-3">
             <h1 className="text-[#fff] font-semibold text-xl sm:text-2xl font-Poppins w-full text-center whitespace-nowrap">
-              {/* Trustee Member */}
-              {/* TRUSTEE MEMBERS */}
-              {/* {memberType === "advisoryMember"
-                ? "ADVISORY MEMBER"
-                : memberType === "trusteeMember"
-                ? "TRUSTEE MEMBER"
-
-                : "ACTIVE LIFE MEMBER"} */}
               {memberType.name.toUpperCase()}
             </h1>
           </div>
@@ -55,10 +48,10 @@ const ProfileCard = ({ data, showCard, setShowCard }) => {
             </div>
             <div className="w-full flex flex-col gap-1 justify-center items-center">
               <p className=" w-full text-xl sm:text-[28px] font-bold text-[#EF4D48]  text-center">
-                {name}
+                {capitalizeSentence(name)}
               </p>
               <h3 className="text-lg sm:text-xl font-medium text-[#444] text-center">
-                {profession}
+                {capitalizeSentence(profession)}
               </h3>
             </div>
             <div className="w-full flex gap-4 justify-center items-center">

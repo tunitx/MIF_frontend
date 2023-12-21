@@ -18,10 +18,6 @@ import Popup from "./Popup";
 import MultiStepProgressBar from "./progressBar/MultiStepProgressBar";
 import MatrimonyLoader from "../../../components/MatrimonyLoader";
 
-// import { matrimonySignIn } from "../../../utils/store/slices/matrimonyUserSlice";
-// import { Provider, useDispatch, useSelector } from "react-redux";
-// import store from "../../../utils/store/store";
-
 const config = {
   headers: {
     Authorization:
@@ -155,6 +151,11 @@ function Registration() {
 
     return true;
   }
+
+  useEffect(() => {
+    const token = localStorage.getItem("jwtToken");
+    if (!token) navigate("/matrimony");
+  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -2499,7 +2500,7 @@ function Registration() {
                           type="file"
                           // TICKET ISSUE : 7
 
-                          accept=".png, .jpeg, .pdf"
+                          accept=".png, .jpeg, .pdf, .doc"
                           onChange={(event) => {
                             formik.setFieldValue(
                               "file",
@@ -2558,7 +2559,7 @@ function Registration() {
                               type="file"
                               // TICKET ISSUE : 8
 
-                              accept="image/png, image/jpeg"
+                              accept="image/png, image/jpeg, image/webp"
                               onChange={(event) => {
                                 formik.setFieldValue(
                                   "image1",
@@ -3258,18 +3259,18 @@ function Registration() {
                                     </div>
 
                                     {/* <div className="w-full justify-center sm:justify-start flex"> */}
-                                    {formik.values.paternalUncleAunt.length <
-                                      3 && (
-                                      <button
-                                        onClick={() => arrayHelpers.push("")}
-                                        type="button"
-                                        className="group flex w-full items-center gap-2 justify-center max-w-[100px] rounded-md bg-[#EF4D48] px-2 py-2 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2"
-                                      >
-                                        {/* <p className="transition duration-150 delay-150"> */}
-                                        Add more
-                                        {/* </p> */}
-                                      </button>
-                                    )}
+                                    {/* {formik.values.paternalUncleAunt.length <
+                                      3 && ( */}
+                                    <button
+                                      onClick={() => arrayHelpers.push("")}
+                                      type="button"
+                                      className="group flex w-full items-center gap-2 justify-center max-w-[100px] rounded-md bg-[#EF4D48] px-2 py-2 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2"
+                                    >
+                                      {/* <p className="transition duration-150 delay-150"> */}
+                                      Add more
+                                      {/* </p> */}
+                                    </button>
+                                    {/* )} */}
                                     {/* </div> */}
                                   </div>
                                 )}
@@ -3406,18 +3407,18 @@ function Registration() {
                                     </div>
 
                                     {/* <div className="w-full justify-center sm:justify-start flex"> */}
-                                    {formik.values.maternalUncleAunt.length <
-                                      3 && (
-                                      <button
-                                        onClick={() => arrayHelpers.push("")}
-                                        type="button"
-                                        className="group flex w-full items-center gap-2 justify-center max-w-[100px] rounded-md bg-[#EF4D48] px-2 py-2 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2"
-                                      >
-                                        {/* <p className="transition duration-150 delay-150"> */}
-                                        Add more
-                                        {/* </p> */}
-                                      </button>
-                                    )}
+                                    {/* {formik.values.maternalUncleAunt.length <
+                                      3 && ( */}
+                                    <button
+                                      onClick={() => arrayHelpers.push("")}
+                                      type="button"
+                                      className="group flex w-full items-center gap-2 justify-center max-w-[100px] rounded-md bg-[#EF4D48] px-2 py-2 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2"
+                                    >
+                                      {/* <p className="transition duration-150 delay-150"> */}
+                                      Add more
+                                      {/* </p> */}
+                                    </button>
+                                    {/* )} */}
                                     {/* </div> */}
                                   </div>
                                 )}

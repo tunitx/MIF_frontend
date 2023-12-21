@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import MissionVisionSection from "./MissionVisionSection";
 import Header from "./Header";
 import Aboutus from "./Aboutus";
@@ -11,6 +11,7 @@ import EventsGallery from "./EventsGallery";
 import Services from "./Services";
 import FAQs from "./FAQs";
 import { faqs_home } from "../../../utils/constants";
+import LoadingBar from "react-top-loading-bar";
 
 const Home = () => {
   useEffect(() => {
@@ -18,6 +19,7 @@ const Home = () => {
   }, []);
   return (
     <div>
+      {/* <LoadingBar color="#EF4D48" ref={ref} /> */}
       <Header />
       <MissionVisionSection />
       <Aboutus />

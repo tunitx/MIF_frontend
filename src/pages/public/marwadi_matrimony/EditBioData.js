@@ -291,7 +291,12 @@ function EditBioData({ biodata }) {
             formikRef.current.setFieldValue("subcaste", foundSubcaste);
         }
     }, [foundCaste]);
-
+    // useEffect(() => {
+    //     // If formik.values.phoneNumbers is a string, split it into an array of phone numbers
+    //     if (typeof formikRef.current.values.phoneNumbers[0] === 'string') {
+    //         formikRef.current.setFieldValue('phoneNumbers',  formikRef.current.values.phoneNumbers[0].split(','));
+    //     }
+    //   }, [])
     // function getGotra(surname) {
     //   let result = {};
     //   Object.entries(bioData.Baniya).forEach(([key, values]) => {
@@ -404,6 +409,7 @@ function EditBioData({ biodata }) {
 
     const nextStep = (formik) => {
         console.log(step)
+      
         setStep((prevStep) => prevStep + 1);
 
     };
@@ -481,7 +487,7 @@ function EditBioData({ biodata }) {
         <div className="w-full flex justify-center my-4">
             <Formik
                 initialValues={{
-                    gender: "",
+                    gender: biodata.gender,
                     firstName: biodata.firstName,
                     surname: biodata.surname.charAt(0).toUpperCase() +
                         biodata.surname.slice(1),
@@ -501,7 +507,7 @@ function EditBioData({ biodata }) {
                     preference: biodata.preference,
 
                     // TICKET ISSUE : 6
-
+                    phoneNumbers: biodata.phoneNumbers[0].split(',') || [],
                     nativePlace: biodata.nativePlace,
                     nativeName: biodata.nativeName,
                     currentAddressLocation: biodata.currentAddressLocation,
@@ -553,11 +559,13 @@ function EditBioData({ biodata }) {
 
             // TICKET ISSUE : 11
 
-            phoneNumbers: [""],
-            emails: [""],
-            siblings: [""],
-            paternalUncleAunt: [""],
-            maternalUncleAunt: [""],
+
+            emails: biodata.emails[0].split(',') || [],
+            siblings: biodata.siblings[0].split(',') || [],
+           
+            
+            paternalUncleAunt: biodata.paternalUncleAunt[0].split(',') || [],
+            maternalUncleAunt : biodata.maternalUncleAunt[0].split(',') || [],
                 }}
             validationSchema={validationSchema}
 
@@ -2218,7 +2226,7 @@ function EditBioData({ biodata }) {
                                         Upload upto 5 MB in PDF, JPEG, PNG format only.
                                     </p>
                                 </div>
-                                {biodataFile ? (
+                               
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         height="2rem"
@@ -2229,7 +2237,7 @@ function EditBioData({ biodata }) {
                                         {/*!Font Awesome Free 6.5.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.*/}
                                         <path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z" />
                                     </svg>
-                                ) : null}
+                               
                             </div>
 
                             {/* Image Upload */}
@@ -2277,7 +2285,7 @@ function EditBioData({ biodata }) {
                                             Upload upto 5 MB in JPEG, PNG format only.
                                         </p>
                                     </div>
-                                    {image1File ? (
+
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             height="2rem"
@@ -2288,7 +2296,7 @@ function EditBioData({ biodata }) {
                                             {/*!Font Awesome Free 6.5.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.*/}
                                             <path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z" />
                                         </svg>
-                                    ) : null}
+
                                 </div>
 
                                 {/* Image 2 */}
@@ -2434,69 +2442,50 @@ function EditBioData({ biodata }) {
                                     </label>
 
                                     <FieldArray
-                                        name="phoneNumbers"
-                                        render={(arrayHelpers) => (
-                                            <div className="w-full flex flex-col gap-3">
-                                                <div className="w-full flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:justify-start items-start">
-                                                    {formik.values.phoneNumbers &&
-                                                        formik.values.phoneNumbers.map(
-                                                            (number, index) => (
-                                                                <div className="w-full flex flex-col max-w-sm">
-                                                                    <div
-                                                                        key={index}
-                                                                        className="w-full max-w-sm flex flex-row justify-center gap-2 items-center"
-                                                                    >
-                                                                        <label className="font-semibold text-sm font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left">
-                                                                            {index + 1} :
-                                                                        </label>
-                                                                        <input
-                                                                            name={`phoneNumbers.${index}`}
-                                                                            type="number"
-                                                                            onChange={formik.handleChange}
-                                                                            value={
-                                                                                formik.values.phoneNumbers[index]
-                                                                            }
-                                                                            placeholder="123-456-7890"
-                                                                            className="grow border fade-in w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                                                                        />
-                                                                    </div>
-                                                                    {index === 0 &&
-                                                                        validateFirstPhoneNumber ? (
-                                                                        <p className="mt-1 fade-in text-sm fade-in font-mono leading-6 text-[#EF4D48]">
-                                                                            {validateFirstPhoneNumber}
-                                                                        </p>
-                                                                    ) : null}
-                                                                </div>
-                                                            )
-                                                        )}
-                                                </div>
+      name="phoneNumbers"
+      render={(arrayHelpers) => (
+        <div className="w-full flex flex-col gap-3">
+          <div className="w-full flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:justify-start items-start">
+            {formik.values.phoneNumbers.map((number, index) => (
+              <div className="w-full flex flex-col max-w-sm" key={index}>
+                <div className="w-full max-w-sm flex flex-row justify-center gap-2 items-center">
+                  <label className="font-semibold text-sm font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left">
+                    {index + 1} :
+                  </label>
+                  <input
+                    name={`phoneNumbers.${index}`}
+                    type="number"
+                    onChange={formik.handleChange}
+                    value={number}
+                    placeholder="123-456-7890"
+                    className="grow border fade-in w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                  />
+                </div>
+                {index === 0 && validateFirstPhoneNumber ? (
+                  <p className="mt-1 fade-in text-sm fade-in font-mono leading-6 text-[#EF4D48]">
+                    {validateFirstPhoneNumber}
+                  </p>
+                ) : null}
+              </div>
+            ))}
+          </div>
 
-                                                {/* <ErrorMessage
-                  name="phoneNumbers"
-                  className="mt-1 text-sm fade-in font-mono leading-6 text-[#EF4D48]"
-                  component="p"
-                /> */}
+          {validateOverallPhoneNumbers ? (
+            <p className="mt-1 fade-in text-sm fade-in font-mono leading-6 text-[#EF4D48]">
+              {validateOverallPhoneNumbers}
+            </p>
+          ) : null}
 
-                                                {validateOverallPhoneNumbers ? (
-                                                    <p className="mt-1 fade-in text-sm fade-in font-mono leading-6 text-[#EF4D48]">
-                                                        {validateOverallPhoneNumbers}
-                                                    </p>
-                                                ) : null}
-
-                                                {/* <div className="w-full justify-center sm:justify-start flex"> */}
-                                                <button
-                                                    onClick={() => arrayHelpers.push("")}
-                                                    type="button"
-                                                    className="group flex w-full items-center gap-2 justify-center max-w-[100px] rounded-md bg-[#EF4D48] px-2 py-2 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2"
-                                                >
-                                                    {/* <p className="transition duration-150 delay-150"> */}
-                                                    Add more
-                                                    {/* </p> */}
-                                                </button>
-                                                {/* </div> */}
-                                            </div>
-                                        )}
-                                    />
+          <button
+            onClick={() => arrayHelpers.push("")}
+            type="button"
+            className="group flex w-full items-center gap-2 justify-center max-w-[100px] rounded-md bg-[#EF4D48] px-2 py-2 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2"
+          >
+            Add more
+          </button>
+        </div>
+      )}
+    />
 
                                     {/* <label
                     htmlFor="phoneNumber1"
@@ -2548,43 +2537,34 @@ function EditBioData({ biodata }) {
                                     </label>
 
                                     <FieldArray
-                                        name="emails"
-                                        render={(arrayHelpers) => (
-                                            <div className="w-full flex flex-col gap-3">
-                                                <div className="w-full flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:justify-start items-center">
-                                                    {formik.values.emails &&
-                                                        formik.values.emails.map((email, index) => (
-                                                            <div
-                                                                key={index}
-                                                                className=" w-full max-w-sm"
-                                                            >
-                                                                <input
-                                                                    name={`emails.${index}`}
-                                                                    type="email"
-                                                                    onChange={formik.handleChange}
-                                                                    value={formik.values.emails[index]}
-                                                                    placeholder="abc@xyz.com"
-                                                                    className="grow border fade-in w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                                                                />
-                                                                {/* <Field name={`phoneNumbers.${index}`} /> */}
-                                                            </div>
-                                                        ))}
-                                                </div>
+      name="emails"
+      render={(arrayHelpers) => (
+        <div className="w-full flex flex-col gap-3">
+          <div className="w-full flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:justify-start items-center">
+            {formik.values.emails.map((email, index) => (
+              <div key={index} className=" w-full max-w-sm">
+                <input
+                  name={`emails.${index}`}
+                  type="email"
+                  onChange={formik.handleChange}
+                  value={formik.values.emails[index]}
+                  placeholder="abc@xyz.com"
+                  className="grow border fade-in w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                />
+              </div>
+            ))}
+          </div>
 
-                                                {/* <div className="w-full justify-center sm:justify-start flex"> */}
-                                                <button
-                                                    onClick={() => arrayHelpers.push("")}
-                                                    type="button"
-                                                    className="group flex w-full items-center gap-2 justify-center max-w-[100px] rounded-md bg-[#EF4D48] px-2 py-2 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2"
-                                                >
-                                                    {/* <p className="transition duration-150 delay-150"> */}
-                                                    Add more
-                                                    {/* </p> */}
-                                                </button>
-                                                {/* </div> */}
-                                            </div>
-                                        )}
-                                    />
+          <button
+            onClick={() => arrayHelpers.push("")}
+            type="button"
+            className="group flex w-full items-center gap-2 justify-center max-w-[100px] rounded-md bg-[#EF4D48] px-2 py-2 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2"
+          >
+            Add more
+          </button>
+        </div>
+      )}
+    />
 
                                     {/* <input
                         id="email"
@@ -2787,45 +2767,36 @@ function EditBioData({ biodata }) {
                                     </label>
 
                                     <FieldArray
-                                        name="siblings"
-                                        render={(arrayHelpers) => (
-                                            <div className="w-full flex flex-col gap-3">
-                                                <div className="w-full flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:justify-start items-center">
-                                                    {formik.values.siblings &&
-                                                        formik.values.siblings.map((email, index) => (
-                                                            <div
-                                                                key={index}
-                                                                className=" w-full max-w-sm"
-                                                            >
-                                                                <input
-                                                                    name={`siblings.${index}`}
-                                                                    type="text"
-                                                                    onChange={formik.handleChange}
-                                                                    value={formik.values.siblings[index]}
-                                                                    placeholder="sibling-spouse (if any)"
-                                                                    className="grow border fade-in w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                                                                />
-                                                                {/* <Field name={`phoneNumbers.${index}`} /> */}
-                                                            </div>
-                                                        ))}
-                                                </div>
+      name="siblings"
+      render={(arrayHelpers) => (
+        <div className="w-full flex flex-col gap-3">
+          <div className="w-full flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:justify-start items-center">
+            {formik.values.siblings.map((sibling, index) => (
+              <div key={index} className="w-full max-w-sm">
+                <input
+                  name={`siblings.${index}`}
+                  type="text"
+                  onChange={formik.handleChange}
+                  value={formik.values.siblings[index]}
+                  placeholder="sibling-spouse (if any)"
+                  className="grow border fade-in w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                />
+              </div>
+            ))}
+          </div>
 
-                                                {/* <div className="w-full justify-center sm:justify-start flex"> */}
-                                                {formik.values.siblings.length < 3 && (
-                                                    <button
-                                                        onClick={() => arrayHelpers.push("")}
-                                                        type="button"
-                                                        className="group flex w-full items-center gap-2 justify-center max-w-[100px] rounded-md bg-[#EF4D48] px-2 py-2 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2"
-                                                    >
-                                                        {/* <p className="transition duration-150 delay-150"> */}
-                                                        Add more
-                                                        {/* </p> */}
-                                                    </button>
-                                                )}
-                                                {/* </div> */}
-                                            </div>
-                                        )}
-                                    />
+          {formik.values.siblings.length < 3 && (
+            <button
+              onClick={() => arrayHelpers.push("")}
+              type="button"
+              className="group flex w-full items-center gap-2 justify-center max-w-[100px] rounded-md bg-[#EF4D48] px-2 py-2 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2"
+            >
+              Add more
+            </button>
+          )}
+        </div>
+      )}
+    />
                                 </div>
                             </div>
 
@@ -2926,51 +2897,36 @@ function EditBioData({ biodata }) {
                                                 </label>
 
                                                 <FieldArray
-                                                    name="paternalUncleAunt"
-                                                    render={(arrayHelpers) => (
-                                                        <div className="w-full flex flex-col gap-3">
-                                                            <div className="w-full flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:justify-start items-center">
-                                                                {formik.values.paternalUncleAunt &&
-                                                                    formik.values.paternalUncleAunt.map(
-                                                                        (email, index) => (
-                                                                            <div
-                                                                                key={index}
-                                                                                className=" w-full max-w-sm"
-                                                                            >
-                                                                                <input
-                                                                                    name={`paternalUncleAunt.${index}`}
-                                                                                    type="text"
-                                                                                    onChange={formik.handleChange}
-                                                                                    value={
-                                                                                        formik.values
-                                                                                            .paternalUncleAunt[index]
-                                                                                    }
-                                                                                    placeholder="Uncle-Aunt"
-                                                                                    className="grow border fade-in w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                                                                                />
-                                                                                {/* <Field name={`phoneNumbers.${index}`} /> */}
-                                                                            </div>
-                                                                        )
-                                                                    )}
-                                                            </div>
+      name="paternalUncleAunt"
+      render={(arrayHelpers) => (
+        <div className="w-full flex flex-col gap-3">
+          <div className="w-full flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:justify-start items-center">
+            {formik.values.paternalUncleAunt.map((uncleAunt, index) => (
+              <div key={index} className="w-full max-w-sm">
+                <input
+                  name={`paternalUncleAunt.${index}`}
+                  type="text"
+                  onChange={formik.handleChange}
+                  value={formik.values.paternalUncleAunt[index]}
+                  placeholder="Uncle-Aunt"
+                  className="grow border fade-in w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                />
+              </div>
+            ))}
+          </div>
 
-                                                            {/* <div className="w-full justify-center sm:justify-start flex"> */}
-                                                            {formik.values.paternalUncleAunt.length <
-                                                                3 && (
-                                                                    <button
-                                                                        onClick={() => arrayHelpers.push("")}
-                                                                        type="button"
-                                                                        className="group flex w-full items-center gap-2 justify-center max-w-[100px] rounded-md bg-[#EF4D48] px-2 py-2 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2"
-                                                                    >
-                                                                        {/* <p className="transition duration-150 delay-150"> */}
-                                                                        Add more
-                                                                        {/* </p> */}
-                                                                    </button>
-                                                                )}
-                                                            {/* </div> */}
-                                                        </div>
-                                                    )}
-                                                />
+          {formik.values.paternalUncleAunt.length < 3 && (
+            <button
+              onClick={() => arrayHelpers.push("")}
+              type="button"
+              className="group flex w-full items-center gap-2 justify-center max-w-[100px] rounded-md bg-[#EF4D48] px-2 py-2 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2"
+            >
+              Add more
+            </button>
+          )}
+        </div>
+      )}
+    />
                                             </div>
                                         </div>
                                     </div>
@@ -3074,51 +3030,36 @@ function EditBioData({ biodata }) {
                                                 </label>
 
                                                 <FieldArray
-                                                    name="maternalUncleAunt"
-                                                    render={(arrayHelpers) => (
-                                                        <div className="w-full flex flex-col gap-3">
-                                                            <div className="w-full flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:justify-start items-center">
-                                                                {formik.values.maternalUncleAunt &&
-                                                                    formik.values.maternalUncleAunt.map(
-                                                                        (email, index) => (
-                                                                            <div
-                                                                                key={index}
-                                                                                className=" w-full max-w-sm"
-                                                                            >
-                                                                                <input
-                                                                                    name={`maternalUncleAunt.${index}`}
-                                                                                    type="text"
-                                                                                    onChange={formik.handleChange}
-                                                                                    value={
-                                                                                        formik.values
-                                                                                            .maternalUncleAunt[index]
-                                                                                    }
-                                                                                    placeholder="Uncle-Aunt"
-                                                                                    className="grow border fade-in w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                                                                                />
-                                                                                {/* <Field name={`phoneNumbers.${index}`} /> */}
-                                                                            </div>
-                                                                        )
-                                                                    )}
-                                                            </div>
+      name="maternalUncleAunt"
+      render={(arrayHelpers) => (
+        <div className="w-full flex flex-col gap-3">
+          <div className="w-full flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:justify-start items-center">
+            {formik.values.maternalUncleAunt.map((uncleAunt, index) => (
+              <div key={index} className="w-full max-w-sm">
+                <input
+                  name={`maternalUncleAunt.${index}`}
+                  type="text"
+                  onChange={formik.handleChange}
+                  value={formik.values.maternalUncleAunt[index]}
+                  placeholder="Uncle-Aunt"
+                  className="grow border fade-in w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                />
+              </div>
+            ))}
+          </div>
 
-                                                            {/* <div className="w-full justify-center sm:justify-start flex"> */}
-                                                            {formik.values.maternalUncleAunt.length <
-                                                                3 && (
-                                                                    <button
-                                                                        onClick={() => arrayHelpers.push("")}
-                                                                        type="button"
-                                                                        className="group flex w-full items-center gap-2 justify-center max-w-[100px] rounded-md bg-[#EF4D48] px-2 py-2 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2"
-                                                                    >
-                                                                        {/* <p className="transition duration-150 delay-150"> */}
-                                                                        Add more
-                                                                        {/* </p> */}
-                                                                    </button>
-                                                                )}
-                                                            {/* </div> */}
-                                                        </div>
-                                                    )}
-                                                />
+          {formik.values.maternalUncleAunt.length < 3 && (
+            <button
+              onClick={() => arrayHelpers.push("")}
+              type="button"
+              className="group flex w-full items-center gap-2 justify-center max-w-[100px] rounded-md bg-[#EF4D48] px-2 py-2 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2"
+            >
+              Add more
+            </button>
+          )}
+        </div>
+      )}
+    />
                                             </div>
                                         </div>
                                     </div>

@@ -28,7 +28,7 @@ async function getNewToken() {
       { headers }
     );
     config.headers.Authorization = `Bearer ${response.data.auth_token}`;
-    console.log(response.data);
+    // console.log(response.data);
   } catch (error) {
     console.error("Failed to get new token:", error);
   }

@@ -3,13 +3,14 @@ import Select from "react-select";
 import { useFormik, Formik, FieldArray, Form } from "formik";
 import bioData from "../../../utils/biodata";
 import indiaStates from "../../../utils/indiaStates";
-// import ReactSlider from "react-slider";
-// import "./BioDataFilterForm.css";
 import { Slider } from "@mui/material";
 import BiodataCard from "./BiodataCard";
 import { GET_BIODATAS } from "../../../utils/constants";
 import Popup from "./Popup";
 import FilterSection from "./FilterSection";
+import ImagePreview from "../press/ImagePreview";
+import { useNavigate } from "react-router-dom";
+import BiodataFrame from "./biodataFrame/BiodataFrame";
 
 const heights = [
   "Less than 4 fts.",
@@ -33,6 +34,8 @@ function SearchBiodata() {
   const castes = Object.keys(bioData);
   const subcastes = caste ? Object.keys(bioData[caste]) : [];
 
+  const navigate = useNavigate();
+
   const [searchedBiodatas, setSearchedBiodatas] = useState(null);
 
   const [filteredBiodatas, setFilteredBioDatas] = useState(searchedBiodatas);
@@ -40,6 +43,15 @@ function SearchBiodata() {
   const [noresponseError, setNoResponseError] = useState(null);
 
   const [minAge, setMinAge] = useState(null);
+
+  const [showImage, setShowImage] = useState(null);
+
+  const [showBiodataFrame, setShowBiodataFrame] = useState(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem("jwtToken");
+    if (!token) navigate("/matrimony");
+  }, []);
 
   useEffect(() => {
     setFilteredBioDatas(searchedBiodatas);
@@ -656,13 +668,56 @@ function SearchBiodata() {
                 ) : (
                   <div className="w-full grid grid-col-1 sm:grid-cols-2 lg:grid-cols-3   gap-4">
                     {filteredBiodatas.map((biodata) => {
-                      return <BiodataCard key={biodata._id} data={biodata} />;
+                      return (
+                        <BiodataCard
+                          key={biodata._id}
+                          data={biodata}
+                          setShowImage={setShowImage}
+                          setShowBiodataFrame={setShowBiodataFrame}
+                        />
+                      );
                     })}
                   </div>
                 )}
               </div>
             </div>
           )}
+        </div>
+      )}
+
+      {showImage && (
+        <ImagePreview
+          data={showImage}
+          showImage={showImage}
+          setShowImage={setShowImage}
+        />
+      )}
+
+      {showBiodataFrame && (
+        <div className=" z-50 fixed flex-col justify-center gap-5 sm:gap-8 items-center w-screen h-screen top-0 left-0 bg-[#323233] bg-opacity-90 overflow-x-auto overflow-y-auto ">
+          <div className="w-full flex flex-col gap-5  justify-center items-center">
+            <div
+              className="self-end flex justify-end pr-5 sm:pr-20 hover:cursor-pointer group mt-5"
+              onClick={() => {
+                setShowBiodataFrame(null);
+              }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="2em"
+                viewBox="0 0 384 512"
+                fill="#fff"
+                className="group-hover:fill-[#EF4D48]"
+              >
+                <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
+              </svg>
+            </div>
+            <div className="w-full flex justify-center items-center">
+              <div className="max-w-md rounded-lg">
+                <BiodataFrame info={showBiodataFrame} />
+              </div>
+            </div>
+          </div>
         </div>
       )}
 

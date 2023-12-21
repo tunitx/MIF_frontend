@@ -142,6 +142,7 @@ import PressClip from "./src/pages/admin/pressClip/PressClip";
 import PressCutout from "./src/pages/admin/pressCutout/PressCutout";
 import MarriageUsers from "./src/pages/admin/Matrimony/MatrimonyUsers";
 import Advertisements from "./src/pages/admin/advertisment-board/Advertisements";
+import BiodataFrame from "./src/pages/public/marwadi_matrimony/biodataFrame/BiodataFrame";
 
 const appRoutes = createBrowserRouter([
   {
@@ -316,6 +317,10 @@ const appRoutes = createBrowserRouter([
                   </Suspense>
                 ),
               },
+              {
+                path: "biodata-frame",
+                element: <BiodataFrame />,
+              },
             ],
           },
         ],
@@ -348,14 +353,6 @@ const appRoutes = createBrowserRouter([
             path: "matrimony-users",
             element: <MarriageUsers />,
           },
-          // {
-          //   path: "members",
-          //   element: <Members />,
-          // },
-          // {
-          //   path: "advertisements",
-          //   element: <Advertisements />,
-          // },
           {
             path: "all-press",
             element: <Presses />,

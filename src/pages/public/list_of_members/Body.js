@@ -98,29 +98,6 @@ const Body = () => {
 
       // console.log(memberTypeList);
     });
-    // getMembers().then((data) => {
-    //   // console.log(data);
-    //   let listAdvisory = data.filter((d) => {
-    //     return d.memberType === "advisoryMember";
-    //   });
-    //   //   console.log(list);
-    //   setAdvisory(listAdvisory);
-
-    //   let listActive = data.filter((d) => {
-    //     return d.memberType === "activeMember";
-    //   });
-
-    //   setActive(listActive);
-
-    //   let listTrustee = data.filter((d) => {
-    //     return d.memberType === "trusteeMember";
-    //   });
-
-    //   setTrustee(listTrustee);
-
-    //   setShowList(listTrustee);
-    //   setFilteredList(listTrustee);
-    // });
   }, []);
 
   useEffect(() => {

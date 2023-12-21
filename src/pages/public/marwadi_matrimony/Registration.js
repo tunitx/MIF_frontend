@@ -18,10 +18,6 @@ import Popup from "./Popup";
 import MultiStepProgressBar from "./progressBar/MultiStepProgressBar";
 import MatrimonyLoader from "../../../components/MatrimonyLoader";
 
-// import { matrimonySignIn } from "../../../utils/store/slices/matrimonyUserSlice";
-// import { Provider, useDispatch, useSelector } from "react-redux";
-// import store from "../../../utils/store/store";
-
 const config = {
   headers: {
     Authorization:
@@ -155,6 +151,11 @@ function Registration() {
 
     return true;
   }
+
+  useEffect(() => {
+    const token = localStorage.getItem("jwtToken");
+    if (!token) navigate("/matrimony");
+  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -2499,7 +2500,7 @@ function Registration() {
                           type="file"
                           // TICKET ISSUE : 7
 
-                          accept=".png, .jpeg, .pdf"
+                          accept=".png, .jpeg, .pdf, .doc"
                           onChange={(event) => {
                             formik.setFieldValue(
                               "file",

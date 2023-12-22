@@ -139,7 +139,7 @@ function Registration() {
     for (let i = 1; i < numbers.length; i++) {
       if (
         numbers[i].toString().length === 0 ||
-        numbers[i].toString().lenght === 10
+        numbers[i].toString().length === 10
       ) {
       } else {
         setValidateOverallPhoneNumbers(

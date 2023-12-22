@@ -2,8 +2,15 @@ import React from "react";
 import infoSvg from "../../../../../assests/images/fibrinfo@2x.png";
 import group_2 from "../../../../../assests/images/group@2x.png";
 import dipak from "../../../../../assests/images/dipak.png";
+import { capitalizeSentence } from "../../../../utils/helper";
 
-const MaternalFamilyDetails = () => {
+const MaternalFamilyDetails = ({ info }) => {
+  const {
+    maternalGrandFatherName,
+    maternalGrandMotherName,
+    maternalUncleAunt,
+  } = info;
+
   return (
     <div className="w-full flex flex-col px-2 items-start justify-start box-border gap-[1rem] text-left text-[1.75rem] text-matrimony_orange font-description-of-gotra">
       {/* Maternal Family Detail */}
@@ -48,14 +55,16 @@ const MaternalFamilyDetails = () => {
 
               <div className="relative text-[1.25rem] tracking-[-0.41px] leading-[1.5rem] inline-block w-[18.19rem] text-matrimony_orange">
                 <p className="m-0">
-                  <span className="text-matrimony_text_gray">Grand Father</span>
-                  <span>: Late Mr. Dina Nath Sehgal, Businessman</span>
+                  <span className="text-matrimony_text_gray">
+                    Grand Father:{" "}
+                  </span>
+                  <span>{capitalizeSentence(maternalGrandFatherName)}</span>
                 </p>
                 <p className="m-0">
                   <span className="text-matrimony_text_gray">
-                    Place of Birth
+                    Grand Mother:{" "}
                   </span>
-                  <span> : Late Mrs. Darshana Sehgal, House-Wife</span>
+                  <span>{capitalizeSentence(maternalGrandMotherName)}</span>
                 </p>
               </div>
             </div>

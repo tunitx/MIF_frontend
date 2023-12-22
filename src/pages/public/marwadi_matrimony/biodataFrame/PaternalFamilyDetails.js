@@ -2,8 +2,23 @@ import React from "react";
 import infoSvg from "../../../../../assests/images/fibrinfo@2x.png";
 import group_2 from "../../../../../assests/images/group@2x.png";
 import dipak from "../../../../../assests/images/dipak.png";
+import { capitalizeSentence } from "../../../../utils/helper";
 
-const PaternalFamilyDetails = () => {
+const PaternalFamilyDetails = ({ info }) => {
+  const {
+    paternalGrandFatherName,
+    paternalGrandMotherName,
+    paternalUncleAunt,
+    maternalGrandFatherName,
+    maternalGrandMotherName,
+    maternalUncleAunt,
+    fatherName,
+    fatherOccupation,
+    motherName,
+    motherOccupation,
+    siblings,
+  } = info;
+
   return (
     <div className="w-full shadow-lg flex flex-row items-center  rounded-lg  justify-center relative gap-[0.63rem] text-left text-[1.75rem] text-tomato font-description-of-gotra">
       <div className=" bg-blanchedalmond rounded-lg py-4 px-2 w-full flex flex-col items-start justify-center gap-4 z-[1]">
@@ -50,12 +65,12 @@ const PaternalFamilyDetails = () => {
 
                 <div className="relative text-[1.25rem] tracking-[-0.41px] leading-[1.5rem] inline-block w-[18.19rem] text-tomato">
                   <p className="m-0">
-                    <span className="text-[#1e1e1e]">Grand Father</span>
-                    <span>: Late Mr. Dina Nath Sehgal, Businessman</span>
+                    <span className="text-[#1e1e1e]">Grand Father: </span>
+                    <span>{capitalizeSentence(paternalGrandFatherName)}</span>
                   </p>
                   <p className="m-0">
-                    <span className="text-[#1e1e1e]">Place of Birth</span>
-                    <span> : Late Mrs. Darshana Sehgal, House-Wife</span>
+                    <span className="text-[#1e1e1e]">Grand Mother: </span>
+                    <span>{capitalizeSentence(paternalGrandMotherName)}</span>
                   </p>
                 </div>
               </div>
@@ -86,12 +101,16 @@ const PaternalFamilyDetails = () => {
                 </div>
                 <div className="relative text-[1.25rem] tracking-[-0.41px] leading-[1.5rem] whitespace-pre-wrap inline-block w-[18.19rem] text-tomato">
                   <p className="m-0">
-                    <span className="text-[#1e1e1e]">{`Father  `}</span>
-                    <span>: Mr. Anil Sehgal, Businessman</span>
+                    <span className="text-[#1e1e1e]">Father: </span>
+                    <span>{`${capitalizeSentence(
+                      fatherName
+                    )}, ${capitalizeSentence(fatherOccupation)}`}</span>
                   </p>
                   <p className="m-0">
-                    <span className="text-[#1e1e1e]">Mother</span>
-                    <span> :Mrs. Ekta Sehgal, Teacher</span>
+                    <span className="text-[#1e1e1e]">Mother: </span>
+                    <span>{`${capitalizeSentence(
+                      motherName
+                    )}, ${capitalizeSentence(motherOccupation)}`}</span>
                   </p>
                 </div>
               </div>

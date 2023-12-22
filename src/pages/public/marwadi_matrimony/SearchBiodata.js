@@ -27,7 +27,6 @@ function SearchBiodata() {
   const [ageRange, setAgeRange] = useState([{ min: 18, max: 100 }]);
   const [caste, setCaste] = useState("");
   const [subcaste, setSubcaste] = useState("");
-  // const [gotra, setGotra] = useState("");
   const [excludedGotras, setExcludedGotras] = useState([]);
   const [height, setHeight] = useState("");
   const gotras = caste && subcaste ? bioData[caste][subcaste] : [];
@@ -63,36 +62,6 @@ function SearchBiodata() {
 
   const prevStep = () => {
     setStep((prevStep) => prevStep - 1);
-  };
-
-  const customStyles = {
-    control: (provided, state) => ({
-      ...provided,
-      borderColor: "#ca403b", // Border color
-      ":focus": {
-        outline: "none", // Outline color on focus
-      },
-    }),
-    multiValueLabel: (provided, state) => ({
-      ...provided,
-      color: "white", // Text color
-      fontFamily: "Poppins", // Font family
-    }),
-    multiValueRemove: (provided, state) => ({
-      ...provided,
-      color: "white", // Color of the cross button
-      ":hover": {
-        backgroundColor: "#EF4D48",
-        borderRadius: "7px",
-      },
-    }),
-    multiValue: (provided, state) => ({
-      ...provided,
-      backgroundColor: "#EF4D48", // Background color of the whole container
-      paddingLeft: "4px", // Padding on the left (x-axis)
-      paddingRight: "4px",
-      borderRadius: "7px",
-    }),
   };
 
   const sliderStyle = {
@@ -373,34 +342,6 @@ function SearchBiodata() {
                           Exclude Gotras:
                         </label>
 
-                        {/* <Select
-                          id="gotra"
-                          name="gotra"
-                          className="grow border w-full rounded-md   text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                          isMulti
-                          styles={customStyles}
-                          options={[
-                            { value: "none", label: "Exclude None" },
-                            ...gotras.map((g) => ({ value: g, label: g })),
-                          ]}
-                          onChange={(selectedOptions) => {
-                            const selectedGotras = selectedOptions.map(
-                              (option) => option.value
-                            );
-                            if (selectedGotras.includes("none")) {
-                              setExcludedGotras(["none"]);
-                              formik.setFieldValue("gotra", []);
-                            } else {
-                              setExcludedGotras(selectedGotras);
-                              formik.setFieldValue("gotra", selectedGotras);
-                            }
-                          }}
-                          value={excludedGotras.map((g) => ({
-                            value: g,
-                            label: g === "none" ? "Exclude None" : g,
-                          }))}
-                        /> */}
-
                         <FieldArray
                           name="gotra"
                           render={(arrayHelpers) => (
@@ -431,21 +372,10 @@ function SearchBiodata() {
                                           );
                                         })}
                                       </select>
-
-                                      {/* <input
-                                        name={`gotra.${index}`}
-                                        type="email"
-                                        onChange={formik.handleChange}
-                                        value={formik.values.gotra[index]}
-                                        placeholder="Gotra"
-                                        className="grow border fade-in w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                                      /> */}
-                                      {/* <Field name={`phoneNumbers.${index}`} /> */}
                                     </div>
                                   ))}
                               </div>
 
-                              {/* <div className="w-full justify-center sm:justify-start flex"> */}
                               <button
                                 onClick={() => arrayHelpers.push("")}
                                 type="button"
@@ -635,9 +565,6 @@ function SearchBiodata() {
           }}
         </Formik>
       ) : (
-        // filteredBiodatas?.length === 0 ? (
-        //   <div>Try Chan</div>
-        // ) :
         <div className="w-full max-w-6xl flex justify-center p-5 flex-col">
           <div className="  w-full flex flex-col justify-center items-center gap-4 mb-8">
             <h2 className="w-full text-4xl font-semibold font-PlayFair text-center ">

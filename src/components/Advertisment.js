@@ -58,7 +58,7 @@ const Advertisment = () => {
   }, [advertisments]);
 
   useEffect(() => {
-    const adver = advertisments.filter((ad) => {
+    const adver = advertisments?.filter((ad) => {
       if (ad?.slugs?.includes("all")) return true;
       return ad?.slugs?.includes(location.pathname);
     });

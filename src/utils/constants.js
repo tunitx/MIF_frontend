@@ -41,6 +41,8 @@ export const POST_PRESS_CUTOUT = BASE_URL + "pressCutout/new";
 export const GET_PRESS_CUTOUTS = BASE_URL + "pressCutout/all";
 export const DELETE_PRESS_CUTOUT = BASE_URL + "pressCutout/";
 
+export const GET_BIODATA_BY_ID = BASE_URL + "biodata/";
+
 export const responsive = {
   superLargeDesktop: {
     breakpoint: { max: 4000, min: 3000 },

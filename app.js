@@ -127,6 +127,8 @@ import FranchiseDetails from "./src/pages/public/marwadi_matrimony/FranchiseDeta
 //   return import("./src/pages/public/marwadi_matrimony/FranchiseDetails");
 // })
 
+import ShowFullBiodata from "./src/pages/public/marwadi_matrimony/ShowFullBiodata";
+
 // admin
 
 import Presses from "./src/pages/admin/press/Allpress";
@@ -320,6 +322,10 @@ const appRoutes = createBrowserRouter([
               {
                 path: "biodata-frame",
                 element: <BiodataFrame />,
+              },
+              {
+                path: "biodata/:id",
+                element: <ShowFullBiodata />,
               },
             ],
           },

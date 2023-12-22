@@ -29,6 +29,7 @@ const BiodataCard = ({ data, setShowImage, setShowBiodataFrame }) => {
     currentAddressCity,
     currentAddressState,
     currentAddressCountry,
+    _id,
   } = data;
 
   let ageInYear;
@@ -208,6 +209,15 @@ const BiodataCard = ({ data, setShowImage, setShowBiodataFrame }) => {
               {preference !== "" ? preference : "-"}
             </p>
           </div>
+          <a
+            target="_blank"
+            href={`/matrimony/biodata/${_id}`}
+            className="w-full flex justify-center items-center mt-auto"
+          >
+            <button className="flex w-full justify-center max-w-[180px] rounded-md bg-[#EF4D48] px-3 sm:py-3 py-2  text-sm sm:text-base font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ">
+              View More
+            </button>
+          </a>
         </div>
       </div>
     </div>

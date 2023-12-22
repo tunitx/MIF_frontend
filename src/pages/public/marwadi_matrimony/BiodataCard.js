@@ -70,7 +70,8 @@ const BiodataCard = ({ data, setShowImage, setShowBiodataFrame }) => {
         <div
           className="h-52 w-52  overflow-hidden rounded-md flex justify-center shadow-lg hover:shadow-2xl z-20 items-start hover:cursor-pointer"
           onClick={() => {
-            setShowImage(() => ({ imageURL: image1 }));
+            if (typeof setShowImage === "function")
+              setShowImage(() => ({ imageURL: image1 }));
           }}
         >
           {/* <div className="my-auto"> */}

@@ -2,8 +2,45 @@ import React from "react";
 import infoSvg from "../../../../../assests/images/fibrinfo@2x.png";
 import group_2 from "../../../../../assests/images/group@2x.png";
 import dipak from "../../../../../assests/images/dipak.png";
+import {
+  capitalizeSentence,
+  formatAddressString,
+} from "../../../../utils/helper";
 
-const QuickInformationSection = () => {
+const QuickInformationSection = ({ info }) => {
+  const {
+    dob,
+    city,
+    timeOfBirth,
+    heightInCms,
+    nativePlace,
+    image1,
+    firstName,
+    surname,
+    gender,
+    complexion,
+    phoneNumber1,
+    phoneNumber2,
+    emails,
+    caste,
+    subcaste,
+    gotra,
+    currentAddress,
+    phoneNumbers,
+    preference,
+    educationDetails,
+    otherProfession,
+    profession,
+    education,
+    occupation,
+    serviceType,
+    currentAddressScope,
+    currentAddressCity,
+    currentAddressState,
+    currentAddressCountry,
+    _id,
+  } = info;
+
   return (
     <div className="w-full flex px-2 flex-col items-start justify-start  box-border gap-4 text-left text-[1.75rem] text-matrimony_orange font-description-of-gotra">
       {/* Quick Information */}
@@ -47,21 +84,26 @@ const QuickInformationSection = () => {
               </div>
               <div className="relative text-[1.25rem] tracking-[-0.41px] leading-[1.5rem] inline-block w-[18.19rem]">
                 <p className="m-0 text-matrimony_orange">
-                  <span className="text-matrimony_text_gray">D.O.B</span>
-                  <span> : 04/11/2002</span>
+                  <span className="text-matrimony_text_gray">D.O.B: </span>
+                  <span>{dob.slice(0, 10)}</span>
                 </p>
                 <p className="m-0">
                   <span className="text-matrimony_text_gray">
-                    Place of Birth
+                    Place of Birth:
                   </span>
-                  <span className="text-matrimony_orange"> : Delhi</span>
+                  <span className="text-matrimony_orange"> {city}</span>
                 </p>
-                <p className="m-0">
-                  <span className="text-matrimony_text_gray">
-                    Time of Birth
-                  </span>
-                  <span className="text-matrimony_orange"> : 6:25 am</span>
-                </p>
+                {timeOfBirth.length > 0 && (
+                  <p className="m-0">
+                    <span className="text-matrimony_text_gray">
+                      Time of Birth:
+                    </span>
+                    <span className="text-matrimony_orange">
+                      {" "}
+                      {timeOfBirth}
+                    </span>
+                  </p>
+                )}
               </div>
             </div>
           </div>
@@ -91,17 +133,26 @@ const QuickInformationSection = () => {
 
               <div className="relative text-[1.25rem] tracking-[-0.41px] leading-[1.5rem] inline-block w-[16.69rem]">
                 <p className="m-0">
-                  <span>Height</span>
-                  <span className="text-matrimony_orange"> :5’9</span>
+                  <span>Height: </span>
+                  <span className="text-matrimony_orange">
+                    {" "}
+                    {(heightInCms / 30.48).toFixed(2)} fts.
+                  </span>
                 </p>
                 <p className="m-0">
-                  <span>Complexion</span>
-                  <span className="text-matrimony_orange"> :Fair</span>
+                  <span>Complexion: </span>
+                  <span className="text-matrimony_orange">
+                    {capitalizeSentence(complexion)}
+                  </span>
                 </p>
-                <p className="m-0">
-                  <span>Native Place</span>
-                  <span className="text-matrimony_orange"> :Lahore</span>
-                </p>
+                {nativePlace?.length > 0 && (
+                  <p className="m-0">
+                    <span>Native Place: </span>
+                    <span className="text-matrimony_orange">
+                      {formatAddressString(nativePlace)}
+                    </span>
+                  </p>
+                )}
               </div>
             </div>
           </div>
@@ -131,12 +182,26 @@ const QuickInformationSection = () => {
 
               <div className="relative text-[1.25rem] tracking-[-0.41px] leading-[1.5rem] whitespace-pre-wrap inline-block w-[17.19rem] text-matrimony_orange">
                 <p className="m-0">
-                  <span className="text-matrimony_text_gray">{`Occupation  `}</span>
-                  <span>: Businessman</span>
+                  <span className="text-matrimony_text_gray">{`Occupation: `}</span>
+                  <span>
+                    {" "}
+                    {occupation === "Service/Job"
+                      ? `${serviceType}`
+                      : `${occupation}`}
+                  </span>
                 </p>
                 <p className="m-0">
-                  <span className="text-matrimony_text_gray">Education</span>
-                  <span> :B-tech , IPU</span>
+                  <span className="text-matrimony_text_gray">{`Education: `}</span>
+                  <span>
+                    {" "}
+                    {education === "Professional" || education === "Other"
+                      ? education === "Professional"
+                        ? profession === "Other"
+                          ? `${otherProfession}`
+                          : `${profession}`
+                        : `${educationDetails}`
+                      : `${education}`}
+                  </span>
                 </p>
               </div>
             </div>

@@ -71,7 +71,7 @@ function Registration() {
 
   const formikRef = useRef();
 
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(6);
   const [location, setLocation] = useState("");
   const [countries, setCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState("");
@@ -353,7 +353,6 @@ function Registration() {
     incomeBracket: Yup.string().required("Required"),
     maritalStatus: Yup.string().required("Required"),
     pwd: Yup.string().required("Required"),
-    file: Yup.mixed().required("Required"),
     image1: Yup.mixed().required("Required"),
 
     // TICKET ISSUE : 8
@@ -514,7 +513,6 @@ function Registration() {
         formik.values.incomeBracket &&
         formik.values.maritalStatus &&
         formik.values.pwd &&
-        formik.values.file &&
         formik.values.image1 &&
         // TICKET ISSUE : 8
 
@@ -2322,28 +2320,6 @@ function Registration() {
                               </label>
                             </div>
 
-                            {/* Divorced */}
-
-                            {/* <div className="flex gap-2 hover:cursor-pointer">
-                              <input
-                                id="divorced"
-                                name="maritalStatus"
-                                type="radio"
-                                value="divorced"
-                                onChange={formik.handleChange}
-                                checked={
-                                  formik.values.maritalStatus === "divorced"
-                                }
-                                className="hover:cursor-pointer"
-                              />
-                              <label
-                                htmlFor="divorced"
-                                className="font-semibold text-sm hover:cursor-pointer font-Poppins self-start tracking-wide sm:text-base whitespace-nowrap  text-[#444]"
-                              >
-                                Divorced
-                              </label>
-                            </div> */}
-
                             {/* Married */}
 
                             {intermediateMarriageStatus === null && (
@@ -2489,7 +2465,7 @@ function Registration() {
                           htmlFor="file"
                           className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
                         >
-                          Upload Biodata* :
+                          Upload Biodata :
                         </label>
                         <input
                           style={{
@@ -2500,7 +2476,7 @@ function Registration() {
                           type="file"
                           // TICKET ISSUE : 7
 
-                          accept=".png, .jpeg, .pdf, .doc"
+                          accept=".png, .jpeg, .pdf, .doc, .docx"
                           onChange={(event) => {
                             formik.setFieldValue(
                               "file",
@@ -2801,43 +2777,7 @@ function Registration() {
                             </div>
                           )}
                         />
-
-                        {/* <label
-                    htmlFor="phoneNumber1"
-                    className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
-                  >
-                    Phone Number 1* :
-                  </label> */}
-                        {/* <input
-                    id="phoneNumber1"
-                    name="phoneNumber1"
-                    type="tel"
-                    onChange={formik.handleChange}
-                    value={formik.values.phoneNumber1}
-                    placeholder="123-456-7890"
-                    className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                  /> */}
                       </div>
-
-                      {/* Phone Number 2 */}
-
-                      {/* <div className="w-full flex gap-2 items-center justify-center">
-                  <label
-                    htmlFor="phoneNumber2"
-                    className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
-                  >
-                    Phone Number 2 :
-                  </label>
-                  <input
-                    id="phoneNumber2"
-                    name="phoneNumber2"
-                    type="tel"
-                    onChange={formik.handleChange}
-                    value={formik.values.phoneNumber2}
-                    placeholder="123-456-7890"
-                    className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                  />
-                </div> */}
                     </div>
 
                     {/* Email */}
@@ -2889,15 +2829,6 @@ function Registration() {
                             </div>
                           )}
                         />
-
-                        {/* <input
-                        id="email"
-                        name="email"
-                        type="email"
-                        onChange={formik.handleChange}
-                        value={formik.values.email}
-                        className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                      /> */}
                       </div>
                     </div>
                   </div>

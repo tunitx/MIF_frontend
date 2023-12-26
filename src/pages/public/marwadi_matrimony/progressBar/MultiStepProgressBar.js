@@ -1,6 +1,8 @@
 import React from "react";
 import "./MultiStepProgressBar.css";
 import { ProgressBar, Step } from "react-step-progress-bar";
+import mifMatrimonyFormTimeLine from "../../../../../assests/images/mifMatrimonyFormTimeLine.png";
+
 // import styled from "@emotion/styled/types/base";
 
 const MultiStepProgressBar = ({ page }) => {
@@ -31,7 +33,11 @@ const MultiStepProgressBar = ({ page }) => {
             className={`indexedStep ${accomplished ? "accomplished" : null}`}
             // onClick={() => onPageNumberClick(1)}
           >
-            {index + 1}
+            {/* {index + 1} */}
+            <img
+              src={mifMatrimonyFormTimeLine}
+              className={`object-cover w-full ${""}`}
+            />
           </div>
         )}
       </Step>
@@ -40,7 +46,11 @@ const MultiStepProgressBar = ({ page }) => {
           <div
             className={`indexedStep ${accomplished ? "accomplished" : null}`}
           >
-            {index + 1}
+            {/* {index + 1} */}
+            <img
+              src={mifMatrimonyFormTimeLine}
+              className={`object-cover w-full ${""}`}
+            />
           </div>
         )}
       </Step>
@@ -49,7 +59,11 @@ const MultiStepProgressBar = ({ page }) => {
           <div
             className={`indexedStep ${accomplished ? "accomplished" : null}`}
           >
-            {index + 1}
+            {/* {index + 1} */}
+            <img
+              src={mifMatrimonyFormTimeLine}
+              className={`object-cover w-full ${""}`}
+            />
           </div>
         )}
       </Step>
@@ -58,7 +72,13 @@ const MultiStepProgressBar = ({ page }) => {
           <div
             className={`indexedStep ${accomplished ? "accomplished" : null}`}
           >
-            {index + 1}
+            {
+              /* {index + 1} */
+              <img
+                src={mifMatrimonyFormTimeLine}
+                className={`object-cover w-full ${""}`}
+              />
+            }
           </div>
         )}
       </Step>
@@ -67,7 +87,11 @@ const MultiStepProgressBar = ({ page }) => {
           <div
             className={`indexedStep ${accomplished ? "accomplished" : null}`}
           >
-            {index + 1}
+            {/* {index + 1} */}
+            <img
+              src={mifMatrimonyFormTimeLine}
+              className={`object-cover w-full ${""}`}
+            />
           </div>
         )}
       </Step>
@@ -76,7 +100,11 @@ const MultiStepProgressBar = ({ page }) => {
           <div
             className={`indexedStep ${accomplished ? "accomplished" : null}`}
           >
-            {index + 1}
+            {/* {index + 1} */}
+            <img
+              src={mifMatrimonyFormTimeLine}
+              className={`object-cover w-full ${""}`}
+            />
           </div>
         )}
       </Step>
@@ -85,7 +113,12 @@ const MultiStepProgressBar = ({ page }) => {
           <div
             className={`indexedStep ${accomplished ? "accomplished" : null}`}
           >
-            {index + 1}
+            {/* {index + 1} */}
+
+            <img
+              src={mifMatrimonyFormTimeLine}
+              className={`object-cover w-full ${""}`}
+            />
           </div>
         )}
       </Step>
@@ -94,7 +127,12 @@ const MultiStepProgressBar = ({ page }) => {
           <div
             className={`indexedStep ${accomplished ? "accomplished" : null}`}
           >
-            {index + 1}
+            {/* {index + 1} */}
+
+            <img
+              src={mifMatrimonyFormTimeLine}
+              className={`object-cover w-full ${""}`}
+            />
           </div>
         )}
       </Step>

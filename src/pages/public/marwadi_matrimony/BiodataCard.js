@@ -88,7 +88,8 @@ const BiodataCard = ({ data, setShowImage, setShowBiodataFrame }) => {
           <p
             className="font-Poppins text-2xl font-semibold text-[#EF4D48] hover:cursor-pointer"
             onClick={() => {
-              setShowBiodataFrame(data);
+              if (typeof setShowBiodataFrame === "function")
+                setShowBiodataFrame(data);
             }}
           >
             {`${firstName} ${capitalize(surname)}`}

@@ -93,7 +93,7 @@ const QuickInformationSection = ({ info }) => {
                   </span>
                   <span className="text-matrimony_orange"> {city}</span>
                 </p>
-                {timeOfBirth.length > 0 && (
+                {timeOfBirth?.length > 0 && (
                   <p className="m-0">
                     <span className="text-matrimony_text_gray">
                       Time of Birth:

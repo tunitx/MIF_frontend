@@ -3,7 +3,16 @@ import group_8 from "../../../../../assests/images/group-8@2x.png";
 import phoneSvg from "../../../../../assests/images/vector@2x.png";
 
 const ReachOutDetails = ({ info }) => {
-  const { file, emails, phoneNumbers } = info;
+  let { file, emails, phoneNumbers } = info;
+
+  phoneNumbers = phoneNumbers?.filter((ele) => {
+    return ele?.length > 0;
+  });
+
+  emails = emails?.filter((ele) => {
+    return ele?.length > 0;
+  });
+
   return (
     <div className="w-full shadow-lg flex flex-col rounded-lg items-center justify-center relative gap-[0.63rem] text-left text-[1.5rem] text-tomato font-josefin-sans">
       {/* <div className="relative rounded-xl  w-full" /> */}

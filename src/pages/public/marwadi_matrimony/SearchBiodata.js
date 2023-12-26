@@ -694,6 +694,7 @@ function SearchBiodata() {
                     <div className="w-full flex items-center flex-col sm:flex-row justify-start gap-4 sm:justify-between mt-5">
                       {totalPages > 1 && (
                         <ReactPaginate
+                          forcePage={currentPage}
                           pageCount={totalPages}
                           pageRangeDisplayed={3}
                           marginPagesDisplayed={1}
@@ -731,9 +732,15 @@ function SearchBiodata() {
                           }
                         />
                       )}
-                      <p className="text-base w-full text-center sm:text-right tracking-wide font-Poppins text-[#333] font-semibold">
-                        Page : {currentPage + 1} of {totalPages}
-                      </p>
+                      {totalPages >= 1 ? (
+                        <p className="text-base w-full text-center sm:text-right tracking-wide font-Poppins text-[#333] font-semibold">
+                          Page : {currentPage + 1} of {totalPages}
+                        </p>
+                      ) : (
+                        <p className="text-base w-full text-center sm:text-right tracking-wide font-Poppins text-[#333] font-semibold">
+                          Page : {currentPage} of {totalPages}
+                        </p>
+                      )}
                     </div>
                   </div>
                 )}

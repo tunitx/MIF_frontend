@@ -70,4 +70,10 @@ body::-webkit-scrollbar-thumb {
   animation: fadeOut 0.5s ease-out;
 }
 
-/* For Matrimony Loader */
+/* For Pagination */
+/* .containerClassName {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+} */

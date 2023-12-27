@@ -13,21 +13,6 @@ import {
 } from "../../../utils/constants";
 
 const Body = () => {
-  // const { membersList, setMembersList } = useContext(MembersContext);
-
-  const mapper = {
-    advisoryMember: "Advisory Member",
-    trusteeMember: "Trustee Member",
-    activeMember: "Active Life Member",
-    patronMember: "Patron Member",
-    lifeMember: "Life Member",
-    associatesMember: "Associates Member",
-  };
-
-  // const [trusteeMembers, setTrustee] = useState([]);
-  // const [advisoryMembers, setAdvisory] = useState([]);
-  // const [activeLifeMembers, setActive] = useState([]);
-
   const [showList, setShowList] = useState([]);
   const [filteredList, setFilteredList] = useState(showList);
 
@@ -52,8 +37,29 @@ const Body = () => {
     setFilteredList(updatedList);
   }
 
+  // For Pagination
+
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const handlePageChange = ({ selected }) => {
+    setCurrentPage(selected);
+  };
+
+  // const itemsPerPage = 3;
+
+  const [itemsPerPage, setItemsPerPage] = useState(() => {
+    return 5;
+  });
+
+  const indexOfLastItem = (currentPage + 1) * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredList?.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(filteredList?.length / itemsPerPage);
+
   useEffect(() => {
     setFilteredList(showList);
+    setCurrentPage(0);
   }, [showList]);
 
   useEffect(() => {
@@ -175,6 +181,10 @@ const Body = () => {
               sortProfession: sortProfession,
               setSortProfession: setSortProfession,
             }}
+            currentItems={currentItems}
+            currentPage={currentPage}
+            handlePageChange={handlePageChange}
+            totalPages={totalPages}
           />
         </div>
       </div>

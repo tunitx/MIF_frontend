@@ -80,7 +80,7 @@ const BiodataFrame = ({ info }) => {
       /> */}
       </div>
       {showAvatarCarousel && (
-        <div className="fixed fade-in flex flex-col justify-center items-center gap-8 backdrop-blur  w-screen h-screen top-0 left-0 bg-[#323233] overflow-y-auto overflow-x-auto p-5 bg-opacity-90 z-50">
+        <div className="fixed fade-in flex flex-col justify-center items-center gap-8 backdrop-blur-sm  w-screen h-screen top-0 left-0 bg-[#323233] overflow-y-auto overflow-x-auto p-5 bg-opacity-90 z-50">
           <div className="w-full h-full flex sm:flex-row-reverse flex-col gap-4 justify-center items-center">
             <div
               className="self-start flex justify-center  hover:cursor-pointer group mt-2"

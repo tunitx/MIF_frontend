@@ -7,9 +7,9 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import { BASE_URL } from "../../../utils/constants";
 // import { useHistory } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import UserContext from "../../../utils/context/UserContext";
-
+import steveRoger from "../../../../assests/images/steveRoger.webp";
 
 const Home = () => {
   // const history = useHistory();
@@ -28,10 +28,8 @@ const Home = () => {
       Swal.fire({
         title: "Are you a new user?",
         showDenyButton: true,
-        
         confirmButtonText: "Sign Up",
         denyButtonText: "Sign In",
-       
       }).then((result) => {
         if (result.isConfirmed) {
           Swal.fire({
@@ -46,28 +44,34 @@ const Home = () => {
             denyButtonText: "Back",
             preConfirm: () => {
               const name = Swal.getPopup().querySelector("#swal-input1").value;
-              const phoneNumber = Swal.getPopup().querySelector("#swal-input2").value;
+              const phoneNumber =
+                Swal.getPopup().querySelector("#swal-input2").value;
               const email = Swal.getPopup().querySelector("#swal-input3").value; //? Email is optional
-              const password = Swal.getPopup().querySelector("#swal-input4").value;
-            
+              const password =
+                Swal.getPopup().querySelector("#swal-input4").value;
+
               // Validation for phone number
               const phoneNumberPattern = /^[0-9]{10}$/; // Adjust this pattern to match the phone number format you want
               if (!phoneNumberPattern.test(phoneNumber)) {
                 Swal.showValidationMessage(`Please enter a valid phone number`);
                 return false;
               }
-            
+
               // Validation for password
               if (password.length < 6) {
-                Swal.showValidationMessage(`Password should be at least 6 characters`);
+                Swal.showValidationMessage(
+                  `Password should be at least 6 characters`
+                );
                 return false;
               }
-            
+
               if (!name || !phoneNumber || !password) {
-                Swal.showValidationMessage(`Please enter your name, phone number, and password`);
+                Swal.showValidationMessage(
+                  `Please enter your name, phone number, and password`
+                );
                 return false;
               }
-            
+
               return { name, phoneNumber, email, password };
             },
           }).then((result) => {
@@ -103,27 +107,33 @@ const Home = () => {
             showDenyButton: true,
             denyButtonText: "Back",
             preConfirm: () => {
-              const phoneNumber = Swal.getPopup().querySelector("#swal-input1").value;
-              const password = Swal.getPopup().querySelector("#swal-input2").value;
-          
+              const phoneNumber =
+                Swal.getPopup().querySelector("#swal-input1").value;
+              const password =
+                Swal.getPopup().querySelector("#swal-input2").value;
+
               // Validation for phone number
               const phoneNumberPattern = /^[0-9]{10}$/; // Adjust this pattern to match the phone number format you want
               if (!phoneNumberPattern.test(phoneNumber)) {
                 Swal.showValidationMessage(`Please enter a valid phone number`);
                 return false;
               }
-          
+
               // Validation for password
               if (password.length < 6) {
-                Swal.showValidationMessage(`Password should be at least 6 characters`);
+                Swal.showValidationMessage(
+                  `Password should be at least 6 characters`
+                );
                 return false;
               }
-          
+
               if (!phoneNumber || !password) {
-                Swal.showValidationMessage(`Please enter both phone number and password`);
+                Swal.showValidationMessage(
+                  `Please enter both phone number and password`
+                );
                 return false;
               }
-          
+
               return { phoneNumber, password };
             },
           }).then((result) => {
@@ -137,7 +147,7 @@ const Home = () => {
                   console.log(response.data);
                   const token = response.data.token;
                   const name = response.data.user.name;
-                 
+
                   localStorage.setItem("jwtToken", token);
                   localStorage.setItem("userName", name);
                   setUserName(name);
@@ -159,7 +169,20 @@ const Home = () => {
 
   return (
     <div className="w-full flex flex-col justify-center items-center gap-6 mt-10 mb-14">
-      <div className="w-full flex justify-center items-center ">
+      <div className="w-full flex gap-5 max-w-6xl flex-col-reverse sm:flex-row justify-center items-center ">
+        {/* Marwadi Head */}
+
+        <div className="w-full flex  justify-center items-center gap-2 flex-col">
+          <img src={steveRoger} alt="cap" className="rounded-md max-w-xs" />
+          <p className="text-4xl font-Poppins text-[#333] font-semibold">
+            Steve Rogers
+          </p>
+          <p className="text-base font-Poppins text-[#333] font-semibold">
+            MIF Matrimony
+          </p>
+        </div>
+
+        {/* Available Actions */}
         <div className="w-full flex  justify-center items-center gap-5 flex-col">
           <button
             onClick={() => {
@@ -189,8 +212,6 @@ const Home = () => {
               >
                 <span>View</span> <strong>BioDatas</strong>
               </button>
-
-             
             </>
           )}
         </div>

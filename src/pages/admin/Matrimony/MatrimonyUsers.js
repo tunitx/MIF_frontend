@@ -3,6 +3,7 @@ import axios from 'axios';
 import { BASE_URL } from '../../../utils/constants';
 import BiodataCard from '../../public/marwadi_matrimony/BiodataCard';
 import AddNewCaste from './AddNewCaste';
+import CasteTable from './AllCastes';
 const MarriageUsers = () => {
     const [biodatas, setBiodatas] = useState([]);
     const [selectedBiodatas, setSelectedBiodatas] = useState([]);
@@ -13,7 +14,7 @@ const MarriageUsers = () => {
     const [openCardId, setOpenCardId] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(10);
-    const [show, setShow] = useState(false);
+   
 
     const handleToggleBiodataCard = (biodata, id) => {
         if (openCardId === id) {
@@ -57,23 +58,11 @@ const MarriageUsers = () => {
     return (
         <>
 
-<div className="overflow-x-auto fade-in w-full flex items-center justify-center mb-16">
+            <div className="overflow-x-auto fade-in w-full flex items-center justify-center mb-16">
                 <p className=" text-gray-900 font-bold text-2x font-Poppins text-lg ">Matrimony Users Details</p>
 
             </div>
-            {/* <div className="w-full flex justify-center">
-                <button
-                    onClick={() => {
-                        setShow(!show);
-                    }}
-                    className="group flex items-center justify-center max-w-[150px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 mb-6"
-                >
-                    Modify caste...
-                </button>
-            </div>
-            {
-                show && <AddNewCaste />
-            } */}
+           
             <div className="overflow-x-auto fade-in w-full flex justify-center mb-16">
 
                 <table className="w-full border-2 border-[#305D2B] max-w-7xl">

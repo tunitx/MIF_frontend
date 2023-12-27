@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BASE_URL } from '../../../utils/constants';
+import CasteTable from './AllCastes';
 const AddNewCaste = () => {
   const [casteData, setCasteData] = useState({});
   const [selectedCaste, setSelectedCaste] = useState('');
@@ -9,7 +10,7 @@ const AddNewCaste = () => {
   const [isNewCaste, setIsNewCaste] = useState(false);
   const [isNewSubCaste, setIsNewSubCaste] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
 
@@ -88,8 +89,10 @@ const AddNewCaste = () => {
 
   return (
     <div
-      className={`w-full max-w-6xl flex flex-col items-center justify-center p-8 ml-12 border-2 border-gray-300 mb-8`}
+    className={`w-full max-w-6xl flex flex-col items-center justify-center p-8 ml-12  mb-8 mx-auto`}
     >
+
+     
       <form onSubmit={handleSubmit}>
         {!isNewCaste ? (
           <>
@@ -197,7 +200,7 @@ const AddNewCaste = () => {
             <button
               type="submit"
               className="group flex items-center gap-2 justify-center max-w-[150px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 "
-           
+
             >
               Submit
             </button>
@@ -226,11 +229,24 @@ const AddNewCaste = () => {
         {
           submitting && (
             <h1 style={{ fontSize: '2em', color: 'black', fontFamily: 'Poppins' }}>
-            Caste Modifications  Submitted ✔️ 
+              Caste Modifications  Submitted ✔️
             </h1>
           )
         }
       </form>
+      <div className="w-full flex justify-center">
+        <button
+          onClick={() => {
+            setShow(!show);
+          }}
+          className="group flex items-center justify-center max-w-[150px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 mb-6 ml-36"
+        >
+          All Castes
+        </button>
+      </div>
+      {
+        show && <CasteTable />
+      }
     </div>
 
   );

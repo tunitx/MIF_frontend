@@ -29,7 +29,7 @@ const HeroAvatar = ({ info, setShowAvatarCarousel }) => {
         </div>
       </div>
       <div className="w-full flex flex-row items-center justify-center gap-2 z-[1] ">
-        {images.map((image) => {
+        {images.map((image, index) => {
           return (
             <div
               className={`relative rounded-[50%]  w-[0.5rem] h-[0.5rem] sm:w-[0.6rem] sm:h-[0.6rem]   hover:cursor-pointer ${
@@ -38,6 +38,7 @@ const HeroAvatar = ({ info, setShowAvatarCarousel }) => {
               onClick={() => {
                 setShowImage(image);
               }}
+              key={index}
             />
           );
         })}

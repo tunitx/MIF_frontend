@@ -184,7 +184,7 @@ const PaternalFamilyDetails = ({ info }) => {
                   <div className="relative text-[1.25rem] tracking-[-0.41px] leading-[1.5rem] whitespace-pre-wrap inline-block w-[18.19rem] text-tomato">
                     {paternalUncleAunt.map((i, index) => {
                       return (
-                        <p className="m-0">
+                        <p className="m-0" key={index}>
                           <span className="text-[#1e1e1e]">{index + 1}. </span>
                           <span>{capitalizeSentence(i)}</span>
                         </p>
@@ -221,7 +221,7 @@ const PaternalFamilyDetails = ({ info }) => {
                   <div className="relative text-[1.25rem] tracking-[-0.41px] leading-[1.5rem] whitespace-pre-wrap inline-block w-[18.19rem] text-tomato">
                     {paternalAunt_Bhua.map((i, index) => {
                       return (
-                        <p className="m-0">
+                        <p className="m-0" key={index}>
                           <span className="text-[#1e1e1e]">{index + 1}. </span>
                           <span>{capitalizeSentence(i)}</span>
                         </p>
@@ -259,7 +259,7 @@ const PaternalFamilyDetails = ({ info }) => {
                   <div className="relative text-[1.25rem] tracking-[-0.41px] leading-[1.5rem] inline-block w-[18.19rem] text-tomato">
                     {siblings.map((i, index) => {
                       return (
-                        <p className="m-0">
+                        <p className="m-0" key={index}>
                           <span className="text-[#1e1e1e]">{index + 1}. </span>
                           <span>{capitalizeSentence(i)}</span>
                         </p>

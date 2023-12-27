@@ -7,6 +7,7 @@ import MaternalFamilyDetails from "./MaternalFamilyDetails";
 import ReachOutDetails from "./ReachOutDetails";
 import Carousel from "react-multi-carousel";
 import TopLoadingBarContext from "../../../../utils/context/TopLoadingBarContext";
+import { useTopLoadingBar } from "../../../../hooks/useTopLoadingBar";
 
 const BiodataFrame = ({ info }) => {
   const {
@@ -46,23 +47,14 @@ const BiodataFrame = ({ info }) => {
     },
   };
 
-  const { topLoadingBarRef } = useContext(TopLoadingBarContext);
-
-  // console.log(topLoadingBarRef);
-
-  useEffect(() => {
-    topLoadingBarRef?.current?.continuousStart();
-    // return () => {
-    //   topLoadingBarRef?.current?.complete();
-    // };
-  }, []);
+  const { LoadingDone } = useTopLoadingBar();
 
   return (
     <div className=" fade-in w-full flex justify-center items-center p-2 ">
       <div
         className="relative bg-seashell w-full max-w-md shadow-lg rounded-lg p-2 py-4 flex justify-center flex-col items-center gap-6"
         onLoad={() => {
-          topLoadingBarRef?.current?.complete();
+          LoadingDone();
         }}
       >
         {/* <img

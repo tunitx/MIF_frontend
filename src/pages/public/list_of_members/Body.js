@@ -11,6 +11,7 @@ import {
   GET_ALL_MEMBER,
   GET_AVAILABLE_MEMBERTYPES_LIST,
 } from "../../../utils/constants";
+import { usePagination } from "../../../hooks/usePagination";
 
 const Body = () => {
   const [showList, setShowList] = useState([]);
@@ -20,7 +21,7 @@ const Body = () => {
   // console.log(membersList);
 
   const [memberTypeList, setMemberTypeList] = useState([]);
-  console.log(memberTypeList);
+  // console.log(memberTypeList);
 
   const [searchFor, setSearchFor] = useState("");
 
@@ -39,27 +40,14 @@ const Body = () => {
 
   // For Pagination
 
-  const [currentPage, setCurrentPage] = useState(0);
-
-  const handlePageChange = ({ selected }) => {
-    setCurrentPage(selected);
-  };
-
-  // const itemsPerPage = 3;
-
-  const [itemsPerPage, setItemsPerPage] = useState(() => {
-    return 5;
-  });
-
-  const indexOfLastItem = (currentPage + 1) * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredList?.slice(indexOfFirstItem, indexOfLastItem);
-
-  const totalPages = Math.ceil(filteredList?.length / itemsPerPage);
+  const { currentPage, handlePageChange, currentItems, totalPages } =
+    usePagination(() => {
+      return 5;
+    }, filteredList);
 
   useEffect(() => {
     setFilteredList(showList);
-    setCurrentPage(0);
+    handlePageChange({ selected: 0 });
   }, [showList]);
 
   useEffect(() => {

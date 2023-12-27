@@ -14,6 +14,7 @@ import BiodataFrame from "./biodataFrame/BiodataFrame";
 import ReactPaginate from "react-paginate";
 import mifBride from "../../../../assests/images/mifBride.webp";
 import mifGroom from "../../../../assests/images/mifGroom.webp";
+import { usePagination } from "../../../hooks/usePagination";
 
 const heights = [
   "Less than 4 fts.",
@@ -52,30 +53,19 @@ function SearchBiodata() {
 
   // For Pagination
 
-  const [currentPage, setCurrentPage] = useState(0);
-
-  const handlePageChange = ({ selected }) => {
-    setCurrentPage(selected);
-  };
-
-  // const itemsPerPage = 3;
-
-  const [itemsPerPage, setItemsPerPage] = useState(() => {
+  const {
+    currentPage,
+    handlePageChange,
+    currentItems,
+    totalPages,
+    setItemsPerPage,
+  } = usePagination(() => {
     if (window.innerWidth < 640) {
       return 4;
     } else if (window.innerWidth < 1024) {
       return 2;
     } else return 3;
-  });
-
-  const indexOfLastItem = (currentPage + 1) * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredBiodatas?.slice(
-    indexOfFirstItem,
-    indexOfLastItem
-  );
-
-  const totalPages = Math.ceil(filteredBiodatas?.length / itemsPerPage);
+  }, filteredBiodatas);
 
   useEffect(() => {
     const handleResize = (e) => {
@@ -95,7 +85,7 @@ function SearchBiodata() {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  });
+  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem("jwtToken");
@@ -137,10 +127,6 @@ function SearchBiodata() {
           onSubmit={async (values) => {
             const formData = new FormData();
 
-            console.log(values);
-
-            // return;
-
             for (const key in values) {
               if (key === "ageRange") {
                 formData.append(key, JSON.stringify(values[key]));
@@ -154,14 +140,13 @@ function SearchBiodata() {
               }
             }
 
-            for (let pair of formData.entries()) {
-              if (pair[0] === "ageRange") {
-                const ageRangeObject = JSON.parse(pair[1]);
-                console.log(ageRangeObject);
-              } else {
-                console.log(pair[0] + ", " + pair[1]);
-              }
-            }
+            // for (let pair of formData.entries()) {
+            //   if (pair[0] === "ageRange") {
+            //     const ageRangeObject = JSON.parse(pair[1]);
+            //   } else {
+            //     console.log(pair[0] + ", " + pair[1]);
+            //   }
+            // }
 
             try {
               const response = await fetch(
@@ -183,8 +168,6 @@ function SearchBiodata() {
 
               const data = await response.json();
               setSearchedBiodatas(data);
-              // console.log("hi");
-              // console.log(data);
             } catch (error) {
               setNoResponseError(true);
 

@@ -51,25 +51,6 @@ async function getNewToken() {
 getNewToken();
 let res = {};
 function Registration() {
-  // const matrimonyUserStore = useSelector((store) => store.MatrimonyUserSlice);
-
-  // const dispatch = useDispatch();
-
-  // // const navigate = useNavigate();
-
-  // const [checked, setChecked] = useState(false);
-
-  // console.log(matrimonyUserStore);
-
-  // useEffect(() => {
-  //   const temp = JSON.parse(localStorage.getItem("matrimonyUser"));
-
-  //   if (temp && temp?.matrimonyUser && temp?.matrimonyUserToken) {
-  //     dispatch(matrimonySignIn(temp));
-  //   }
-  //   setChecked(true);
-  // });
-
   const navigate = useNavigate();
 
   const formikRef = useRef();
@@ -795,7 +776,7 @@ function Registration() {
                 {step === 1 && (
                   <div className="w-full max-w-full flex flex-col justify-between items-center gap-14">
                     <p className=" fade-in w-full text-center font-Poppins text-lg sm:text-xl font-semibold text-[#333]">
-                      You want to be a:
+                      Select :
                     </p>
 
                     <div className="w-full flex justify-between sm:justify-evenly gap-6">

@@ -1,7 +1,7 @@
 import React from "react";
-import infoSvg from "../../../../../assests/images/fibrinfo@2x.png";
-import group_2 from "../../../../../assests/images/group@2x.png";
-import dipak from "../../../../../assests/images/dipak.png";
+import infoSvg from "../../../../../assests/images/fibrinfo@2x.webp";
+import group_2 from "../../../../../assests/images/group@2x.webp";
+import dipak from "../../../../../assests/images/dipak.webp";
 import { capitalizeSentence } from "../../../../utils/helper";
 
 const PaternalFamilyDetails = ({ info }) => {

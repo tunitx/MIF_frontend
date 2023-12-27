@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import HeroAvatar from "./HeroAvatar";
 import HeroIntro from "./HeroIntro";
 import QuickInformationSection from "./QuickInformationSection";
@@ -6,6 +6,7 @@ import PaternalFamilyDetails from "./PaternalFamilyDetails";
 import MaternalFamilyDetails from "./MaternalFamilyDetails";
 import ReachOutDetails from "./ReachOutDetails";
 import Carousel from "react-multi-carousel";
+import TopLoadingBarContext from "../../../../utils/context/TopLoadingBarContext";
 
 const BiodataFrame = ({ info }) => {
   const {
@@ -25,10 +26,6 @@ const BiodataFrame = ({ info }) => {
   const images = [image1];
   image2 && images.push(image2);
   image3 && images.push(image3);
-  // console.log(images);
-
-  //   console.log(manglik);
-  console.log(info);
 
   const responsive = {
     superLargeDesktop: {
@@ -49,9 +46,25 @@ const BiodataFrame = ({ info }) => {
     },
   };
 
+  const { topLoadingBarRef } = useContext(TopLoadingBarContext);
+
+  // console.log(topLoadingBarRef);
+
+  useEffect(() => {
+    topLoadingBarRef?.current?.continuousStart();
+    // return () => {
+    //   topLoadingBarRef?.current?.complete();
+    // };
+  }, []);
+
   return (
     <div className=" fade-in w-full flex justify-center items-center p-2 ">
-      <div className="relative bg-seashell w-full max-w-md shadow-lg rounded-lg p-2 py-4 flex justify-center flex-col items-center gap-6">
+      <div
+        className="relative bg-seashell w-full max-w-md shadow-lg rounded-lg p-2 py-4 flex justify-center flex-col items-center gap-6"
+        onLoad={() => {
+          topLoadingBarRef?.current?.complete();
+        }}
+      >
         {/* <img
         className="absolute h-[27.48%] w-[214.83%] top-[84.8%] right-[-60.69%] bottom-[-12.28%] left-[-54.13%] max-w-full overflow-hidden max-h-full object-contain"
         alt=""
@@ -98,16 +111,6 @@ const BiodataFrame = ({ info }) => {
                 <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
               </svg>
             </div>
-
-            {/* {images.length === 1 && (
-              <div className="w-fit sm:h-full h-fit rounded-lg">
-                <img
-                  src={images[0]}
-                  alt="image"
-                  className="rounded-lg max-h-[85vh] my-auto "
-                />
-              </div>
-            )} */}
 
             <div className="relative pb-4 sm:w-[80vw] w-full">
               <Carousel

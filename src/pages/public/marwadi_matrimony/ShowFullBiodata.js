@@ -6,11 +6,13 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import axios from "axios";
 import UserContext from "../../../utils/context/UserContext";
+import TopLoadingBarContext from "../../../utils/context/TopLoadingBarContext";
 
 const ShowFullBiodata = () => {
   const { id } = useParams();
 
   const [biodata, setBiodata] = useState("");
+  console.log(biodata);
 
   const [isLogged, setIsLogged] = useState(true);
 
@@ -27,18 +29,19 @@ const ShowFullBiodata = () => {
   useEffect(() => {
     async function getBiodatabyID() {
       try {
+        console.log("sadfadf");
         const resBody = await fetch(`${GET_BIODATA_BY_ID}${id}`);
-        // console.log(resBody);
-
+        console.log(resBody);
         if (resBody.status === 200) {
           const resData = await resBody.json();
           setBiodata(resData);
-          //   console.log(resData);
+          console.log(resData);
         } else {
-          //   console.log("NOT FOUND");
+          console.log("NOT FOUND");
           setBiodata(null);
         }
       } catch (e) {
+        console.log("uipoui");
         console.log(e);
       }
     }
@@ -221,7 +224,20 @@ const ShowFullBiodata = () => {
           </div>
         </div>
       ) : null}
-      {biodata === null ? <p>NOT FOUND</p> : <BiodataFrame info={biodata} />}{" "}
+      {biodata === null ? (
+        <div className="w-full fade-in flex flex-col justify-center items-center my-12">
+          <div className="w-full flex flex-col justify-center items-center gap-2">
+            <p className="w-full text-center font-Poppins text-3xl font-semibold text-[#EF4D48]">
+              BIODATA NOT FOUND
+            </p>
+            <p className="w-full text-center font-Poppins text-XL text-[#EF4D48]">
+              (404)
+            </p>
+          </div>
+        </div>
+      ) : (
+        <BiodataFrame info={biodata} />
+      )}{" "}
     </div>
   );
 };

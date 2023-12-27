@@ -12,8 +12,8 @@ import ImagePreview from "../press/ImagePreview";
 import { useNavigate } from "react-router-dom";
 import BiodataFrame from "./biodataFrame/BiodataFrame";
 import ReactPaginate from "react-paginate";
-import mifBride from "../../../../assests/images/mifBride.png";
-import mifGroom from "../../../../assests/images/mifGroom.png";
+import mifBride from "../../../../assests/images/mifBride.webp";
+import mifGroom from "../../../../assests/images/mifGroom.webp";
 
 const heights = [
   "Less than 4 fts.",

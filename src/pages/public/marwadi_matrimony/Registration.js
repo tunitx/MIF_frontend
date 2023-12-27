@@ -18,8 +18,8 @@ import Popup from "./Popup";
 import MultiStepProgressBar from "./progressBar/MultiStepProgressBar";
 import MatrimonyLoader from "../../../components/MatrimonyLoader";
 
-import mifBride from "../../../../assests/images/mifBride.png";
-import mifGroom from "../../../../assests/images/mifGroom.png";
+import mifBride from "../../../../assests/images/mifBride.webp";
+import mifGroom from "../../../../assests/images/mifGroom.webp";
 
 const config = {
   headers: {

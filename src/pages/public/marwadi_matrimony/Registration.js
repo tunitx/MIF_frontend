@@ -9,7 +9,8 @@ import {
 } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import bioData from "../../../utils/biodata";
+import { BASE_URL } from "../../../utils/constants";
+// import bioData from "../../../utils/biodata";
 import indiaStates from "../../../utils/indiaStates";
 import Swal from "sweetalert2";
 import { POST_BIODATA } from "../../../utils/constants";
@@ -82,6 +83,7 @@ function Registration() {
   const [caste, setCaste] = useState("");
   const [subcaste, setSubcaste] = useState("");
   const [gotra, setGotra] = useState("");
+  const [bioData, setBioData] = useState({});
 
   const [intermediateMarriageStatus, setIntermediateMarriageStatus] =
     useState(null);
@@ -160,14 +162,29 @@ function Registration() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [step]);
+  
+  useEffect(() => {
+    const jwtToken = localStorage.getItem('jwtToken');
+    const token = jwtToken;
+
+    const headers = {
+      'Content-Type': 'application/json'
+    };
+    if (token) {
+      headers['authorization'] = `Bearer ${token}`;
+    }
+
+    fetch(`${BASE_URL}getBiodata`, { headers })
+      .then(response => response.json())
+      .then(data => setBioData(data))
+      .catch(error => console.log(error));
+  }, []);
+
+
 
   const castes = Object.keys(bioData);
-  const subcastes =
-    bioData && caste && bioData[caste] ? Object.keys(bioData[caste]) : [];
-  const gotras =
-    bioData && caste && subcaste && bioData[caste] && bioData[caste][subcaste]
-      ? bioData[caste][subcaste]
-      : [];
+  const subcastes = bioData && caste && bioData[caste] ? Object.keys(bioData[caste]) : [];
+  const gotras = bioData && caste && subcaste && bioData[caste] && bioData[caste][subcaste] ? bioData[caste][subcaste] : [];
 
   useEffect(() => {
     if (location === "abroad") {
@@ -776,9 +793,8 @@ function Registration() {
               <MultiStepProgressBar page={step} />
               <form
                 onSubmit={formik.handleSubmit}
-                className={`w-full flex flex-col justify-center mt-10 items-center gap-16 max-w-4xl ${
-                  formik.isSubmitting ? "opacity-50" : ""
-                }`}
+                className={`w-full flex flex-col justify-center mt-10 items-center gap-16 max-w-4xl ${formik.isSubmitting ? "opacity-50" : ""
+                  }`}
               >
                 {step === 1 && (
                   <div className="w-full max-w-full flex flex-col justify-between items-center gap-14">
@@ -796,11 +812,10 @@ function Registration() {
                           // height={532}
                           viewBox="0 0 532 532"
                           xmlnsXlink="http://www.w3.org/1999/xlink"
-                          className={`fade-in w-full hover:cursor-pointer bg-[#f7f3f5] box-border shadow-xl delay-150 duration-300 transition-transform border-2 border-orange-500 rounded-full p-2 ${
-                            formik.values.gender === "male"
+                          className={`fade-in w-full hover:cursor-pointer bg-[#f7f3f5] box-border shadow-xl delay-150 duration-300 transition-transform border-2 border-orange-500 rounded-full p-2 ${formik.values.gender === "male"
                               ? ""
                               : "border-none hover:scale-110"
-                          } `}
+                            } `}
                           onClick={() => {
                             formik.setFieldValue("gender", "male");
                             setStep((s) => s + 1);
@@ -852,11 +867,10 @@ function Registration() {
                           // height={532}
                           viewBox="0 0 532 532"
                           xmlnsXlink="http://www.w3.org/1999/xlink"
-                          className={`fade-in w-full hover:cursor-pointer bg-[#f7f3f5] box-border delay-150 shadow-xl duration-300 transition-transform border-2 border-orange-500 rounded-full p-2 ${
-                            formik.values.gender === "female"
+                          className={`fade-in w-full hover:cursor-pointer bg-[#f7f3f5] box-border delay-150 shadow-xl duration-300 transition-transform border-2 border-orange-500 rounded-full p-2 ${formik.values.gender === "female"
                               ? ""
                               : "border-none hover:scale-110"
-                          }`}
+                            }`}
                           onClick={() => {
                             formik.setFieldValue("gender", "female");
                             setStep((s) => s + 1);
@@ -2765,7 +2779,7 @@ function Registration() {
                                           />
                                         </div>
                                         {index === 0 &&
-                                        validateFirstPhoneNumber ? (
+                                          validateFirstPhoneNumber ? (
                                           <p className="mt-1 fade-in text-sm fade-in font-mono leading-6 text-[#EF4D48]">
                                             {validateFirstPhoneNumber}
                                           </p>
@@ -3579,11 +3593,10 @@ function Registration() {
                   )}
                   {step < 8 && step > 1 && (
                     <div
-                      className={`w-full  flex ${
-                        step === 1
+                      className={`w-full  flex ${step === 1
                           ? "justify-center"
                           : "sm:justify-end justify-center"
-                      }`}
+                        }`}
                     >
                       <button
                         onClick={() => {

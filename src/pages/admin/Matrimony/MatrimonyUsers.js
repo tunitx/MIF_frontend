@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BASE_URL } from '../../../utils/constants';
 import BiodataCard from '../../public/marwadi_matrimony/BiodataCard';
-
+import AddNewCaste from './AddNewCaste';
 const MarriageUsers = () => {
     const [biodatas, setBiodatas] = useState([]);
     const [selectedBiodatas, setSelectedBiodatas] = useState([]);
@@ -11,13 +11,16 @@ const MarriageUsers = () => {
     const [biodataView, setBiodataView] = useState(false);
     const [isBiodataCardOpen, setBiodataCardOpen] = useState(false);
     const [openCardId, setOpenCardId] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(10);
+    const [show, setShow] = useState(false);
 
     const handleToggleBiodataCard = (biodata, id) => {
         if (openCardId === id) {
             setOpenCardId(null); // if the card is already open, close it
-          } else {
+        } else {
             setOpenCardId(id); // otherwise, open the card
-          }
+        }
         if (isBiodataCardOpen) {
 
         } else {
@@ -25,6 +28,10 @@ const MarriageUsers = () => {
         }
         setBiodataCardOpen(!isBiodataCardOpen);
     };
+    useEffect(() => {
+        setViewingBiodata(null);
+        setBiodataCardOpen(false);
+    }, [currentPage]);
 
     useEffect(() => {
         axios.get(`${BASE_URL}getAllBiodatas`)
@@ -49,12 +56,25 @@ const MarriageUsers = () => {
 
     return (
         <>
-            <div className="overflow-x-auto fade-in w-full flex justify-center mb-24">
+
+<div className="overflow-x-auto fade-in w-full flex items-center justify-center mb-16">
                 <p className=" text-gray-900 font-bold text-2x font-Poppins text-lg ">Matrimony Users Details</p>
 
             </div>
-
-            <div className="overflow-x-auto fade-in w-full flex justify-center mb-24">
+            {/* <div className="w-full flex justify-center">
+                <button
+                    onClick={() => {
+                        setShow(!show);
+                    }}
+                    className="group flex items-center justify-center max-w-[150px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 mb-6"
+                >
+                    Modify caste...
+                </button>
+            </div>
+            {
+                show && <AddNewCaste />
+            } */}
+            <div className="overflow-x-auto fade-in w-full flex justify-center mb-16">
 
                 <table className="w-full border-2 border-[#305D2B] max-w-7xl">
                     <thead className="w-full">
@@ -80,46 +100,104 @@ const MarriageUsers = () => {
                         </tr>
                     </thead>
                     <tbody className="w-full">
-                        {biodatas.map((biodata, index) => (
-                            <tr key={index}>
-                                <td className="p-2 border-r border-[#EF4D48] text-center text-[#333] whitespace-nowrap font-bold font-Poppins">
-                                    {biodata.name}
-                                </td>
-                                <td className="p-2 border-r border-[#EF4D48] text-center text-[#333] whitespace-nowrap font-bold font-Poppins">
-                                    {biodata.phoneNumber}
-                                </td>
-                                <td className="p-2 border-r border-[#EF4D48] text-center text-[#333] whitespace-nowrap font-bold font-Poppins">
-                                    {biodata.email ? biodata.email : "Not Available"}
-                                </td>
-                                <td className="p-2 border-r border-[#EF4D48] text-center text-[#333] whitespace-nowrap font-bold font-Poppins">
-                                    {biodata.marriageSchema.length}
-                                </td>
-                                <td className="p-2 border-r border-[#EF4D48] text-center text-[#333] whitespace-nowrap font-bold font-Poppins">
-                                    {biodata.timeStamp && biodata.timeStamp.length > 0 ? new Date(biodata.timeStamp[biodata.timeStamp.length - 1]).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' }) : "Not Available"}
-                                </td>
+                        {biodatas
+                            .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
 
-                                <td className="p-2 border-r border-[#EF4D48] text-center text-[#333] whitespace-nowrap font-bold font-Poppins">
-                                    {selectedBiodata === biodata ? (
-                                        <button onClick={() => {
-                                            setSelectedBiodata(null)
-                                            setViewingBiodata(null)
-                                            setBiodataCardOpen(false)
-                                        }
-                                        }>Close</button>
-                                    ) : (
-                                        <button onClick={() => handleView(biodata)}>View</button>
-                                    )}
-                                </td>
-                            </tr>
-                        ))}
+                            .map((biodata, index) => (
+                                <tr key={index}>
+                                    <td className="p-2 border-r border-[#EF4D48] text-center text-[#333] whitespace-nowrap font-bold font-Poppins">
+                                        {biodata.name}
+                                    </td>
+                                    <td className="p-2 border-r border-[#EF4D48] text-center text-[#333] whitespace-nowrap font-bold font-Poppins">
+                                        {biodata.phoneNumber}
+                                    </td>
+                                    <td className="p-2 border-r border-[#EF4D48] text-center text-[#333] whitespace-nowrap font-bold font-Poppins">
+                                        {biodata.email ? biodata.email : "Not Available"}
+                                    </td>
+                                    <td className="p-2 border-r border-[#EF4D48] text-center text-[#333] whitespace-nowrap font-bold font-Poppins">
+                                        {biodata.marriageSchema.length}
+                                    </td>
+                                    <td className="p-2 border-r border-[#EF4D48] text-center text-[#333] whitespace-nowrap font-bold font-Poppins">
+                                        {biodata.timeStamp && biodata.timeStamp.length > 0 ? new Date(biodata.timeStamp[biodata.timeStamp.length - 1]).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' }) : "Not Available"}
+                                    </td>
+
+                                    <td className="p-2 border-r border-[#EF4D48] text-center text-[#333] whitespace-nowrap font-bold font-Poppins">
+                                        {selectedBiodata === biodata ? (
+                                            <button onClick={() => {
+                                                setSelectedBiodata(null)
+                                                setViewingBiodata(null)
+                                                setBiodataCardOpen(false)
+                                            }
+                                            }>Close</button>
+                                        ) : (
+                                            <button onClick={() => handleView(biodata)}>View</button>
+                                        )}
+                                    </td>
+                                </tr>
+                            ))}
                     </tbody>
                 </table>
+
+            </div>
+            {/* <div className="flex justify-center space-x-4">
+                    <button
+                            className={`px-4 py-2 rounded bg-blue-500 text-white ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        onClick={() => setCurrentPage((old) => Math.max(old - 1, 1))}
+                        disabled={currentPage === 1}
+                    >
+                        Previous
+                    </button>
+                    {Array.from({ length: Math.ceil(biodatas.length / itemsPerPage) }, (_, index) => (
+                        <button
+                            key={index}
+                            className="px-4 py-2 rounded bg-blue-500 text-white"
+                            onClick={() => setCurrentPage(index + 1)}
+                        >
+                            {index + 1}
+                        </button>
+                    ))}
+                    <button
+                    className={`px-4 py-2 rounded bg-blue-500 text-white ${currentPage === Math.ceil(biodatas.length / itemsPerPage) ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        onClick={() =>
+                            setCurrentPage((old) => Math.min(old + 1, Math.ceil(biodatas.length / itemsPerPage)))
+                        }
+                        disabled={currentPage === Math.ceil(biodatas.length / itemsPerPage)}
+                    >
+                        Next
+                    </button>
+                </div> */}
+            <div className="flex justify-center space-x-4">
+                <button
+                    className={`px-4 py-2 rounded bg-blue-500 text-white ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    onClick={() => setCurrentPage((old) => Math.max(old - 1, 1))}
+                    disabled={currentPage === 1}
+                >
+                    Previous
+                </button>
+                {Array.from({ length: Math.ceil(biodatas.length / itemsPerPage) }, (_, index) => (
+                    <button
+                        key={index}
+                        className={`px-4 py-2 rounded ${currentPage === index + 1 ? 'bg-red-500' : 'bg-blue-500'} text-white`}
+                        onClick={() => setCurrentPage(index + 1)}
+                    >
+                        {index + 1}
+                    </button>
+                ))}
+                <button
+                    className={`px-4 py-2 rounded bg-blue-500 text-white ${currentPage === Math.ceil(biodatas.length / itemsPerPage) ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    onClick={() =>
+                        setCurrentPage((old) => Math.min(old + 1, Math.ceil(biodatas.length / itemsPerPage)))
+                    }
+                    disabled={currentPage === Math.ceil(biodatas.length / itemsPerPage)}
+                >
+                    Next
+                </button>
             </div>
 
             <div className="overflow-x-auto fade-in w-full flex justify-center mb-24">
                 <table className="w-full border-2 border-[#305D2B] max-w-7xl">
 
-                    {viewingBiodata && viewingBiodata.length>0 && (
+                    {viewingBiodata && viewingBiodata.length > 0 && (
                         <thead className="w-full">
                             <tr className="bg-[#305D2B] text-white w-full">
                                 <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">First Name</th>
@@ -145,7 +223,7 @@ const MarriageUsers = () => {
                                 </td>
                                 <td className="p-2 border-r border-[#EF4D48] text-center text-[#333] whitespace-nowrap font-bold font-Poppins">
                                     <button onClick={() => handleToggleBiodataCard(biodata, biodata._id)}>
-                                    {openCardId === biodata._id ? 'Close Biodata Card' : 'View Biodata Card'}
+                                        {openCardId === biodata._id ? 'Close Biodata Card' : 'View Biodata Card'}
                                     </button>
                                 </td>
                             </tr>

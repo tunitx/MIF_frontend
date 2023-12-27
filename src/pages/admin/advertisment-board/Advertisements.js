@@ -10,6 +10,8 @@ const api = axios.create({
 const Advertisements = () => {
   const [members, setMembers] = useState([]);
   const [pfp, setPfp] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(10);
 
   useEffect(() => {
     api
@@ -74,21 +76,8 @@ const Advertisements = () => {
   };
 
   return (
-    // <div className="w-fit flex flex-row gap-5 flex-wrap max-w-[100%]">
-    //   {members.map((member, index) => (
-    //     <div key={index}>
-    //       <Advertisement
-    //         member={member}
-    //         onEdit={handleEdit}
-    //         onDelete={handleDelete}
-    //         pfp={pfp}
-    //         setPfp={setPfp}
-    //       />
-    //     </div>
-    //   ))}
-    // </div>
-    <div className="overflow-x-auto fade-in w-full flex justify-center">
-
+   
+    <div className="overflow-x-auto fade-in w-full flex justify-center flex-col items-center">
       <table className="w-full border-2 border-[#305D2B] max-w-7xl">
         <thead className="w-full">
           <tr className="bg-[#305D2B] text-white w-full">
@@ -111,7 +100,9 @@ const Advertisements = () => {
           <tbody className="w-full">
 
 
-            {members.map((member, index, _id) => (
+            {members
+              .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+            .map((member, index, _id) => (
               // <tr key={index}>
 
               <Advertisement
@@ -126,9 +117,40 @@ const Advertisements = () => {
 
             ))}
           </tbody>
+
+
         </>
       </table>
+      <div className="flex justify-center space-x-4 mt-4">
+                <button
+                    className={`px-4 py-2 rounded bg-blue-500 text-white ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    onClick={() => setCurrentPage((old) => Math.max(old - 1, 1))}
+                    disabled={currentPage === 1}
+                >
+                    Previous
+                </button>
+                {Array.from({ length: Math.ceil(members.length / itemsPerPage) }, (_, index) => (
+                    <button
+                        key={index}
+                        className={`px-4 py-2 rounded ${currentPage === index + 1 ? 'bg-red-500' : 'bg-blue-500'} text-white`}
+                        onClick={() => setCurrentPage(index + 1)}
+                    >
+                        {index + 1}
+                    </button>
+                ))}
+                <button
+                    className={`px-4 py-2 rounded bg-blue-500 text-white ${currentPage === Math.ceil(members.length / itemsPerPage) ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    onClick={() =>
+                        setCurrentPage((old) => Math.min(old + 1, Math.ceil(members.length / itemsPerPage)))
+                    }
+                    disabled={currentPage === Math.ceil(members.length / itemsPerPage)}
+                >
+                    Next
+                </button>
+            </div>
+      
     </div>
+    
 
   );
 };

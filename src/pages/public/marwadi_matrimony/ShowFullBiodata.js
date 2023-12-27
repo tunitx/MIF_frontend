@@ -1,28 +1,59 @@
-import React, { useState, useContext } from "react";
-import Header from "../../../components/matrimony/Header";
-import { Link, useNavigate } from "react-router-dom";
-import ConsentAddBiodata from "./ConsentAddBiodata";
-import ConsentSearchBiodata from "./ConsentSearchBiodata";
+import React, { useEffect, useState, useContext } from "react";
+import { GET_BIODATA_BY_ID, BASE_URL } from "../../../utils/constants";
+import { useParams } from "react-router-dom";
+import BiodataFrame from "./biodataFrame/BiodataFrame";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import axios from "axios";
-import { BASE_URL } from "../../../utils/constants";
-import { useNavigate } from "react-router-dom";
 import UserContext from "../../../utils/context/UserContext";
-import mifHead from "../../../../assests/images/mifHead.webp";
+import TopLoadingBarContext from "../../../utils/context/TopLoadingBarContext";
 
-const Home = () => {
-  // const history = useHistory();
-  const { setUserName } = useContext(UserContext);
+const ShowFullBiodata = () => {
+  const { id } = useParams();
+
+  const [biodata, setBiodata] = useState("");
+  console.log(biodata);
+
+  const [isLogged, setIsLogged] = useState(true);
+
+  const { userName, setUserName } = useContext(UserContext);
+
   const navigate = useNavigate();
 
-  const [action, setAction] = useState(null);
-  const handleActionState = (path) => {
-    setAction(path);
-  };
+  useEffect(() => {
+    const token = localStorage.getItem("jwtToken");
+    if (!token) setIsLogged(false);
+    else setIsLogged(true);
+  }, [userName]);
+
+  useEffect(() => {
+    async function getBiodatabyID() {
+      try {
+        console.log("sadfadf");
+        const resBody = await fetch(`${GET_BIODATA_BY_ID}${id}`);
+        console.log(resBody);
+        if (resBody.status === 200) {
+          const resData = await resBody.json();
+          setBiodata(resData);
+          console.log(resData);
+        } else {
+          console.log("NOT FOUND");
+          setBiodata(null);
+        }
+      } catch (e) {
+        console.log("uipoui");
+        console.log(e);
+      }
+    }
+    getBiodatabyID();
+  }, []);
+
   const handleAction = (path, info) => {
     const token = localStorage.getItem("jwtToken");
     if (token) {
-      setAction(path);
+      // setAction(path);
+      navigate(path);
+      return;
     } else {
       Swal.fire({
         title: "Are you a new user?",
@@ -37,21 +68,10 @@ const Home = () => {
               '<input type="text" id="swal-input1" class="swal2-input" placeholder="Name">' +
               '<input type="text" id="swal-input2" class="swal2-input" placeholder="Phone Number">' +
               '<input type="text" id="swal-input3" class="swal2-input" placeholder="Email (Optional)">' +
-              '<input type="password" id="swal-input4" class="swal2-input" placeholder="Password">'+
-              '<div><input type="checkbox" id="swal-input5"> Show Password</div>',
+              '<input type="password" id="swal-input4" class="swal2-input" placeholder="Password">',
             focusConfirm: false,
             showDenyButton: true,
             denyButtonText: "Back",
-            didOpen: () => {
-              document.getElementById('swal-input5').addEventListener('change', function () {
-                const passwordInput = document.getElementById('swal-input4');
-                if (this.checked) {
-                  passwordInput.type = 'text';
-                } else {
-                  passwordInput.type = 'password';
-                }
-              });
-            },
             preConfirm: () => {
               const name = Swal.getPopup().querySelector("#swal-input1").value;
               const phoneNumber =
@@ -98,7 +118,8 @@ const Home = () => {
                   localStorage.setItem("jwtToken", token);
                   localStorage.setItem("userName", name);
                   setUserName(name);
-                  setAction(path);
+                  // setAction(path);
+                  navigate(path);
                 })
                 .catch((error) => {
                   Swal.fire("User already Exists!", error.message, "error");
@@ -112,21 +133,10 @@ const Home = () => {
             title: "Sign In",
             html:
               '<input type="text" id="swal-input1" class="swal2-input" placeholder="Phone Number">' +
-              '<input type="password" id="swal-input2" class="swal2-input" placeholder="Password">'+
-              '<div><input type="checkbox" id="swal-input3"> Show Password</div>',
+              '<input type="password" id="swal-input2" class="swal2-input" placeholder="Password">',
             focusConfirm: false,
             showDenyButton: true,
             denyButtonText: "Back",
-            didOpen: () => {
-              document.getElementById('swal-input3').addEventListener('change', function () {
-                const passwordInput = document.getElementById('swal-input2');
-                if (this.checked) {
-                  passwordInput.type = 'text';
-                } else {
-                  passwordInput.type = 'password';
-                }
-              });
-            },
             preConfirm: () => {
               const phoneNumber =
                 Swal.getPopup().querySelector("#swal-input1").value;
@@ -172,7 +182,8 @@ const Home = () => {
                   localStorage.setItem("jwtToken", token);
                   localStorage.setItem("userName", name);
                   setUserName(name);
-                  setAction(path);
+                  // setAction(path);
+                  navigate(path);
                 })
                 .catch((error) => {
                   Swal.fire("Wrong Credentials!", error.message, "error");
@@ -182,74 +193,53 @@ const Home = () => {
             }
           });
         } else if (result.dismiss === Swal.DismissReason.cancel) {
-          setAction(path);
+          // setAction(path);
+          navigate(path);
         }
       });
     }
   };
 
+  if (biodata === "") return "";
+
   return (
-    <div className="w-full flex flex-col justify-center items-center gap-6 mt-10 mb-14">
-      <div className="w-full flex gap-5 max-w-6xl flex-col-reverse sm:flex-row justify-center items-center ">
-        {/* Marwadi Head */}
+    <div>
+      {!isLogged ? (
+        <div className=" z-50 fixed flex flex-col justify-center gap-8 items-center w-screen h-screen top-0 left-0 bg-[#323233] backdrop-blur-sm bg-opacity-90 overflow-x-auto py-5 px-5">
+          <div className="w-full flex flex-col gap-8 justify-center items-center">
+            <div className="shadow-xl fade-in bg-[#f7f3f5] rounded-md p-8 flex max-w-full w-fit flex-col justify-center items-center gap-5">
+              <p className="text-xl font-Poppins text-center">
+                Please Login to see the biodata.
+              </p>
 
-        <div className="w-full flex  justify-center items-center gap-2 flex-col">
-          <img src={mifHead} alt="cap" className="rounded-md max-w-[200px]" />
-          <p className="text-3xl font-Poppins text-[#333] font-semibold mt-4">
-            Makkhan Lal Kanda
-          </p>
-          <p className="text-base font-Poppins text-[#333] font-semibold">
-            National Convenor
-          </p>
-          <p className="text-base font-Poppins text-[#333] font-semibold">
-            MIF Marwadi Matrimony
-          </p>
-        </div>
-
-        {/* Available Actions */}
-        <div className="w-full flex  justify-center items-center gap-5 flex-col">
-          <div className="w-fit flex flex-col justify-center items-center gap-5">
-            <button
-              onClick={() => {
-                handleAction("/matrimony/add-biodata");
-              }}
-              className="flex gap-2 w-full justify-center font-Poppins rounded-md bg-indigo-600 px-5 py-4 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >
-              <span>Add</span> <strong>BioData</strong>
-            </button>
-
-            <button
-              onClick={() => {
-                handleAction("/matrimony/search-biodata");
-              }}
-              className="flex gap-2 w-full justify-center  font-Poppins rounded-md bg-indigo-600 px-5 py-4 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >
-              <span>Search</span> <strong>BioData</strong>
-            </button>
-
-            {localStorage.getItem("jwtToken") && (
-              <>
-                <button
-                  onClick={() => {
-                    navigate("/matrimony/biodata");
-                  }}
-                  className="flex gap-2 w-full justify-center font-Poppins rounded-md bg-indigo-600 px-5 py-4 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  <span>View</span> <strong>BioDatas</strong>
-                </button>
-              </>
-            )}
+              <button
+                className="group flex w-full items-center gap-2 justify-center max-w-[150px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 "
+                onClick={() => {
+                  handleAction(`/matrimony/biodata/${id}`);
+                }}
+              >
+                Login
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-
-      {action === "/matrimony/add-biodata" ? (
-        <ConsentAddBiodata />
-      ) : action === "/matrimony/search-biodata" ? (
-        <ConsentSearchBiodata />
       ) : null}
+      {biodata === null ? (
+        <div className="w-full fade-in flex flex-col justify-center items-center my-12">
+          <div className="w-full flex flex-col justify-center items-center gap-2">
+            <p className="w-full text-center font-Poppins text-3xl font-semibold text-[#EF4D48]">
+              BIODATA NOT FOUND
+            </p>
+            <p className="w-full text-center font-Poppins text-XL text-[#EF4D48]">
+              (404)
+            </p>
+          </div>
+        </div>
+      ) : (
+        <BiodataFrame info={biodata} />
+      )}{" "}
     </div>
   );
 };
 
-export default Home;
+export default ShowFullBiodata;

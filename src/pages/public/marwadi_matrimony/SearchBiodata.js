@@ -11,6 +11,10 @@ import FilterSection from "./FilterSection";
 import ImagePreview from "../press/ImagePreview";
 import { useNavigate } from "react-router-dom";
 import BiodataFrame from "./biodataFrame/BiodataFrame";
+import ReactPaginate from "react-paginate";
+import mifBride from "../../../../assests/images/mifBride.webp";
+import mifGroom from "../../../../assests/images/mifGroom.webp";
+import { usePagination } from "../../../hooks/usePagination";
 
 const heights = [
   "Less than 4 fts.",
@@ -27,7 +31,6 @@ function SearchBiodata() {
   const [ageRange, setAgeRange] = useState([{ min: 18, max: 100 }]);
   const [caste, setCaste] = useState("");
   const [subcaste, setSubcaste] = useState("");
-  // const [gotra, setGotra] = useState("");
   const [excludedGotras, setExcludedGotras] = useState([]);
   const [height, setHeight] = useState("");
   const gotras = caste && subcaste ? bioData[caste][subcaste] : [];
@@ -48,6 +51,42 @@ function SearchBiodata() {
 
   const [showBiodataFrame, setShowBiodataFrame] = useState(null);
 
+  // For Pagination
+
+  const {
+    currentPage,
+    handlePageChange,
+    currentItems,
+    totalPages,
+    setItemsPerPage,
+  } = usePagination(() => {
+    if (window.innerWidth < 640) {
+      return 4;
+    } else if (window.innerWidth < 1024) {
+      return 2;
+    } else return 3;
+  }, filteredBiodatas);
+
+  useEffect(() => {
+    const handleResize = (e) => {
+      if (window.innerWidth < 640) {
+        setItemsPerPage(4);
+      } else if (window.innerWidth < 1024) {
+        setItemsPerPage(2);
+      } else {
+        setItemsPerPage(3);
+      }
+    };
+
+    // Add event listener
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup function to remove the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   useEffect(() => {
     const token = localStorage.getItem("jwtToken");
     if (!token) navigate("/matrimony");
@@ -63,36 +102,6 @@ function SearchBiodata() {
 
   const prevStep = () => {
     setStep((prevStep) => prevStep - 1);
-  };
-
-  const customStyles = {
-    control: (provided, state) => ({
-      ...provided,
-      borderColor: "#ca403b", // Border color
-      ":focus": {
-        outline: "none", // Outline color on focus
-      },
-    }),
-    multiValueLabel: (provided, state) => ({
-      ...provided,
-      color: "white", // Text color
-      fontFamily: "Poppins", // Font family
-    }),
-    multiValueRemove: (provided, state) => ({
-      ...provided,
-      color: "white", // Color of the cross button
-      ":hover": {
-        backgroundColor: "#EF4D48",
-        borderRadius: "7px",
-      },
-    }),
-    multiValue: (provided, state) => ({
-      ...provided,
-      backgroundColor: "#EF4D48", // Background color of the whole container
-      paddingLeft: "4px", // Padding on the left (x-axis)
-      paddingRight: "4px",
-      borderRadius: "7px",
-    }),
   };
 
   const sliderStyle = {
@@ -118,10 +127,6 @@ function SearchBiodata() {
           onSubmit={async (values) => {
             const formData = new FormData();
 
-            console.log(values);
-
-            // return;
-
             for (const key in values) {
               if (key === "ageRange") {
                 formData.append(key, JSON.stringify(values[key]));
@@ -135,14 +140,13 @@ function SearchBiodata() {
               }
             }
 
-            for (let pair of formData.entries()) {
-              if (pair[0] === "ageRange") {
-                const ageRangeObject = JSON.parse(pair[1]);
-                console.log(ageRangeObject);
-              } else {
-                console.log(pair[0] + ", " + pair[1]);
-              }
-            }
+            // for (let pair of formData.entries()) {
+            //   if (pair[0] === "ageRange") {
+            //     const ageRangeObject = JSON.parse(pair[1]);
+            //   } else {
+            //     console.log(pair[0] + ", " + pair[1]);
+            //   }
+            // }
 
             try {
               const response = await fetch(
@@ -164,8 +168,6 @@ function SearchBiodata() {
 
               const data = await response.json();
               setSearchedBiodatas(data);
-              // console.log("hi");
-              // console.log(data);
             } catch (error) {
               setNoResponseError(true);
 
@@ -187,13 +189,13 @@ function SearchBiodata() {
                   {step === 1 && (
                     <div className="w-full max-w-full flex flex-col justify-between items-center gap-14">
                       <p className=" fade-in w-full text-center font-Poppins text-lg sm:text-xl font-semibold text-[#333]">
-                        CHOOSE GENDER
+                        Looking for...
                       </p>{" "}
                       <div className="w-full flex justify-between sm:justify-evenly gap-6">
                         <div className="w-1/2 sm:w-1/4 lg:w-1/5 ">
                           {/* Male Avatar */}
 
-                          <svg
+                          {/* <svg
                             xmlns="http://www.w3.org/2000/svg"
                             // width={532}
                             // height={532}
@@ -236,13 +238,30 @@ function SearchBiodata() {
                               d="M454.09009,77.91016C403.8501,27.6709,337.05005,0,266,0S128.15015,27.6709,77.90991,77.91016C27.67017,128.15039,0,194.9502,0,266c0,64.85059,23.05005,126.16016,65.29004,174.57031,4.03003,4.62988,8.23999,9.13965,12.61987,13.52051,1.03003,1.0293,2.07007,2.05957,3.12012,3.05957,5.84009,5.66016,11.89014,11.02051,18.14014,16.05957,.02979,.03027,.0498,.05078,.07983,.07031,47.11012,38.0498,105.3401,58.71973,166.75001,58.71973,71.05005,0,137.8501-27.66992,188.09009-77.90918,3.73999-3.74023,7.34985-7.57031,10.83008-11.48047,43.36987-48.71973,67.07983-110.83984,67.07983-176.61035,0-71.0498-27.66992-137.84961-77.90991-188.08984Zm10.17993,362.20996c-7.86987,8.9502-16.33008,17.37012-25.33008,25.18066-17.06982,14.84961-36.06982,27.5293-56.55981,37.62988-7.19019,3.5498-14.56006,6.7793-22.1001,9.66992-29.29004,11.24023-61.08008,17.39941-94.28003,17.39941-32.04004,0-62.76001-5.73926-91.18994-16.23926-11.67017-4.30078-22.94995-9.41016-33.78003-15.26074-1.59009-.85938-3.16992-1.72949-4.73999-2.61914-8.26001-4.68066-16.25-9.79004-23.91992-15.31055-10.98999-7.87988-21.3501-16.58984-30.98022-26.03027-5.3999-5.29004-10.55981-10.7998-15.48975-16.5293C26.09009,391.77051,2,331.65039,2,266,2,120.43066,120.42993,2,266,2s264,118.43066,264,264c0,66.66016-24.82983,127.62012-65.72998,174.12012Z"
                               fill="#3f3d56"
                             />
-                          </svg>
+                          </svg> */}
+                          <img
+                            src={mifGroom}
+                            alt="groom"
+                            className={`fade-in w-full hover:cursor-pointer bg-[#f7f3f5] box-border shadow-xl delay-150 duration-300 transition-transform border-2 border-orange-500 rounded-full p-2 ${
+                              formik.values.gender === "male"
+                                ? ""
+                                : "border-none hover:scale-110"
+                            } `}
+                            onClick={() => {
+                              formik.setFieldValue("gender", "male");
+                              setMinAge(21);
+                              setStep((s) => s + 1);
+                            }}
+                          />
+                          <p className="w-full text-center font-semibold font-Poppins text-sm text-[#EF4D48] mt-3">
+                            Groom
+                          </p>
                         </div>
 
                         <div className="w-1/2 sm:w-1/4 lg:w-1/5">
                           {/* Female Avatar */}
 
-                          <svg
+                          {/* <svg
                             xmlns="http://www.w3.org/2000/svg"
                             // width={532}
                             // height={532}
@@ -291,7 +310,25 @@ function SearchBiodata() {
                               d="M454.09003,77.90997C403.84998,27.66998,337.04999,0,266,0S128.15002,27.66998,77.90997,77.90997C27.66998,128.14996,0,194.95001,0,266c0,64.84998,23.04999,126.15997,65.28998,174.57001,4.03003,4.63,8.24005,9.13995,12.62,13.51996,6.79004,6.79004,13.89001,13.17999,21.26001,19.12,.03003,.03003,.04999,.05005,.08002,.07001,47.10999,38.04999,105.34002,58.72003,166.74999,58.72003,71.04999,0,137.84998-27.67004,188.09003-77.91003,50.23999-50.23999,77.90997-117.03998,77.90997-188.08997s-27.66998-137.85004-77.90997-188.09003Zm-15.15002,387.39001c-17.07001,14.84998-36.07001,27.52997-56.56,37.63-7.19,3.54999-14.56,6.77997-22.09998,9.66998-29.29004,11.23999-61.08002,17.40002-94.28003,17.40002-32.03998,0-62.76001-5.73999-91.19-16.23999-11.66998-4.30005-22.95001-9.41003-33.77997-15.26001-1.59003-.85999-3.17004-1.73004-4.74005-2.62-8.25995-4.67999-16.25-9.79004-23.91998-15.31-17.14001-12.30005-32.75-26.60004-46.46997-42.56C26.09003,391.76996,2,331.64996,2,266,2,120.42999,120.42999,2,266,2s264,118.42999,264,264c0,79.47998-35.29999,150.87-91.06,199.29999Z"
                               fill="#3f3d56"
                             />
-                          </svg>
+                          </svg> */}
+
+                          <img
+                            src={mifBride}
+                            alt="bride"
+                            className={`fade-in w-full hover:cursor-pointer bg-[#f7f3f5] box-border shadow-xl delay-150 duration-300 transition-transform border-2 border-orange-500 rounded-full p-2 ${
+                              formik.values.gender === "female"
+                                ? ""
+                                : "border-none hover:scale-110"
+                            } `}
+                            onClick={() => {
+                              formik.setFieldValue("gender", "female");
+                              setMinAge(18);
+                              setStep((s) => s + 1);
+                            }}
+                          />
+                          <p className="w-full text-center font-semibold font-Poppins text-sm text-[#EF4D48] mt-3">
+                            Bride
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -373,34 +410,6 @@ function SearchBiodata() {
                           Exclude Gotras:
                         </label>
 
-                        {/* <Select
-                          id="gotra"
-                          name="gotra"
-                          className="grow border w-full rounded-md   text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                          isMulti
-                          styles={customStyles}
-                          options={[
-                            { value: "none", label: "Exclude None" },
-                            ...gotras.map((g) => ({ value: g, label: g })),
-                          ]}
-                          onChange={(selectedOptions) => {
-                            const selectedGotras = selectedOptions.map(
-                              (option) => option.value
-                            );
-                            if (selectedGotras.includes("none")) {
-                              setExcludedGotras(["none"]);
-                              formik.setFieldValue("gotra", []);
-                            } else {
-                              setExcludedGotras(selectedGotras);
-                              formik.setFieldValue("gotra", selectedGotras);
-                            }
-                          }}
-                          value={excludedGotras.map((g) => ({
-                            value: g,
-                            label: g === "none" ? "Exclude None" : g,
-                          }))}
-                        /> */}
-
                         <FieldArray
                           name="gotra"
                           render={(arrayHelpers) => (
@@ -431,21 +440,10 @@ function SearchBiodata() {
                                           );
                                         })}
                                       </select>
-
-                                      {/* <input
-                                        name={`gotra.${index}`}
-                                        type="email"
-                                        onChange={formik.handleChange}
-                                        value={formik.values.gotra[index]}
-                                        placeholder="Gotra"
-                                        className="grow border fade-in w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                                      /> */}
-                                      {/* <Field name={`phoneNumbers.${index}`} /> */}
                                     </div>
                                   ))}
                               </div>
 
-                              {/* <div className="w-full justify-center sm:justify-start flex"> */}
                               <button
                                 onClick={() => arrayHelpers.push("")}
                                 type="button"
@@ -635,9 +633,6 @@ function SearchBiodata() {
           }}
         </Formik>
       ) : (
-        // filteredBiodatas?.length === 0 ? (
-        //   <div>Try Chan</div>
-        // ) :
         <div className="w-full max-w-6xl flex justify-center p-5 flex-col">
           <div className="  w-full flex flex-col justify-center items-center gap-4 mb-8">
             <h2 className="w-full text-4xl font-semibold font-PlayFair text-center ">
@@ -666,17 +661,70 @@ function SearchBiodata() {
                     </div>
                   </div>
                 ) : (
-                  <div className="w-full grid grid-col-1 sm:grid-cols-2 lg:grid-cols-3   gap-4">
-                    {filteredBiodatas.map((biodata) => {
-                      return (
-                        <BiodataCard
-                          key={biodata._id}
-                          data={biodata}
-                          setShowImage={setShowImage}
-                          setShowBiodataFrame={setShowBiodataFrame}
+                  <div className="w-full flex flex-col justify-center items-center">
+                    <div className="w-full grid grid-col-1 sm:grid-cols-2 lg:grid-cols-3   gap-4">
+                      {currentItems?.map((biodata) => {
+                        return (
+                          <BiodataCard
+                            key={biodata._id}
+                            data={biodata}
+                            setShowImage={setShowImage}
+                            setShowBiodataFrame={setShowBiodataFrame}
+                          />
+                        );
+                      })}
+                    </div>
+                    <div className="w-full flex items-center flex-col sm:flex-row justify-start gap-4 sm:justify-between mt-5">
+                      {totalPages > 1 && (
+                        <ReactPaginate
+                          forcePage={currentPage}
+                          pageCount={totalPages}
+                          pageRangeDisplayed={3}
+                          marginPagesDisplayed={1}
+                          onPageChange={handlePageChange}
+                          containerClassName={
+                            "flex justify-center items-center gap-6 font-Poppins text-sm text-[#333]  rounded-md p-3"
+                          }
+                          pageClassName={"font-bold"}
+                          activeClassName={
+                            "bg-[#EF4D48] text-white rounded-md py-2 px-4"
+                          }
+                          disabledClassName={
+                            "hover:cursor-not-allowed fill-gray-500 hidden"
+                          }
+                          previousLabel={
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              height="1.4rem"
+                              viewBox="0 0 320 512"
+                              fill="#EF4D48"
+                            >
+                              <path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" />
+                            </svg>
+                          }
+                          // className="flex hover:cursor-not-allowed w-full  justify-center font-Poppins text-sm text-[#333] gap-2 items-center "
+                          nextLabel={
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              height="1.4rem"
+                              fill="#EF4D48"
+                              viewBox="0 0 320 512"
+                            >
+                              <path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z" />
+                            </svg>
+                          }
                         />
-                      );
-                    })}
+                      )}
+                      {totalPages >= 1 ? (
+                        <p className="text-base w-full text-center sm:text-right tracking-wide font-Poppins text-[#333] font-semibold">
+                          Page : {currentPage + 1} of {totalPages}
+                        </p>
+                      ) : (
+                        <p className="text-base w-full text-center sm:text-right tracking-wide font-Poppins text-[#333] font-semibold">
+                          Page : {currentPage} of {totalPages}
+                        </p>
+                      )}
+                    </div>
                   </div>
                 )}
               </div>

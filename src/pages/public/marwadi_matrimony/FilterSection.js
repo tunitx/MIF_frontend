@@ -365,113 +365,115 @@ const FilterSection = ({
 
           {/* Profession */}
 
-          <div className="w-full flex flex-col gap-2">
-            <label
-              className="text-base font-semibold text-[#EF4D48] flex items-center justify-between w-full hover:cursor-pointer gap-1"
-              onClick={() => {
-                setShow("profession");
-              }}
-            >
-              Select Professions{" "}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="1rem"
-                className="fill-[#EF4D48]"
-                viewBox="0 0 448 512"
+          {education.has("Professional") && (
+            <div className="w-full fade-in flex flex-col gap-2">
+              <label
+                className="text-base font-semibold text-[#EF4D48] flex items-center justify-between w-full hover:cursor-pointer gap-1"
+                onClick={() => {
+                  setShow("profession");
+                }}
               >
-                {/*!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.*/}
-                <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z" />
-              </svg>
-            </label>
-            {show === "profession" ? (
-              <div className="w-full fade-in flex flex-col ">
-                <div className="flex gap-2 items-center ">
-                  <input
-                    type="checkbox"
-                    id="engineer"
-                    value="Engineer"
-                    checked={profession.has("Engineer")}
-                    onChange={() => handleProfessionChange("Engineer")}
-                    className="hover:cursor-pointer"
-                  />
-                  <label
-                    htmlFor="engineer"
-                    className="text-sm text-[#444] hover:cursor-pointer"
-                  >
-                    Engineer
-                  </label>
-                </div>
+                Select Professions{" "}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="1rem"
+                  className="fill-[#EF4D48]"
+                  viewBox="0 0 448 512"
+                >
+                  {/*!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.*/}
+                  <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z" />
+                </svg>
+              </label>
+              {show === "profession" ? (
+                <div className="w-full fade-in flex flex-col ">
+                  <div className="flex gap-2 items-center ">
+                    <input
+                      type="checkbox"
+                      id="engineer"
+                      value="Engineer"
+                      checked={profession.has("Engineer")}
+                      onChange={() => handleProfessionChange("Engineer")}
+                      className="hover:cursor-pointer"
+                    />
+                    <label
+                      htmlFor="engineer"
+                      className="text-sm text-[#444] hover:cursor-pointer"
+                    >
+                      Engineer
+                    </label>
+                  </div>
 
-                <div className="flex gap-2 items-center ">
-                  <input
-                    type="checkbox"
-                    id="doctor"
-                    value="Doctor"
-                    checked={profession.has("Doctor")}
-                    onChange={() => handleProfessionChange("Doctor")}
-                    className="hover:cursor-pointer"
-                  />
-                  <label
-                    htmlFor="doctor"
-                    className="text-sm text-[#444] hover:cursor-pointer"
-                  >
-                    Doctor
-                  </label>
-                </div>
+                  <div className="flex gap-2 items-center ">
+                    <input
+                      type="checkbox"
+                      id="doctor"
+                      value="Doctor"
+                      checked={profession.has("Doctor")}
+                      onChange={() => handleProfessionChange("Doctor")}
+                      className="hover:cursor-pointer"
+                    />
+                    <label
+                      htmlFor="doctor"
+                      className="text-sm text-[#444] hover:cursor-pointer"
+                    >
+                      Doctor
+                    </label>
+                  </div>
 
-                <div className="flex gap-2 items-center ">
-                  <input
-                    type="checkbox"
-                    id="ca"
-                    value="CA"
-                    checked={profession.has("CA")}
-                    onChange={() => handleProfessionChange("CA")}
-                    className="hover:cursor-pointer"
-                  />
-                  <label
-                    htmlFor="ca"
-                    className="text-sm text-[#444] hover:cursor-pointer"
-                  >
-                    CA
-                  </label>
-                </div>
+                  <div className="flex gap-2 items-center ">
+                    <input
+                      type="checkbox"
+                      id="ca"
+                      value="CA"
+                      checked={profession.has("CA")}
+                      onChange={() => handleProfessionChange("CA")}
+                      className="hover:cursor-pointer"
+                    />
+                    <label
+                      htmlFor="ca"
+                      className="text-sm text-[#444] hover:cursor-pointer"
+                    >
+                      CA
+                    </label>
+                  </div>
 
-                <div className="flex gap-2 items-center ">
-                  <input
-                    type="checkbox"
-                    id="advocate"
-                    value="Advocate"
-                    checked={profession.has("Advocate")}
-                    onChange={() => handleProfessionChange("Advocate")}
-                    className="hover:cursor-pointer"
-                  />
-                  <label
-                    htmlFor="advocate"
-                    className="text-sm text-[#444] hover:cursor-pointer"
-                  >
-                    Advocate
-                  </label>
-                </div>
+                  <div className="flex gap-2 items-center ">
+                    <input
+                      type="checkbox"
+                      id="advocate"
+                      value="Advocate"
+                      checked={profession.has("Advocate")}
+                      onChange={() => handleProfessionChange("Advocate")}
+                      className="hover:cursor-pointer"
+                    />
+                    <label
+                      htmlFor="advocate"
+                      className="text-sm text-[#444] hover:cursor-pointer"
+                    >
+                      Advocate
+                    </label>
+                  </div>
 
-                <div className="flex gap-2 items-center ">
-                  <input
-                    type="checkbox"
-                    id="otherProfession"
-                    value="Other"
-                    checked={profession.has("Other")}
-                    onChange={() => handleProfessionChange("Other")}
-                    className="hover:cursor-pointer"
-                  />
-                  <label
-                    htmlFor="otherProfession"
-                    className="text-sm text-[#444] hover:cursor-pointer"
-                  >
-                    Other
-                  </label>
+                  <div className="flex gap-2 items-center ">
+                    <input
+                      type="checkbox"
+                      id="otherProfession"
+                      value="Other"
+                      checked={profession.has("Other")}
+                      onChange={() => handleProfessionChange("Other")}
+                      className="hover:cursor-pointer"
+                    />
+                    <label
+                      htmlFor="otherProfession"
+                      className="text-sm text-[#444] hover:cursor-pointer"
+                    >
+                      Other
+                    </label>
+                  </div>
                 </div>
-              </div>
-            ) : null}
-          </div>
+              ) : null}
+            </div>
+          )}
 
           {/* Occupation */}
 
@@ -499,9 +501,9 @@ const FilterSection = ({
                   <input
                     type="checkbox"
                     id="service"
-                    value="Service"
-                    checked={occupation.has("Service")}
-                    onChange={() => handleOccupationChange("Service")}
+                    value="Service/Job"
+                    checked={occupation.has("Service/Job")}
+                    onChange={() => handleOccupationChange("Service/Job")}
                     className="hover:cursor-pointer"
                   />
                   <label
@@ -543,6 +545,42 @@ const FilterSection = ({
                     className="text-sm text-[#444] hover:cursor-pointer"
                   >
                     Self Employed
+                  </label>
+                </div>
+
+                <div className="flex gap-2 items-center ">
+                  <input
+                    type="checkbox"
+                    id="defence"
+                    value="Defence"
+                    checked={occupation.has("Defence")}
+                    onChange={() => handleOccupationChange("Defence")}
+                    className="hover:cursor-pointer"
+                  />
+                  <label
+                    htmlFor="defence"
+                    className="text-sm text-[#444] hover:cursor-pointer"
+                  >
+                    Defence
+                  </label>
+                </div>
+
+                <div className="flex gap-2 items-center ">
+                  <input
+                    type="checkbox"
+                    id="NotWorking_Studying"
+                    value="Not Working/Studying"
+                    checked={occupation.has("Not Working/Studying")}
+                    onChange={() =>
+                      handleOccupationChange("Not Working/Studying")
+                    }
+                    className="hover:cursor-pointer"
+                  />
+                  <label
+                    htmlFor="NotWorking_Studying"
+                    className="text-sm text-[#444] hover:cursor-pointer"
+                  >
+                    Not Working/Studying
                   </label>
                 </div>
               </div>

@@ -11,23 +11,9 @@ import {
   GET_ALL_MEMBER,
   GET_AVAILABLE_MEMBERTYPES_LIST,
 } from "../../../utils/constants";
+import { usePagination } from "../../../hooks/usePagination";
 
 const Body = () => {
-  // const { membersList, setMembersList } = useContext(MembersContext);
-
-  const mapper = {
-    advisoryMember: "Advisory Member",
-    trusteeMember: "Trustee Member",
-    activeMember: "Active Life Member",
-    patronMember: "Patron Member",
-    lifeMember: "Life Member",
-    associatesMember: "Associates Member",
-  };
-
-  // const [trusteeMembers, setTrustee] = useState([]);
-  // const [advisoryMembers, setAdvisory] = useState([]);
-  // const [activeLifeMembers, setActive] = useState([]);
-
   const [showList, setShowList] = useState([]);
   const [filteredList, setFilteredList] = useState(showList);
 
@@ -35,7 +21,7 @@ const Body = () => {
   // console.log(membersList);
 
   const [memberTypeList, setMemberTypeList] = useState([]);
-  console.log(memberTypeList);
+  // console.log(memberTypeList);
 
   const [searchFor, setSearchFor] = useState("");
 
@@ -52,8 +38,16 @@ const Body = () => {
     setFilteredList(updatedList);
   }
 
+  // For Pagination
+
+  const { currentPage, handlePageChange, currentItems, totalPages } =
+    usePagination(() => {
+      return 5;
+    }, filteredList);
+
   useEffect(() => {
     setFilteredList(showList);
+    handlePageChange({ selected: 0 });
   }, [showList]);
 
   useEffect(() => {
@@ -175,6 +169,10 @@ const Body = () => {
               sortProfession: sortProfession,
               setSortProfession: setSortProfession,
             }}
+            currentItems={currentItems}
+            currentPage={currentPage}
+            handlePageChange={handlePageChange}
+            totalPages={totalPages}
           />
         </div>
       </div>

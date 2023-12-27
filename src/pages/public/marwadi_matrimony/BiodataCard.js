@@ -29,6 +29,7 @@ const BiodataCard = ({ data, setShowImage, setShowBiodataFrame }) => {
     currentAddressCity,
     currentAddressState,
     currentAddressCountry,
+    _id,
   } = data;
 
   let ageInYear;
@@ -67,9 +68,10 @@ const BiodataCard = ({ data, setShowImage, setShowBiodataFrame }) => {
     <div className="w-full fade-in shadow-md flex flex-col gap-4 min-h-full ">
       <div className="w-full min-h-full p-3 border border-indigo-900 rounded-md flex flex-col gap-5 justify-start items-center">
         <div
-          className="h-52 w-52  overflow-hidden rounded-md flex justify-center shadow-lg hover:shadow-2xl z-20 items-start hover:cursor-pointer"
+          className="h-52 w-52  overflow-hidden rounded-md flex justify-center shadow-lg hover:shadow-2xl z-20 items-start hover:cursor-zoom-in"
           onClick={() => {
-            setShowImage(() => ({ imageURL: image1 }));
+            if (typeof setShowImage === "function")
+              setShowImage(() => ({ imageURL: image1 }));
           }}
         >
           {/* <div className="my-auto"> */}
@@ -86,7 +88,8 @@ const BiodataCard = ({ data, setShowImage, setShowBiodataFrame }) => {
           <p
             className="font-Poppins text-2xl font-semibold text-[#EF4D48] hover:cursor-pointer"
             onClick={() => {
-              setShowBiodataFrame(data);
+              if (typeof setShowBiodataFrame === "function")
+                setShowBiodataFrame(data);
             }}
           >
             {`${firstName} ${capitalize(surname)}`}
@@ -208,6 +211,15 @@ const BiodataCard = ({ data, setShowImage, setShowBiodataFrame }) => {
               {preference !== "" ? preference : "-"}
             </p>
           </div>
+          <a
+            target="_blank"
+            href={`/matrimony/biodata/${_id}`}
+            className="w-full flex justify-center items-center mt-auto"
+          >
+            <button className="flex w-full justify-center max-w-[180px] rounded-md bg-[#EF4D48] px-3 sm:py-3 py-2  text-sm sm:text-base font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ">
+              View More
+            </button>
+          </a>
         </div>
       </div>
     </div>

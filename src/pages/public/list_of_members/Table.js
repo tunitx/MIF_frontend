@@ -2,8 +2,18 @@ import React, { useState } from "react";
 import { sortAscending, sortDescending } from "../../../utils/sort";
 import ProfileCard from "./ProfileCard";
 import { capitalizeSentence } from "../../../utils/helper";
+import ReactPaginate from "react-paginate";
 
-const Table = ({ data, setFilteredList, nameSorting, professionSorting }) => {
+const Table = ({
+  data,
+  setFilteredList,
+  nameSorting,
+  professionSorting,
+  totalPages,
+  handlePageChange,
+  currentItems,
+  currentPage,
+}) => {
   const { sortName, setSortName } = nameSorting;
   const { sortProfession, setSortProfession } = professionSorting;
 
@@ -130,7 +140,7 @@ const Table = ({ data, setFilteredList, nameSorting, professionSorting }) => {
             </tr>
           </thead>
           <tbody>
-            {data?.map((item, index) => (
+            {currentItems?.map((item, index) => (
               <tr key={index} className="border-b border-[#EF4D48] w-full">
                 <td className="p-2 border-r border-[#EF4D48]  text-center w-1/3  text-[#333] whitespace-nowrap font-bold font-Poppins">
                   {item.name.toUpperCase()}
@@ -155,6 +165,58 @@ const Table = ({ data, setFilteredList, nameSorting, professionSorting }) => {
             ))}
           </tbody>
         </table>
+
+        {/* Pagination */}
+
+        <div className="w-full flex items-center flex-col sm:flex-row justify-start gap-4 sm:justify-between mt-5">
+          {totalPages > 1 && (
+            <ReactPaginate
+              forcePage={currentPage}
+              pageCount={totalPages}
+              pageRangeDisplayed={3}
+              marginPagesDisplayed={1}
+              onPageChange={handlePageChange}
+              containerClassName={
+                "flex justify-center items-center gap-6 font-Poppins text-sm text-[#333]  rounded-md p-3"
+              }
+              pageClassName={"font-bold"}
+              activeClassName={"bg-[#EF4D48] text-white rounded-md py-2 px-4"}
+              disabledClassName={
+                "hover:cursor-not-allowed fill-gray-500 hidden"
+              }
+              previousLabel={
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="1.4rem"
+                  viewBox="0 0 320 512"
+                  fill="#EF4D48"
+                >
+                  <path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" />
+                </svg>
+              }
+              // className="flex hover:cursor-not-allowed w-full  justify-center font-Poppins text-sm text-[#333] gap-2 items-center "
+              nextLabel={
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="1.4rem"
+                  fill="#EF4D48"
+                  viewBox="0 0 320 512"
+                >
+                  <path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z" />
+                </svg>
+              }
+            />
+          )}
+          {totalPages >= 1 ? (
+            <p className="text-base w-full text-center sm:text-right tracking-wide font-Poppins text-[#333] font-semibold">
+              Page : {currentPage + 1} of {totalPages}
+            </p>
+          ) : (
+            <p className="text-base w-full text-center sm:text-right tracking-wide font-Poppins text-[#333] font-semibold">
+              Page : {currentPage} of {totalPages}
+            </p>
+          )}
+        </div>
       </div>
       {showCard && (
         <ProfileCard

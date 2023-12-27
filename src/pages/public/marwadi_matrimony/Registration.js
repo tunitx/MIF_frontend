@@ -799,21 +799,11 @@ function Registration() {
                       <div className="w-1/2 sm:w-1/4 lg:w-1/5 ">
                         {/* Male Avatar */}
 
-<<<<<<< HEAD
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          // width={532}
-                          // height={532}
-                          viewBox="0 0 532 532"
-                          xmlnsXlink="http://www.w3.org/1999/xlink"
-                          className={`fade-in w-full hover:cursor-pointer bg-[#f7f3f5] box-border shadow-xl delay-150 duration-300 transition-transform border-2 border-orange-500 rounded-full p-2 ${formik.values.gender === "male"
-=======
                         <img
                           src={mifGroom}
                           alt="groom"
                           className={`fade-in w-full hover:cursor-pointer bg-[#f7f3f5] box-border shadow-xl delay-150 duration-300 transition-transform border-2 border-orange-500 rounded-full p-2 ${
                             formik.values.gender === "male"
->>>>>>> 044a7694dd19842082b3594ad5bb551d9ef35a9c
                               ? ""
                               : "border-none hover:scale-110"
                             } `}
@@ -838,18 +828,6 @@ function Registration() {
                       <div className="w-1/2 sm:w-1/4 lg:w-1/5">
                         {/* Female Avatar */}
 
-<<<<<<< HEAD
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          // width={532}
-                          // height={532}
-                          viewBox="0 0 532 532"
-                          xmlnsXlink="http://www.w3.org/1999/xlink"
-                          className={`fade-in w-full hover:cursor-pointer bg-[#f7f3f5] box-border delay-150 shadow-xl duration-300 transition-transform border-2 border-orange-500 rounded-full p-2 ${formik.values.gender === "female"
-                              ? ""
-                              : "border-none hover:scale-110"
-                            }`}
-=======
                         <img
                           src={mifBride}
                           alt="bride"
@@ -858,7 +836,6 @@ function Registration() {
                               ? ""
                               : "border-none hover:scale-110"
                           } `}
->>>>>>> 044a7694dd19842082b3594ad5bb551d9ef35a9c
                           onClick={() => {
                             formik.setFieldValue("gender", "female");
                             setStep((s) => s + 1);

@@ -1,6 +1,4 @@
 import React from "react";
-import group_8 from "../../../../../assests/images/group-8@2x.png";
-import phoneSvg from "../../../../../assests/images/vector@2x.png";
 
 const ReachOutDetails = ({ info }) => {
   let { file, emails, phoneNumbers } = info;

@@ -8,6 +8,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import ListOfMembers from "./src/pages/public/list_of_members/ListOfMembers";
+import AddNewCaste from "./src/pages/admin/Matrimony/AddNewCaste";
 
 // const ListOfMembers = lazy(() => {
 //   return import("./src/pages/public/list_of_members/ListOfMembers");
@@ -358,6 +359,10 @@ const appRoutes = createBrowserRouter([
           {
             path: "matrimony-users",
             element: <MarriageUsers />,
+          },
+          {
+            path: "add-caste",
+            element: <AddNewCaste />,
           },
           {
             path: "all-press",

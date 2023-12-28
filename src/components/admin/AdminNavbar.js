@@ -51,6 +51,10 @@ const navigation = [
     name: "Matrimony",
     href: "/admin/matrimony-users",
   },
+  {
+    name: "Modify Castes",
+    href: "/admin/add-caste",
+  },
 ];
 
 export default function AdminNavbar() {

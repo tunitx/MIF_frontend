@@ -1,7 +1,7 @@
 import React from "react";
 import "./MultiStepProgressBar.css";
 import { ProgressBar, Step } from "react-step-progress-bar";
-import mifMatrimonyFormTimeLine from "../../../../../assests/images/mifMatrimonyFormTimeLine.png";
+import mifMatrimonyFormTimeLine from "../../../../../assests/images/mifMatrimonyFormTimeLine.webp";
 
 // import styled from "@emotion/styled/types/base";
 

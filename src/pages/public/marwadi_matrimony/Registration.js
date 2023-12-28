@@ -9,7 +9,8 @@ import {
 } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import bioData from "../../../utils/biodata";
+import { BASE_URL } from "../../../utils/constants";
+// import bioData from "../../../utils/biodata";
 import indiaStates from "../../../utils/indiaStates";
 import Swal from "sweetalert2";
 import { POST_BIODATA } from "../../../utils/constants";
@@ -18,8 +19,8 @@ import Popup from "./Popup";
 import MultiStepProgressBar from "./progressBar/MultiStepProgressBar";
 import MatrimonyLoader from "../../../components/MatrimonyLoader";
 
-import mifBride from "../../../../assests/images/mifBride.png";
-import mifGroom from "../../../../assests/images/mifGroom.png";
+import mifBride from "../../../../assests/images/mifBride.webp";
+import mifGroom from "../../../../assests/images/mifGroom.webp";
 
 const config = {
   headers: {
@@ -51,25 +52,6 @@ async function getNewToken() {
 getNewToken();
 let res = {};
 function Registration() {
-  // const matrimonyUserStore = useSelector((store) => store.MatrimonyUserSlice);
-
-  // const dispatch = useDispatch();
-
-  // // const navigate = useNavigate();
-
-  // const [checked, setChecked] = useState(false);
-
-  // console.log(matrimonyUserStore);
-
-  // useEffect(() => {
-  //   const temp = JSON.parse(localStorage.getItem("matrimonyUser"));
-
-  //   if (temp && temp?.matrimonyUser && temp?.matrimonyUserToken) {
-  //     dispatch(matrimonySignIn(temp));
-  //   }
-  //   setChecked(true);
-  // });
-
   const navigate = useNavigate();
 
   const formikRef = useRef();
@@ -85,6 +67,7 @@ function Registration() {
   const [caste, setCaste] = useState("");
   const [subcaste, setSubcaste] = useState("");
   const [gotra, setGotra] = useState("");
+  const [bioData, setBioData] = useState({});
 
   const [intermediateMarriageStatus, setIntermediateMarriageStatus] =
     useState(null);
@@ -163,14 +146,29 @@ function Registration() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [step]);
+  
+  useEffect(() => {
+    const jwtToken = localStorage.getItem('jwtToken');
+    const token = jwtToken;
+
+    const headers = {
+      'Content-Type': 'application/json'
+    };
+    if (token) {
+      headers['authorization'] = `Bearer ${token}`;
+    }
+
+    fetch(`${BASE_URL}getBiodata`, { headers })
+      .then(response => response.json())
+      .then(data => setBioData(data))
+      .catch(error => console.log(error));
+  }, []);
+
+
 
   const castes = Object.keys(bioData);
-  const subcastes =
-    bioData && caste && bioData[caste] ? Object.keys(bioData[caste]) : [];
-  const gotras =
-    bioData && caste && subcaste && bioData[caste] && bioData[caste][subcaste]
-      ? bioData[caste][subcaste]
-      : [];
+  const subcastes = bioData && caste && bioData[caste] ? Object.keys(bioData[caste]) : [];
+  const gotras = bioData && caste && subcaste && bioData[caste] && bioData[caste][subcaste] ? bioData[caste][subcaste] : [];
 
   useEffect(() => {
     if (location === "abroad") {
@@ -788,14 +786,13 @@ function Registration() {
               <MultiStepProgressBar page={step} />
               <form
                 onSubmit={formik.handleSubmit}
-                className={`w-full flex flex-col justify-center mt-10 items-center gap-16 max-w-4xl ${
-                  formik.isSubmitting ? "opacity-50" : ""
-                }`}
+                className={`w-full flex flex-col justify-center mt-10 items-center gap-16 max-w-4xl ${formik.isSubmitting ? "opacity-50" : ""
+                  }`}
               >
                 {step === 1 && (
                   <div className="w-full max-w-full flex flex-col justify-between items-center gap-14">
                     <p className=" fade-in w-full text-center font-Poppins text-lg sm:text-xl font-semibold text-[#333]">
-                      You want to be a:
+                      Select :
                     </p>
 
                     <div className="w-full flex justify-between sm:justify-evenly gap-6">
@@ -809,7 +806,7 @@ function Registration() {
                             formik.values.gender === "male"
                               ? ""
                               : "border-none hover:scale-110"
-                          } `}
+                            } `}
                           onClick={() => {
                             formik.setFieldValue("gender", "male");
                             setStep((s) => s + 1);
@@ -2695,7 +2692,7 @@ function Registration() {
                                           />
                                         </div>
                                         {index === 0 &&
-                                        validateFirstPhoneNumber ? (
+                                          validateFirstPhoneNumber ? (
                                           <p className="mt-1 fade-in text-sm fade-in font-mono leading-6 text-[#EF4D48]">
                                             {validateFirstPhoneNumber}
                                           </p>
@@ -3584,11 +3581,10 @@ function Registration() {
                   )}
                   {step < 8 && step > 1 && (
                     <div
-                      className={`w-full  flex ${
-                        step === 1
+                      className={`w-full  flex ${step === 1
                           ? "justify-center"
                           : "sm:justify-end justify-center"
-                      }`}
+                        }`}
                     >
                       <button
                         onClick={() => {

@@ -36,10 +36,21 @@ const Home = () => {
               '<input type="text" id="swal-input1" class="swal2-input" placeholder="Name">' +
               '<input type="text" id="swal-input2" class="swal2-input" placeholder="Phone Number">' +
               '<input type="text" id="swal-input3" class="swal2-input" placeholder="Email (Optional)">' +
-              '<input type="password" id="swal-input4" class="swal2-input" placeholder="Password">',
+              '<input type="password" id="swal-input4" class="swal2-input" placeholder="Password">'+
+              '<div><input type="checkbox" id="swal-input5"> Show Password</div>',
             focusConfirm: false,
             showDenyButton: true,
             denyButtonText: "Back",
+            didOpen: () => {
+              document.getElementById('swal-input5').addEventListener('change', function () {
+                const passwordInput = document.getElementById('swal-input4');
+                if (this.checked) {
+                  passwordInput.type = 'text';
+                } else {
+                  passwordInput.type = 'password';
+                }
+              });
+            },
             preConfirm: () => {
               const name = Swal.getPopup().querySelector("#swal-input1").value;
               const phoneNumber =
@@ -100,10 +111,21 @@ const Home = () => {
             title: "Sign In",
             html:
               '<input type="text" id="swal-input1" class="swal2-input" placeholder="Phone Number">' +
-              '<input type="password" id="swal-input2" class="swal2-input" placeholder="Password">',
+              '<input type="password" id="swal-input2" class="swal2-input" placeholder="Password">'+
+              '<div><input type="checkbox" id="swal-input3"> Show Password</div>',
             focusConfirm: false,
             showDenyButton: true,
             denyButtonText: "Back",
+            didOpen: () => {
+              document.getElementById('swal-input3').addEventListener('change', function () {
+                const passwordInput = document.getElementById('swal-input2');
+                if (this.checked) {
+                  passwordInput.type = 'text';
+                } else {
+                  passwordInput.type = 'password';
+                }
+              });
+            },
             preConfirm: () => {
               const phoneNumber =
                 Swal.getPopup().querySelector("#swal-input1").value;

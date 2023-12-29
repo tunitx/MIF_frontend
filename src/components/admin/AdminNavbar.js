@@ -59,6 +59,10 @@ const navigation = [
     name: "Office Bearer Samaj",
     href: "office_bearer_samaj",
   },
+  {
+    name: "Modify Castes",
+    href: "/admin/add-caste",
+  },
 ];
 
 export default function AdminNavbar() {

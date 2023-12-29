@@ -9,7 +9,9 @@ const api = axios.create({
 
 const Presses = () => {
   const [members, setMembers] = useState([]);
- 
+  const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(4);
+
 
   useEffect(() => {
     api
@@ -34,12 +36,42 @@ const Presses = () => {
   };
 
   return (
-    <div className="w-fit flex flex-row gap-5 flex-wrap max-w-[100%]">
-      {members.map((member, index) => (
+    <div className="w-fit flex flex-row gap-5 flex-wrap max-w-[100%] items-center" >
+      {members
+       .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+      .map((member, index) => (
         <div key={index}>
           <Press member={member} onDelete={handleDelete} />
         </div>
       ))}
+   <div className="flex justify-center space-x-4 mt-4 ml-12">
+                <button
+                    className={`px-4 py-2 rounded bg-blue-500 text-white ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    onClick={() => setCurrentPage((old) => Math.max(old - 1, 1))}
+                    disabled={currentPage === 1}
+                >
+                    Previous
+                </button>
+                {Array.from({ length: Math.ceil(members.length / itemsPerPage) }, (_, index) => (
+                    <button
+                        key={index}
+                        className={`px-4 py-2 rounded ${currentPage === index + 1 ? 'bg-red-500' : 'bg-blue-500'} text-white`}
+                        onClick={() => setCurrentPage(index + 1)}
+                    >
+                        {index + 1}
+                    </button>
+                ))}
+                <button
+                    className={`px-4 py-2 rounded bg-blue-500 text-white ${currentPage === Math.ceil(members.length / itemsPerPage) ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    onClick={() =>
+                        setCurrentPage((old) => Math.min(old + 1, Math.ceil(members.length / itemsPerPage)))
+                    }
+                    disabled={currentPage === Math.ceil(members.length / itemsPerPage)}
+                >
+                    Next
+                </button>
+            </div>
+      
     </div>
   );
 };

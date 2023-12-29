@@ -17,6 +17,21 @@ const FormAddAdvertisment = () => {
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
 
+  const categoryList = [
+    {
+      name: "Platinum",
+      id: "platinum",
+    },
+    {
+      name: "Gold",
+      id: "gold",
+    },
+    {
+      name: "Silver",
+      id: "silver",
+    },
+  ];
+
   return (
     <Formik
       initialValues={{
@@ -33,6 +48,7 @@ const FormAddAdvertisment = () => {
         youtube: "",
         website: "",
         slugs: [],
+        category: "",
       }}
       onSubmit={async (values, { setSubmitting, resetForm }) => {
         const reqBody = new FormData();
@@ -48,6 +64,7 @@ const FormAddAdvertisment = () => {
         reqBody.append("whatsapp", values.whatsapp);
         reqBody.append("youtube", values.youtube);
         reqBody.append("website", values.website);
+        reqBody.append("category", values.category);
         reqBody.append("slugs", JSON.stringify(values.slugs));
 
         setError(null);
@@ -152,6 +169,38 @@ const FormAddAdvertisment = () => {
                     </div>
                   </div>
 
+                  {/* Advertisment Category */}
+
+                  <div className="sm:col-span-6">
+                    <label
+                      htmlFor="category"
+                      className="block text-sm font-medium leading-6 text-gray-900"
+                    >
+                      Category
+                    </label>
+                    <div className="mt-2">
+                      <select
+                        id="category"
+                        name="category"
+                        required
+                        {...formik.getFieldProps("category")}
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600  sm:text-sm sm:leading-6"
+                      >
+                        <option disabled value={""}>
+                          Select Category
+                        </option>
+                        {categoryList &&
+                          categoryList.map((type, index) => {
+                            return (
+                              <option key={index} value={type.id}>
+                                {type.name}
+                              </option>
+                            );
+                          })}
+                      </select>
+                    </div>
+                  </div>
+
                   {/* Slugs */}
 
                   <div className="flex flex-col gap-2">
@@ -199,10 +248,18 @@ const FormAddAdvertisment = () => {
                       <option value="/study-abroad">/study-abroad</option>
                       <option value="/free-website">/free-website</option>
                       <option value="/faqs">/faqs</option>
-                      <option value="/membership-and-fees">/membership-and-fees</option>
-                      <option value="/matrimony/add-biodata">/matrimony/add-biodata</option>
-                      <option value="/matrimony/biodata">/matrimony/biodata</option>
-                      <option value="/matrimony/search-biodata">/matrimony/search-biodata</option>
+                      <option value="/membership-and-fees">
+                        /membership-and-fees
+                      </option>
+                      <option value="/matrimony/add-biodata">
+                        /matrimony/add-biodata
+                      </option>
+                      <option value="/matrimony/biodata">
+                        /matrimony/biodata
+                      </option>
+                      <option value="/matrimony/search-biodata">
+                        /matrimony/search-biodata
+                      </option>
                       <option value="all">All</option>
                     </select>
                   </div>
@@ -227,7 +284,7 @@ const FormAddAdvertisment = () => {
                       />
                     </div>
                     <p className="mt-3 text-sm leading-6 text-gray-600">
-                      Enter your full address here.
+                      Write about your business here.
                     </p>
                   </div>
 

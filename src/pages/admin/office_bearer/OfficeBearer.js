@@ -92,6 +92,8 @@ const OfficeBearer = () => {
   return (
     <div className="w-full flex justify-center items-center mb-12">
       <div className="w-full flex flex-col px-4 max-w-7xl gap-5 justify-center items-center">
+        {/* ADD BEARER */}
+
         <Formik
           initialValues={{
             pfp: "",
@@ -393,6 +395,9 @@ const OfficeBearer = () => {
             );
           }}
         </Formik>
+
+        {/* LIST OF OFFICE BEARER */}
+
         <div className="w-full flex justify-center items-center flex-col gap-10">
           <h2 className="text-[#EF4D48] text-xl font-Poppins  font-bold w-full text-start md:text-2xl lg:text-3xl ">
             <p className="border rounded-md border-[#333] p-3 w-fit">
@@ -473,6 +478,8 @@ const OfficeBearer = () => {
           )}
         </div>
       </div>
+
+      {/* UPDATE BEARER */}
 
       {showUpdateForm && (
         <div className=" z-50 fixed flex-col justify-center gap-5 sm:gap-8 mb-4 items-center w-screen h-screen top-0 left-0 bg-[#323233] bg-opacity-90 overflow-x-auto overflow-y-auto ">

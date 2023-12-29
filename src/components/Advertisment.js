@@ -31,6 +31,7 @@ const Advertisment = () => {
   const slugs = [];
 
   const [showAdver, setShowAdver] = useState([]);
+  console.log(showAdver);
 
   useEffect(() => {
     async function getAdvertisments() {

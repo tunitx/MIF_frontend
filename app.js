@@ -332,7 +332,7 @@ const appRoutes = createBrowserRouter([
                 element: <ShowFullBiodata />,
               },
               {
-                path: "office-bearer",
+                path: "office-bearers",
                 element: <OfficeBearer />,
               },
             ],

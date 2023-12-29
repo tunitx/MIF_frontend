@@ -65,7 +65,7 @@ const Body = () => {
     }, filteredList);
 
   return (
-    <div className="w-full py-12 flex justify-center items-center">
+    <div className="w-full py-12 px-3 flex justify-center items-center">
       <div className="w-full max-w-6xl flex flex-col gap-8 items-center">
         <div className="flex w-full justify-center max-w-5xl">
           <div className="bg-[#EF4D4847] flex items-center justify-center rounded-tl-full rounded-bl-full p-3 px-6">

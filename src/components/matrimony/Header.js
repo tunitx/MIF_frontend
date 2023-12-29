@@ -1,10 +1,13 @@
 import React, { useEffect, useState, useContext } from "react";
 import UserContext from "../../utils/context/UserContext";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 
 const Header = () => {
   const navigate = useNavigate();
+
+  const loaction = useLocation();
+
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
@@ -25,12 +28,12 @@ const Header = () => {
   }, []);
   console.log(userName);
   return (
-    <div className="w-full flex justify-center p-5 mt-10">
-      <div className="w-full max-w-6xl flex justify-center items-center flex-col gap-4">
-        <div className="absolute top-4 right-10">
+    <div className="w-full flex flex-col items-center gap-5 justify-center p-5 ">
+      <div className="w-full flex-row-reverse flex justify-between items-center ">
+        <div className="">
           {localStorage.getItem("jwtToken") && (
             <button
-              className="flex w-full justify-center max-w-[200px] rounded-md bg-[#EF4D48] px-3 sm:py-3 py-2  text-sm sm:text-base font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 "
+              className="flex w-full justify-center  max-w-[200px] rounded-md bg-[#EF4D48] px-3  py-2  text-sm sm:text-base font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 "
               onClick={() => {
                 Swal.fire("Logged out", "Please sign in/sign up", "info");
                 localStorage.removeItem("jwtToken");
@@ -43,6 +46,17 @@ const Header = () => {
             </button>
           )}
         </div>
+        {location.pathname === "/matrimony" && (
+          <div className="">
+            <Link to={"/matrimony/office-bearers"}>
+              <button className="flex gap-2  justify-center font-Poppins rounded-md  bg-[#EF4D48] px-3  py-2  text-sm font-semibold leading-6 text-white shadow-sm ">
+                Office Bearers
+              </button>
+            </Link>
+          </div>
+        )}
+      </div>
+      <div className="w-full max-w-6xl flex justify-center items-center flex-col gap-4">
         <p className="w-fit font-PlayFair border-2 px-3 py-2 text-xl font-bold border-orange-400 md:text-2xl xl:text-4xl">
           {" "}
           MIF Marwadi Matrimony
@@ -52,7 +66,7 @@ const Header = () => {
             Welcome, {capitalizeFirstLetter(userName)}
           </h1>
         )}
-        <div></div>
+
         <div className="flex relative">
           <div className="flex items-center gap-[2px]">
             <div className="h-1 rounded-l-lg bg-[#000] w-16"></div>

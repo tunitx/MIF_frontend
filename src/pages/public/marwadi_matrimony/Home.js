@@ -7,7 +7,6 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import { BASE_URL } from "../../../utils/constants";
 import UserContext from "../../../utils/context/UserContext";
-import mifHead from "../../../../assests/images/mifHead.webp";
 
 const Home = () => {
   // const history = useHistory();
@@ -36,20 +35,22 @@ const Home = () => {
               '<input type="text" id="swal-input1" class="swal2-input" placeholder="Name">' +
               '<input type="text" id="swal-input2" class="swal2-input" placeholder="Phone Number">' +
               '<input type="text" id="swal-input3" class="swal2-input" placeholder="Email (Optional)">' +
-              '<input type="password" id="swal-input4" class="swal2-input" placeholder="Password">'+
+              '<input type="password" id="swal-input4" class="swal2-input" placeholder="Password">' +
               '<div><input type="checkbox" id="swal-input5"> Show Password</div>',
             focusConfirm: false,
             showDenyButton: true,
             denyButtonText: "Back",
             didOpen: () => {
-              document.getElementById('swal-input5').addEventListener('change', function () {
-                const passwordInput = document.getElementById('swal-input4');
-                if (this.checked) {
-                  passwordInput.type = 'text';
-                } else {
-                  passwordInput.type = 'password';
-                }
-              });
+              document
+                .getElementById("swal-input5")
+                .addEventListener("change", function () {
+                  const passwordInput = document.getElementById("swal-input4");
+                  if (this.checked) {
+                    passwordInput.type = "text";
+                  } else {
+                    passwordInput.type = "password";
+                  }
+                });
             },
             preConfirm: () => {
               const name = Swal.getPopup().querySelector("#swal-input1").value;
@@ -111,20 +112,22 @@ const Home = () => {
             title: "Sign In",
             html:
               '<input type="text" id="swal-input1" class="swal2-input" placeholder="Phone Number">' +
-              '<input type="password" id="swal-input2" class="swal2-input" placeholder="Password">'+
+              '<input type="password" id="swal-input2" class="swal2-input" placeholder="Password">' +
               '<div><input type="checkbox" id="swal-input3"> Show Password</div>',
             focusConfirm: false,
             showDenyButton: true,
             denyButtonText: "Back",
             didOpen: () => {
-              document.getElementById('swal-input3').addEventListener('change', function () {
-                const passwordInput = document.getElementById('swal-input2');
-                if (this.checked) {
-                  passwordInput.type = 'text';
-                } else {
-                  passwordInput.type = 'password';
-                }
-              });
+              document
+                .getElementById("swal-input3")
+                .addEventListener("change", function () {
+                  const passwordInput = document.getElementById("swal-input2");
+                  if (this.checked) {
+                    passwordInput.type = "text";
+                  } else {
+                    passwordInput.type = "password";
+                  }
+                });
             },
             preConfirm: () => {
               const phoneNumber =
@@ -190,26 +193,6 @@ const Home = () => {
   return (
     <div className="w-full flex flex-col justify-center items-center gap-6 mt-10 mb-14">
       <div className="w-full flex gap-5 max-w-6xl flex-col-reverse sm:flex-row justify-center items-center ">
-        {/* Marwadi Head */}
-
-        <div className="w-full flex  justify-center items-center gap-2 flex-col">
-          <img src={mifHead} alt="cap" className="rounded-md max-w-[200px]" />
-          <p className="text-3xl font-Poppins text-[#333] font-semibold mt-4">
-            Makkhan Lal Kanda
-          </p>
-          <p className="text-base font-Poppins text-[#333] font-semibold">
-            National Convenor
-          </p>
-          <p className="text-base font-Poppins text-[#333] font-semibold">
-            MIF Marwadi Matrimony
-          </p>
-          <Link to={"/matrimony/office-bearer"}>
-            <button className="flex gap-2  justify-center font-Poppins rounded-md bg-indigo-600 px-5 py-4 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-              Office Bearers
-            </button>
-          </Link>
-        </div>
-
         {/* Available Actions */}
         <div className="w-full flex  justify-center items-center gap-5 flex-col">
           <div className="w-fit flex flex-col justify-center items-center gap-5">

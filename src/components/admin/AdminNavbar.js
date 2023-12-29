@@ -51,6 +51,14 @@ const navigation = [
     name: "Matrimony",
     href: "/admin/matrimony-users",
   },
+  {
+    name: "Office Bearer",
+    href: "office_bearer_member",
+  },
+  {
+    name: "Office Bearer Samaj",
+    href: "office_bearer_samaj",
+  },
 ];
 
 export default function AdminNavbar() {

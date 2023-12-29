@@ -18,10 +18,8 @@ const Body = () => {
   const [filteredList, setFilteredList] = useState(showList);
 
   const [membersList, setMembersList] = useState([]);
-  // console.log(membersList);
 
   const [memberTypeList, setMemberTypeList] = useState([]);
-  // console.log(memberTypeList);
 
   const [searchFor, setSearchFor] = useState("");
 
@@ -54,6 +52,8 @@ const Body = () => {
     search(searchFor);
   }, [searchFor]);
 
+  // to get the list of members and memberTypes
+
   useEffect(() => {
     async function getMemberTypes() {
       try {
@@ -71,9 +71,7 @@ const Body = () => {
     getMemberTypes().then((data) => {
       setMemberTypeList(data);
     });
-  }, []);
 
-  useEffect(() => {
     async function getMembers() {
       try {
         const resBody = await fetch(GET_ALL_MEMBER);
@@ -89,8 +87,6 @@ const Body = () => {
 
     getMembers().then((data) => {
       setMembersList(data);
-
-      // console.log(memberTypeList);
     });
   }, []);
 
@@ -99,8 +95,6 @@ const Body = () => {
       return member.memberType.id === memberTypeList[0]?.id;
     });
 
-    // console.log(list);
-
     setShowList(list);
   }, [membersList, memberTypeList]);
 
@@ -108,8 +102,6 @@ const Body = () => {
     const list = membersList.filter((member) => {
       return member.memberType.id === setTo;
     });
-
-    // console.log(list);
 
     setShowList(list);
   }

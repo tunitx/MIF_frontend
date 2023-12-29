@@ -44,6 +44,16 @@ export const DELETE_PRESS_CUTOUT = BASE_URL + "pressCutout/";
 
 export const GET_BIODATA_BY_ID = BASE_URL + "biodata/";
 
+// office-bearers
+
+export const POST_SAMAJ = BASE_URL + "office_bearer/samaj/new";
+export const POST_OFFICE_BEARER = BASE_URL + "office_bearer/new";
+export const GET_ALL_SAMAJ = BASE_URL + "office_bearer/samaj/all";
+export const GET_ALL_BEARER = BASE_URL + "office_bearer/all";
+export const DELETE_SAMAJ = BASE_URL + "office_bearer/samaj/";
+export const DELETE_BEARER = BASE_URL + "office_bearer/";
+export const UPDATE_BEARER = BASE_URL + "office_bearer/";
+
 export const responsive = {
   superLargeDesktop: {
     breakpoint: { max: 4000, min: 3000 },

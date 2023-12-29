@@ -6,7 +6,6 @@ import ConsentSearchBiodata from "./ConsentSearchBiodata";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { BASE_URL } from "../../../utils/constants";
-import { useNavigate } from "react-router-dom";
 import UserContext from "../../../utils/context/UserContext";
 import mifHead from "../../../../assests/images/mifHead.webp";
 
@@ -182,6 +181,11 @@ const Home = () => {
           <p className="text-base font-Poppins text-[#333] font-semibold">
             MIF Marwadi Matrimony
           </p>
+          <Link to={"/matrimony/office-bearer"}>
+            <button className="flex gap-2  justify-center font-Poppins rounded-md bg-indigo-600 px-5 py-4 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+              Office Bearers
+            </button>
+          </Link>
         </div>
 
         {/* Available Actions */}

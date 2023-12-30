@@ -149,7 +149,6 @@ import BiodataFrame from "./src/pages/public/marwadi_matrimony/biodataFrame/Biod
 import OfficeBearer from "./src/pages/public/marwadi_matrimony/office_bearer/OfficeBearer";
 import Samaj from "./src/pages/admin/office_bearer/Samaj";
 import OfficeBearerAdmin from "./src/pages/admin/office_bearer/OfficeBearer";
-import GoldAdvertisment from "./src/components/GoldAdvertisment";
 
 const appRoutes = createBrowserRouter([
   {
@@ -163,10 +162,6 @@ const appRoutes = createBrowserRouter([
           {
             path: "/",
             element: <Home />,
-          },
-          {
-            path: "test",
-            element: <GoldAdvertisment />,
           },
           {
             path: "/list-of-members",

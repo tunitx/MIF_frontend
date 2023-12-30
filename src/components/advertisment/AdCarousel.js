@@ -3,43 +3,45 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const GoldAdvertisment = ({ showAdver, itemsPerFrame, category }) => {
-  showAdver = [...showAdver, ...showAdver, ...showAdver, ...showAdver];
+const AdCarousel = ({ showAdver, itemsPerFrame, category }) => {
+  let ads = showAdver.filter((ad) => {
+    return ad.category === category;
+  });
+
   const sliderConfig = {
     dots: true,
-    // infinite: true,
+    infinite: ads.length > itemsPerFrame,
     slidesToShow: itemsPerFrame,
     slidesToScroll: 1,
-    // autoplay: true,
-    // adaptiveHeight: true,
+    autoplay: true,
+    autoplaySpeed: 3000,
     arrows: false,
-
+    pauseOnDotsHover: true,
+    pauseOnHover: true,
     speed: 500,
     vertical: true,
     verticalSwiping: true,
-    // beforeChange: function (currentSlide, nextSlide) {
-    //   console.log("before change", currentSlide, nextSlide);
-    // },
-    // afterChange: function (currentSlide) {
-    //   console.log("after change", currentSlide);
-    // },
   };
 
+  if (ads?.length === 0) return null;
+
   return (
-    <div className="w-full shadow-lg rounded-md">
+    <div className="w-full h-[700px] overflow-hidden rounded-md">
       <Slider {...sliderConfig}>
-        {showAdver?.map((advertisment) => {
+        {ads?.map((advertisment) => {
           return (
-            <div>
+            <div
+              className={`${
+                category === "platinum"
+                  ? "h-[660px]"
+                  : category === "gold"
+                  ? "h-[329px]"
+                  : "h-[218px]"
+              } p-1 py-2`}
+            >
               <div
                 key={advertisment._id}
-                className={`w-full flex gap-4  flex-col bg-slate-200 overflow-y-hidden p-2 py-4 rounded-md  border  border-[#333] box-border hover:cursor-pointer ${
-                  category === "platinum"
-                    ? "h-[660px]"
-                    : category === "gold"
-                    ? "h-[329px]"
-                    : "h-[218px]"
-                }`}
+                className={`w-full flex gap-4 h-full shadow-md flex-col bg-[#fefefa] overflow-y-hidden p-2 py-4 rounded-md   box-border hover:cursor-pointer ${""}`}
               >
                 <div
                   className={`w-full flex justify-center  items-center ${
@@ -232,4 +234,4 @@ const GoldAdvertisment = ({ showAdver, itemsPerFrame, category }) => {
   );
 };
 
-export default GoldAdvertisment;
+export default AdCarousel;

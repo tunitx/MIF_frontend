@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import Navbar from "./components/Navbar";
 import { Outlet } from "react-router-dom";
 import Footer from "./components/Footer";
-import Advertisment from "./components/Advertisment";
+import Advertisment from "./components/advertisment/Advertisment";
 import PressClipContext from "./utils/context/PressClipContext";
 import PressCutoutContext from "./utils/context/PressCutoutContext";
 import { useState } from "react";

@@ -8,7 +8,6 @@ import { Link, Location } from "react-router-dom";
 import React, { useEffect, useState, useContext } from "react";
 import UserContext from "../utils/context/UserContext";
 
-
 const navigation = [
   { name: "Home", href: "/", current: true },
   {
@@ -178,7 +177,7 @@ export default function Navbar() {
                   )}
                 </Disclosure.Button>
               </div>
-              <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+              <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start pl-4 sm:pl-0">
                 {/* Marwadi Logo */}
 
                 <div className="flex flex-shrink-0 items-center hover:cursor-pointer">
@@ -359,7 +358,6 @@ export default function Navbar() {
                   </div>
                 </div>
               </div>
-             
 
               <div className="flex sm:flex-row flex-col-reverse gap-3 justify-center items-center ">
                 <Link to={"/matrimony"}>
@@ -375,11 +373,7 @@ export default function Navbar() {
                   <button className="flex w-full justify-center max-w-[200px] rounded-md bg-[#EF4D48] px-3 sm:py-3 py-2  text-sm sm:text-base font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ">
                     Find Marwadi
                   </button>
-
                 </Link>
-
-
-
               </div>
             </div>
           </div>

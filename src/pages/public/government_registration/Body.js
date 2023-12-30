@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { REGISTRATIONS as registrations } from "../../../utils/constants";
 
-import Advertisment from "../../../components/Advertisment";
+import Advertisment from "../../../components/advertisment/Advertisment";
 
 const Body = () => {
   const [form, setForm] = useState("12A");

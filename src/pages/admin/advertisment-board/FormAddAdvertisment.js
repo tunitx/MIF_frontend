@@ -10,8 +10,6 @@ const FormAddAdvertisment = () => {
 
   const { admin, setAdmin } = useContext(AdminContext);
 
-  // console.log(admin);
-
   const [selectedFile, setFile] = useState(null);
 
   const [error, setError] = useState(null);
@@ -29,6 +27,10 @@ const FormAddAdvertisment = () => {
     {
       name: "Silver",
       id: "silver",
+    },
+    {
+      name: "Bronze",
+      id: "bronze",
     },
   ];
 

@@ -34,11 +34,6 @@ const Body = () => {
 
   const [showImage, setShowImage] = useState(null);
 
-  // console.log(showImage);
-
-  // useEffect(() => {
-
-  // }, [setShowImage]);
   function updatesShowPress(forYear, forMonth) {
     if (allPress[forYear]) {
       if (forMonth === "all") {
@@ -58,13 +53,9 @@ const Body = () => {
   function structurePressData(allPressData, yearsListData) {
     const structuredData = {};
 
-    console.log(yearsListData);
-
     for (let year of yearsListData) {
       structuredData[year] = [];
     }
-
-    console.log(allPressData);
 
     for (let press of allPressData) {
       structuredData[press.year].push(press);
@@ -120,9 +111,6 @@ const Body = () => {
       updatesShowPress(showYear, showMonth);
     }
   }, [showMonth]);
-
-  // console.log(allPress);
-  // console.log(allPress?.length);
 
   if (!allPress || Object.keys(allPress)?.length <= 0) return;
 

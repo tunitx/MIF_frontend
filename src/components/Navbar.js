@@ -194,11 +194,11 @@ export default function Navbar() {
 
                 <div className="hidden  sm:ml-6 sm:mr-6 sm:flex items-center">
                   <div className="flex flex-wrap items-center">
-                    {navigation.map((item) => {
+                    {navigation.map((item, index) => {
                       // console.log(item);
                       if (!item?.subNames) {
                         return (
-                          <div>
+                          <div key={index}>
                             {" "}
                             <Link
                               key={item.name}
@@ -219,7 +219,7 @@ export default function Navbar() {
                         // FOR FIRST LEVEL DROPDOWN
 
                         return (
-                          <Menu as="div" className="relative m-0">
+                          <Menu as="div" className="relative m-0" key={index}>
                             <div>
                               <Menu.Button className="relative flex rounded-full  text-sm ">
                                 <p
@@ -252,12 +252,12 @@ export default function Navbar() {
                               leaveTo="transform opacity-0 scale-95"
                             >
                               <Menu.Items className="absolute right-0 flex flex-col z-[100] mt-2 w-fit min-w-[200px] origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                {item.subNames.map((subName) => {
+                                {item.subNames.map((subName, index) => {
                                   // SECOND LEVEL DROPDOWN
 
                                   if (!subName?.subNames) {
                                     return (
-                                      <Menu.Item>
+                                      <Menu.Item key={index}>
                                         <Link
                                           to={subName.href}
                                           className={classNames(
@@ -279,6 +279,7 @@ export default function Navbar() {
                                       <Menu
                                         as="div"
                                         className="relative m-0 w-full"
+                                        key={index}
                                       >
                                         <div>
                                           <Menu.Button className="relative flex rounded-full w-full  text-sm ">
@@ -318,10 +319,10 @@ export default function Navbar() {
                                             className="absolute top-0 left-full flex flex-col z-10 ml-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                                           >
                                             {subName.subNames.map(
-                                              (innreSubName) => {
+                                              (innreSubName, index) => {
                                                 // console.log(innreSubName);
                                                 return (
-                                                  <Menu.Item>
+                                                  <Menu.Item key={index}>
                                                     <Link
                                                       to={innreSubName?.href}
                                                       className={classNames(
@@ -380,11 +381,11 @@ export default function Navbar() {
 
           <Disclosure.Panel className="sm:hidden">
             <div className="flex flex-col gap-1 px-2 pb-3 pt-2 border-b-4 ">
-              {navigation.map((item) => {
+              {navigation.map((item, index) => {
                 // console.log(item);
                 if (!item?.subNames) {
                   return (
-                    <div>
+                    <div key={index}>
                       {" "}
                       <Link
                         key={item.name}
@@ -403,7 +404,7 @@ export default function Navbar() {
                   // FOR FIRST LEVEL DROPDOWN
 
                   return (
-                    <Menu as="div" className="relative m-0">
+                    <Menu as="div" className="relative m-0" key={index}>
                       <div>
                         <Menu.Button className="relative flex rounded-full  text-sm ">
                           <p
@@ -434,12 +435,12 @@ export default function Navbar() {
                         leaveTo="transform opacity-0 scale-95"
                       >
                         <Menu.Items className="absolute left-0 shadow-xl flex flex-col z-[100] mt-2 w-fit min-w-[110px]  origin-top-right rounded-md bg-white py-1  ring-1 ring-black ring-opacity-5 focus:outline-none">
-                          {item.subNames.map((subName) => {
+                          {item.subNames.map((subName, index) => {
                             // SECOND LEVEL DROPDOWN
 
                             if (!subName?.subNames) {
                               return (
-                                <Menu.Item>
+                                <Menu.Item key={index}>
                                   <Link
                                     to={subName.href}
                                     className={classNames(
@@ -458,7 +459,11 @@ export default function Navbar() {
                               );
                             } else if (subName?.subNames) {
                               return (
-                                <Menu as="div" className="relative m-0 w-full">
+                                <Menu
+                                  as="div"
+                                  className="relative m-0 w-full"
+                                  key={index}
+                                >
                                   <div>
                                     <Menu.Button className="relative flex rounded-full w-full  text-sm ">
                                       <p
@@ -494,30 +499,32 @@ export default function Navbar() {
                                       data-okay="aklsdjfadnfkj"
                                       className="absolute top-0 left-full flex flex-col z-10 ml-2 w-fit origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                                     >
-                                      {subName.subNames.map((innreSubName) => {
-                                        // console.log(innreSubName);
-                                        return (
-                                          <Menu.Item>
-                                            <Link
-                                              to={innreSubName?.href}
-                                              className={classNames(
-                                                innreSubName?.current
-                                                  ? "text-[#453E3E]"
-                                                  : "text-[#453E3E]",
-                                                "rounded-md px-3 py-2 text-sm font-medium  whitespace-nowrap"
-                                              )}
-                                              aria-current={
-                                                innreSubName?.current
-                                                  ? "page"
-                                                  : undefined
-                                              }
-                                              data-name="ha ye hi hai"
-                                            >
-                                              {innreSubName?.name}
-                                            </Link>
-                                          </Menu.Item>
-                                        );
-                                      })}
+                                      {subName.subNames.map(
+                                        (innreSubName, index) => {
+                                          // console.log(innreSubName);
+                                          return (
+                                            <Menu.Item key={index}>
+                                              <Link
+                                                to={innreSubName?.href}
+                                                className={classNames(
+                                                  innreSubName?.current
+                                                    ? "text-[#453E3E]"
+                                                    : "text-[#453E3E]",
+                                                  "rounded-md px-3 py-2 text-sm font-medium  whitespace-nowrap"
+                                                )}
+                                                aria-current={
+                                                  innreSubName?.current
+                                                    ? "page"
+                                                    : undefined
+                                                }
+                                                data-name="ha ye hi hai"
+                                              >
+                                                {innreSubName?.name}
+                                              </Link>
+                                            </Menu.Item>
+                                          );
+                                        }
+                                      )}
                                     </Menu.Items>
                                   </Transition>
                                 </Menu>

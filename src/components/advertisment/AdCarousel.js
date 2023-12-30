@@ -2,15 +2,14 @@ import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { useAdvertisment } from "../../hooks/useAdvertisment";
 
-const AdCarousel = ({ showAdver, itemsPerFrame, category }) => {
-  let ads = showAdver.filter((ad) => {
-    return ad.category === category;
-  });
+const AdCarousel = ({ itemsPerFrame, category }) => {
+  const { categorisedAds } = useAdvertisment(category);
 
   const sliderConfig = {
     dots: true,
-    infinite: ads.length > itemsPerFrame,
+    infinite: categorisedAds?.length > itemsPerFrame,
     slidesToShow: itemsPerFrame,
     slidesToScroll: 1,
     autoplay: true,
@@ -23,14 +22,15 @@ const AdCarousel = ({ showAdver, itemsPerFrame, category }) => {
     verticalSwiping: true,
   };
 
-  if (ads?.length === 0) return null;
+  if (categorisedAds?.length === 0) return null;
 
   return (
     <div className="w-full h-[700px] overflow-hidden rounded-md">
       <Slider {...sliderConfig}>
-        {ads?.map((advertisment) => {
+        {categorisedAds?.map((advertisment, index) => {
           return (
             <div
+              key={index}
               className={`${
                 category === "platinum"
                   ? "h-[660px]"

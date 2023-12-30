@@ -4,7 +4,7 @@ import aboutus_entrepreneur from "../../../../assests/images/aboutus_entrepreneu
 import aboutus_network from "../../../../assests/images/aboutus_network.webp";
 import aboutus_networking from "../../../../assests/images/aboutus_networking.webp";
 import aboutus_team from "../../../../assests/images/aboutus_team.webp";
-import aboutus_entrepreneur from "../../../../assests/images/aboutus_entrepreneur.webp";
+// import aboutus_entrepreneur from "../../../../assests/images/aboutus_entrepreneur.webp";
 import aboutus_skill_development from "../../../../assests/images/aboutus_skill-development.webp";
 import aboutus_social_care from "../../../../assests/images/aboutus_social-care.webp";
 import aboutus_women_entrepreneur from "../../../../assests/images/aboutus_women_entrepreneur.webp";

@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import marwadi_logo from "../../assests/images/marwari_logo_pro.webp";
 import { Link } from "react-router-dom";
-// import AwesomeSlider from "react-awesome-slider";
-import "react-awesome-slider/dist/custom-animations/cube-animation.css";
 import AwesomeSlider from "react-awesome-slider";
+import "react-awesome-slider/dist/custom-animations/cube-animation.css";
 import withAutoplay from "react-awesome-slider/dist/autoplay";
 import "react-awesome-slider/dist/styles.css";
 import { useAdvertisment } from "../hooks/useAdvertisment";
@@ -63,7 +62,7 @@ const Footer = () => {
     <div className="w-full flex flex-col bg-[#5C5D5C] text-[#F6F7F8] sm:items-center">
       {/* Footer Section */}
 
-      <div className="w-full flex flex-col items-center md:flex-row px-5 py-16 gap-8 max-w-7xl">
+      <div className="w-full flex flex-col items-center md:flex-row px-5 py-16 gap-12 md:gap-8   max-w-7xl">
         {/* Non-Advertisment Section of Footer */}
 
         <div className="w-full flex flex-col items-center sm:flex-row   gap-8 max-w-7xl">
@@ -220,15 +219,22 @@ const Footer = () => {
         <div className="w-full p-5 max-w-md  sm:px-5 sm:py-2 flex justify-center items-center h-full">
           <AutoplaySlider
             play={true}
-            interval={1000}
+            interval={3000}
             organicArrows={false}
             animation="cubeAnimation"
             bullets={false}
+            className="rounded-md"
           >
-            <div>1</div>
+            {/* <div>1</div>
             <div>2</div>
-            <div>3</div>
-            {/* <div>4</div> */}
+            <div>3</div> */}
+            {categorisedAds?.map((ad) => {
+              return (
+                <div key={ad._id} className="rounded-md">
+                  <img src={ad.businessImage} className="rounded-md" />
+                </div>
+              );
+            })}
           </AutoplaySlider>
         </div>
       </div>

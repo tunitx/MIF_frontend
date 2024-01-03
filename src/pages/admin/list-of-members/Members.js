@@ -14,7 +14,7 @@ const Members = () => {
   const [pfp, setPfp] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
-
+  const [inputValue, setInputValue] = useState('10');
   useEffect(() => {
     api.get('/getMemberDetails')
       .then(response => {
@@ -32,7 +32,17 @@ const Members = () => {
       });
 
   }, []);
-
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value);
+};
+const handleInputBlur = () => {
+    const newValue = parseInt(inputValue, 10);
+    if (!isNaN(newValue) && newValue > 0) {
+        setItemsPerPage(newValue);
+    } else {
+        setInputValue(itemsPerPage.toString());
+    }
+};
   const handleEdit = (id, editedMember) => {
     const formData = new FormData();
     Object.keys(editedMember).forEach(key => {
@@ -156,6 +166,27 @@ const Members = () => {
                 >
                     Next
                 </button>
+
+                <div className="flex justify-center space-x-4 ">
+          <input
+            type="number"
+            min="1"
+            value={inputValue}
+            onChange={handleInputChange}
+            onBlur={handleInputBlur}
+            className="px-2 py-1 rounded border-2 border-gray-300 mr-2 ml-24"
+
+            aria-label="Set items per page"
+          />
+
+          <button
+            className="px-4 py-2 rounded bg-blue-500 text-white"
+            onClick={handleInputBlur}
+          >
+            Go
+          </button>
+
+        </div>
             </div>
     </div>
   );

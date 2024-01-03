@@ -5,6 +5,7 @@ import AppLayout from "./src/AppLayout";
 import Home from "./src/pages/public/home/Home";
 import Public from "./src/Public";
 import dotenv from "dotenv";
+import RegistrationForm from "./src/pages/public/organisation/JoinUs";
 dotenv.config();
 
 import ListOfMembers from "./src/pages/public/list_of_members/ListOfMembers";
@@ -189,6 +190,14 @@ const appRoutes = createBrowserRouter([
             element: (
               <Suspense>
                 <Gallery />
+              </Suspense>
+            ),
+          },
+          {
+            path: "/join-us",
+            element: (
+              <Suspense>
+                <RegistrationForm />
               </Suspense>
             ),
           },

@@ -11,7 +11,8 @@ const Advertisements = () => {
   const [members, setMembers] = useState([]);
   const [pfp, setPfp] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [inputValue, setInputValue] = useState('10');
 
   useEffect(() => {
     api
@@ -23,7 +24,18 @@ const Advertisements = () => {
         console.error("There was an error retrieving the data: ", error);
       });
   }, []);
-
+  
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value);
+  };
+  const handleInputBlur = () => {
+    const newValue = parseInt(inputValue, 10);
+    if (!isNaN(newValue) && newValue > 0) {
+      setItemsPerPage(newValue);
+    } else {
+      setInputValue(itemsPerPage.toString());
+    }
+  };
   const handleEdit = (id, editedMember) => {
     const formData = new FormData();
     Object.keys(editedMember).forEach((key) => {
@@ -76,7 +88,7 @@ const Advertisements = () => {
   };
 
   return (
-   
+
     <div className="overflow-x-auto fade-in w-full flex justify-center flex-col items-center">
       <table className="w-full border-2 border-[#305D2B] max-w-7xl">
         <thead className="w-full">
@@ -102,55 +114,77 @@ const Advertisements = () => {
 
             {members
               .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
-            .map((member, index, _id) => (
-              // <tr key={index}>
+              .map((member, index, _id) => (
+                // <tr key={index}>
 
-              <Advertisement
-                member={member}
-                onEdit={handleEdit}
-                onDelete={handleDelete}
-                pfp={pfp}
-                setPfp={setPfp}
-                _id={_id}
-              />
+                <Advertisement
+                  member={member}
+                  onEdit={handleEdit}
+                  onDelete={handleDelete}
+                  pfp={pfp}
+                  setPfp={setPfp}
+                  _id={_id}
+                />
 
 
-            ))}
+              ))}
           </tbody>
 
 
         </>
       </table>
       <div className="flex justify-center space-x-4 mt-4">
-                <button
-                    className={`px-4 py-2 rounded bg-blue-500 text-white ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
-                    onClick={() => setCurrentPage((old) => Math.max(old - 1, 1))}
-                    disabled={currentPage === 1}
-                >
-                    Previous
-                </button>
-                {Array.from({ length: Math.ceil(members.length / itemsPerPage) }, (_, index) => (
-                    <button
-                        key={index}
-                        className={`px-4 py-2 rounded ${currentPage === index + 1 ? 'bg-red-500' : 'bg-blue-500'} text-white`}
-                        onClick={() => setCurrentPage(index + 1)}
-                    >
-                        {index + 1}
-                    </button>
-                ))}
-                <button
-                    className={`px-4 py-2 rounded bg-blue-500 text-white ${currentPage === Math.ceil(members.length / itemsPerPage) ? 'opacity-50 cursor-not-allowed' : ''}`}
-                    onClick={() =>
-                        setCurrentPage((old) => Math.min(old + 1, Math.ceil(members.length / itemsPerPage)))
-                    }
-                    disabled={currentPage === Math.ceil(members.length / itemsPerPage)}
-                >
-                    Next
-                </button>
-            </div>
-      
+        <button
+          className={`px-4 py-2 rounded bg-blue-500 text-white ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
+          onClick={() => setCurrentPage((old) => Math.max(old - 1, 1))}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </button>
+        {Array.from({ length: Math.ceil(members.length / itemsPerPage) }, (_, index) => (
+          <button
+            key={index}
+            className={`px-4 py-2 rounded ${currentPage === index + 1 ? 'bg-red-500' : 'bg-blue-500'} text-white`}
+            onClick={() => setCurrentPage(index + 1)}
+          >
+            {index + 1}
+          </button>
+        ))}
+        <button
+          className={`px-4 py-2 rounded bg-blue-500 text-white ${currentPage === Math.ceil(members.length / itemsPerPage) ? 'opacity-50 cursor-not-allowed' : ''}`}
+          onClick={() =>
+            setCurrentPage((old) => Math.min(old + 1, Math.ceil(members.length / itemsPerPage)))
+          }
+          disabled={currentPage === Math.ceil(members.length / itemsPerPage)}
+        >
+          Next
+        </button>
+
+
+        <div className="flex justify-center space-x-4 ">
+          <input
+            type="number"
+            min="1"
+            value={inputValue}
+            onChange={handleInputChange}
+            onBlur={handleInputBlur}
+            className="px-2 py-1 rounded border-2 border-gray-300 mr-2 ml-24"
+
+            aria-label="Set items per page"
+          />
+
+          <button
+            className="px-4 py-2 rounded bg-blue-500 text-white"
+            onClick={handleInputBlur}
+          >
+            Go
+          </button>
+
+        </div>
+      </div>
+
     </div>
-    
+
 
   );
 };
@@ -184,8 +218,8 @@ const Advertisement = ({ member, onEdit, onDelete, pfp, setPfp, _id }) => {
   };
 
   return (
-  <>
-  
+    <>
+
       {isEditing ? (
         <>
           <div className="w-fit p-3 border border-indigo-900 rounded-md flex flex-col gap-5 justify-center items-center max-w-[800px] g">
@@ -592,26 +626,26 @@ const Advertisement = ({ member, onEdit, onDelete, pfp, setPfp, _id }) => {
             </td>
             <td className="p-2 border-r border-[#EF4D48]  text-center   text-[#333] whitespace-nowrap font-bold font-Poppins">
               <button
-               onClick={() => {
-                Swal.fire({
-                  title: "Are you sure?",
-                  text: "You won't be able to revert this!",
-                  icon: "warning",
-                  showCancelButton: true,
-                  confirmButtonColor: "#3085d6",
-                  cancelButtonColor: "#d33",
-                  confirmButtonText: "Yes, delete it!",
-                }).then((result) => {
-                  if (result.isConfirmed) {
-                    onDelete(member._id);
-                    Swal.fire(
-                      "Deleted!",
-                      "Your file has been deleted.",
-                      "success"
-                    );
-                  }
-                });
-              }}
+                onClick={() => {
+                  Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, delete it!",
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      onDelete(member._id);
+                      Swal.fire(
+                        "Deleted!",
+                        "Your file has been deleted.",
+                        "success"
+                      );
+                    }
+                  });
+                }}
                 type="button"
                 className="group flex w-full items-center gap-2 justify-center max-w-[150px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 "
               >

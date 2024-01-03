@@ -65,6 +65,7 @@ function EditBioData({ biodata }) {
   const [selectedState, setSelectedState] = useState(biodata.state || "");
   const [selectedCity, setSelectedCity] = useState(biodata.city || "");
   const [cities, setCities] = useState([]);
+  
   // const [caste, setCaste] = useState(biodata.caste || "");
   // const [subcaste, setSubcaste] = useState(biodata.subcaste || "");
   // const [gotra, setGotra] = useState("");
@@ -455,18 +456,27 @@ function EditBioData({ biodata }) {
     }
 
     console.log(values);
+    const admin = JSON.parse(localStorage.getItem('admin'));
+    const jwtToken = localStorage.getItem('jwtToken');
+    const token = admin?.token || jwtToken;
 
+    // const headers = {
+    //     'Content-Type': 'application/json'
+    // };
+    // if (token) {
+    //     headers['Authorization'] = `Bearer ${token}`;
+    // }
     // return;
-    const jwtToken = localStorage.getItem("jwtToken");
+    // const jwtToken = localStorage.getItem("jwtToken");
 
     let fetchOptions = {
       method: "PUT",
       body: formData,
     };
 
-    if (jwtToken) {
+    if (token) {
       fetchOptions.headers = {
-        authorization: `Bearer ${jwtToken}`,
+        authorization: `Bearer ${token}`,
       };
     }
 

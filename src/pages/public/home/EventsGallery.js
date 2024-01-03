@@ -5,7 +5,6 @@ import events2 from "../../../../assests/images/events2.jpeg.webp";
 import events3 from "../../../../assests/images/events3.jpeg.webp";
 import events4 from "../../../../assests/images/events4.webp";
 import events5 from "../../../../assests/images/events5.webp";
-import Advertisment from "../../../components/Advertisment";
 import { Link } from "react-router-dom";
 
 const EventsGallery = () => {
@@ -72,9 +71,6 @@ const EventsGallery = () => {
             </button>
           </Link>
         </div>
-        {/* <div className="w-full flex justify-center">
-          <Advertisment />
-        </div> */}
       </div>
     </div>
   );

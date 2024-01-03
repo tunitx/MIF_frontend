@@ -56,7 +56,7 @@ function Registration() {
 
   const formikRef = useRef();
 
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(6);
   const [location, setLocation] = useState("");
   const [countries, setCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState("");
@@ -138,6 +138,16 @@ function Registration() {
     return true;
   }
 
+  function disabilityMeasureValidator(pwd, disabilityMeasure) {
+    if (pwd === "no") return true;
+
+    if (pwd === "yes" && disabilityMeasure?.trim().length > 0) {
+      return true;
+    }
+
+    return false;
+  }
+
   useEffect(() => {
     const token = localStorage.getItem("jwtToken");
     if (!token) navigate("/matrimony");
@@ -146,29 +156,31 @@ function Registration() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [step]);
-  
+
   useEffect(() => {
-    const jwtToken = localStorage.getItem('jwtToken');
+    const jwtToken = localStorage.getItem("jwtToken");
     const token = jwtToken;
 
     const headers = {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     };
     if (token) {
-      headers['authorization'] = `Bearer ${token}`;
+      headers["authorization"] = `Bearer ${token}`;
     }
 
     fetch(`${BASE_URL}getBiodata`, { headers })
-      .then(response => response.json())
-      .then(data => setBioData(data))
-      .catch(error => console.log(error));
+      .then((response) => response.json())
+      .then((data) => setBioData(data))
+      .catch((error) => console.log(error));
   }, []);
 
-
-
   const castes = Object.keys(bioData);
-  const subcastes = bioData && caste && bioData[caste] ? Object.keys(bioData[caste]) : [];
-  const gotras = bioData && caste && subcaste && bioData[caste] && bioData[caste][subcaste] ? bioData[caste][subcaste] : [];
+  const subcastes =
+    bioData && caste && bioData[caste] ? Object.keys(bioData[caste]) : [];
+  const gotras =
+    bioData && caste && subcaste && bioData[caste] && bioData[caste][subcaste]
+      ? bioData[caste][subcaste]
+      : [];
 
   useEffect(() => {
     if (location === "abroad") {
@@ -276,29 +288,6 @@ function Registration() {
     }
   }, [foundCaste]);
 
-  // function getGotra(surname) {
-  //   let result = {};
-  //   Object.entries(bioData.Baniya).forEach(([key, values]) => {
-  //     if (
-  //       values
-  //         .map((value) => value.toLowerCase())
-  //         .includes(surname.toLowerCase())
-
-  //     ) {
-  //       result = {
-  //         caste: "Baniya",
-  //         subcaste: key,
-  //         surname: values
-  //           .map((value) => value.toLowerCase())
-  //           .find((value) => value.includes(surname.toLowerCase())),
-
-  //       };
-  //     }
-  //   });
-  //   console.log(result);
-  //   res = result;
-  //   return result;
-  // }
   function getGotra(surname) {
     let result = {};
     Object.entries(bioData.Baniya).forEach(([key, values]) => {
@@ -330,23 +319,13 @@ function Registration() {
     gotra: Yup.string().required("Required"),
     dob: Yup.string().required("Required"),
     manglik: Yup.string().required("Required"),
-    // placeOfBirth: Yup.string().required('Required'),
-    // currentAddress: Yup.string().required("Required"),
     location: Yup.string().required("Required"),
     country: Yup.string().required("Required"),
     state: Yup.string().required("Required"),
     city: Yup.string().required("Required"),
-
-    // TICKET ISSUE : 6
-
-    // nativePlaceLocation: Yup.string().required("Required"),
-    // nativePlaceCity: Yup.string().required("Required"),
-    // nativePlaceState: Yup.string().required("Required"),
-    // nativePlaceCurrentAddress: Yup.string().required("Required"),
     currentAddressLocation: Yup.string().required("Required"),
     currentAddressCity: Yup.string().required("Required"),
     currentAddressState: Yup.string().required("Required"),
-    // currentAddressScope: Yup.string().required("Required"),
     heightFeet: Yup.string().required("Required"),
     complexion: Yup.string().required("Required"),
     education: Yup.string().required("Required"),
@@ -355,14 +334,6 @@ function Registration() {
     maritalStatus: Yup.string().required("Required"),
     pwd: Yup.string().required("Required"),
     image1: Yup.mixed().required("Required"),
-
-    // TICKET ISSUE : 8
-
-    // image2: Yup.mixed().required("Required"),
-
-    // TICKET ISSUE : 11
-
-    // phoneNumber1: Yup.string().required("Required"),
     phoneNumbers: Yup.array().of(Yup.string()).min(1),
     emails: Yup.array().of(Yup.string().email()).notRequired(),
     disabilityMeasure: Yup.string().when("pwd", {
@@ -371,12 +342,6 @@ function Registration() {
       otherwise: (schema) =>
         schema.trim().required("Disability measure is required"),
     }),
-
-    // TICKET ISSUE : 11
-
-    // phoneNumber2: Yup.string().required("Required"),
-    // email: Yup.string().required("Required"),
-    // image3: Yup.mixed().notRequired(),
   });
 
   const nextStep = (formik) => {
@@ -476,34 +441,6 @@ function Registration() {
       }
     } else if (step === 5) {
       setStep((prevStep) => prevStep + 1);
-      // TICKET ISSUE : 6
-      //   console.log(formik.errors);
-      //   if (
-      //     nativeAddressOption === "SameAsPlaceOfBirth" ||
-      //     nativeAddressOption === "SameAsCurrentAddress" ||
-      //     (formik.values.nativePlaceLocation &&
-      //       formik.values.nativePlaceCurrentAddress &&
-      //       formik.values.nativePlaceState &&
-      //       formik.values.nativePlaceCity)
-      //   ) {
-      //     setStep((prevStep) => prevStep + 1);
-      //   } else {
-      //     console.log(formik.errors);
-      //     Swal.fire({
-      //       width: 600,
-      //       padding: "3em",
-      //       background: "#fff url(/images/trees.png)",
-      //       backdrop: `
-      //         rgba(0,0,123,0.4)
-      //         url("/images/nyan-cat.gif")
-      //         left top
-      //         no-repeat
-      //       `,
-      //       icon: "error",
-      //       title: "Oops...",
-      //       text: "Please fill in all required fields before moving to the next step.",
-      //     });
-      //   }
     } else if (step === 6) {
       console.log(formik.errors);
       if (
@@ -515,15 +452,12 @@ function Registration() {
         formik.values.maritalStatus &&
         formik.values.pwd &&
         formik.values.image1 &&
-        // TICKET ISSUE : 8
-
-        // formik.values.image2 &&
         formik.values.phoneNumbers.length > 0 &&
-        phoneNumberValidator(formik.values.phoneNumbers)
-        // TICKET ISSUE : 11
-
-        // formik.values.phoneNumber2 &&
-        // formik.values.email
+        phoneNumberValidator(formik.values.phoneNumbers) &&
+        disabilityMeasureValidator(
+          formik.values.pwd,
+          formik.values.disabilityMeasure
+        )
       ) {
         // formik.handleSubmit();
         setStep((prevStep) => prevStep + 1);
@@ -545,63 +479,7 @@ function Registration() {
       }
     } else if (step === 7) {
       setStep((prevStep) => prevStep + 1);
-      // TICKET ISSUE : 6
-      //   console.log(formik.errors);
-      //   if (
-      //     nativeAddressOption === "SameAsPlaceOfBirth" ||
-      //     nativeAddressOption === "SameAsCurrentAddress" ||
-      //     (formik.values.nativePlaceLocation &&
-      //       formik.values.nativePlaceCurrentAddress &&
-      //       formik.values.nativePlaceState &&
-      //       formik.values.nativePlaceCity)
-      //   ) {
-      //     setStep((prevStep) => prevStep + 1);
-      //   } else {
-      //     console.log(formik.errors);
-      //     Swal.fire({
-      //       width: 600,
-      //       padding: "3em",
-      //       background: "#fff url(/images/trees.png)",
-      //       backdrop: `
-      //         rgba(0,0,123,0.4)
-      //         url("/images/nyan-cat.gif")
-      //         left top
-      //         no-repeat
-      //       `,
-      //       icon: "error",
-      //       title: "Oops...",
-      //       text: "Please fill in all required fields before moving to the next step.",
-      //     });
-      //   }
     } else if (step === 8) {
-      // TICKET ISSUE : 6
-      //   console.log(formik.errors);
-      //   if (
-      //     nativeAddressOption === "SameAsPlaceOfBirth" ||
-      //     nativeAddressOption === "SameAsCurrentAddress" ||
-      //     (formik.values.nativePlaceLocation &&
-      //       formik.values.nativePlaceCurrentAddress &&
-      //       formik.values.nativePlaceState &&
-      //       formik.values.nativePlaceCity)
-      //   ) {
-      //     setStep((prevStep) => prevStep + 1);
-      //   } else {
-      //     console.log(formik.errors);
-      //     Swal.fire({
-      //       width: 600,
-      //       padding: "3em",
-      //       background: "#fff url(/images/trees.png)",
-      //       backdrop: `
-      //         rgba(0,0,123,0.4)
-      //         url("/images/nyan-cat.gif")
-      //         left top
-      //         no-repeat
-      //       `,
-      //       icon: "error",
-      //       title: "Oops...",
-      //       text: "Please fill in all required fields before moving to the next step.",
-      //     });
-      //   }
     } else {
       formik.validateForm().then((errors) => {
         if (Object.keys(errors).length === 0) {
@@ -786,8 +664,9 @@ function Registration() {
               <MultiStepProgressBar page={step} />
               <form
                 onSubmit={formik.handleSubmit}
-                className={`w-full flex flex-col justify-center mt-10 items-center gap-16 max-w-4xl ${formik.isSubmitting ? "opacity-50" : ""
-                  }`}
+                className={`w-full flex flex-col justify-center mt-10 items-center gap-16 max-w-4xl ${
+                  formik.isSubmitting ? "opacity-50" : ""
+                }`}
               >
                 {step === 1 && (
                   <div className="w-full max-w-full flex flex-col justify-between items-center gap-14">
@@ -806,7 +685,7 @@ function Registration() {
                             formik.values.gender === "male"
                               ? ""
                               : "border-none hover:scale-110"
-                            } `}
+                          } `}
                           onClick={() => {
                             formik.setFieldValue("gender", "male");
                             setStep((s) => s + 1);
@@ -2398,7 +2277,7 @@ function Registration() {
                                   type="text"
                                   value={formik.values.disabilityMeasure}
                                   onChange={formik.handleChange}
-                                  placeholder="Specify"
+                                  placeholder="Specify*"
                                   className="grow border fade-in w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
                                 />
                               </div>
@@ -2446,7 +2325,7 @@ function Registration() {
                         {/* TICKET ISSUE : 7 */}
 
                         <p className="mt-1 text-sm leading-6 text-gray-600">
-                          Upload upto 5 MB in PDF, JPEG, PNG format only.
+                          Upload upto 5 MB in PDF, JPEG, PNG, Docs format only.
                         </p>
                       </div>
                       {biodataFile ? (
@@ -2692,7 +2571,7 @@ function Registration() {
                                           />
                                         </div>
                                         {index === 0 &&
-                                          validateFirstPhoneNumber ? (
+                                        validateFirstPhoneNumber ? (
                                           <p className="mt-1 fade-in text-sm fade-in font-mono leading-6 text-[#EF4D48]">
                                             {validateFirstPhoneNumber}
                                           </p>
@@ -3581,10 +3460,11 @@ function Registration() {
                   )}
                   {step < 8 && step > 1 && (
                     <div
-                      className={`w-full  flex ${step === 1
+                      className={`w-full  flex ${
+                        step === 1
                           ? "justify-center"
                           : "sm:justify-end justify-center"
-                        }`}
+                      }`}
                     >
                       <button
                         onClick={() => {

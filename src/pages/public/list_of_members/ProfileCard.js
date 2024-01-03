@@ -5,7 +5,8 @@ const ProfileCard = ({ data, showCard, setShowCard }) => {
   const {
     address,
     email,
-    memberType,
+    memberType = "not_available",
+    samaj = "not_available",
     name,
     nativePlace,
     phoneNumber,
@@ -35,7 +36,8 @@ const ProfileCard = ({ data, showCard, setShowCard }) => {
         <div className="w-full  border-4 rounded-b-xl border-[#EF4D48] font-Poppins max-w-md  min-w-[350px] box-border  bg-gradient-to-r from-[#FFDD57] to-[#FE954C]">
           <div className="flex justify-center items-center w-full rounded-b-2xl bg-[#EF4D48] p-3">
             <h1 className="text-[#fff] font-semibold text-xl sm:text-2xl font-Poppins w-full text-center whitespace-nowrap">
-              {memberType.name.toUpperCase()}
+              {memberType !== "not_available" && memberType.name.toUpperCase()}
+              {samaj !== "not_available" && samaj.toUpperCase()}
             </h1>
           </div>
           <div className="w-full p-5 flex justify-center items-center flex-col gap-4">

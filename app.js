@@ -146,6 +146,9 @@ import PressCutout from "./src/pages/admin/pressCutout/PressCutout";
 import MarriageUsers from "./src/pages/admin/Matrimony/MatrimonyUsers";
 import Advertisements from "./src/pages/admin/advertisment-board/Advertisements";
 import BiodataFrame from "./src/pages/public/marwadi_matrimony/biodataFrame/BiodataFrame";
+import OfficeBearer from "./src/pages/public/marwadi_matrimony/office_bearer/OfficeBearer";
+import Samaj from "./src/pages/admin/office_bearer/Samaj";
+import OfficeBearerAdmin from "./src/pages/admin/office_bearer/OfficeBearer";
 
 const appRoutes = createBrowserRouter([
   {
@@ -328,6 +331,10 @@ const appRoutes = createBrowserRouter([
                 path: "biodata/:id",
                 element: <ShowFullBiodata />,
               },
+              {
+                path: "office-bearers",
+                element: <OfficeBearer />,
+              },
             ],
           },
         ],
@@ -379,6 +386,14 @@ const appRoutes = createBrowserRouter([
           {
             path: "all-adv",
             element: <Advertisements />,
+          },
+          {
+            path: "office_bearer_member",
+            element: <OfficeBearerAdmin />,
+          },
+          {
+            path: "office_bearer_samaj",
+            element: <Samaj />,
           },
         ],
       },

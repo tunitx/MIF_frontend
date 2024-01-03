@@ -52,6 +52,14 @@ const navigation = [
     href: "/admin/matrimony-users",
   },
   {
+    name: "Office Bearer",
+    href: "office_bearer_member",
+  },
+  {
+    name: "Office Bearer Samaj",
+    href: "office_bearer_samaj",
+  },
+  {
     name: "Modify Castes",
     href: "/admin/add-caste",
   },

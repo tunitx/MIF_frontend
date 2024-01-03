@@ -81,9 +81,9 @@ export default function CarouselVideo({ slides }) {
             src={slides[current]?.url}
             width="560"
             // height="315"
-            frameborder="0"
+            frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen
+            allowFullScreen
             className="h-[250px] lg:h-[280px] xl:h-[315px] w-full sm:w-[320px] lg:w-[400px] xl:w-[520px]"
           ></iframe>
         </div>

@@ -3,7 +3,7 @@ import aboutus_entrepreneur from "../../assests/images/aboutus_entrepreneur.webp
 import aboutus_network from "../../assests/images/aboutus_network.webp";
 import aboutus_networking from "../../assests/images/aboutus_networking.webp";
 import aboutus_team from "../../assests/images/aboutus_team.webp";
-import aboutus_entrepreneur from "../../assests/images/aboutus_entrepreneur.webp";
+// import aboutus_entrepreneur from "../../assests/images/aboutus_entrepreneur.webp";
 import aboutus_skill_development from "../../assests/images/aboutus_skill-development.webp";
 import aboutus_social_care from "../../assests/images/aboutus_social-care.webp";
 import aboutus_women_entrepreneur from "../../assests/images/aboutus_women_entrepreneur.webp";
@@ -43,6 +43,16 @@ export const GET_PRESS_CUTOUTS = BASE_URL + "pressCutout/all";
 export const DELETE_PRESS_CUTOUT = BASE_URL + "pressCutout/";
 
 export const GET_BIODATA_BY_ID = BASE_URL + "biodata/";
+
+// office-bearers
+
+export const POST_SAMAJ = BASE_URL + "office_bearer/samaj/new";
+export const POST_OFFICE_BEARER = BASE_URL + "office_bearer/new";
+export const GET_ALL_SAMAJ = BASE_URL + "office_bearer/samaj/all";
+export const GET_ALL_BEARER = BASE_URL + "office_bearer/all";
+export const DELETE_SAMAJ = BASE_URL + "office_bearer/samaj/";
+export const DELETE_BEARER = BASE_URL + "office_bearer/";
+export const UPDATE_BEARER = BASE_URL + "office_bearer/";
 
 export const responsive = {
   superLargeDesktop: {

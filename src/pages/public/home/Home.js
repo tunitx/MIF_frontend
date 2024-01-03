@@ -23,7 +23,7 @@ const Home = () => {
       <Header />
       <MissionVisionSection />
       <Aboutus />
-      <VideoSection />
+      {/* <VideoSection /> */}
       <FounderSection />
       <MIF_news exploreMore={true} />
       <Network />

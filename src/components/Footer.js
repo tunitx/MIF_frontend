@@ -65,7 +65,7 @@ const Footer = () => {
       <div className="w-full flex flex-col items-center md:flex-row px-5 py-16 gap-12 md:gap-8   max-w-7xl">
         {/* Non-Advertisment Section of Footer */}
 
-        <div className="w-full flex flex-col items-center sm:flex-row   gap-8 max-w-7xl">
+        <div className="w-full flex flex-col items-center sm:flex-row   gap-10 max-w-7xl">
           {/* Company Logo Section */}
 
           <div className="w-full flex justify-center flex-col  gap-4 sm:justify-start items-center">
@@ -156,58 +156,67 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Quick Link Section */}
-
-          {/* <div className="w-full flex justify-center flex-col text-center gap-2 sm:justify-start">
-          <p className="font-semibold font-Poppins text-xl ">
-            <strong>Quick Links</strong>
-          </p>
-          <ul className=" font-Poppins text-base flex flex-col">
-            <li className="hover:cursor-pointer">
-              <Link to={"/about"}>About</Link>
-            </li>
-            <li className="hover:cursor-pointer">
-              <Link to={"/press"}>Press</Link>
-            </li>
-            <li className="hover:cursor-pointer">
-              <Link
-                to={
-                  "https://app.marwadiinternationalfederation.com/india-network"
-                }
-              >
-                Network
-              </Link>
-            </li>
-            <li className="hover:cursor-pointer">
-              <Link to={"/gallery"}>Gallery</Link>
-            </li>
-            <li className="hover:cursor-pointer">
-              <Link to={"/list-of-members"}>Members</Link>
-            </li>
-            <li className="hover:cursor-pointer">
-              <Link to={"/book-marwadi-vyapari"}>Publication</Link>
-            </li>
-          </ul>
-        </div> */}
-
           {/* Contact Us Section */}
 
           <div className="font-Poppins  flex flex-col gap-8 sm:justify-start">
-            <div className="flex flex-col justify-center gap-1 text-center">
+            <div className="flex flex-col justify-start gap-4 text-center">
               <p className="font-semibold font-Poppins text-xl">
                 <strong>Contact Us</strong>
               </p>
-              <p>
-                <strong>Email: </strong> marwadiif@gmail.com
-              </p>
-              <p>
-                <strong>Contact: </strong> +91 9314503871
-              </p>
-              <p>
-                <strong>Address: </strong> ABHYAM, C-121 A, Lal Kothi Opp Jyoti
-                Nagar Thana, near Rajasthan Vidhan Sabha, Jaipur, Rajasthan
-                302015
-              </p>
+              <div className="flex flex-col gap-3">
+                <p className="flex gap-3 items-start justify-start">
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      height="1.2rem"
+                      viewBox="0 0 512 512"
+                      fill="#fff"
+                    >
+                      {/*!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.*/}
+                      <path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z" />
+                    </svg>
+                  </span>
+                  <span>
+                    {" "}
+                    <strong>Email: </strong> marwadiif@gmail.com
+                  </span>
+                </p>
+                <p className="flex gap-3 items-start justify-start">
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      height="1.2rem"
+                      viewBox="0 0 512 512"
+                      fill="#fff"
+                    >
+                      {/*!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.*/}
+                      <path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z" />
+                    </svg>
+                  </span>
+                  <span>
+                    <strong>Phone: </strong> +91 9314503871
+                  </span>{" "}
+                </p>
+                <p className="flex gap-3 items-start text-left justify-start">
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      height="1.2rem"
+                      viewBox="0 0 384 512"
+                      fill="#fff"
+                    >
+                      {/*!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.*/}
+                      <path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z" />
+                    </svg>
+                  </span>
+                  <span>
+                    {" "}
+                    <strong>Address: </strong> ABHYAM, C-121 A, Lal Kothi Opp
+                    Jyoti Nagar Thana, near Rajasthan Vidhan Sabha, Jaipur,
+                    Rajasthan 302015
+                  </span>
+                </p>
+              </div>
             </div>
             {/* <div>
             <p className="text-center"> Total Users : {visitorCount}</p>
@@ -219,7 +228,7 @@ const Footer = () => {
         <div className="w-full p-5 max-w-md  sm:px-5 sm:py-2 flex justify-center items-center h-full">
           <AutoplaySlider
             play={true}
-            interval={3000}
+            interval={2000}
             organicArrows={false}
             animation="cubeAnimation"
             bullets={false}

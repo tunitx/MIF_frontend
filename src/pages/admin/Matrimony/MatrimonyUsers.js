@@ -4,6 +4,7 @@ import { BASE_URL } from '../../../utils/constants';
 import BiodataCard from '../../public/marwadi_matrimony/BiodataCard';
 import AddNewCaste from './AddNewCaste';
 import CasteTable from './AllCastes';
+import EditBioData from '../../public/marwadi_matrimony/EditBioData';
 const MarriageUsers = () => {
     const [biodatas, setBiodatas] = useState([]);
     const [selectedBiodatas, setSelectedBiodatas] = useState([]);
@@ -14,7 +15,10 @@ const MarriageUsers = () => {
     const [openCardId, setOpenCardId] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(10);
-   
+    const [inputValue, setInputValue] = useState('10');
+    const [editingBiodata, setEditingBiodata] = useState(null);
+    const [editing , setEditing ] = useState(false);
+
 
     const handleToggleBiodataCard = (biodata, id) => {
         if (openCardId === id) {
@@ -28,6 +32,17 @@ const MarriageUsers = () => {
             handleViewOfTables(biodata);
         }
         setBiodataCardOpen(!isBiodataCardOpen);
+    };
+    const handleInputChange = (event) => {
+        setInputValue(event.target.value);
+    };
+    const handleInputBlur = () => {
+        const newValue = parseInt(inputValue, 10);
+        if (!isNaN(newValue) && newValue > 0) {
+            setItemsPerPage(newValue);
+        } else {
+            setInputValue(itemsPerPage.toString());
+        }
     };
     useEffect(() => {
         setViewingBiodata(null);
@@ -62,7 +77,7 @@ const MarriageUsers = () => {
                 <p className=" text-gray-900 font-bold text-2x font-Poppins text-lg ">Matrimony Users Details</p>
 
             </div>
-           
+
             <div className="overflow-x-auto fade-in w-full flex justify-center mb-16">
 
                 <table className="w-full border-2 border-[#305D2B] max-w-7xl">
@@ -155,7 +170,7 @@ const MarriageUsers = () => {
                         Next
                     </button>
                 </div> */}
-            <div className="flex justify-center space-x-4">
+            <div className="flex justify-center space-x-4 mb-8">
                 <button
                     className={`px-4 py-2 rounded bg-blue-500 text-white ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
                     onClick={() => setCurrentPage((old) => Math.max(old - 1, 1))}
@@ -181,7 +196,30 @@ const MarriageUsers = () => {
                 >
                     Next
                 </button>
+
+                <div className="flex justify-center space-x-4 ">
+                    <input
+                        type="number"
+                        min="1"
+                        value={inputValue}
+                        onChange={handleInputChange}
+                        onBlur={handleInputBlur}
+                        className="px-2 py-1 rounded border-2 border-gray-300 mr-2 ml-24"
+
+                        aria-label="Set items per page"
+                    />
+
+                    <button
+                        className="px-4 py-2 rounded bg-blue-500 text-white"
+                        onClick={handleInputBlur}
+                    >
+                        Go
+                    </button>
+
+                </div>
             </div>
+
+
 
             <div className="overflow-x-auto fade-in w-full flex justify-center mb-24">
                 <table className="w-full border-2 border-[#305D2B] max-w-7xl">
@@ -194,6 +232,7 @@ const MarriageUsers = () => {
                                 <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">Created At</th>
                                 <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">Close</th>
                                 <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">View</th>
+                                <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">Edit</th>
                             </tr>
                         </thead>
                     )}
@@ -210,10 +249,19 @@ const MarriageUsers = () => {
                                         setBiodataCardOpen(false)
                                     }}>Close this table</button>
                                 </td>
+
                                 <td className="p-2 border-r border-[#EF4D48] text-center text-[#333] whitespace-nowrap font-bold font-Poppins">
                                     <button onClick={() => handleToggleBiodataCard(biodata, biodata._id)}>
                                         {openCardId === biodata._id ? 'Close Biodata Card' : 'View Biodata Card'}
                                     </button>
+                                </td>
+                                <td className="p-2 border-r border-[#EF4D48] text-center text-[#333] whitespace-nowrap font-bold font-Poppins">
+                                    <button onClick={() => {setEditingBiodata(biodata)
+                                               setEditing(!editing)             
+                                }
+                                    
+                                    
+                                    }>Edit</button>
                                 </td>
                             </tr>
                         ))}
@@ -223,8 +271,9 @@ const MarriageUsers = () => {
             <div className="w-full grid grid-col-1 sm:grid-cols-2 lg:grid-cols-3   gap-4">
 
                 {isBiodataCardOpen && biodataView && <BiodataCard data={biodataView} />}
-
+              
             </div>
+            {editing && editingBiodata && <EditBioData biodata={editingBiodata} />}
 
         </>
     );

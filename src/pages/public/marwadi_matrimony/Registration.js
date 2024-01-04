@@ -288,6 +288,28 @@ function Registration() {
     }
   }, [foundCaste]);
 
+  // function getGotra(surname) {
+  //   let result = {};
+  //   Object.entries(bioData.Baniya).forEach(([key, values]) => {
+  //     if (
+  //       values
+  //         .map((value) => value.toLowerCase())
+  //         .includes(surname.toLowerCase())
+  //     ) {
+  //       const foundSurname = values
+  //         .map((value) => value.toLowerCase())
+  //         .find((value) => value.includes(surname.toLowerCase()));
+  //       const capitalizedSurname =
+  //         foundSurname.charAt(0).toUpperCase() + foundSurname.slice(1);
+  //       result = {
+  //         caste: "Baniya",
+  //         subcaste: key,
+  //         surname: capitalizedSurname,
+  //       };
+  //     }
+  //   });
+  //   return result;
+  // }
   function getGotra(surname) {
     let result = {};
     Object.entries(bioData).forEach(([caste, subcastes]) => {

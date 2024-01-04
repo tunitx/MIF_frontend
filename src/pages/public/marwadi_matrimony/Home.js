@@ -74,10 +74,6 @@ const Home = () => {
               axios
                 .post(`${IS_USER_ALREADY_EXIST}`, result.value)
                 .then((response) => {
-                  // if (response.data.error) {
-                  //   throw new Error(response.data.error);
-                  // }
-
                   // ? If user already exist, than throw the error.
 
                   if (response.data.success) {
@@ -120,7 +116,11 @@ const Home = () => {
 
                     Swal.fire({
                       title: "Enter the OTP",
-                      html: '<input type="number" id="swal-input1" class="swal2-input" placeholder="OTP">',
+                      html:
+                        '<input type="number" id="swal-input1" class="swal2-input" placeholder="OTP">' +
+                        `<p>Please wait while we a send a OTP to ******${result.value.phoneNumber.slice(
+                          6
+                        )}</p>`,
                       preConfirm: () => {
                         const otp_rececived =
                           Swal.getPopup().querySelector("#swal-input1").value;
@@ -185,39 +185,6 @@ const Home = () => {
                         }
                       }
                     });
-
-                    // return { ...result.value };
-
-                    // here the OTP verification will take place
-
-                    //   function opt_generator() {
-                    //     return (
-                    //       Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000
-                    //     );
-                    //   }
-
-                    //   const opt_sent = opt_generator();
-
-                    //   const opt_message_request_url = `${Fast2SMS_OPT_API_ENDPOINT}?authorization=${Fast2SMS_OPT_API_KEY}&variables_values=${opt_sent}&route=otp&numbers=${result.value.phoneNumber}`;
-
-                    //   axios
-                    //     .get(opt_message_request_url)
-                    //     .then((response) => {
-                    //       console.log(response);
-                    //     })
-                    //     .catch((e) => {
-                    //       console.log(e);
-                    //     });
-                    // }
-
-                    // const token = response.data.token;
-                    // // console.log(token);
-                    // const name = result.value.name;
-                    // localStorage.setItem("jwtToken", token);
-                    // localStorage.setItem("userName", name);
-                    // setUserName(name);
-                    // setAction(path);
-                    console.log(response);
                   }
                 })
                 .catch((error) => {
@@ -228,103 +195,18 @@ const Home = () => {
               handleAction(path);
             }
           });
-
-          // For taking OTP input
-
-          // .then((result) => {
-          //   if (result.isConfirmed) {
-          //     Swal.fire({
-          //       title: "Enter the OTP",
-          //       html:
-          //         '<input type="text" id="swal-input1" class="swal2-input" placeholder="OTP">' +
-          //         `<p>OTP sent to ******${result.value.phoneNumber.slice(
-          //           6
-          //         )}</p>`,
-          //       preConfirm: () => {
-          //         const otp =
-          //           Swal.getPopup().querySelector("#swal-input1").value;
-          //         // const phoneNumber =
-          //         //   Swal.getPopup().querySelector("#swal-input2").value;
-          //         // const email = Swal.getPopup().querySelector("#swal-input3").value; //? Email is optional
-          //         // const password =
-          //         //   Swal.getPopup().querySelector("#swal-input4").value;
-
-          //         // Validation for phone number
-          //         // const otpPattern = /^[0-9]{4}$/; // Adjust this pattern to match the phone number format you want
-          //         // if (!phoneNumberPattern.test(phoneNumber)) {
-          //         //   Swal.showValidationMessage(`Please enter a valid phone number`);
-          //         //   return false;
-          //         // }
-
-          //         // // Validation for password
-          //         // if (password.length < 6) {
-          //         //   Swal.showValidationMessage(
-          //         //     `Password should be at least 6 characters`
-          //         //   );
-          //         //   return false;
-          //         // }
-
-          //         if (!otp) {
-          //           Swal.showValidationMessage(`Please enter the OTP`);
-          //           return false;
-          //         }
-          //       },
-          //     });
-          //   } else if (result.isDenied) {
-          //     handleAction(path);
-          //   }
-          // });
-          // then((result) => {
-          //   if (result.isConfirmed) {
-          //     axios
-          //       .post(`${BASE_URL}marriage-user/signup`, result.value)
-          //       .then((response) => {
-          //         if (response.data.error) {
-          //           throw new Error(response.data.error);
-          //         }
-          //         const token = response.data.token;
-          //         // console.log(token);
-          //         const name = result.value.name;
-          //         localStorage.setItem("jwtToken", token);
-          //         localStorage.setItem("userName", name);
-          //         setUserName(name);
-          //         setAction(path);
-          //       })
-          //       .catch((error) => {
-          //         Swal.fire("User already Exists!", error.message, "error");
-          //       });
-          //   } else if (result.isDenied) {
-          //     handleAction(path);
-          //   }
-          // });
         } else if (result.isDenied) {
           // ? Sign In Form
 
           Swal.fire({
             title: "Sign In",
             html: '<input type="text" id="swal-input1" class="swal2-input" placeholder="Phone Number">',
-            // '<input type="password" id="swal-input2" class="swal2-input" placeholder="Password">' +
-            // '<div><input type="checkbox" id="swal-input3"> Show Password</div>',
             focusConfirm: false,
             showDenyButton: true,
             denyButtonText: "Back",
-            // didOpen: () => {
-            //   document
-            //     .getElementById("swal-input3")
-            //     .addEventListener("change", function () {
-            //       const passwordInput = document.getElementById("swal-input2");
-            //       if (this.checked) {
-            //         passwordInput.type = "text";
-            //       } else {
-            //         passwordInput.type = "password";
-            //       }
-            //     });
-            // },
             preConfirm: () => {
               const phoneNumber =
                 Swal.getPopup().querySelector("#swal-input1").value;
-              // const password =
-              //   Swal.getPopup().querySelector("#swal-input2").value;
 
               // Validation for phone number
               const phoneNumberPattern = /^[0-9]{10}$/; // Adjust this pattern to match the phone number format you want
@@ -332,15 +214,6 @@ const Home = () => {
                 Swal.showValidationMessage(`Please enter a valid phone number`);
                 return false;
               }
-
-              // Validation for password
-              // if (password.length < 6) {
-              //   Swal.showValidationMessage(
-              //     `Password should be at least 6 characters`
-              //   );
-              //   return false;
-              // }
-
               if (!phoneNumber) {
                 Swal.showValidationMessage(
                   `Please enter both phone number and password`
@@ -357,10 +230,6 @@ const Home = () => {
               axios
                 .post(`${IS_USER_ALREADY_EXIST}`, result.value)
                 .then((response) => {
-                  // if (response.data.error) {
-                  //   throw new Error(response.data.error);
-                  // }
-
                   // ? If user doesn't already exist, than throw the error.
 
                   if (!response.data.success) {
@@ -403,7 +272,11 @@ const Home = () => {
 
                     Swal.fire({
                       title: "Enter the OTP",
-                      html: '<input type="number" id="swal-input1" class="swal2-input" placeholder="OTP">',
+                      html:
+                        '<input type="number" id="swal-input1" class="swal2-input" placeholder="OTP">' +
+                        `<p>Please wait while we a send a OTP to ******${result.value.phoneNumber.slice(
+                          6
+                        )}</p>`,
                       preConfirm: () => {
                         const otp_rececived =
                           Swal.getPopup().querySelector("#swal-input1").value;
@@ -462,64 +335,12 @@ const Home = () => {
                         }
                       }
                     });
-
-                    // return { ...result.value };
-
-                    // here the OTP verification will take place
-
-                    //   function opt_generator() {
-                    //     return (
-                    //       Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000
-                    //     );
-                    //   }
-
-                    //   const opt_sent = opt_generator();
-
-                    //   const opt_message_request_url = `${Fast2SMS_OPT_API_ENDPOINT}?authorization=${Fast2SMS_OPT_API_KEY}&variables_values=${opt_sent}&route=otp&numbers=${result.value.phoneNumber}`;
-
-                    //   axios
-                    //     .get(opt_message_request_url)
-                    //     .then((response) => {
-                    //       console.log(response);
-                    //     })
-                    //     .catch((e) => {
-                    //       console.log(e);
-                    //     });
-                    // }
-
-                    // const token = response.data.token;
-                    // // console.log(token);
-                    // const name = result.value.name;
-                    // localStorage.setItem("jwtToken", token);
-                    // localStorage.setItem("userName", name);
-                    // setUserName(name);
-                    // setAction(path);
-                    console.log(response);
                   }
                 })
                 .catch((error) => {
                   Swal.fire("User doesn't exist.", error.message, "error");
                   // console.log("Something went wrong");
                 });
-
-              // axios
-              //   .post(`${BASE_URL}marriage-user/signin`, result.value)
-              //   .then((response) => {
-              //     if (response.data.error) {
-              //       throw new Error(response.data.error);
-              //     }
-              //     console.log(response.data);
-              //     const token = response.data.token;
-              //     const name = response.data.user.name;
-
-              //     localStorage.setItem("jwtToken", token);
-              //     localStorage.setItem("userName", name);
-              //     setUserName(name);
-              //     setAction(path);
-              //   })
-              //   .catch((error) => {
-              //     Swal.fire("Wrong Credentials!", error.message, "error");
-              //   });
             } else if (result.isDenied) {
               handleAction(path);
             }

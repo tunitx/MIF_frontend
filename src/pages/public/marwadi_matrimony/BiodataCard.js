@@ -1,4 +1,5 @@
 import React from "react";
+import { capitalizeSentence } from "../../../utils/helper";
 
 const BiodataCard = ({ data, setShowImage, setShowBiodataFrame }) => {
   const {
@@ -93,7 +94,7 @@ const BiodataCard = ({ data, setShowImage, setShowBiodataFrame }) => {
                 setShowBiodataFrame(data);
             }}
           >
-            {`${firstName} ${capitalize(surname)}`}
+            {`${capitalizeSentence(firstName)} ${capitalizeSentence(surname)}`}
           </p>
           <p className="font-Poppins text-sm text-gray-800">
             ({formatedGotra}, {ageInYear}yr.,{" "}

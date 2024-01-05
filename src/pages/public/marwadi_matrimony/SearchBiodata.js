@@ -166,7 +166,12 @@ function SearchBiodata() {
                 setNoResponseError(true);
               }
 
-              const data = await response.json();
+              let data = await response.json();
+
+              data = data.filter((d) => {
+                return !d.matured && !d.discard;
+              });
+
               setSearchedBiodatas(data);
             } catch (error) {
               setNoResponseError(true);

@@ -6,6 +6,7 @@ import {
   IS_USER_ALREADY_EXIST,
   MATRIMONY_SIGNIN,
   MATRIMONY_SIGNUP,
+  PHONE_NUMBERS_TO_NOT_VERIFY_OTP_FOR,
 } from "../../../utils/constants";
 import { useParams } from "react-router-dom";
 import BiodataFrame from "./biodataFrame/BiodataFrame";
@@ -116,34 +117,46 @@ const ShowFullBiodata = () => {
                   // ? Else send the OTP
                   else {
                     // ? Generating and Sending the OTP
+                    let opt_sent;
 
-                    function opt_generator() {
-                      return (
-                        Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000
-                      );
-                    }
+                    if (
+                      // This is surpass some numbers, form the otp verification, for the phone numbers, in the PHONE_NUMBERS_TO_NOT_VERIFY_OTP_FOR array,
+                      // opt will be 1111, and no otp will be sent to these numbers.
 
-                    const opt_sent = opt_generator();
-
-                    const opt_message_request_url = `${Fast2SMS_OPT_API_ENDPOINT}?authorization=${Fast2SMS_OPT_API_KEY}&variables_values=${opt_sent}&route=otp&numbers=${result.value.phoneNumber}`;
-
-                    axios
-                      .get(opt_message_request_url)
-                      .then((response) => {
-                        // ? If the OTP is successfully sent, continue
-
-                        console.log(response);
-                      })
-                      .catch((e) => {
-                        // ? If the OTP is not successfully sent, than do this
-
-                        Swal.fire(
-                          "Something went wrong",
-                          "Please try again later."
+                      PHONE_NUMBERS_TO_NOT_VERIFY_OTP_FOR.includes(
+                        result.value.phoneNumber
+                      )
+                    ) {
+                      opt_sent = 1111;
+                    } else {
+                      function opt_generator() {
+                        return (
+                          Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000
                         );
+                      }
 
-                        console.log(e);
-                      });
+                      opt_sent = opt_generator();
+
+                      const opt_message_request_url = `${Fast2SMS_OPT_API_ENDPOINT}?authorization=${Fast2SMS_OPT_API_KEY}&variables_values=${opt_sent}&route=otp&numbers=${result.value.phoneNumber}`;
+
+                      axios
+                        .get(opt_message_request_url)
+                        .then((response) => {
+                          // ? If the OTP is successfully sent, continue
+
+                          console.log(response);
+                        })
+                        .catch((e) => {
+                          // ? If the OTP is not successfully sent, than do this
+
+                          Swal.fire(
+                            "Something went wrong",
+                            "Please try again later."
+                          );
+
+                          console.log(e);
+                        });
+                    }
 
                     // ? Asking for the OTP from the user.
 
@@ -274,33 +287,46 @@ const ShowFullBiodata = () => {
                   else {
                     // ? Generating and Sending the OTP
 
-                    function opt_generator() {
-                      return (
-                        Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000
-                      );
-                    }
+                    let opt_sent;
 
-                    const opt_sent = opt_generator();
+                    if (
+                      // This is surpass some numbers, form the otp verification, for the phone numbers, in the PHONE_NUMBERS_TO_NOT_VERIFY_OTP_FOR array,
+                      // opt will be 1111, and no otp will be sent to these numbers.
 
-                    const opt_message_request_url = `${Fast2SMS_OPT_API_ENDPOINT}?authorization=${Fast2SMS_OPT_API_KEY}&variables_values=${opt_sent}&route=otp&numbers=${result.value.phoneNumber}`;
-
-                    axios
-                      .get(opt_message_request_url)
-                      .then((response) => {
-                        // ? If the OTP is successfully sent, continue
-
-                        console.log(response);
-                      })
-                      .catch((e) => {
-                        // ? If the OTP is not successfully sent, than do this
-
-                        Swal.fire(
-                          "Something went wrong",
-                          "Please try again later."
+                      PHONE_NUMBERS_TO_NOT_VERIFY_OTP_FOR.includes(
+                        result.value.phoneNumber
+                      )
+                    ) {
+                      opt_sent = 1111;
+                    } else {
+                      function opt_generator() {
+                        return (
+                          Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000
                         );
+                      }
 
-                        console.log(e);
-                      });
+                      opt_sent = opt_generator();
+
+                      const opt_message_request_url = `${Fast2SMS_OPT_API_ENDPOINT}?authorization=${Fast2SMS_OPT_API_KEY}&variables_values=${opt_sent}&route=otp&numbers=${result.value.phoneNumber}`;
+
+                      axios
+                        .get(opt_message_request_url)
+                        .then((response) => {
+                          // ? If the OTP is successfully sent, continue
+
+                          console.log(response);
+                        })
+                        .catch((e) => {
+                          // ? If the OTP is not successfully sent, than do this
+
+                          Swal.fire(
+                            "Something went wrong",
+                            "Please try again later."
+                          );
+
+                          console.log(e);
+                        });
+                    }
 
                     // ? Asking for the OTP from the user.
 

@@ -63,6 +63,10 @@ const navigation = [
     name: "Modify Castes",
     href: "/admin/add-caste",
   },
+  {
+    name: "Active Biodatas",
+    href: "/admin/matrimony_profiles",
+  },
 ];
 
 export default function AdminNavbar() {

@@ -7,7 +7,7 @@ import Public from "./src/Public";
 import dotenv from "dotenv";
 import RegistrationForm from "./src/pages/public/organisation/JoinUs";
 dotenv.config();
-
+import BiodataTables from "./src/pages/admin/Matrimony/MatrimonyProfiles";
 import ListOfMembers from "./src/pages/public/list_of_members/ListOfMembers";
 import AddNewCaste from "./src/pages/admin/Matrimony/AddNewCaste";
 
@@ -399,6 +399,10 @@ const appRoutes = createBrowserRouter([
           {
             path: "office_bearer_member",
             element: <OfficeBearerAdmin />,
+          },
+          {
+            path: "matrimony_profiles",
+            element: <BiodataTables />,
           },
           {
             path: "office_bearer_samaj",

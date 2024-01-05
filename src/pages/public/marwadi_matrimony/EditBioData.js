@@ -65,7 +65,7 @@ function EditBioData({ biodata }) {
   const [selectedState, setSelectedState] = useState(biodata.state || "");
   const [selectedCity, setSelectedCity] = useState(biodata.city || "");
   const [cities, setCities] = useState([]);
-  
+
   // const [caste, setCaste] = useState(biodata.caste || "");
   // const [subcaste, setSubcaste] = useState(biodata.subcaste || "");
   // const [gotra, setGotra] = useState("");
@@ -456,8 +456,8 @@ function EditBioData({ biodata }) {
     }
 
     console.log(values);
-    const admin = JSON.parse(localStorage.getItem('admin'));
-    const jwtToken = localStorage.getItem('jwtToken');
+    const admin = JSON.parse(localStorage.getItem("admin"));
+    const jwtToken = localStorage.getItem("jwtToken");
     const token = admin?.token || jwtToken;
 
     // const headers = {
@@ -536,9 +536,7 @@ function EditBioData({ biodata }) {
           currentAddressCity: biodata.currentAddressCity,
           currentAddressState: biodata.currentAddressState,
           currentAddressScope: biodata.currentAddressScope,
-          heightFeet: Math.round(Number(biodata.heightInCms) / 30.48).toFixed(
-            2
-          ),
+          heightFeet: biodata.heightFeet,
           complexion: biodata.complexion,
           education: biodata.education,
           occupation: biodata.occupation,

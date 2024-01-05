@@ -105,6 +105,11 @@ const MarriageUsers = () => {
                     </thead>
                     <tbody className="w-full">
                         {biodatas
+                         .sort((a, b) => {
+                            const aLastSignIn = a.timeStamp && a.timeStamp.length > 0 ? new Date(a.timeStamp[a.timeStamp.length - 1]) : new Date(0);
+                            const bLastSignIn = b.timeStamp && b.timeStamp.length > 0 ? new Date(b.timeStamp[b.timeStamp.length - 1]) : new Date(0);
+                            return bLastSignIn - aLastSignIn;
+                        })
                             .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
 
                             .map((biodata, index) => (

@@ -54,6 +54,26 @@ export const DELETE_SAMAJ = BASE_URL + "office_bearer/samaj/";
 export const DELETE_BEARER = BASE_URL + "office_bearer/";
 export const UPDATE_BEARER = BASE_URL + "office_bearer/";
 
+// Matrimony-user
+export const IS_USER_ALREADY_EXIST = BASE_URL + "marriage-user/is-user-exist";
+export const MATRIMONY_SIGNUP = BASE_URL + "marriage-user/signup";
+export const MATRIMONY_SIGNIN = BASE_URL + "marriage-user/signin";
+
+// Fast2SMS get request api
+
+export const Fast2SMS_OPT_API_ENDPOINT = "https://www.fast2sms.com/dev/bulkV2";
+
+export const Fast2SMS_OPT_API_KEY =
+  "mVpxAKGk7usyJz1FTelWn60Z9ShfjEBXbroiNgPCaUw3MYqH8I9vx1KrdJRaQhLYeWScn80VXBgljiPZ";
+
+export const PHONE_NUMBERS_TO_NOT_VERIFY_OTP_FOR = [
+  "9414041872",
+  "9351758536",
+  "9460764056",
+  "9461041872",
+  "9660623448",
+];
+
 export const responsive = {
   superLargeDesktop: {
     breakpoint: { max: 4000, min: 3000 },

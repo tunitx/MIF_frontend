@@ -1,11 +1,18 @@
 import React, { useState, useContext } from "react";
-import Header from "../../../components/matrimony/Header";
 import { Link, useNavigate } from "react-router-dom";
 import ConsentAddBiodata from "./ConsentAddBiodata";
 import ConsentSearchBiodata from "./ConsentSearchBiodata";
 import Swal from "sweetalert2";
 import axios from "axios";
-import { BASE_URL } from "../../../utils/constants";
+import {
+  BASE_URL,
+  Fast2SMS_OPT_API_ENDPOINT,
+  Fast2SMS_OPT_API_KEY,
+  IS_USER_ALREADY_EXIST,
+  MATRIMONY_SIGNIN,
+  MATRIMONY_SIGNUP,
+  PHONE_NUMBERS_TO_NOT_VERIFY_OTP_FOR,
+} from "../../../utils/constants";
 import UserContext from "../../../utils/context/UserContext";
 
 const Home = () => {
@@ -29,36 +36,22 @@ const Home = () => {
         denyButtonText: "Sign In",
       }).then((result) => {
         if (result.isConfirmed) {
+          // ? Sign Up Form
+
           Swal.fire({
             title: "Sign Up",
             html:
               '<input type="text" id="swal-input1" class="swal2-input" placeholder="Name">' +
               '<input type="text" id="swal-input2" class="swal2-input" placeholder="Phone Number">' +
-              '<input type="text" id="swal-input3" class="swal2-input" placeholder="Email (Optional)">' +
-              '<input type="password" id="swal-input4" class="swal2-input" placeholder="Password">' +
-              '<div><input type="checkbox" id="swal-input5"> Show Password</div>',
+              '<input type="text" id="swal-input3" class="swal2-input" placeholder="Email (Optional)">',
             focusConfirm: false,
             showDenyButton: true,
             denyButtonText: "Back",
-            didOpen: () => {
-              document
-                .getElementById("swal-input5")
-                .addEventListener("change", function () {
-                  const passwordInput = document.getElementById("swal-input4");
-                  if (this.checked) {
-                    passwordInput.type = "text";
-                  } else {
-                    passwordInput.type = "password";
-                  }
-                });
-            },
             preConfirm: () => {
               const name = Swal.getPopup().querySelector("#swal-input1").value;
               const phoneNumber =
                 Swal.getPopup().querySelector("#swal-input2").value;
-              const email = Swal.getPopup().querySelector("#swal-input3").value; //? Email is optional
-              const password =
-                Swal.getPopup().querySelector("#swal-input4").value;
+              const email = Swal.getPopup().querySelector("#swal-input3").value;
 
               // Validation for phone number
               const phoneNumberPattern = /^[0-9]{10}$/; // Adjust this pattern to match the phone number format you want
@@ -66,74 +59,168 @@ const Home = () => {
                 Swal.showValidationMessage(`Please enter a valid phone number`);
                 return false;
               }
-
-              // Validation for password
-              if (password.length < 6) {
+              if (!name || !phoneNumber) {
                 Swal.showValidationMessage(
-                  `Password should be at least 6 characters`
+                  `Please enter your name, phone number`
                 );
                 return false;
               }
 
-              if (!name || !phoneNumber || !password) {
-                Swal.showValidationMessage(
-                  `Please enter your name, phone number, and password`
-                );
-                return false;
-              }
-
-              return { name, phoneNumber, email, password };
+              return { name, phoneNumber, email };
             },
           }).then((result) => {
             if (result.isConfirmed) {
+              // ? Checking if the user already exist
+
               axios
-                .post(`${BASE_URL}marriage-user/signup`, result.value)
+                .post(`${IS_USER_ALREADY_EXIST}`, result.value)
                 .then((response) => {
-                  if (response.data.error) {
-                    throw new Error(response.data.error);
+                  // ? If user already exist, than throw the error.
+
+                  if (response.data.success) {
+                    throw new Error(response.data.message);
                   }
-                  const token = response.data.token;
-                  // console.log(token);
-                  const name = result.value.name;
-                  localStorage.setItem("jwtToken", token);
-                  localStorage.setItem("userName", name);
-                  setUserName(name);
-                  setAction(path);
+
+                  // ? Else send the OTP
+                  else {
+                    // ? Generating and Sending the OTP
+
+                    let opt_sent;
+
+                    if (
+                      // This is surpass some numbers, form the otp verification, for the phone numbers, in the PHONE_NUMBERS_TO_NOT_VERIFY_OTP_FOR array,
+                      // opt will be 1111, and no otp will be sent to these numbers.
+
+                      PHONE_NUMBERS_TO_NOT_VERIFY_OTP_FOR.includes(
+                        result.value.phoneNumber
+                      )
+                    ) {
+                      opt_sent = 1111;
+                    } else {
+                      function opt_generator() {
+                        return (
+                          Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000
+                        );
+                      }
+
+                      opt_sent = opt_generator();
+
+                      const opt_message_request_url = `${Fast2SMS_OPT_API_ENDPOINT}?authorization=${Fast2SMS_OPT_API_KEY}&variables_values=${opt_sent}&route=otp&numbers=${result.value.phoneNumber}`;
+
+                      axios
+                        .get(opt_message_request_url)
+                        .then((response) => {
+                          // ? If the OTP is successfully sent, continue
+
+                          console.log(response);
+                        })
+                        .catch((e) => {
+                          // ? If the OTP is not successfully sent, than do this
+
+                          Swal.fire(
+                            "Something went wrong",
+                            "Please try again later."
+                          );
+
+                          console.log(e);
+                        });
+                    }
+
+                    // ? Asking for the OTP from the user.
+
+                    Swal.fire({
+                      title: "Enter the OTP",
+                      html:
+                        '<input type="number" id="swal-input1" class="swal2-input" placeholder="OTP">' +
+                        `<p>Please wait while we a send a OTP to ******${result.value.phoneNumber.slice(
+                          6
+                        )}</p>`,
+                      preConfirm: () => {
+                        const otp_rececived =
+                          Swal.getPopup().querySelector("#swal-input1").value;
+                        if (!otp_rececived) {
+                          Swal.showValidationMessage(`Please enter the OTP`);
+                          return false;
+                        }
+
+                        return {
+                          opt_sent,
+                          otp_rececived,
+                          phoneNumber: result.value.phoneNumber,
+                          name: result.value.name,
+                          email: result.value.email,
+                        };
+                      },
+                    }).then((result) => {
+                      // ? After taking the input of the image from the user, check if the OTP is correct or not.
+
+                      if (result.isConfirmed) {
+                        if (
+                          result.value.opt_sent ===
+                          Number(result.value.otp_rececived)
+                        ) {
+                          // Swal.fire("GOOD");
+                          Swal.fire({
+                            icon: "success",
+                            title: "Verified",
+                            text: "OTP has been successfully verified.",
+                          });
+
+                          // ? Sending request to the backend
+
+                          axios
+                            .post(`${MATRIMONY_SIGNUP}`, {
+                              phoneNumber: result.value.phoneNumber,
+                              name: result.value.name,
+                              email: result.value.email,
+                            })
+                            .then((response) => {
+                              console.log(response);
+
+                              if (response.data.error) {
+                                throw new Error(response.data.error);
+                              }
+                              const token = response.data.token;
+                              // console.log(token);
+                              const name = result.value.name;
+                              localStorage.setItem("jwtToken", token);
+                              localStorage.setItem("userName", name);
+                              setUserName(name);
+                              setAction(path);
+                            })
+                            .catch((error) => {
+                              Swal.fire(
+                                "Something went wrong",
+                                "Please try again later."
+                              );
+                            });
+                        } else {
+                          Swal.fire("Wrong OTP", "error");
+                        }
+                      }
+                    });
+                  }
                 })
                 .catch((error) => {
                   Swal.fire("User already Exists!", error.message, "error");
+                  // console.log("Something went wrong");
                 });
             } else if (result.isDenied) {
               handleAction(path);
             }
           });
         } else if (result.isDenied) {
+          // ? Sign In Form
+
           Swal.fire({
             title: "Sign In",
-            html:
-              '<input type="text" id="swal-input1" class="swal2-input" placeholder="Phone Number">' +
-              '<input type="password" id="swal-input2" class="swal2-input" placeholder="Password">' +
-              '<div><input type="checkbox" id="swal-input3"> Show Password</div>',
+            html: '<input type="text" id="swal-input1" class="swal2-input" placeholder="Phone Number">',
             focusConfirm: false,
             showDenyButton: true,
             denyButtonText: "Back",
-            didOpen: () => {
-              document
-                .getElementById("swal-input3")
-                .addEventListener("change", function () {
-                  const passwordInput = document.getElementById("swal-input2");
-                  if (this.checked) {
-                    passwordInput.type = "text";
-                  } else {
-                    passwordInput.type = "password";
-                  }
-                });
-            },
             preConfirm: () => {
               const phoneNumber =
                 Swal.getPopup().querySelector("#swal-input1").value;
-              const password =
-                Swal.getPopup().querySelector("#swal-input2").value;
 
               // Validation for phone number
               const phoneNumberPattern = /^[0-9]{10}$/; // Adjust this pattern to match the phone number format you want
@@ -141,43 +228,145 @@ const Home = () => {
                 Swal.showValidationMessage(`Please enter a valid phone number`);
                 return false;
               }
-
-              // Validation for password
-              if (password.length < 6) {
-                Swal.showValidationMessage(
-                  `Password should be at least 6 characters`
-                );
-                return false;
-              }
-
-              if (!phoneNumber || !password) {
+              if (!phoneNumber) {
                 Swal.showValidationMessage(
                   `Please enter both phone number and password`
                 );
                 return false;
               }
 
-              return { phoneNumber, password };
+              return { phoneNumber };
             },
           }).then((result) => {
             if (result.isConfirmed) {
-              axios
-                .post(`${BASE_URL}marriage-user/signin`, result.value)
-                .then((response) => {
-                  if (response.data.error) {
-                    throw new Error(response.data.error);
-                  }
-                  console.log(response.data);
-                  const token = response.data.token;
-                  const name = response.data.user.name;
+              // ? Checking if the user already exist
 
-                  localStorage.setItem("jwtToken", token);
-                  localStorage.setItem("userName", name);
-                  setUserName(name);
-                  setAction(path);
+              axios
+                .post(`${IS_USER_ALREADY_EXIST}`, result.value)
+                .then((response) => {
+                  // ? If user doesn't already exist, than throw the error.
+
+                  if (!response.data.success) {
+                    throw new Error(response.data.message);
+                  }
+
+                  // ? Else send the OTP
+                  else {
+                    // ? Generating and Sending the OTP
+
+                    let opt_sent;
+
+                    if (
+                      // This is surpass some numbers, form the otp verification, for the phone numbers, in the PHONE_NUMBERS_TO_NOT_VERIFY_OTP_FOR array,
+                      // opt will be 1111, and no otp will be sent to these numbers.
+
+                      PHONE_NUMBERS_TO_NOT_VERIFY_OTP_FOR.includes(
+                        result.value.phoneNumber
+                      )
+                    ) {
+                      opt_sent = 1111;
+                    } else {
+                      function opt_generator() {
+                        return (
+                          Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000
+                        );
+                      }
+
+                      opt_sent = opt_generator();
+
+                      const opt_message_request_url = `${Fast2SMS_OPT_API_ENDPOINT}?authorization=${Fast2SMS_OPT_API_KEY}&variables_values=${opt_sent}&route=otp&numbers=${result.value.phoneNumber}`;
+
+                      axios
+                        .get(opt_message_request_url)
+                        .then((response) => {
+                          // ? If the OTP is successfully sent, continue
+
+                          console.log(response);
+                        })
+                        .catch((e) => {
+                          // ? If the OTP is not successfully sent, than do this
+
+                          Swal.fire(
+                            "Something went wrong",
+                            "Please try again later."
+                          );
+
+                          console.log(e);
+                        });
+                    }
+
+                    // ? Asking for the OTP from the user.
+
+                    Swal.fire({
+                      title: "Enter the OTP",
+                      html:
+                        '<input type="number" id="swal-input1" class="swal2-input" placeholder="OTP">' +
+                        `<p>Please wait while we a send a OTP to ******${result.value.phoneNumber.slice(
+                          6
+                        )}</p>`,
+                      preConfirm: () => {
+                        const otp_rececived =
+                          Swal.getPopup().querySelector("#swal-input1").value;
+                        if (!otp_rececived) {
+                          Swal.showValidationMessage(`Please enter the OTP`);
+                          return false;
+                        }
+
+                        return {
+                          opt_sent,
+                          otp_rececived,
+                          phoneNumber: result.value.phoneNumber,
+                        };
+                      },
+                    }).then((result) => {
+                      // ? After taking the input of the image from the user, check if the OTP is correct or not.
+
+                      if (result.isConfirmed) {
+                        if (
+                          result.value.opt_sent ===
+                          Number(result.value.otp_rececived)
+                        ) {
+                          Swal.fire({
+                            icon: "success",
+                            title: "Verified",
+                            text: "OTP has been successfully verified.",
+                          });
+
+                          // ? Sending request to the backend
+
+                          axios
+                            .post(`${MATRIMONY_SIGNIN}`, {
+                              phoneNumber: result.value.phoneNumber,
+                            })
+                            .then((response) => {
+                              if (response.data.error) {
+                                throw new Error(response.data.error);
+                              }
+                              console.log(response.data);
+                              const token = response.data.token;
+                              const name = response.data.user.name;
+
+                              localStorage.setItem("jwtToken", token);
+                              localStorage.setItem("userName", name);
+                              setUserName(name);
+                              setAction(path);
+                            })
+                            .catch((error) => {
+                              Swal.fire(
+                                "Something went wrong",
+                                "Please try again later."
+                              );
+                            });
+                        } else {
+                          Swal.fire("Wrong OTP", "error");
+                        }
+                      }
+                    });
+                  }
                 })
                 .catch((error) => {
-                  Swal.fire("Wrong Credentials!", error.message, "error");
+                  Swal.fire("User doesn't exist.", error.message, "error");
+                  // console.log("Something went wrong");
                 });
             } else if (result.isDenied) {
               handleAction(path);

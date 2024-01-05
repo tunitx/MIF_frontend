@@ -1,4 +1,5 @@
 import React from "react";
+import { capitalizeSentence } from "../../../utils/helper";
 
 const BiodataCard = ({ data, setShowImage, setShowBiodataFrame }) => {
   const {
@@ -17,6 +18,7 @@ const BiodataCard = ({ data, setShowImage, setShowBiodataFrame }) => {
     currentAddress,
     nativePlace,
     heightInCms,
+    heightInFeets,
     phoneNumbers,
     preference,
     educationDetails,
@@ -92,10 +94,13 @@ const BiodataCard = ({ data, setShowImage, setShowBiodataFrame }) => {
                 setShowBiodataFrame(data);
             }}
           >
-            {`${firstName} ${capitalize(surname)}`}
+            {`${capitalizeSentence(firstName)} ${capitalizeSentence(surname)}`}
           </p>
           <p className="font-Poppins text-sm text-gray-800">
-            ({formatedGotra}, {ageInYear}yr., {(heightInCms / 30.48).toFixed(2)}{" "}
+            ({formatedGotra}, {ageInYear}yr.,{" "}
+            {heightInFeets
+              ? `${heightInFeets}`
+              : (heightInCms / 30.48).toFixed(2)}{" "}
             ft, {formatedComplexion});
           </p>
         </div>

@@ -15,7 +15,7 @@ import ReactPaginate from "react-paginate";
 import mifBride from "../../../../assests/images/mifBride.webp";
 import mifGroom from "../../../../assests/images/mifGroom.webp";
 import { usePagination } from "../../../hooks/usePagination";
-
+import { BASE_URL } from "../../../utils/constants";
 const heights = [
   "Less than 4 fts.",
   "4-4.5 fts.",
@@ -33,9 +33,10 @@ function SearchBiodata() {
   const [subcaste, setSubcaste] = useState("");
   const [excludedGotras, setExcludedGotras] = useState([]);
   const [height, setHeight] = useState("");
-  const gotras = caste && subcaste ? bioData[caste][subcaste] : [];
-  const castes = Object.keys(bioData);
-  const subcastes = caste ? Object.keys(bioData[caste]) : [];
+  const [bioData, setBioData] = useState({});
+  // const gotras = caste && subcaste ? bioData[caste][subcaste] : [];
+  // const castes = Object.keys(bioData);
+  // const subcastes = caste ? Object.keys(bioData[caste]) : [];
 
   const navigate = useNavigate();
 
@@ -52,7 +53,39 @@ function SearchBiodata() {
   const [showBiodataFrame, setShowBiodataFrame] = useState(null);
 
   // For Pagination
+  useEffect(() => {
+    const token = localStorage.getItem("jwtToken");
+    if (!token) navigate("/matrimony");
+  }, []);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [step]);
+
+  useEffect(() => {
+    const jwtToken = localStorage.getItem("jwtToken");
+    const token = jwtToken;
+
+    const headers = {
+      "Content-Type": "application/json",
+    };
+    if (token) {
+      headers["authorization"] = `Bearer ${token}`;
+    }
+
+    fetch(`${BASE_URL}getBiodata`, { headers })
+      .then((response) => response.json())
+      .then((data) => setBioData(data))
+      .catch((error) => console.log(error));
+  }, []);
+
+  const castes = Object.keys(bioData);
+  const subcastes =
+    bioData && caste && bioData[caste] ? Object.keys(bioData[caste]) : [];
+  const gotras =
+    bioData && caste && subcaste && bioData[caste] && bioData[caste][subcaste]
+      ? bioData[caste][subcaste]
+      : [];
   const {
     currentPage,
     handlePageChange,

@@ -225,27 +225,29 @@ const Footer = () => {
         </div>
 
         {/*Advertisment Section of Footer */}
-        <div className="w-full p-5 max-w-md  sm:px-5 sm:py-2 flex justify-center items-center h-full">
-          <AutoplaySlider
-            play={true}
-            interval={2000}
-            organicArrows={false}
-            animation="cubeAnimation"
-            bullets={false}
-            className="rounded-md"
-          >
-            {/* <div>1</div>
-            <div>2</div>
-            <div>3</div> */}
-            {categorisedAds?.map((ad) => {
-              return (
-                <div key={ad._id} className="rounded-md">
-                  <img src={ad.businessImage} className="rounded-md" />
-                </div>
-              );
-            })}
-          </AutoplaySlider>
-        </div>
+        {categorisedAds?.length > 0 && (
+          <div className="w-full p-5 max-w-md  sm:px-5 sm:py-2 flex justify-center items-center h-full">
+            <AutoplaySlider
+              play={true}
+              interval={2000}
+              organicArrows={false}
+              animation="cubeAnimation"
+              bullets={false}
+              className="rounded-md"
+            >
+              {/* <div>1</div>
+          <div>2</div>
+          <div>3</div> */}
+              {categorisedAds?.map((ad) => {
+                return (
+                  <div key={ad._id} className="rounded-md">
+                    <img src={ad.businessImage} className="rounded-md" />
+                  </div>
+                );
+              })}
+            </AutoplaySlider>
+          </div>
+        )}
       </div>
 
       {/* Copyright Section */}

@@ -88,9 +88,6 @@ const Home = () => {
                     let opt_sent;
 
                     if (
-                      // This is surpass some numbers, form the otp verification, for the phone numbers, in the PHONE_NUMBERS_TO_NOT_VERIFY_OTP_FOR array,
-                      // opt will be 1111, and no otp will be sent to these numbers.
-
                       PHONE_NUMBERS_TO_NOT_VERIFY_OTP_FOR.includes(
                         result.value.phoneNumber
                       )

@@ -12,7 +12,7 @@ const QuickInformationSection = ({ info }) => {
     dob,
     city,
     timeOfBirth,
-    heightInCms,
+    heightFeet,
     nativePlace,
     image1,
     firstName,
@@ -136,7 +136,7 @@ const QuickInformationSection = ({ info }) => {
                   <span>Height: </span>
                   <span className="text-matrimony_orange">
                     {" "}
-                    {(heightInCms / 30.48).toFixed(2)} fts.
+                    {heightFeet} fts.
                   </span>
                 </p>
                 <p className="m-0">

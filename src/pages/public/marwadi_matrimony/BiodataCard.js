@@ -18,7 +18,7 @@ const BiodataCard = ({ data, setShowImage, setShowBiodataFrame }) => {
     currentAddress,
     nativePlace,
     heightInCms,
-    heightInFeets,
+    heightFeet,
     phoneNumbers,
     preference,
     educationDetails,
@@ -97,11 +97,8 @@ const BiodataCard = ({ data, setShowImage, setShowBiodataFrame }) => {
             {`${capitalizeSentence(firstName)} ${capitalizeSentence(surname)}`}
           </p>
           <p className="font-Poppins text-sm text-gray-800">
-            ({formatedGotra}, {ageInYear}yr.,{" "}
-            {heightInFeets
-              ? `${heightInFeets}`
-              : (heightInCms / 30.48).toFixed(2)}{" "}
-            ft, {formatedComplexion});
+            ({formatedGotra}, {ageInYear}yr., {heightFeet} ft,{" "}
+            {formatedComplexion});
           </p>
         </div>
         {/* Svg section of phone, emial */}

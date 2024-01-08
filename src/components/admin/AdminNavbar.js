@@ -67,6 +67,10 @@ const navigation = [
     name: "Active Biodatas",
     href: "/admin/matrimony_profiles",
   },
+  {
+    name: "Approve Members",
+    href: "/admin/pending-approvals",
+  },
 ];
 
 export default function AdminNavbar() {

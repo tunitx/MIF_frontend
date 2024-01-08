@@ -711,9 +711,8 @@ function Registration() {
               <MultiStepProgressBar page={step} />
               <form
                 onSubmit={formik.handleSubmit}
-                className={`w-full flex flex-col justify-center mt-10 items-center gap-16 max-w-4xl ${
-                  formik.isSubmitting ? "opacity-50" : ""
-                }`}
+                className={`w-full flex flex-col justify-center mt-10 items-center gap-16 max-w-4xl ${formik.isSubmitting ? "opacity-50" : ""
+                  }`}
               >
                 {step === 1 && (
                   <div className="w-full max-w-full flex flex-col justify-between items-center gap-14">
@@ -728,11 +727,10 @@ function Registration() {
                         <img
                           src={mifGroom}
                           alt="groom"
-                          className={`fade-in w-full hover:cursor-pointer bg-[#f7f3f5] box-border shadow-xl delay-150 duration-300 transition-transform border-2 border-orange-500 rounded-full p-2 ${
-                            formik.values.gender === "male"
-                              ? ""
-                              : "border-none hover:scale-110"
-                          } `}
+                          className={`fade-in w-full hover:cursor-pointer bg-[#f7f3f5] box-border shadow-xl delay-150 duration-300 transition-transform border-2 border-orange-500 rounded-full p-2 ${formik.values.gender === "male"
+                            ? ""
+                            : "border-none hover:scale-110"
+                            } `}
                           onClick={() => {
                             formik.setFieldValue("gender", "male");
                             setStep((s) => s + 1);
@@ -757,11 +755,10 @@ function Registration() {
                         <img
                           src={mifBride}
                           alt="bride"
-                          className={`fade-in w-full hover:cursor-pointer bg-[#f7f3f5] box-border shadow-xl delay-150 duration-300 transition-transform border-2 border-orange-500 rounded-full p-2 ${
-                            formik.values.gender === "female"
-                              ? ""
-                              : "border-none hover:scale-110"
-                          } `}
+                          className={`fade-in w-full hover:cursor-pointer bg-[#f7f3f5] box-border shadow-xl delay-150 duration-300 transition-transform border-2 border-orange-500 rounded-full p-2 ${formik.values.gender === "female"
+                            ? ""
+                            : "border-none hover:scale-110"
+                            } `}
                           onClick={() => {
                             formik.setFieldValue("gender", "female");
                             setStep((s) => s + 1);
@@ -2375,6 +2372,8 @@ function Registration() {
                           Upload upto 5 MB in PDF, JPEG, PNG, Docs format only.
                         </p>
                       </div>
+
+
                       {biodataFile ? (
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -2618,7 +2617,7 @@ function Registration() {
                                           />
                                         </div>
                                         {index === 0 &&
-                                        validateFirstPhoneNumber ? (
+                                          validateFirstPhoneNumber ? (
                                           <p className="mt-1 fade-in text-sm fade-in font-mono leading-6 text-[#EF4D48]">
                                             {validateFirstPhoneNumber}
                                           </p>
@@ -3507,11 +3506,10 @@ function Registration() {
                   )}
                   {step < 8 && step > 1 && (
                     <div
-                      className={`w-full  flex ${
-                        step === 1
-                          ? "justify-center"
-                          : "sm:justify-end justify-center"
-                      }`}
+                      className={`w-full  flex ${step === 1
+                        ? "justify-center"
+                        : "sm:justify-end justify-center"
+                        }`}
                     >
                       <button
                         onClick={() => {

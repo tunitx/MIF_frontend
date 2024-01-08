@@ -5,9 +5,10 @@ import AppLayout from "./src/AppLayout";
 import Home from "./src/pages/public/home/Home";
 import Public from "./src/Public";
 import dotenv from "dotenv";
-import RegistrationForm from "./src/pages/public/organisation/JoinUs";
+import RegistrationForm from "./src/pages/public/organisation/JoinUsCorporate";
+import RegistrationFormForMembership from "./src/pages/public/organisation/joinUsMember";
 dotenv.config();
-
+import BiodataTables from "./src/pages/admin/Matrimony/MatrimonyProfiles";
 import ListOfMembers from "./src/pages/public/list_of_members/ListOfMembers";
 import AddNewCaste from "./src/pages/admin/Matrimony/AddNewCaste";
 
@@ -150,7 +151,7 @@ import BiodataFrame from "./src/pages/public/marwadi_matrimony/biodataFrame/Biod
 import OfficeBearer from "./src/pages/public/marwadi_matrimony/office_bearer/OfficeBearer";
 import Samaj from "./src/pages/admin/office_bearer/Samaj";
 import OfficeBearerAdmin from "./src/pages/admin/office_bearer/OfficeBearer";
-
+import CorporateMembers from "./src/pages/admin/join-us/CorporateMembers";
 const appRoutes = createBrowserRouter([
   {
     path: "/",
@@ -201,6 +202,14 @@ const appRoutes = createBrowserRouter([
             element: (
               <Suspense>
                 <RegistrationForm />
+              </Suspense>
+            ),
+          },
+          {
+            path: "/join-us-member",
+            element: (
+              <Suspense>
+                <RegistrationFormForMembership />
               </Suspense>
             ),
           },
@@ -357,6 +366,10 @@ const appRoutes = createBrowserRouter([
             element: <AdminHome />,
           },
           {
+            path: "pending-approvals",
+            element: <CorporateMembers />,
+          },
+          {
             path: "press",
             element: <AdminPress />,
           },
@@ -399,6 +412,10 @@ const appRoutes = createBrowserRouter([
           {
             path: "office_bearer_member",
             element: <OfficeBearerAdmin />,
+          },
+          {
+            path: "matrimony_profiles",
+            element: <BiodataTables />,
           },
           {
             path: "office_bearer_samaj",

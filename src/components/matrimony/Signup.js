@@ -10,6 +10,8 @@ const Signup = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+
+  
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

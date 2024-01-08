@@ -93,8 +93,12 @@ const navigation = [
         href: "https://app.marwadiinternationalfederation.com/form",
       },
       {
-        name: "Membership",
-        href: "#",
+        name: "Corporate Membership",
+        href: "/join-us",
+      },
+      {
+        name: "Individual Membership",
+        href: "/join-us-member",
       },
     ],
   },

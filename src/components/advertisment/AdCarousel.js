@@ -22,6 +22,7 @@ const AdCarousel = ({ itemsPerFrame, category }) => {
     verticalSwiping: true,
   };
 
+  if (!categorisedAds) return null;
   if (categorisedAds?.length === 0) return null;
 
   return (

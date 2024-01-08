@@ -1,5 +1,13 @@
 import { useState } from "react";
 
+/**
+ * usePagination Hook
+ *
+ * @param {Function} perPageItem - Function to determine items per page
+ * @param {Array} data - Array of data to paginate
+ * @returns {Object} - Pagination state and functions
+ */
+
 export const usePagination = (perPageItem, data) => {
   const [currentPage, setCurrentPage] = useState(0);
 

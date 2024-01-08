@@ -63,8 +63,8 @@ function SearchBiodata() {
     if (window.innerWidth < 640) {
       return 4;
     } else if (window.innerWidth < 1024) {
-      return 2;
-    } else return 3;
+      return 4;
+    } else return 6;
   }, filteredBiodatas);
 
   useEffect(() => {
@@ -72,9 +72,9 @@ function SearchBiodata() {
       if (window.innerWidth < 640) {
         setItemsPerPage(4);
       } else if (window.innerWidth < 1024) {
-        setItemsPerPage(2);
+        setItemsPerPage(4);
       } else {
-        setItemsPerPage(3);
+        setItemsPerPage(6);
       }
     };
 
@@ -95,6 +95,10 @@ function SearchBiodata() {
   useEffect(() => {
     setFilteredBioDatas(searchedBiodatas);
   }, [searchedBiodatas]);
+
+  useEffect(() => {
+    handlePageChange({ selected: 0 });
+  }, [filteredBiodatas]);
 
   const nextStep = () => {
     setStep((prevStep) => prevStep + 1);
@@ -343,13 +347,14 @@ function SearchBiodata() {
                     <div className="w-full fade-in gap-8 flex flex-col pt-1 justify-center items-center">
                       {/* Caste And SubCaste Dropdown */}
 
-                      <div className="w-full flex flex-col gap-3 sm:flex-row md:gap-8">
+                      {/* <div className="w-full flex flex-col gap-3 sm:flex-row md:gap-8"> */}
+                      <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-5">
                         {/* Caste Dropdown */}
 
-                        <div className="w-full flex gap-2 items-center justify-center">
+                        <div className="w-full flex gap-2 flex-col items-center justify-center">
                           <label
                             htmlFor="caste"
-                            className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
+                            className="font-semibold text-sm font-Poppins w-full text-left tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
                           >
                             Caste:
                           </label>
@@ -364,7 +369,7 @@ function SearchBiodata() {
                             className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
                           >
                             <option value="" disabled>
-                              Select caste
+                              -- Select Caste --
                             </option>
                             {castes.map((c) => (
                               <option key={c} value={c}>
@@ -376,10 +381,10 @@ function SearchBiodata() {
 
                         {/* SubCaste Dopdown */}
 
-                        <div className="w-full flex gap-2 items-center justify-center">
+                        <div className="w-full flex gap-2 flex-col items-center justify-center">
                           <label
                             htmlFor="subcaste"
-                            className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
+                            className="font-semibold text-sm font-Poppins w-full text-left tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
                           >
                             Subcaste:
                           </label>
@@ -394,7 +399,7 @@ function SearchBiodata() {
                             className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
                           >
                             <option value="" disabled>
-                              Select subcaste
+                              -- Select Subcaste --
                             </option>
                             {subcastes.map((s) => (
                               <option key={s} value={s}>
@@ -419,12 +424,14 @@ function SearchBiodata() {
                           name="gotra"
                           render={(arrayHelpers) => (
                             <div className="w-full flex flex-col gap-3">
-                              <div className="w-full flex flex-col  items-center gap-2 sm:flex-row sm:flex-wrap">
+                              {/* <div className="w-full flex flex-col  items-center gap-2 sm:flex-row sm:flex-wrap"> */}
+                              <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-5">
                                 {formik.values.gotra &&
                                   formik.values.gotra.map((g, index) => (
                                     <div
                                       key={index}
-                                      className=" w-full fade-in max-w-sm "
+                                      // className=" w-full fade-in max-w-sm "
+                                      className=" w-full fade-in "
                                     >
                                       <select
                                         id={`gotra.${index}`}
@@ -435,7 +442,7 @@ function SearchBiodata() {
                                         className="w-full  border  rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
                                       >
                                         <option value={""} disabled>
-                                          Exclude Gotra
+                                          -- Select Gotra to Exclude --
                                         </option>
                                         {gotras.map((gg, index) => {
                                           return (
@@ -470,13 +477,14 @@ function SearchBiodata() {
                     <div className="w-full fade-in gap-8 flex flex-col pt-1 justify-center items-center">
                       {/* Manglik and Height */}
 
-                      <div className="w-full flex flex-col gap-3 sm:flex-row md:gap-8">
+                      {/* <div className="w-full flex flex-col gap-3 sm:flex-row md:gap-8"> */}
+                      <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-5">
                         {/* Manglik */}
 
-                        <div className="w-full flex gap-2 items-center justify-center">
+                        <div className="w-full flex gap-2 flex-col items-center justify-center">
                           <label
                             htmlFor="manglik"
-                            className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
+                            className="font-semibold text-sm font-Poppins w-full text-left tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
                           >
                             Manglik:
                           </label>
@@ -488,7 +496,7 @@ function SearchBiodata() {
                             className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
                           >
                             <option value="" disabled>
-                              Select manglik
+                              -- Select Manglik --
                             </option>
                             <option value="yes">Yes</option>
                             <option value="no">No</option>
@@ -498,10 +506,10 @@ function SearchBiodata() {
 
                         {/* Height */}
 
-                        <div className="w-full flex gap-2 items-center justify-center">
+                        <div className="w-full flex gap-2 flex-col items-center justify-center">
                           <label
                             htmlFor="height"
-                            className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
+                            className="font-semibold text-sm font-Poppins w-full text-left tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
                           >
                             Height:
                           </label>
@@ -516,7 +524,7 @@ function SearchBiodata() {
                             className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
                           >
                             <option value="" disabled>
-                              Select height
+                              -- Select Height --
                             </option>
 
                             {heights.map((h) => (
@@ -530,35 +538,37 @@ function SearchBiodata() {
 
                       {/* Age Slider */}
 
-                      <div className="w-full flex gap-2 items-center justify-center sm:justify-start">
-                        <label
-                          htmlFor="ageRange"
-                          className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] text-left"
-                        >
-                          Age Range:
-                        </label>
-                        <div className="w-full sm:w-1/2 border flex justify-center items-center px-8 py-2 rounded-lg border-[#ca403b]  text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm">
-                          <Slider
-                            sx={sliderStyle}
-                            getAriaLabel={() => "Age Range"}
-                            onChange={(event, newValue) => {
-                              const newAgeRange = {
-                                min: newValue[0],
-                                max: newValue[1],
-                              };
-                              formik.setFieldValue("ageRange", newAgeRange);
-                              setAgeRange(newAgeRange);
-                            }}
-                            value={[ageRange.min, ageRange.max]}
-                            min={minAge}
-                            max={100}
-                            valueLabelDisplay="auto"
-                            valueLabelFormat={(value, index) =>
-                              index === 0
-                                ? `Min Age: ${value}`
-                                : `Max Age: ${value}`
-                            }
-                          />
+                      <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-5">
+                        <div className="w-full flex gap-2 items-center flex-col justify-center sm:justify-start">
+                          <label
+                            htmlFor="ageRange"
+                            className="font-semibold text-sm font-Poppins w-full tracking-wide sm:text-base whitespace-nowrap  text-[#444] text-left"
+                          >
+                            Age Range:
+                          </label>
+                          <div className="w-full  border flex justify-center items-center px-8 py-2 rounded-lg border-[#ca403b]  text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm">
+                            <Slider
+                              sx={sliderStyle}
+                              getAriaLabel={() => "Age Range"}
+                              onChange={(event, newValue) => {
+                                const newAgeRange = {
+                                  min: newValue[0],
+                                  max: newValue[1],
+                                };
+                                formik.setFieldValue("ageRange", newAgeRange);
+                                setAgeRange(newAgeRange);
+                              }}
+                              value={[ageRange.min, ageRange.max]}
+                              min={minAge}
+                              max={100}
+                              valueLabelDisplay="auto"
+                              valueLabelFormat={(value, index) =>
+                                index === 0
+                                  ? `Min Age: ${value}`
+                                  : `Max Age: ${value}`
+                              }
+                            />
+                          </div>
                         </div>
                       </div>
                     </div>

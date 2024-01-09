@@ -31,6 +31,7 @@ const BiodataCard = ({ data, setShowImage, setShowBiodataFrame }) => {
     currentAddressCity,
     currentAddressState,
     currentAddressCountry,
+    pwd,
     _id,
   } = data;
 
@@ -84,7 +85,7 @@ const BiodataCard = ({ data, setShowImage, setShowBiodataFrame }) => {
           {/* </div>{" "} */}
         </div>
 
-        {/* Name, Age, Gotra, Height and Complexion */}
+        {/* Name, Age, Gotra, Height and Complexion, pwd */}
 
         <div className="w-full flex-col flex  justify-center text-center">
           <p
@@ -97,10 +98,22 @@ const BiodataCard = ({ data, setShowImage, setShowBiodataFrame }) => {
             {`${capitalizeSentence(firstName)} ${capitalizeSentence(surname)}`}
           </p>
           <p className="font-Poppins text-sm text-gray-800">
-            ({formatedGotra}, {ageInYear}yr., {heightFeet} ft,{" "}
-            {formatedComplexion});
+            ({formatedGotra}, {ageInYear}yr., {heightFeet}ft,{" "}
+            {formatedComplexion}){" "}
+            {pwd === "yes" && (
+              <span className="text-xs font-Poppins font-medium text-red-500">
+                ( PwD )
+              </span>
+            )}
           </p>
+
+          {/* <p className="m-0 full text-center">
+              <span className="text-xs font-Poppins font-medium text-red-500">
+                ( PwD )
+              </span>
+            </p> */}
         </div>
+
         {/* Svg section of phone, emial */}
 
         <div className="w-full flex flex-row justify-evenly items-center">
@@ -189,7 +202,7 @@ const BiodataCard = ({ data, setShowImage, setShowBiodataFrame }) => {
               Native Place :
             </p>
             <p className="w-full text-center font-sm text-gray-700 font-normal">
-              {nativePlace !== "" ? nativePlace : "-"}
+              {nativePlace !== "" ? capitalizeSentence(nativePlace) : "-"}
             </p>
           </div>
 
@@ -200,8 +213,8 @@ const BiodataCard = ({ data, setShowImage, setShowBiodataFrame }) => {
               Present Address :
             </p>
             <p className="w-full text-center font-sm text-gray-700 font-normal">
-              {currentAddressScope}, {currentAddressCity}, {currentAddressState}
-              , {currentAddressCountry}
+              {currentAddressCity}, {currentAddressState},{" "}
+              {capitalizeSentence(currentAddressCountry)}
             </p>
           </div>
 
@@ -210,7 +223,7 @@ const BiodataCard = ({ data, setShowImage, setShowBiodataFrame }) => {
               Preference :
             </p>
             <p className="w-full text-center font-sm text-gray-700 font-normal">
-              {preference !== "" ? preference : "-"}
+              {preference !== "" ? capitalizeSentence(preference) : "-"}
             </p>
           </div>
           <a

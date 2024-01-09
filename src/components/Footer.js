@@ -13,7 +13,7 @@ const Footer = () => {
   const [visitorCount, setVisitorCount] = useState(6384);
 
   const { categorisedAds } = useAdvertisment("bronze");
-  console.log(categorisedAds);
+  // console.log(categorisedAds);
 
   // useEffect(() => {
   //   const fetchData = async () => {

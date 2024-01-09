@@ -10,6 +10,7 @@ import {
 const QuickInformationSection = ({ info }) => {
   const {
     dob,
+    incomeBracket,
     city,
     timeOfBirth,
     heightFeet,
@@ -27,7 +28,6 @@ const QuickInformationSection = ({ info }) => {
     gotra,
     currentAddress,
     phoneNumbers,
-    preference,
     educationDetails,
     otherProfession,
     profession,
@@ -38,6 +38,11 @@ const QuickInformationSection = ({ info }) => {
     currentAddressCity,
     currentAddressState,
     currentAddressCountry,
+    hobbies,
+    preference,
+    maritalStatus,
+    pwd,
+    disabilityMeasure,
     _id,
   } = info;
 
@@ -60,7 +65,7 @@ const QuickInformationSection = ({ info }) => {
 
       <div className=" w-full flex flex-row items-center justify-start gap-[0.5rem] text-[1.5rem] text-matrimony_text_gray">
         <div className="shrink-0 w-full flex flex-col items-start justify-start gap-[1.5rem]">
-          {/* Important Dates */}
+          {/* Important Details */}
 
           <div className="w-full flex flex-col items-start justify-start gap-[0.75rem]">
             <div className="w-full flex justify-start items-center gap-2">
@@ -70,7 +75,7 @@ const QuickInformationSection = ({ info }) => {
                 src={dipak}
               />
               <div className="relative tracking-[-0.41px] leading-[1.38rem] font-medium inline-block">
-                Important Dates
+                Important Details
               </div>
             </div>
 
@@ -108,7 +113,7 @@ const QuickInformationSection = ({ info }) => {
             </div>
           </div>
 
-          {/* One Word that describes you */}
+          {/* Personal Details */}
 
           <div className="w-full flex flex-col items-start justify-start gap-[0.75rem]">
             <div className="w-full flex justify-start items-center gap-2">
@@ -118,7 +123,7 @@ const QuickInformationSection = ({ info }) => {
                 src={dipak}
               />
               <div className="relative tracking-[-0.41px] leading-[1.38rem] font-medium">
-                One word that describes you
+                Personal Details
               </div>
             </div>
 
@@ -203,9 +208,72 @@ const QuickInformationSection = ({ info }) => {
                       : `${education}`}
                   </span>
                 </p>
+                <p className="m-0">
+                  <span className="text-matrimony_text_gray">{`Income Bracket: `}</span>
+                  <span>{incomeBracket}</span>
+                </p>
               </div>
             </div>
           </div>
+
+          {/* Other Details */}
+
+          {(hobbies?.length > 0 ||
+            preference?.length > 0 ||
+            maritalStatus !== "single" ||
+            pwd === "yes") && (
+            <div className="w-full flex flex-col items-start justify-start gap-[0.75rem]">
+              <div className="w-full flex justify-start items-center gap-2">
+                <img
+                  className="relative w-[1.25rem] h-[1.25rem] object-cover"
+                  alt=""
+                  src={dipak}
+                />
+                <div className="relative tracking-[-0.41px] leading-[1.38rem] font-medium inline-block w-[17.19rem]">
+                  Other Details
+                </div>
+              </div>
+
+              <div className="w-full flex justify-start items-center gap-2">
+                <div className="w-[1.25rem] flex justify-center">
+                  <img
+                    className="relative w-[0.84rem] h-[4.63rem]  object-contain"
+                    alt=""
+                    src={group_2}
+                  />
+                </div>
+
+                <div className="relative text-[1.25rem] tracking-[-0.41px] leading-[1.5rem] whitespace-pre-wrap inline-block w-[17.19rem] text-matrimony_orange">
+                  {hobbies?.length > 0 && (
+                    <p className="m-0">
+                      <span className="text-matrimony_text_gray">{`Hobbies: `}</span>
+                      <span>{hobbies}</span>
+                    </p>
+                  )}
+                  {preference?.length > 0 && (
+                    <p className="m-0">
+                      <span className="text-matrimony_text_gray">{`Preference: `}</span>
+                      <span>{preference}</span>
+                    </p>
+                  )}
+
+                  {maritalStatus !== "single" && (
+                    <p className="m-0">
+                      <span className="text-matrimony_text_gray">{`Marital Status: `}</span>
+                      <span>{capitalizeSentence(maritalStatus)}</span>
+                    </p>
+                  )}
+
+                  {pwd === "yes" && (
+                    <p className="m-0">
+                      <span className="text-matrimony_text_gray">{`Person with Disability: `}</span>
+                      <span>{capitalizeSentence(disabilityMeasure)}</span>
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

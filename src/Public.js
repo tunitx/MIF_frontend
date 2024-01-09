@@ -66,8 +66,9 @@ const Public = () => {
       try {
         const resBody = await fetch(GET_ADVERTISMENTS);
         const resData = await resBody.json();
-
-        return resData;
+        if (resBody.status === 200) {
+          return resData;
+        } else throw new Error("Something went wrong.");
       } catch (e) {
         console.log(e);
       }

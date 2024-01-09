@@ -24,6 +24,7 @@ const Home = () => {
   const handleActionState = (path) => {
     setAction(path);
   };
+
   const handleAction = (path, info) => {
     const token = localStorage.getItem("jwtToken");
     if (token) {
@@ -71,11 +72,18 @@ const Home = () => {
           }).then((result) => {
             if (result.isConfirmed) {
               // ? Checking if the user already exist
+              const swalLoading = Swal.fire({
+                title: "Please wait...",
+                text: "while we are running some authentification checks",
+                allowOutsideClick: false,
+                showConfirmButton: false,
+              });
 
               axios
                 .post(`${IS_USER_ALREADY_EXIST}`, result.value)
                 .then((response) => {
                   // ? If user already exist, than throw the error.
+                  swalLoading.close();
 
                   if (response.data.success) {
                     throw new Error(response.data.message);
@@ -199,7 +207,8 @@ const Home = () => {
                   }
                 })
                 .catch((error) => {
-                  Swal.fire("User already Exists!", error.message, "error");
+                  swalLoading.close();
+                  Swal.fire("Error!", error.message, "error");
                   // console.log("Something went wrong");
                 });
             } else if (result.isDenied) {
@@ -237,12 +246,18 @@ const Home = () => {
           }).then((result) => {
             if (result.isConfirmed) {
               // ? Checking if the user already exist
+              const swalLoading = Swal.fire({
+                title: "Please wait...",
+                text: "while we are running some authentification checks",
+                allowOutsideClick: false,
+                showConfirmButton: false,
+              });
 
               axios
                 .post(`${IS_USER_ALREADY_EXIST}`, result.value)
                 .then((response) => {
                   // ? If user doesn't already exist, than throw the error.
-
+                  swalLoading.close();
                   if (!response.data.success) {
                     throw new Error(response.data.message);
                   }
@@ -362,7 +377,8 @@ const Home = () => {
                   }
                 })
                 .catch((error) => {
-                  Swal.fire("User doesn't exist.", error.message, "error");
+                  swalLoading.close();
+                  Swal.fire("Error!", error.message, "error");
                   // console.log("Something went wrong");
                 });
             } else if (result.isDenied) {
@@ -417,9 +433,9 @@ const Home = () => {
       </div>
 
       {action === "/matrimony/add-biodata" ? (
-        <ConsentAddBiodata />
+        <ConsentAddBiodata setAction={setAction} />
       ) : action === "/matrimony/search-biodata" ? (
-        <ConsentSearchBiodata />
+        <ConsentSearchBiodata setAction={setAction} />
       ) : null}
     </div>
   );

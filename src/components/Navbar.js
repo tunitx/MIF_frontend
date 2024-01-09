@@ -364,7 +364,7 @@ export default function Navbar() {
                 </div>
               </div>
 
-              <div className="flex sm:flex-row flex-col-reverse gap-3 justify-center items-center ">
+              <div className="flex lg:flex-row flex-col-reverse gap-3 justify-center items-center ">
                 <Link to={"/matrimony"}>
                   <button className="flex w-full justify-center max-w-[220px] rounded-md bg-[#EF4D48] px-3 sm:py-3 py-2  text-sm sm:text-base font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ">
                     MIF Marwadi Matrimony

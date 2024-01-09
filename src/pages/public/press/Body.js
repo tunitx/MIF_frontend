@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Swal from "sweetalert2";
-
+import Carousel from "react-multi-carousel";
 import { GET_ALL_PRESS, GET_YEARS_LIST } from "../../../utils/constants";
 import ImagePreview from "./ImagePreview";
 
@@ -32,7 +32,28 @@ const Body = () => {
 
   const [monthsList, setMonthsList] = useState([]);
 
-  const [showImage, setShowImage] = useState(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const [showPressCarousel, setShowPressCarousel] = useState(false);
+
+  const responsive = {
+    superLargeDesktop: {
+      breakpoint: { max: 4000, min: 3000 },
+      items: 1,
+    },
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 1,
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 740 },
+      items: 1,
+    },
+    mobile: {
+      breakpoint: { max: 740, min: 0 },
+      items: 1,
+    },
+  };
 
   function updatesShowPress(forYear, forMonth) {
     if (allPress[forYear]) {
@@ -49,6 +70,18 @@ const Body = () => {
       }
     }
   }
+
+  /**
+   *
+   * @param {*} allPressData
+   * @param {*} yearsListData
+   * @returns data of the press in the format :
+   *
+   *     {
+   *        year1: [press1_object, press2_object],
+   *         year2 : [press1_object, press2_object]
+   *    }
+   */
 
   function structurePressData(allPressData, yearsListData) {
     const structuredData = {};
@@ -90,6 +123,8 @@ const Body = () => {
   useEffect(() => {
     getPress();
   }, []);
+
+  // This is for getting the list of the months, for which press is available for a particukar year
 
   useEffect(() => {
     let list = [];
@@ -184,14 +219,8 @@ const Body = () => {
                     className="w-full min-[450px]:w-1/2 sm:w-1/3 lg:w-1/4 border-[3px] h-80 overflow-hidden p-3 flex items-center group relative hover:cursor-pointer "
                     key={i}
                     onClick={() => {
-                      setShowImage(e);
-                      // Swal.fire({
-                      //   imageUrl: e.imageURL,
-                      //   imageWidth: 500,
-                      //   imageHeight: 500,
-                      //   imageAlt: 'Custom image',
-                      //   confirmButtonText: 'Close'
-                      // });
+                      setCurrentSlide(i);
+                      setShowPressCarousel(true);
                     }}
                   >
                     <div className="absolute inset-0 bg-[#323233] opacity-0 group-hover:opacity-80 transition-opacity duration-300 rounded-md"></div>
@@ -207,12 +236,59 @@ const Body = () => {
           </div>
         </div>
       </div>
-      {showImage && (
-        <ImagePreview
-          data={showImage}
-          showImage={showImage}
-          setShowImage={setShowImage}
-        />
+
+      {showPressCarousel && (
+        <div className="fixed fade-in flex flex-col justify-center items-center gap-8 backdrop-blur  w-screen h-screen top-0 left-0 bg-[#323233] overflow-y-auto overflow-x-auto p-5 bg-opacity-90 z-50">
+          <div className="w-full h-full flex sm:flex-row-reverse flex-col gap-4 justify-center items-center">
+            <div
+              className="self-start flex justify-center  hover:cursor-pointer group mt-2"
+              onClick={() => {
+                setShowPressCarousel(false);
+              }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="2em"
+                viewBox="0 0 384 512"
+                fill="#fff"
+                className="group-hover:fill-[#EF4D48]"
+              >
+                <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
+              </svg>
+            </div>
+
+            <div className="relative pb-4 sm:w-[80vw] w-full">
+              <Carousel
+                // ref={carouselRef}
+                ref={(el) => {
+                  el?.goToSlide(currentSlide, true);
+                }}
+                responsive={responsive}
+                // autoPlay={true}
+                // autoPlaySpeed={2000}
+                transitionDuration={1000}
+                // infinite={true}
+                renderDotsOutside={true}
+                showDots={true}
+                dotListClass="flex gap-2 mt-4 relative flex-wrap"
+                containerClass="mb-10"
+                itemClass="flex justify-center items-center"
+              >
+                {showPress[showYear]?.map((imageSlide, index) => {
+                  return (
+                    <div key={index} className="w-fit  h-fit rounded-lg ">
+                      <img
+                        src={imageSlide.imageURL}
+                        alt={`image${index}`}
+                        className="rounded-lg max-h-[80vh] my-auto "
+                      />
+                    </div>
+                  );
+                })}
+              </Carousel>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

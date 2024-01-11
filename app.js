@@ -11,6 +11,7 @@ dotenv.config();
 import BiodataTables from "./src/pages/admin/Matrimony/MatrimonyProfiles";
 import ListOfMembers from "./src/pages/public/list_of_members/ListOfMembers";
 import AddNewCaste from "./src/pages/admin/Matrimony/AddNewCaste";
+import SlugsComponent from "./src/pages/admin/slugs/Slugs";
 
 // const ListOfMembers = lazy(() => {
 //   return import("./src/pages/public/list_of_members/ListOfMembers");
@@ -152,6 +153,7 @@ import OfficeBearer from "./src/pages/public/marwadi_matrimony/office_bearer/Off
 import Samaj from "./src/pages/admin/office_bearer/Samaj";
 import OfficeBearerAdmin from "./src/pages/admin/office_bearer/OfficeBearer";
 import CorporateMembers from "./src/pages/admin/join-us/CorporateMembers";
+import MembershipType from "./src/pages/public/organisation/JoinUsHome";
 const appRoutes = createBrowserRouter([
   {
     path: "/",
@@ -210,6 +212,14 @@ const appRoutes = createBrowserRouter([
             element: (
               <Suspense>
                 <RegistrationFormForMembership />
+              </Suspense>
+            ),
+          },
+          {
+            path: "/membershipType",
+            element: (
+              <Suspense>
+                <MembershipType />
               </Suspense>
             ),
           },
@@ -420,6 +430,10 @@ const appRoutes = createBrowserRouter([
           {
             path: "office_bearer_samaj",
             element: <Samaj />,
+          },
+          {
+            path: "Slugs",
+            element: <SlugsComponent />,
           },
         ],
       },

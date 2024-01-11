@@ -5,6 +5,8 @@ import { Formik, Field, Form } from 'formik';
 import indiaStates from '../../../utils/indiaStates';
 import * as Yup from 'yup';
 import Swal from 'sweetalert2';
+import { equal } from 'assert';
+import { useNavigate } from 'react-router-dom';
 
 const config = {
     headers: {
@@ -35,6 +37,7 @@ async function getNewToken() {
 }
 getNewToken();
 const RegistrationFormForMembership = () => {
+    const navigate = useNavigate();
     const [location, setLocation] = useState('');
     const [selectedCountry, setSelectedCountry] = useState('');
     const [selectedState, setSelectedState] = useState('');
@@ -45,8 +48,10 @@ const RegistrationFormForMembership = () => {
     const [membershipTypes, setMembershipTypes] = useState([]);
     const formikRef = useRef();
     const [idProof, setIdProof] = useState(null);
+    const [idProof2, setIdProof2] = useState(null);
     const [photo, setPhoto] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [paymentProof, setPaymentProof] = useState(null);
 
     useEffect(() => {
         if (location === "abroad") {
@@ -103,10 +108,10 @@ const RegistrationFormForMembership = () => {
         membershipType: Yup.string().required('Required'),
         address: Yup.string().required('Required'),
         idProof: Yup.mixed().required('Required'),
+        idProof2: Yup.mixed().required('Required'),
         // ccpState: Yup.string().required('Required'),
         // certification: Yup.mixed().required('Required'),
         consentCheckbox: Yup.bool().oneOf([true], 'Must agree to something'),
-        designation: Yup.string().required('Required'),
         // email: Yup.string().email('Invalid email address').required('Required'),
         // idProof: Yup.mixed().required('Required'),
         occupation: Yup.string().required('Required'),
@@ -130,6 +135,7 @@ const RegistrationFormForMembership = () => {
                     membershipType: '',
                     address: '',
                     idProof: null,
+                    idProof2: null,
                     consentCheckbox: true,
                     designation: '',
                     occupation: '',
@@ -161,53 +167,55 @@ const RegistrationFormForMembership = () => {
                 }}
                 onSubmit={async (values, { setSubmitting, setErrors }) => {
                     try {
-                        console.log(values);
-                        // setSubmitting(true);
-                        setIsSubmitting(true);
-
-                        const formData = new FormData();
-
-                        for (let key in values) {
-                            formData.append(key, values[key]);
-                        }
-
-                        // Log FormData
-                        for (let pair of formData.entries()) {
-                            console.log(pair[0] + ', ' + pair[1]);
-                        }
-                        // return
-
-                        const response = await fetch(`${BASE_URL}postMemberDetailsX`, {
-                            method: 'POST',
-                            body: formData
-                        });
-
-                        if (!response.ok) {
-                            console.error('Failed to submit form', response);
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: 'Failed to submit form',
-                            });
-                        } else {
-                            const data = await response.json();
-                            console.log('Form submitted successfully', data);
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Success',
-                                text: 'Form submitted successfully',
-                            });
-                        }
-                    } catch (error) {
-                        setIsSubmitting(false);
-                        Swal.fire({
+                      console.log(values);
+                      setIsSubmitting(true);
+                  
+                      const formData = new FormData();
+                  
+                      for (let key in values) {
+                        formData.append(key, values[key]);
+                      }
+                  
+                      const response = await fetch(`${BASE_URL}postMemberDetailsX`, {
+                        method: 'POST',
+                        body: formData
+                      });
+                  
+                      if (!response.ok) {
+                        const data = await response.json();
+                        if (data.message === 'member already exists') {
+                          Swal.fire({
                             icon: 'error',
                             title: 'Oops...',
-                            text: 'Network error',
+                            text: 'Member already exists, please enter unique Email address & Phone Number',
+                          });
+                        } else {
+                          console.error('Failed to submit form', response);
+                          Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Failed to submit form',
+                          });
+                        }
+                      } else {
+                        const data = await response.json();
+                        console.log('Form submitted successfully', data);
+                        Swal.fire({
+                          icon: 'success',
+                          title: 'Success',
+                          text: 'Form submitted successfully',
                         });
+                        navigate('/');
+                      }
+                    } catch (error) {
+                      setIsSubmitting(false);
+                      Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Network error',
+                      });
                     }
-
-                }}
+                  }}
             >
                 {(formik) => {
                     formikRef.current = formik;
@@ -246,7 +254,7 @@ const RegistrationFormForMembership = () => {
                                             className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
                                         />
                                         <label htmlFor="gender" className="font-semibold text-sm font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left">
-                                            Gender:*
+                                            Gender* :
                                         </label>
 
                                         <select
@@ -272,18 +280,12 @@ const RegistrationFormForMembership = () => {
                                             id="email"
                                             name="email"
                                             type="text"
-                                            onChange={(e) => {
-                                                let a = e.target.value;
-                                                a = a.replace(/\b\w/g, (match) =>
-                                                    match.toUpperCase()
-                                                );
-                                                formik.setFieldValue("email", a);
-                                            }}
+                                            onChange={formik.handleChange}
                                             value={formik.values.email}
                                             placeholder="Email"
                                             className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
                                         />
-                                       
+
                                     </div>
                                     <div className="Sharma w-full flex flex-col sm:flex-row justify-start gap-2 items-center">
                                         <label
@@ -308,10 +310,10 @@ const RegistrationFormForMembership = () => {
                                             </label>
                                             <input type="radio" value="abroad" name="location" className="hover:cursor-pointer" />
                                         </div>
-                                        
 
-                                       
-                                        
+
+
+
                                     </div>
                                     {location && (
                                         <div className="w-full flex flex-col sm:flex-row justify-center  gap-2 items-center">
@@ -319,7 +321,7 @@ const RegistrationFormForMembership = () => {
                                                 htmlFor="address"
                                                 className="font-semibold text-sm font-Poppins sm:w-fit self-start tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left"
                                             >
-                                                Address*
+                                                Address* :
                                             </label>
                                             <textarea
                                                 id="address"
@@ -477,7 +479,7 @@ const RegistrationFormForMembership = () => {
                                                             htmlFor="district"
                                                             className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
                                                         >
-                                                            City*
+                                                            City* :
                                                         </label>
                                                         <select
                                                             id="city"
@@ -505,16 +507,16 @@ const RegistrationFormForMembership = () => {
                                             )}
                                         </>
                                     )}
-                                      <div className="w-full flex flex-col sm:flex-row justify-center gap-2 items-center">
+                                    <div className="w-full flex flex-col sm:flex-row justify-center gap-2 items-center">
 
 
-                                     
-                                     <label htmlFor="phoneNumber" className="font-semibold text-sm font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left">
-                                            Phone Number*
+
+                                        <label htmlFor="phoneNumber" className="font-semibold text-sm font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left">
+                                            Phone Number* :
 
                                         </label>
 
-<input
+                                        <input
                                             id="phoneNumber"
                                             name="phoneNumber"
                                             type="tel"
@@ -523,49 +525,37 @@ const RegistrationFormForMembership = () => {
                                             value={formik.values.phoneNumber}
                                             className="w-full sm:w-1/2 border  rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm "
                                         />
-                                        
-                                            <label
-                                                htmlFor="membershipType"
-                                                className="font-semibold text-sm font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left "
-                                            >
-                                                Membership Type*:
-                                            </label>
 
-                                            <select
-                                                id="membershipType"
-                                                name="membershipType"
-                                                onChange={formik.handleChange}
-                                                value={formik.values.membershipType}
-                                                className="w-full sm:w-1/2 border  rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm "
-                                            >
-                                                <option value="" disabled>
-                                                    Select membership Type
-                                                </option>
-                                                {membershipTypes.map((type, index) => (
-                                                    <option key={index} value={type.name}>
-                                                        {type.name}
-                                                    </option>
-                                                ))}
-                                            </select>
-                                            </div>
-                                    <div className="w-full flex flex-col sm:flex-row justify-center gap-2 items-center">
-                                        <label htmlFor="designation" className="font-semibold text-sm font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left">
-                                            Designation*
-
+                                        <label
+                                            htmlFor="membershipType"
+                                            className="font-semibold text-sm font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left "
+                                        >
+                                            Membership Type* :
                                         </label>
-                                        <input
-                                            id="designation"
-                                            name="designation"
-                                            type="text"
-                                            placeholder="Designation"
+
+                                        <select
+                                            id="membershipType"
+                                            name="membershipType"
                                             onChange={formik.handleChange}
-                                            value={formik.values.designation}
-                                            className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                                        />
-                                        <label htmlFor="occupation" className="font-semibold text-sm font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left">
-                                            Occupation*
+                                            value={formik.values.membershipType}
+                                            className="w-full sm:w-1/2 border  rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm "
+                                        >
+                                            <option value="" disabled>
+                                                Select membership Type
+                                            </option>
+                                            {membershipTypes.map((type, index) => (
+                                                <option key={index} value={type.name}>
+                                                    {type.name}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                    <div className="w-full flex flex-col sm:flex-row gap-2 ">
+                                    <label htmlFor="occupation" className="font-semibold text-sm font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left">
+                                            Occupation* :
 
                                         </label>
+
                                         <input
                                             id="occupation"
                                             name="occupation"
@@ -573,80 +563,202 @@ const RegistrationFormForMembership = () => {
                                             placeholder="Occupation"
                                             onChange={formik.handleChange}
                                             value={formik.values.occupation}
-                                            className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                                            className="w-full sm:w-1/2 border  rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm "
                                         />
+                                        </div>
+
+                                    <div className="flex flex-col sm:flex-row justify-between items-center min-h-fit w-full gap-8 mb-8 mt-8">
+                                        <div className="flex  justify-between items-center min-h-fit  w-full">
+
+                                            <div className="flex flex-col gap-2">
 
 
-                                        {/* </div> */}
+                                                {/* Chief Contact Person Photo */}
+                                                <label htmlFor="photo" className="font-semibold text-sm font-Poppins tracking-wide sm:text-base whitespace-nowrap text-[#444]">
 
-                                    </div>
-                                    <div className="flex  justify-between items-center min-h-fit  w-full">
+                                                    Photo* :
+                                                </label>
+                                                <input
+                                                    style={{ display: "none" }}
+                                                    id="photo"
+                                                    name="photo"
+                                                    type="file"
+                                                    accept="image/png, image/jpeg, image/webp"
+                                                    onChange={(event) => {
+                                                        const file = event.currentTarget.files[0];
+                                                        const maxSize = 5 * 1024 * 1024; // 5 MB
 
-                                        <div className="flex flex-col gap-2">
+                                                        if (file.size > maxSize) {
+                                                            Swal.fire({
+                                                                icon: 'error',
+                                                                title: 'Oops...',
+                                                                text: 'File is too large, please select a file less than 5MB.',
+                                                            });
+                                                            return;
+                                                        }
 
+                                                        formik.setFieldValue("photo", file);
+                                                        setPhoto(file);
+                                                    }}
+                                                />
+                                                <label
+                                                    htmlFor="photo"
+                                                    className="rounded-md bg-[#EF4D48] max-w-[250px] px-3 py-2 text-sm text-center font-semibold text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                                >
+                                                    Select File
+                                                </label>
+                                                <p className="mt-1 text-sm leading-6 text-gray-600">
+                                                    Upload upto 5 MB in PDF, JPEG, PNG, Docs format only.
+                                                </p>
 
-                                            {/* Chief Contact Person Photo */}
-                                            <label htmlFor="photo" className="font-semibold text-sm font-Poppins tracking-wide sm:text-base whitespace-nowrap text-[#444]">
+                                            </div>
+                                            {photo ? (
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    height="2rem"
+                                                    viewBox="0 0 512 512"
+                                                    // fill="#EF4D48"
+                                                    className="fade-in fill-green-700"
+                                                >
+                                                    {/*!Font Awesome Free 6.5.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.*/}
+                                                    <path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z" />
+                                                </svg>
+                                            ) : null}
 
-                                                Photo* :
-                                            </label>
-                                            <input
-                                                style={{ display: "none" }}
-                                                id="photo"
-                                                name="photo"
-                                                type="file"
-                                                accept="image/png, image/jpeg, image/webp"
-                                                onChange={(event) => {
-                                                    formik.setFieldValue("photo", event.currentTarget.files[0]);
-                                                    setPhoto(event.currentTarget.files[0]);
-                                                }}
-                                            />
-                                            <label
-                                                htmlFor="photo"
-                                                className="rounded-md bg-[#EF4D48] max-w-[250px] px-3 py-2 text-sm text-center font-semibold text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                                            >
-                                                Select File
-                                            </label>
-                                            <p className="mt-1 text-sm leading-6 text-gray-600">
-                                                Upload upto 5 MB in PDF, JPEG, PNG, Docs format only.
-                                            </p>
 
                                         </div>
-                                        {photo ? (
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                height="2rem"
-                                                viewBox="0 0 512 512"
-                                                // fill="#EF4D48"
-                                                className="fade-in fill-green-700"
-                                            >
-                                                {/*!Font Awesome Free 6.5.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.*/}
-                                                <path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z" />
-                                            </svg>
-                                        ) : null}
+                                        <div className="flex  justify-between items-center min-h-fit  w-full">
 
+                                            <div className="flex flex-col gap-2">
+                                                <label htmlFor="idProof" className="font-semibold text-sm font-Poppins tracking-wide sm:text-base whitespace-nowrap text-[#444]">
+                                                    PAN Card*:
+
+                                                </label>
+                                                <input
+                                                    style={{ display: "none" }}
+                                                    id="idProof"
+                                                    name="idProof"
+                                                    type="file"
+                                                    accept="image/png, image/jpeg, image/webp"
+                                                    onChange={(event) => {
+                                                        const file = event.currentTarget.files[0];
+                                                        const maxSize = 5 * 1024 * 1024; // 5 MB
+
+                                                        if (file.size > maxSize) {
+                                                            Swal.fire({
+                                                                icon: 'error',
+                                                                title: 'Oops...',
+                                                                text: 'File is too large, please select a file less than 5MB.',
+                                                            });
+                                                            return;
+                                                        }
+
+                                                        formik.setFieldValue("idProof", file);
+                                                        setIdProof(file);
+                                                    }}
+                                                />
+                                                <label
+                                                    htmlFor="idProof"
+                                                    className="rounded-md bg-[#EF4D48] max-w-[250px] px-3 py-2 text-sm text-center font-semibold text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                                >
+                                                    Select File
+                                                </label>
+                                                <p className="mt-1 text-sm leading-6 text-gray-600">
+                                                    Upload upto 5 MB in PDF, JPEG, PNG, Docs format only.
+                                                </p>
+                                            </div>
+                                            {idProof ? (
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    height="2rem"
+                                                    viewBox="0 0 512 512"
+                                                    // fill="#EF4D48"
+                                                    className="fade-in fill-green-700"
+                                                >
+                                                    {/*!Font Awesome Free 6.5.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.*/}
+                                                    <path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z" />
+                                                </svg>
+                                            ) : null}
+
+
+                                        </div>
+                                        <div className="flex  justify-between items-center min-h-fit  w-full">
+
+                                            <div className="flex flex-col gap-2">
+                                                <label htmlFor="idProof" className="font-semibold text-sm font-Poppins tracking-wide sm:text-base whitespace-nowrap text-[#444]">
+                                                    Aadhar Card* :
+
+                                                </label>
+                                                <input
+                                                    style={{ display: "none" }}
+                                                    id="idProof2"
+                                                    name="idProof2"
+                                                    type="file"
+                                                    accept="image/png, image/jpeg, image/webp"
+                                                    onChange={(event) => {
+                                                        const file = event.currentTarget.files[0];
+                                                        const maxSize = 5 * 1024 * 1024; // 5 MB
+
+                                                        if (file.size > maxSize) {
+                                                            Swal.fire({
+                                                                icon: 'error',
+                                                                title: 'Oops...',
+                                                                text: 'File is too large, please select a file less than 5MB.',
+                                                            });
+                                                            return;
+                                                        }
+
+                                                        formik.setFieldValue("idProof2", file);
+                                                        setIdProof2(file);
+                                                    }}
+                                                />
+                                                <label
+                                                    htmlFor="idProof2"
+                                                    className="rounded-md bg-[#EF4D48] max-w-[250px] px-3 py-2 text-sm text-center font-semibold text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                                >
+                                                    Select File
+                                                </label>
+                                                <p className="mt-1 text-sm leading-6 text-gray-600">
+                                                    Upload upto 5 MB in PDF, JPEG, PNG, Docs format only.
+                                                </p>
+                                            </div>
+                                            {idProof2 ? (
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    height="2rem"
+                                                    viewBox="0 0 512 512"
+                                                    // fill="#EF4D48"
+                                                    className="fade-in fill-green-700"
+                                                >
+                                                    {/*!Font Awesome Free 6.5.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.*/}
+                                                    <path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z" />
+                                                </svg>
+                                            ) : null}
+
+
+                                        </div>
 
                                     </div>
                                     <div className="flex  justify-between items-center min-h-fit  w-full">
 
                                         <div className="flex flex-col gap-2">
                                             <label htmlFor="idProof" className="font-semibold text-sm font-Poppins tracking-wide sm:text-base whitespace-nowrap text-[#444]">
-                                                Select ID Proof:
+                                                Proof of Payment:
 
                                             </label>
                                             <input
                                                 style={{ display: "none" }}
-                                                id="idProof"
-                                                name="idProof"
+                                                id="paymentProof"
+                                                name="paymentProof"
                                                 type="file"
                                                 accept="image/png, image/jpeg, image/webp"
                                                 onChange={(event) => {
-                                                    formik.setFieldValue("idProof", event.currentTarget.files[0]);
-                                                    setIdProof(event.currentTarget.files[0]);
+                                                    formik.setFieldValue("paymentProof", event.currentTarget.files[0]);
+                                                    setPaymentProof(event.currentTarget.files[0]);
                                                 }}
                                             />
                                             <label
-                                                htmlFor="idProof"
+                                                htmlFor="paymentProof"
                                                 className="rounded-md bg-[#EF4D48] max-w-[250px] px-3 py-2 text-sm text-center font-semibold text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                             >
                                                 Select File
@@ -655,7 +767,7 @@ const RegistrationFormForMembership = () => {
                                                 Upload upto 5 MB in PDF, JPEG, PNG, Docs format only.
                                             </p>
                                         </div>
-                                        {idProof ? (
+                                        {paymentProof ? (
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 height="2rem"
@@ -681,10 +793,9 @@ const RegistrationFormForMembership = () => {
                                                 className="mr-2"
                                                 defaultChecked
                                             />
-                                            By submitting this form, I consent to Founder General Secretary of
-                                            MARWADI INTERNATIONAL FEDERATION (MIF) for using my name and details
-                                            for records of MIF and its office bearers list. I have read and understood
-                                            all the terms and conditions of MIF.
+                                            By submitting this form, I willingly authorize the Founder General Secretary of the Marwadi International Federation (MIF) to use my name and particulars for the records of MIF and its office bearers list. I confirm my understanding and acceptance of all the terms and conditions set forth by MIF.
+                                            <br></br>
+                                            Furthermore, I recognize that the approval or rejection of my membership in MIF is subject to the discretion of the Founder General Secretary.
                                         </label>
 
                                     </div>

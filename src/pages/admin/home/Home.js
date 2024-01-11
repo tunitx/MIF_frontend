@@ -200,6 +200,14 @@ const Home = () => {
                 >
                   All Advertisements
                 </button>
+                <button
+                  onClick={() => {
+                    setShow("slugs");
+                  }}
+                  className="flex w-full justify-center max-w-[210px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 whitespace-nowrap"
+                >
+                  Slugs
+                </button>
 
               </div>
             )}
@@ -387,6 +395,7 @@ const Home = () => {
                         show === "addNewPress" ? navigate('/admin/press') :
                           show === "matrimonyUsers" ? navigate('/admin/matrimony-users') :
                             show === "officeBearerMember" ? navigate('/admin/office_bearer_member') :
+                            show === "slugs" ? navigate('/admin/slugs') :
                               show === "officeBearerSamaj" ? navigate('/admin/office_bearer_samaj') :
                                 show === "modifyCastes" ? navigate('/admin/add-caste') :
                                   show === "activeBiodatas" ? navigate('/admin/matrimony_profiles') :

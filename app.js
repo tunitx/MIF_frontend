@@ -152,6 +152,8 @@ import OfficeBearer from "./src/pages/public/marwadi_matrimony/office_bearer/Off
 import Samaj from "./src/pages/admin/office_bearer/Samaj";
 import OfficeBearerAdmin from "./src/pages/admin/office_bearer/OfficeBearer";
 import CorporateMembers from "./src/pages/admin/join-us/CorporateMembers";
+import Configuration from "./src/pages/admin/configuration/Configuration";
+
 const appRoutes = createBrowserRouter([
   {
     path: "/",
@@ -420,6 +422,10 @@ const appRoutes = createBrowserRouter([
           {
             path: "office_bearer_samaj",
             element: <Samaj />,
+          },
+          {
+            path: "configuration",
+            element: <Configuration />,
           },
         ],
       },

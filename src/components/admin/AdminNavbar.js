@@ -71,6 +71,10 @@ const navigation = [
     name: "Approve Members",
     href: "/admin/pending-approvals",
   },
+  {
+    name: "Configuration",
+    href: "/admin/configuration",
+  },
 ];
 
 export default function AdminNavbar() {

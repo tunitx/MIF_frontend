@@ -15,29 +15,13 @@ const QuickInformationSection = ({ info }) => {
     timeOfBirth,
     heightFeet,
     nativePlace,
-    image1,
-    firstName,
-    surname,
-    gender,
     complexion,
-    phoneNumber1,
-    phoneNumber2,
-    emails,
-    caste,
-    subcaste,
-    gotra,
-    currentAddress,
-    phoneNumbers,
     educationDetails,
     otherProfession,
     profession,
     education,
     occupation,
     serviceType,
-    currentAddressScope,
-    currentAddressCity,
-    currentAddressState,
-    currentAddressCountry,
     hobbies,
     preference,
     maritalStatus,
@@ -158,6 +142,23 @@ const QuickInformationSection = ({ info }) => {
                     </span>
                   </p>
                 )}
+                {maritalStatus !== "single" && (
+                  <p className="m-0">
+                    <span className="text-matrimony_text_gray">{`Marital Status: `}</span>
+                    <span className="text-matrimony_orange">
+                      {capitalizeSentence(maritalStatus)}
+                    </span>
+                  </p>
+                )}
+
+                {pwd === "yes" && (
+                  <p className="m-0">
+                    <span className="text-matrimony_text_gray">{`Person with Disability: `}</span>
+                    <span className="text-matrimony_orange">
+                      {capitalizeSentence(disabilityMeasure)}
+                    </span>
+                  </p>
+                )}
               </div>
             </div>
           </div>
@@ -218,10 +219,7 @@ const QuickInformationSection = ({ info }) => {
 
           {/* Other Details */}
 
-          {(hobbies?.length > 0 ||
-            preference?.length > 0 ||
-            maritalStatus !== "single" ||
-            pwd === "yes") && (
+          {(hobbies?.length > 0 || preference?.length > 0) && (
             <div className="w-full flex flex-col items-start justify-start gap-[0.75rem]">
               <div className="w-full flex justify-start items-center gap-2">
                 <img
@@ -254,20 +252,6 @@ const QuickInformationSection = ({ info }) => {
                     <p className="m-0">
                       <span className="text-matrimony_text_gray">{`Preference: `}</span>
                       <span>{preference}</span>
-                    </p>
-                  )}
-
-                  {maritalStatus !== "single" && (
-                    <p className="m-0">
-                      <span className="text-matrimony_text_gray">{`Marital Status: `}</span>
-                      <span>{capitalizeSentence(maritalStatus)}</span>
-                    </p>
-                  )}
-
-                  {pwd === "yes" && (
-                    <p className="m-0">
-                      <span className="text-matrimony_text_gray">{`Person with Disability: `}</span>
-                      <span>{capitalizeSentence(disabilityMeasure)}</span>
                     </p>
                   )}
                 </div>

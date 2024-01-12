@@ -6,7 +6,8 @@ import { useNavigate, Link, useLocation } from "react-router-dom";
 const Header = () => {
   const navigate = useNavigate();
 
-  const loaction = useLocation();
+  const location = useLocation();
+  // console.log(location);
 
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -29,28 +30,40 @@ const Header = () => {
   console.log(userName);
   return (
     <div className="w-full flex flex-col items-center gap-5 justify-center p-5 ">
-      <div className="w-full flex-row-reverse flex justify-between items-center ">
-        <div className="">
+      <div className="w-full flex-col gap-4 sm:flex-row-reverse flex justify-between items-center ">
+        <div className="w-full sm:w-fit flex gap-4 sm:justify-center justify-between  flex-row-reverse items-center">
           {localStorage.getItem("jwtToken") && (
-            <button
-              className="flex w-full justify-center  max-w-[200px] rounded-md bg-[#EF4D48] px-3  py-2  text-sm sm:text-base font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 "
-              onClick={() => {
-                Swal.fire("Logged out", "Please sign in/sign up", "info");
-                localStorage.removeItem("jwtToken");
-                localStorage.removeItem("userName"); // remove the userName from local storage
-                setUserName(null);
-                navigate("/matrimony");
-              }}
-            >
-              <span>Log out</span>
-            </button>
+            <>
+              <button
+                className="flex  justify-center  max-w-[200px] rounded-md bg-[#EF4D48] px-3  py-2  text-sm sm:text-base font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 "
+                onClick={() => {
+                  Swal.fire("Logged out", "Please sign in/sign up", "info");
+                  localStorage.removeItem("jwtToken");
+                  localStorage.removeItem("userName"); // remove the userName from local storage
+                  setUserName(null);
+                  navigate("/matrimony");
+                }}
+              >
+                <span>Log out</span>
+              </button>
+              <button
+                className="flex  justify-center  whitespace-nowrap rounded-md bg-[#EF4D48] px-3  py-2  text-sm sm:text-base font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 "
+                onClick={() => {
+                  navigate("/matrimony/biodata");
+                }}
+              >
+                <span>Edit Uploaded Biodatas</span>
+              </button>
+            </>
           )}
         </div>
+
         {location.pathname === "/matrimony" && (
-          <div className="">
-            <Link to={"/matrimony/office-bearers"}>
-              <button className="flex gap-2  justify-center font-Poppins rounded-md  bg-[#EF4D48] px-3  py-2  text-sm font-semibold leading-6 text-white shadow-sm ">
-                Office Bearers
+          <div>
+            {" "}
+            <Link to={"/matrimony/office-bearers"} className="w-full">
+              <button className="flex gap-2 w-full justify-center font-Poppins rounded-md bg-[#EF4D48] px-3  py-2  text-sm sm:text-base font-semibold leading-6 text-white shadow-sm  focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                Office Bearers <br /> (MIF Marwadi Matrimony)
               </button>
             </Link>
           </div>

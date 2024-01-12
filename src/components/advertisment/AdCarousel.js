@@ -4,7 +4,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useAdvertisment } from "../../hooks/useAdvertisment";
 
-const AdCarousel = ({ itemsPerFrame, category }) => {
+const AdCarousel = ({ itemsPerFrame, category, advertismentSpeed }) => {
   const { categorisedAds } = useAdvertisment(category);
 
   const sliderConfig = {
@@ -13,7 +13,7 @@ const AdCarousel = ({ itemsPerFrame, category }) => {
     slidesToShow: itemsPerFrame,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 3000,
+    autoplaySpeed: advertismentSpeed,
     arrows: false,
     pauseOnDotsHover: true,
     pauseOnHover: true,

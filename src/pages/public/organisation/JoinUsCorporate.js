@@ -5,6 +5,7 @@ import { Formik, Field, Form } from 'formik';
 import indiaStates from '../../../utils/indiaStates';
 import * as Yup from 'yup';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 const config = {
     headers: {
@@ -37,6 +38,7 @@ getNewToken();
 
 
 const RegistrationForm = () => {
+    const navigate = useNavigate();
     const [location, setLocation] = useState('');
     const [selectedCountry, setSelectedCountry] = useState('');
     const [selectedState, setSelectedState] = useState('');
@@ -58,6 +60,7 @@ const RegistrationForm = () => {
     const [photo, setPhoto] = useState('');
     const [ccpIdProof, setCCPIdProof] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [paymentProof, setPaymentProof] = useState(null);
 
     // const [idProof, setIdProof] = useState('');
 
@@ -194,6 +197,7 @@ const RegistrationForm = () => {
                             errors[error.path] = error.message;
                         });
                         if (Object.keys(errors).length) {
+                            console.log(errors);
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Oops...',
@@ -205,52 +209,63 @@ const RegistrationForm = () => {
                 }}
                 onSubmit={async (values, { setSubmitting, setErrors }) => {
                     try {
-                        console.log(values);
-                        // setSubmitting(true);
-                        setIsSubmitting(true);
-
-                        const formData = new FormData();
-
-                        for (let key in values) {
-                            formData.append(key, values[key]);
-                        }
-
-                        // Log FormData
-                        for (let pair of formData.entries()) {
-                            console.log(pair[0] + ', ' + pair[1]);
-                        }
-
-                        const response = await fetch(`${BASE_URL}postCorporateDetails`, {
-                            method: 'POST',
-                            body: formData
-                        });
-
-                        if (!response.ok) {
-                            console.error('Failed to submit form', response);
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: 'Failed to submit form',
-                            });
-                        } else {
-                            const data = await response.json();
-                            console.log('Form submitted successfully', data);
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Success',
-                                text: 'Form submitted successfully',
-                            });
-                        }
-                    } catch (error) {
+                      console.log(values);
+                      setIsSubmitting(true);
+                  
+                      const formData = new FormData();
+                  
+                      for (let key in values) {
+                        formData.append(key, values[key]);
+                      }
+                  
+                      const response = await fetch(`${BASE_URL}postCorporateDetails`, {
+                        method: 'POST',
+                        body: formData
+                      });
+                  
+                      if (!response.ok) {
                         setIsSubmitting(false);
-                        Swal.fire({
+
+                        const data = await response.json();
+                        if (data.message === 'Corporate member already exists') {
+                          Swal.fire({
                             icon: 'error',
                             title: 'Oops...',
-                            text: 'Network error',
-                        });
+                            text: 'Corporate member already exists, Please enter a unique Email address & Phone Number.',
+                          });
+                        } else {
+                          console.error('Failed to submit form', response);
+                          Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Failed to submit form',
+                          });
+                        }
+                      } else {
+                        setIsSubmitting(false);
+                        const data = await response.json();
+                        console.log('Form submitted successfully', data);
+                        Swal.fire({
+                          icon: 'success',
+                          title: 'Success',
+                          text: 'Form submitted successfully',
+                        }
+                        ).then((result) => {
+                            if(result.isConfirmed){
+                                navigate('/');
+                            }
+                        })
+                        
+                      }
+                    } catch (error) {
+                      setIsSubmitting(false);
+                      Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Network error',
+                      });
                     }
-
-                }}
+                  }}
             >
 
                 {(formik) => {
@@ -265,7 +280,7 @@ const RegistrationForm = () => {
                             <Form>
                                 <div className="w-full fade-in gap-8 flex flex-col justify-center items-center ">
                                     <h1 className="font-semibold text-lg font-Poppins tracking-wide sm:text-xl whitespace-nowrap text-[#444]">
-                                        Become a Corporate Member of MIF
+                                        Organisation Details
                                     </h1>
                                     <div className="w-full flex flex-col sm:flex-row justify-center gap-2 items-center">
                                         <label
@@ -300,13 +315,7 @@ const RegistrationForm = () => {
                                             id="orgEmail"
                                             name="orgEmail"
                                             type="text"
-                                            onChange={(e) => {
-                                                let a = e.target.value;
-                                                a = a.replace(/\b\w/g, (match) =>
-                                                    match.toUpperCase()
-                                                );
-                                                formik.setFieldValue("orgEmail", a);
-                                            }}
+                                           onChange={formik.handleChange}
                                             value={formik.values.orgEmail}
                                             placeholder="Organisation Email"
                                             className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
@@ -503,7 +512,7 @@ const RegistrationForm = () => {
                                                             htmlFor="district"
                                                             className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
                                                         >
-                                                            City*
+                                                            City* :
                                                         </label>
                                                         <select
                                                             id="city"
@@ -525,7 +534,7 @@ const RegistrationForm = () => {
                                                                     </option>
                                                                 ))}
                                                         </select>
-                                                        
+
                                                     </div>
                                                 </div>
                                             )}
@@ -549,9 +558,13 @@ const RegistrationForm = () => {
                                             <option value="" disabled>
                                                 Select Organisation Type
                                             </option>
-                                            <option value="private">Private</option>
-                                            <option value="government">Government</option>
-                                            <option value="beneficiary">Beneficiary</option>
+                                            <option value="corporate">Corporate</option>
+                                            <option value="partnership">Partnership Firm</option>
+                                            <option value="individual">Individual</option>
+                                            <option value="organization">Organization (NGO/Trust)/Other</option>
+                                            {/* <option value="private">Private</option> */}
+                                            {/* <option value="government">Government</option> */}
+                                            {/* <option value="beneficiary">Beneficiary</option> */}
                                         </select>
 
                                         <label
@@ -579,174 +592,195 @@ const RegistrationForm = () => {
                                         {/* </div> */}
 
                                     </div>
+                                    <div className="flex flex-col sm:flex-row justify-between items-center min-h-fit w-full gap-8 mb-8 mt-8">
+                                        <div className="w-full flex flex-col gap-4 mr-0">
+                                            <div className="flex  justify-between items-center min-h-fit  w-full">
+                                                <div className=" flex flex-col">
+                                                    <div className="flex flex-row items-center gap-2">
+                                                        <label
+                                                            htmlFor="orgPhoto"
+                                                            className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
+                                                        >
+                                                            Company Logo* :
+                                                        </label>
+                                                        <input
+                                                            style={{ display: "none" }}
+                                                            id="orgPhoto"
+                                                            name="orgPhoto"
+                                                            type="file"
+                                                            accept="image/png, image/jpeg, image/webp"
+                                                            onChange={(event) => {
+                                                                const file = event.currentTarget.files[0];
+                                                                const maxSize = 5 * 1024 * 1024; // 5 MB
 
-                                    <div className="flex  justify-between items-center min-h-fit  w-full">
+                                                                if (file.size > maxSize) {
+                                                                    Swal.fire({
+                                                                        icon: 'error',
+                                                                        title: 'Oops...',
+                                                                        text: 'File is too large, please select a file less than 5MB.',
+                                                                    });
+                                                                    return;
+                                                                }
 
-                                        <div className="flex flex-col gap-2">
-
-                                            <label
-                                                htmlFor="orgPhoto"
-                                                className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
-                                            >
-                                                Photo* :
-                                            </label>
-
-
-                                            <input
-                                                style={{
-                                                    display: "none",
-                                                }}
-                                                id="orgPhoto"
-                                                name="orgPhoto"
-                                                type="file"
-                                                accept=".png, .jpeg, .pdf, .doc, .docx"
-                                                onChange={(event) => {
-                                                    formik.setFieldValue(
-                                                        "orgPhoto",
-                                                        event.currentTarget.files[0]
-                                                    );
-                                                    setOrgPhoto(event.currentTarget.files[0]);
-                                                }}
-                                            />
-                                            <label
-                                                htmlFor="orgPhoto"
-                                                className="rounded-md bg-[#EF4D48] max-w-[250px] px-3 py-2 text-sm text-center font-semibold text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                                            >
-                                                Select File
-                                            </label>
-                                            <p className="mt-1 text-sm leading-6 text-gray-600">
-                                                Upload upto 5 MB in PDF, JPEG, PNG, Docs format only.
-                                            </p>
-
-                                        </div>
-                                        {orgPhoto ? (
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                height="2rem"
-                                                viewBox="0 0 512 512"
-                                                // fill="#EF4D48"
-                                                className="fade-in fill-green-700"
-                                            >
-                                                {/*!Font Awesome Free 6.5.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.*/}
-                                                <path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z" />
-                                            </svg>
-                                        ) : null}
-
-
-                                    </div>
-                                    <div className="w-full flex flex-col gap-4">
-                                        <div className="flex  justify-between items-center min-h-fit  w-full">
-                                            <div className=" flex flex-col">
-                                                <div className="flex flex-row items-center gap-2">
-                                                    <label
-                                                        htmlFor="certification"
-                                                        className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
-                                                    >
-                                                        Upload Certification :
-                                                    </label>
-                                                    <input
-                                                        style={{
-                                                            display: "none",
-                                                        }}
-                                                        id="certification"
-                                                        name="certification"
-                                                        type="file"
-                                                        // TICKET ISSUE : 8
-
-                                                        accept="image/png, image/jpeg, image/webp"
-                                                        onChange={(event) => {
-                                                            formik.setFieldValue(
-                                                                "certification",
-                                                                event.currentTarget.files[0]
-                                                            );
-                                                            setCertification(event.currentTarget.files[0]);
-                                                        }}
-                                                    />
-                                                    <label
-                                                        htmlFor="certification"
-                                                        className="rounded-md bg-[#EF4D48] px-8 py-2 text-sm text-center font-semibold text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                                                    >
-                                                        Select File
-                                                    </label>
+                                                                formik.setFieldValue("orgPhoto", file);
+                                                                setOrgPhoto(file);
+                                                            }}
+                                                        />
+                                                        <label
+                                                            htmlFor="orgPhoto"
+                                                            className="rounded-md bg-[#EF4D48] px-8 py-2 text-sm text-center font-semibold text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                                        >
+                                                            Select File
+                                                        </label>
+                                                    </div>
+                                                    <p className="mt-1 text-sm leading-6 text-gray-600">
+                                                        Upload upto 5 MB in JPEG, PNG format only.
+                                                    </p>
                                                 </div>
-                                                <p className="mt-1 text-sm leading-6 text-gray-600">
-                                                    Upload upto 5 MB in JPEG, PNG format only.
-                                                </p>
-                                            </div>
 
-                                            {certification ? (
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    height="2rem"
-                                                    viewBox="0 0 512 512"
-                                                    // fill="#EF4D48"
-                                                    className="fade-in fill-green-700"
-                                                >
-                                                    {/*!Font Awesome Free 6.5.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.*/}
-                                                    <path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z" />
-                                                </svg>
-                                            ) : null}
+                                                {orgPhoto ? (
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        height="2rem"
+                                                        viewBox="0 0 512 512"
+                                                        // fill="#EF4D48"
+                                                        className="fade-in fill-green-700"
+                                                    >
+                                                        {/*!Font Awesome Free 6.5.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.*/}
+                                                        <path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z" />
+                                                    </svg>
+                                                ) : null}
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div className="w-full flex flex-col gap-4">
-                                        <div className="flex justify-between items-center min-h-fit w-full">
-                                            <div className="flex flex-col">
-                                                <div className="flex flex-row items-center gap-2">
-                                                    <label
-                                                        htmlFor="idProof"
-                                                        className="font-semibold text-sm font-Poppins tracking-wide sm:text-base whitespace-nowrap text-[#444]"
-                                                    >
-                                                        Upload ID Proof :
-                                                    </label>
-                                                    <input
-                                                        style={{
-                                                            display: "none",
-                                                        }}
-                                                        id="idProof"
-                                                        name="idProof"
-                                                        type="file"
-                                                        accept="image/png, image/jpeg, image/webp"
-                                                        onChange={(event) => {
-                                                            formik.setFieldValue(
-                                                                "idProof",
-                                                                event.currentTarget.files[0]
-                                                            );
-                                                            setIdProof(event.currentTarget.files[0]);
-                                                        }}
-                                                    />
-                                                    <label
-                                                        htmlFor="idProof"
-                                                        className="rounded-md bg-[#EF4D48] px-8 py-2 text-sm text-center font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                                                    >
-                                                        Select File
-                                                    </label>
+                                        <div className="w-full flex flex-col gap-4">
+                                            <div className="flex  justify-between items-center min-h-fit  w-full">
+                                                <div className=" flex flex-col">
+                                                    <div className="flex flex-row items-center gap-2">
+                                                        <label
+                                                            htmlFor="certification"
+                                                            className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap  text-[#444] "
+                                                        >
+                                                            Company Reg. Certificate* :
+                                                        </label>
+                                                        <input
+                                                            style={{ display: "none" }}
+                                                            id="certification"
+                                                            name="certification"
+                                                            type="file"
+                                                            accept="image/png, image/jpeg, image/webp"
+                                                            onChange={(event) => {
+                                                                const file = event.currentTarget.files[0];
+                                                                const maxSize = 5 * 1024 * 1024; // 5 MB
+
+                                                                if (file.size > maxSize) {
+                                                                    Swal.fire({
+                                                                        icon: 'error',
+                                                                        title: 'Oops...',
+                                                                        text: 'File is too large, please select a file less than 5MB.',
+                                                                    });
+                                                                    return;
+                                                                }
+
+                                                                formik.setFieldValue("certification", file);
+                                                                setCertification(file);
+                                                            }}
+                                                        />
+                                                        <label
+                                                            htmlFor="certification"
+                                                            className="rounded-md bg-[#EF4D48] px-8 py-2 text-sm text-center font-semibold text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 whitespace-nowrap mr-4"
+                                                        >
+                                                            Select File
+                                                        </label>
+                                                    </div>
+                                                    <p className="mt-1 text-sm leading-6 text-gray-600">
+                                                        Upload upto 5 MB in JPEG, PNG format only.
+                                                    </p>
                                                 </div>
-                                                <p className="mt-1 text-sm leading-6 text-gray-600">
-                                                    Upload upto 5 MB in JPEG, PNG format only.
-                                                </p>
-                                            </div>
 
-                                            {idProof ? (
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    height="2rem"
-                                                    viewBox="0 0 512 512"
-                                                    className="fade-in fill-green-700"
-                                                >
-                                                    <path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z" />
-                                                </svg>
-                                            ) : null}
+                                                {certification ? (
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        height="2rem"
+                                                        viewBox="0 0 512 512"
+                                                        // fill="#EF4D48"
+                                                        className="fade-in fill-green-700"
+                                                    >
+                                                        {/*!Font Awesome Free 6.5.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.*/}
+                                                        <path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z" />
+                                                    </svg>
+                                                ) : null}
+                                            </div>
+                                        </div>
+
+                                        <div className="w-full flex flex-col gap-4">
+                                            <div className="flex justify-between items-center min-h-fit w-full">
+                                                <div className="flex flex-col">
+                                                    <div className="flex flex-row items-center gap-2">
+                                                        <label
+                                                            htmlFor="idProof"
+                                                            className="font-semibold text-sm font-Poppins tracking-wide sm:text-base whitespace-nowrap text-[#444]"
+                                                        >
+                                                            Company PAN* :
+                                                        </label>
+                                                        <input
+                                                            style={{
+                                                                display: "none",
+                                                            }}
+                                                            id="idProof"
+                                                            name="idProof"
+                                                            type="file"
+                                                            accept="image/png, image/jpeg, image/webp"
+                                                            onChange={(event) => {
+                                                                const file = event.currentTarget.files[0];
+                                                                const maxSize = 5 * 1024 * 1024; // 5 MB
+                                                              
+                                                                if (file.size > maxSize) {
+                                                                  Swal.fire({
+                                                                    icon: 'error',
+                                                                    title: 'Oops...',
+                                                                    text: 'File is too large, please select a file less than 5MB.',
+                                                                  });
+                                                                  return;
+                                                                }
+                                                              
+                                                                formik.setFieldValue("idProof", file);
+                                                                setIdProof(file);
+                                                              }}
+                                                        />
+                                                        <label
+                                                            htmlFor="idProof"
+                                                            className="rounded-md bg-[#EF4D48] px-8 py-2 text-sm text-center font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                                        >
+                                                            Select File
+                                                        </label>
+                                                    </div>
+                                                    <p className="mt-1 text-sm leading-6 text-gray-600">
+                                                        Upload upto 5 MB in JPEG, PNG format only.
+                                                    </p>
+                                                </div>
+
+                                                {idProof ? (
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        height="2rem"
+                                                        viewBox="0 0 512 512"
+                                                        className="fade-in fill-green-700"
+                                                    >
+                                                        <path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z" />
+                                                    </svg>
+                                                ) : null}
+                                            </div>
                                         </div>
                                     </div>
                                     <h2 className="font-semibold text-lg font-Poppins tracking-wide sm:text-xl whitespace-nowrap text-[#444]">
-                                        Chief Contact Person Details
+                                        Authorized Contact Person Details
                                     </h2>
 
                                     <div className="w-full flex flex-col sm:flex-row justify-center gap-2 items-center">
                                         {/* Name field */}
                                         <label htmlFor="name" className="font-semibold text-sm font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left" >
-                                            Name:*
+                                            Name* :
 
                                         </label>
                                         <input
@@ -759,7 +793,7 @@ const RegistrationForm = () => {
                                             className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
                                         />
                                         <label htmlFor="gender" className="font-semibold text-sm font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left">
-                                            Gender:*
+                                            Gender* :
                                         </label>
 
                                         <select
@@ -777,7 +811,7 @@ const RegistrationForm = () => {
                                         </select>
                                         {/* Email field */}
                                         <label htmlFor="email" className="font-semibold text-sm font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left">
-                                            Email*
+                                            Email* :
 
                                         </label>
                                         <input
@@ -793,7 +827,7 @@ const RegistrationForm = () => {
                                     <div className="w-full flex flex-col sm:flex-row justify-center gap-2 items-center">
                                         {/* Phone number field */}
                                         <label htmlFor="phoneNumber" className="font-semibold text-sm font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left">
-                                            Phone Number*
+                                            Phone Number* :
 
                                         </label>
                                         <input
@@ -808,7 +842,7 @@ const RegistrationForm = () => {
 
                                         {/* Designation field */}
                                         <label htmlFor="designation" className="font-semibold text-sm font-Poppins sm:w-fit tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left">
-                                            Designation*
+                                            Designation* :
 
                                         </label>
                                         <input
@@ -825,7 +859,7 @@ const RegistrationForm = () => {
                                     <div className="w-full flex flex-col sm:flex-row  gap-2" >
                                         {/* Address field */}
                                         <label htmlFor="ccpLocation" className="font-semibold text-sm font-Poppins tracking-wide sm:text-base whitespace-nowrap text-[#444]">
-                                            Location:*
+                                            Location* :
 
                                         </label>
 
@@ -847,25 +881,25 @@ const RegistrationForm = () => {
                                     </div>
                                     {ccpLocation && (
                                         <>
-                                      
-                                        <div className="w-full flex flex-col sm:flex-row justify-center  gap-2 items-center">
-                                            <label
-                                                htmlFor="ccpAddress"
-                                                className="font-semibold text-sm font-Poppins sm:w-fit self-start tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left"
-                                            >
-                                                Address*
-                                            </label>
-                                            <textarea
-                                                id="ccpAddress"
-                                                name="ccpAddress"
-                                                type="text"
-                                                placeholder="Address"
-                                                rows="3"
-                                                onChange={formik.handleChange}
-                                                value={formik.values.ccpAddress}
-                                                className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
-                                            />
-                                        </div>
+
+                                            <div className="w-full flex flex-col sm:flex-row justify-center  gap-2 items-center">
+                                                <label
+                                                    htmlFor="ccpAddress"
+                                                    className="font-semibold text-sm font-Poppins sm:w-fit self-start tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left"
+                                                >
+                                                    Address*
+                                                </label>
+                                                <textarea
+                                                    id="ccpAddress"
+                                                    name="ccpAddress"
+                                                    type="text"
+                                                    placeholder="Address"
+                                                    rows="3"
+                                                    onChange={formik.handleChange}
+                                                    value={formik.values.ccpAddress}
+                                                    className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                                                />
+                                            </div>
                                         </>
                                     )}
                                     {ccpLocation && (
@@ -967,7 +1001,7 @@ const RegistrationForm = () => {
                                                                 </option>
                                                             ))}
                                                         </select>
-                                                       
+
                                                     </div>
                                                 </div>
                                             )}
@@ -1038,78 +1072,161 @@ const RegistrationForm = () => {
                                             )}
                                         </>
                                     )}
+                                    <div className="flex flex-col sm:flex-row justify-between items-center min-h-fit w-full gap-8 mb-8 ">
 
 
-                                    <div className="flex  justify-between items-center min-h-fit  w-full">
 
-                                        <div className="flex flex-col gap-2">
+                                        <div className="flex  justify-between items-center min-h-fit  w-full">
+
+                                            <div className="flex flex-col gap-2">
 
 
-                                            {/* Chief Contact Person Photo */}
-                                            <label htmlFor="photo" className="font-semibold text-sm font-Poppins tracking-wide sm:text-base whitespace-nowrap text-[#444]">
+                                                {/* Chief Contact Person Photo */}
+                                                <label htmlFor="photo" className="font-semibold text-sm font-Poppins tracking-wide sm:text-base whitespace-nowrap text-[#444]">
 
-                                                Photo* :
-                                            </label>
-                                            <input
-                                                style={{ display: "none" }}
-                                                id="photo"
-                                                name="photo"
-                                                type="file"
-                                                accept="image/png, image/jpeg, image/webp"
-                                                onChange={(event) => {
-                                                    formik.setFieldValue("photo", event.currentTarget.files[0]);
-                                                    setPhoto(event.currentTarget.files[0]);
-                                                }}
-                                            />
-                                            <label
-                                                htmlFor="photo"
-                                                className="rounded-md bg-[#EF4D48] max-w-[250px] px-3 py-2 text-sm text-center font-semibold text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                                            >
-                                                Select File
-                                            </label>
-                                            <p className="mt-1 text-sm leading-6 text-gray-600">
-                                                Upload upto 5 MB in PDF, JPEG, PNG, Docs format only.
-                                            </p>
+                                                    Photo* :
+                                                </label>
+                                                <input
+                                                    style={{ display: "none" }}
+                                                    id="photo"
+                                                    name="photo"
+                                                    type="file"
+                                                    accept="image/png, image/jpeg, image/webp"
+                                                    onChange={(event) => {
+                                                        const file = event.currentTarget.files[0];
+                                                        const maxSize = 5 * 1024 * 1024; // 5 MB
+
+                                                        if (file.size > maxSize) {
+                                                            Swal.fire({
+                                                                icon: 'error',
+                                                                title: 'Oops...',
+                                                                text: 'File is too large, please select a file less than 5MB.',
+                                                            });
+                                                            return;
+                                                        }
+
+                                                        formik.setFieldValue("photo", file);
+                                                        setPhoto(file);
+                                                    }}
+                                                />
+                                                <label
+                                                    htmlFor="photo"
+                                                    className="rounded-md bg-[#EF4D48] max-w-[250px] px-3 py-2 text-sm text-center font-semibold text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                                >
+                                                    Select File
+                                                </label>
+                                                <p className="mt-1 text-sm leading-6 text-gray-600">
+                                                    Upload upto 5 MB in PDF, JPEG, PNG, Docs format only.
+                                                </p>
+
+                                            </div>
+                                            {photo ? (
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    height="2rem"
+                                                    viewBox="0 0 512 512"
+                                                    // fill="#EF4D48"
+                                                    className="fade-in fill-green-700"
+                                                >
+                                                    {/*!Font Awesome Free 6.5.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.*/}
+                                                    <path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z" />
+                                                </svg>
+                                            ) : null}
+
 
                                         </div>
-                                        {photo ? (
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                height="2rem"
-                                                viewBox="0 0 512 512"
-                                                // fill="#EF4D48"
-                                                className="fade-in fill-green-700"
-                                            >
-                                                {/*!Font Awesome Free 6.5.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.*/}
-                                                <path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z" />
-                                            </svg>
-                                        ) : null}
 
+                                        {/* Chief Contact Person ID Proof */}
+
+                                        <div className="flex  justify-between items-center min-h-fit  w-full">
+
+                                            <div className="flex flex-col gap-2">
+                                                <label htmlFor="ccpIdProof" className="font-semibold text-sm font-Poppins tracking-wide sm:text-base whitespace-nowrap text-[#444]">
+                                                    Select ID Proof* :
+
+                                                </label>
+                                                <input
+                                                    style={{ display: "none" }}
+                                                    id="ccpIdProof"
+                                                    name="ccpIdProof"
+                                                    type="file"
+                                                    accept="image/png, image/jpeg, image/webp"
+                                                    onChange={(event) => {
+                                                        const file = event.currentTarget.files[0];
+                                                        const maxSize = 5 * 1024 * 1024; // 5 MB
+
+                                                        if (file.size > maxSize) {
+                                                            Swal.fire({
+                                                                icon: 'error',
+                                                                title: 'Oops...',
+                                                                text: 'File is too large, please select a file less than 5MB.',
+                                                            });
+                                                            return;
+                                                        }
+
+                                                        formik.setFieldValue("ccpIdProof", file);
+                                                        setCCPIdProof(file);
+                                                    }}
+                                                />
+                                                <label
+                                                    htmlFor="ccpIdProof"
+                                                    className="rounded-md bg-[#EF4D48] max-w-[250px] px-3 py-2 text-sm text-center font-semibold text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                                >
+                                                    Select File
+                                                </label>
+                                                <p className="mt-1 text-sm leading-6 text-gray-600">
+                                                    Upload upto 5 MB in PDF, JPEG, PNG, Docs format only.
+                                                </p>
+                                            </div>
+                                            {ccpIdProof ? (
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    height="2rem"
+                                                    viewBox="0 0 512 512"
+                                                    // fill="#EF4D48"
+                                                    className="fade-in fill-green-700"
+                                                >
+                                                    {/*!Font Awesome Free 6.5.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.*/}
+                                                    <path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z" />
+                                                </svg>
+                                            ) : null}
+
+
+                                        </div>
 
                                     </div>
-
-                                    {/* Chief Contact Person ID Proof */}
-
                                     <div className="flex  justify-between items-center min-h-fit  w-full">
 
                                         <div className="flex flex-col gap-2">
                                             <label htmlFor="ccpIdProof" className="font-semibold text-sm font-Poppins tracking-wide sm:text-base whitespace-nowrap text-[#444]">
-                                                Select ID Proof:
+                                                Proof of Payment:
 
                                             </label>
                                             <input
                                                 style={{ display: "none" }}
-                                                id="ccpIdProof"
-                                                name="ccpIdProof"
+                                                id="paymentProof"
+                                                name="paymentProof"
                                                 type="file"
                                                 accept="image/png, image/jpeg, image/webp"
                                                 onChange={(event) => {
-                                                    formik.setFieldValue("ccpIdProof", event.currentTarget.files[0]);
-                                                    setCCPIdProof(event.currentTarget.files[0]);
+                                                    const file = event.currentTarget.files[0];
+                                                    const maxSize = 5 * 1024 * 1024; // 5 MB
+
+                                                    if (file.size > maxSize) {
+                                                        Swal.fire({
+                                                            icon: 'error',
+                                                            title: 'Oops...',
+                                                            text: 'File is too large, please select a file less than 5MB.',
+                                                        });
+                                                        return;
+                                                    }
+
+                                                    formik.setFieldValue("paymentProof", file);
+                                                    setPaymentProof(file);
                                                 }}
                                             />
                                             <label
-                                                htmlFor="ccpIdProof"
+                                                htmlFor="paymentProof"
                                                 className="rounded-md bg-[#EF4D48] max-w-[250px] px-3 py-2 text-sm text-center font-semibold text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                             >
                                                 Select File
@@ -1118,7 +1235,7 @@ const RegistrationForm = () => {
                                                 Upload upto 5 MB in PDF, JPEG, PNG, Docs format only.
                                             </p>
                                         </div>
-                                        {ccpIdProof ? (
+                                        {paymentProof ? (
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 height="2rem"
@@ -1144,10 +1261,9 @@ const RegistrationForm = () => {
                                                 className="mr-2"
                                                 defaultChecked
                                             />
-                                            By submitting this form, I consent to Founder General Secretary of
-                                            MARWADI INTERNATIONAL FEDERATION (MIF) for using my name and details
-                                            for records of MIF and its office bearers list. I have read and understood
-                                            all the terms and conditions of MIF.
+                                            By submitting this form, I willingly authorize the Founder General Secretary of the Marwadi International Federation (MIF) to use my name and particulars for the records of MIF and its office bearers list. I confirm my understanding and acceptance of all the terms and conditions set forth by MIF.
+                                            <br></br>
+                                            Furthermore, I recognize that the approval or rejection of my membership in MIF is subject to the discretion of the Founder General Secretary.
                                         </label>
 
                                     </div>

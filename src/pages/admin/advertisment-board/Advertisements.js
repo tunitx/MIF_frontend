@@ -13,6 +13,16 @@ const Advertisements = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [inputValue, setInputValue] = useState('10');
+  const [slugs, setSlugs] = useState([]);
+
+  useEffect(() => {
+    const fetchSlugs = async () => {
+      const response = await axios.get(`${BASE_URL}getSlugs`);
+      setSlugs(response.data);
+    };
+
+    fetchSlugs();
+  }, []);
 
   useEffect(() => {
     api
@@ -24,7 +34,7 @@ const Advertisements = () => {
         console.error("There was an error retrieving the data: ", error);
       });
   }, []);
-  
+
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
   };
@@ -124,6 +134,7 @@ const Advertisements = () => {
                   pfp={pfp}
                   setPfp={setPfp}
                   _id={_id}
+                  slugs={slugs}
                 />
 
 
@@ -189,7 +200,7 @@ const Advertisements = () => {
   );
 };
 
-const Advertisement = ({ member, onEdit, onDelete, pfp, setPfp, _id }) => {
+const Advertisement = ({ member, onEdit, onDelete, pfp, setPfp, _id, slugs }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedMember, setEditedMember] = useState({ ...member });
 
@@ -222,7 +233,72 @@ const Advertisement = ({ member, onEdit, onDelete, pfp, setPfp, _id }) => {
 
       {isEditing ? (
         <>
-          <div className="w-fit p-3 border border-indigo-900 rounded-md flex flex-col gap-5 justify-center items-center max-w-[800px] g">
+
+        </>
+      ) : (
+        <>
+          <tr
+            key={_id}
+            className=" border-b border-[#EF4D48] w-full align-middle"
+          >
+
+            <td className="  p-2 border-r border-[#EF4D48]  text-center   text-[#333] whitespace-nowrap font-bold font-Poppins">
+              <img src={member.businessImage} alt="" className="object-cover rounded-full w-24 h-24" />
+            </td>
+            <td className="p-2 border-r border-[#EF4D48]  text-center   text-[#333] whitespace-nowrap font-bold font-Poppins">
+              {member.title}
+            </td>
+            {/* Add more body columns as needed */}
+            <td className="p-2 border-r border-[#EF4D48]  text-center   text-[#333] whitespace-nowrap font-bold font-Poppins">
+              <button
+                onClick={() => {
+                  setIsEditing(true);
+                }}
+                type="button"
+                className="group flex w-full items-center gap-2 justify-center max-w-[150px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 "
+              >
+                <p className="group-hover:-translate-x-1 transition duration-150 delay-150">
+                  Edit
+                </p>{" "}
+              </button>
+            </td>
+            <td className="p-2 border-r border-[#EF4D48]  text-center   text-[#333] whitespace-nowrap font-bold font-Poppins">
+              <button
+                onClick={() => {
+                  Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, delete it!",
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      onDelete(member._id);
+                      Swal.fire(
+                        "Deleted!",
+                        "Your file has been deleted.",
+                        "success"
+                      );
+                    }
+                  });
+                }}
+                type="button"
+                className="group flex w-full items-center gap-2 justify-center max-w-[150px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 "
+              >
+                <p className="group-hover:-translate-x-1 transition duration-150 delay-150">
+                  Delete
+                </p>{" "}
+              </button>
+            </td>
+          </tr>
+
+        </>
+      )}
+      <>
+        {isEditing && (
+          <div className=" p-3 border border-indigo-900 rounded-md flex flex-col gap-5 justify-center items-center max-w-[800px] g">
             <div className="w-full flex gap-2 items-center justify-center">
               <label
                 htmlFor="title"
@@ -250,61 +326,14 @@ const Advertisement = ({ member, onEdit, onDelete, pfp, setPfp, _id }) => {
               <select
                 name="slugs"
                 multiple
-                // onChange={(e) => {
-                //   const selectedOptions = Array.from(e.target.selectedOptions).map(o => o.value);
-                //   let event;
-                //   if (selectedOptions.includes('all')) {
-                //     event = {
-                //       target: {
-                //         name: e.target.name,
-                //         value: ['/', '/matrimony', '/press', '/list-of-members'],
-                //       },
-                //     };
-                //   } else {
-                //     event = {
-                //       target: {
-                //         name: e.target.name,
-                //         value: selectedOptions.map(option => {
-                //           switch (option) {
-                //             case '/matrimony':
-                //               return '/matrimony';
-                //             case '/press':
-                //               return '/press';
-                //             case '/list-of-members':
-                //               return '/list-of-members';
-                //             default:
-                //               return '/';
-                //           }
-                //         }),
-                //       },
-                //     };
-                //   }
-                //   handleInputChange(event);
-                // }}
-                // value={editedMember.slugs}
-
                 onChange={(e) => {
-                  const selectedOptions = Array.from(
-                    e.target.selectedOptions
-                  ).map((o) => o.value);
-                  console.log(selectedOptions);
+                  const selectedOptions = Array.from(e.target.selectedOptions).map((o) => o.value);
                   let event;
                   if (selectedOptions.includes("all")) {
                     event = {
                       target: {
                         name: e.target.name,
-                        value: ["/about",
-                          "/",
-                          "/list-of-members",
-                          "/press",
-                          "/faqs",
-                          "/free-website",
-                          "/matrimony/biodata",
-                          "/matrimony/search-biodata",
-                          "/gallery",
-                          "/matrimony/add-biodata",
-                          "/membership-and-fees",
-                          "/study-abroad"],
+                        value: slugs.map(slug => slug.route),
                       },
                     };
                   } else {
@@ -320,22 +349,36 @@ const Advertisement = ({ member, onEdit, onDelete, pfp, setPfp, _id }) => {
                 value={editedMember.slugs}
                 className="grow border w-full rounded-lg border-[#ca403b] py-2 px-3 text-sm sm:text-base bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
               >
-                <option value="/about">/about</option>
-                <option value="/">/</option>
-                <option value="/list-of-members">/list-of-members</option>
-                <option value="/press">/press </option>
-                <option value="/gallery">/gallery</option>
-                <option value="/study-abroad">/study-abroad</option>
-                <option value="/free-website">/free-website</option>
-                <option value="/faqs">/faqs</option>
-                <option value="/membership-and-fees">/membership-and-fees</option>
-                <option value="/matrimony/add-biodata">/matrimony/add-biodata</option>
-                <option value="/matrimony/biodata">/matrimony/biodata</option>
-                <option value="/matrimony/search-biodata">/matrimony/search-biodata</option>
+                {slugs.map(slug => (
+                  <option key={slug._id} value={slug.route}>{slug.route}</option>
+                ))}
                 <option value="all">All</option>
               </select>
             </div>
+            
+            <div className="w-full flex gap-2 items-center justify-center">
+            <label
+                htmlFor="category"
+                className="font-semibold text-sm font-Poppins tracking-wide sm:text-base whitespace-nowrap text-[#444]"
+              >
+                Category* :
+              </label>
+              <select
+                            id="category"
+                            name="category"
+                            onChange={handleInputChange}
+                            value={editedMember.category}
+                            className="w-full border  rounded border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm"
+                          >
+                            <option value="">-- Select Category --</option>
+                            <option value="platinum">Platinum</option>
+                            <option value="gold">Gold</option>
+                            <option value="silver">Silver</option>
+                            <option value="bronze">Bronze</option>
+                           
+                          </select>
 
+              </div>
             <div className="w-full flex gap-2 items-center justify-center">
               <label
                 htmlFor="description"
@@ -596,68 +639,8 @@ const Advertisement = ({ member, onEdit, onDelete, pfp, setPfp, _id }) => {
               </div>
             </div>
           </div>
-        </>
-      ) : (
-        <>
-          <tr
-            key={_id}
-            className=" border-b border-[#EF4D48] w-full align-middle"
-          >
-
-            <td className="  p-2 border-r border-[#EF4D48]  text-center   text-[#333] whitespace-nowrap font-bold font-Poppins">
-              <img src={member.businessImage} alt="" className="object-cover rounded-full w-24 h-24" />
-            </td>
-            <td className="p-2 border-r border-[#EF4D48]  text-center   text-[#333] whitespace-nowrap font-bold font-Poppins">
-              {member.title}
-            </td>
-            {/* Add more body columns as needed */}
-            <td className="p-2 border-r border-[#EF4D48]  text-center   text-[#333] whitespace-nowrap font-bold font-Poppins">
-              <button
-                onClick={() => {
-                  setIsEditing(true);
-                }}
-                type="button"
-                className="group flex w-full items-center gap-2 justify-center max-w-[150px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 "
-              >
-                <p className="group-hover:-translate-x-1 transition duration-150 delay-150">
-                  Edit
-                </p>{" "}
-              </button>
-            </td>
-            <td className="p-2 border-r border-[#EF4D48]  text-center   text-[#333] whitespace-nowrap font-bold font-Poppins">
-              <button
-                onClick={() => {
-                  Swal.fire({
-                    title: "Are you sure?",
-                    text: "You won't be able to revert this!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Yes, delete it!",
-                  }).then((result) => {
-                    if (result.isConfirmed) {
-                      onDelete(member._id);
-                      Swal.fire(
-                        "Deleted!",
-                        "Your file has been deleted.",
-                        "success"
-                      );
-                    }
-                  });
-                }}
-                type="button"
-                className="group flex w-full items-center gap-2 justify-center max-w-[150px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 "
-              >
-                <p className="group-hover:-translate-x-1 transition duration-150 delay-150">
-                  Delete
-                </p>{" "}
-              </button>
-            </td>
-          </tr>
-
-        </>
-      )}
+        )}
+      </>
     </>
   );
 };

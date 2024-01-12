@@ -10,6 +10,7 @@ const ListOfMembers = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  
 
   return (
     <MembersContext.Provider value={{ membersList, setMembersList }}>

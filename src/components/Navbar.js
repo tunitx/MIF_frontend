@@ -4,11 +4,14 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import marwadi_logo_navbar from "../../assests/images/marwari_logo_pro.webp";
 import { ChevronDownIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
+// import MembershipType from "../pages/public/organisation/JoinUsHome";
+
 // import { Link, Location } from "react-router-dom";
 import React, { useEffect, useState, useContext } from "react";
 import UserContext from "../utils/context/UserContext";
 
 const navigation = [
+ 
   { name: "Home", href: "/", current: true },
   {
     name: "About Us",
@@ -100,6 +103,10 @@ const navigation = [
         name: "Individual Membership",
         href: "/join-us-member",
       },
+      {
+        name: "Membership",
+        href: "/membershipType",
+      },
     ],
   },
   {
@@ -157,9 +164,11 @@ const navigation = [
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
+  const [showMembershipType, setShowMembershipType] = useState(false);
 }
 import { Link, useLocation } from "react-router-dom";
 export default function Navbar() {
+ 
   const location = useLocation();
   const { userName, setUserName } = useContext(UserContext);
   return (
@@ -256,6 +265,7 @@ export default function Navbar() {
                               leaveTo="transform opacity-0 scale-95"
                             >
                               <Menu.Items className="absolute right-0 flex flex-col z-[100] mt-2 w-fit min-w-[200px] origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                             
                                 {item.subNames.map((subName, index) => {
                                   // SECOND LEVEL DROPDOWN
 

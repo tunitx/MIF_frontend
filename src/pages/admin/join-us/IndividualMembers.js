@@ -57,6 +57,33 @@ function IndividualMember () {
             }
         })
     };
+    const declineMember = (id) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, decline it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.delete(`${BASE_URL}declineMember/${id}`)
+                    .then(response => {
+                        const newMembers = members.filter(member => member._id !== id);
+                        setMembers(newMembers);
+                        Swal.fire(
+                            'Declined',
+                            'The member has been declined.',
+                            'success'
+                        )
+                    })
+                    .catch(error => {
+                        console.error('There was an error!', error);
+                    });
+            }
+        })
+    };
     return (
         <>
 
@@ -73,6 +100,7 @@ function IndividualMember () {
                             <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">Photo</th>
                             <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins"> Phone Number</th>
                             <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">Approve</th>
+                            <th className="p-3 text-center border-white border-r whitespace-nowrap font-bold font-Poppins">Decline</th>
                         </tr>
                     </thead>
                     <tbody className="w-full">
@@ -84,6 +112,7 @@ function IndividualMember () {
                                     <td className=" p-2 border-r border-[#EF4D48]  text-center   text-[#333] whitespace-nowrap font-bold font-Poppins"><img src={member.photo} alt={member.name} className="object-cover  w-16 h-16" /></td>
                                     <td className="p-2 border-r border-[#EF4D48] text-center text-[#333] whitespace-nowrap font-bold font-Poppins">{member.phoneNumber}</td>
                                     <td className="p-2 border-r border-[#EF4D48] text-center text-[#333] whitespace-nowrap font-bold font-Poppins"><button onClick={() => approveMember(member._id)}>Approve</button></td>
+                                    <td className="p-2 border-r border-[#EF4D48] text-center text-[#333] whitespace-nowrap font-bold font-Poppins"><button onClick={() => declineMember(member._id)}>Decline</button></td>
                                 </tr>
                             ))}
                     </tbody>

@@ -20,8 +20,6 @@ const QueriesTable = ({ data }) => {
         },
       });
 
-      
-
       if (resBody.status === 200) {
         dispatch(delete_query(id));
       }

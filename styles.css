@@ -69,6 +69,12 @@ body::-webkit-scrollbar-thumb {
   animation: fadeOut 0.5s ease-out;
 }
 
+/* This is important, it is used to hide the timerline, of the cube-animation in the Footer Section Advertisment */
+
+.awssld__timer {
+  height: 0px !important;
+}
+
 /* For Pagination */
 /* .containerClassName {
   display: flex;

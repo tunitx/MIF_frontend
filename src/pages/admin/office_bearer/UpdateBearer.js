@@ -16,6 +16,7 @@ const UpdateBearer = ({ data }) => {
     samaj,
     pfp,
     _id,
+    about,
   } = data;
 
   const [selectedFile, setFile] = useState(null);
@@ -61,6 +62,7 @@ const UpdateBearer = ({ data }) => {
         email: email,
         address: address,
         phoneNumber: phoneNumber,
+        about: about,
       }}
       onSubmit={async (values, { setSubmitting, resetForm }) => {
         console.log(values);
@@ -74,6 +76,7 @@ const UpdateBearer = ({ data }) => {
         reqBody.append("email", values.email);
         reqBody.append("address", values.address);
         reqBody.append("phoneNumber", values.phoneNumber);
+        reqBody.append("about", values.about);
 
         setError(null);
         setMessage(null);
@@ -266,6 +269,24 @@ const UpdateBearer = ({ data }) => {
                         name="nativePlace"
                         type="text"
                         required
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="col-span-full">
+                    <label
+                      htmlFor="about"
+                      className="block text-sm font-medium leading-6 text-gray-900"
+                    >
+                      About
+                    </label>
+                    <div className="mt-2">
+                      <textarea
+                        id="about"
+                        name="about"
+                        rows={3}
+                        {...formik.getFieldProps("about")}
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
                     </div>

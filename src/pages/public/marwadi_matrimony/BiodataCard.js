@@ -99,19 +99,16 @@ const BiodataCard = ({ data, setShowImage, setShowBiodataFrame }) => {
           </p>
           <p className="font-Poppins text-sm text-gray-800">
             ({formatedGotra}, {ageInYear}yr., {heightFeet}ft,{" "}
-            {formatedComplexion}){" "}
+            {formatedComplexion})
             {pwd === "yes" && (
-              <span className="text-xs font-Poppins font-medium text-red-500">
-                ( PwD )
-              </span>
+              <>
+                {", "}
+                <span className="text-xs font-Poppins font-bold text-red-500 ">
+                  ( PwD )
+                </span>
+              </>
             )}
           </p>
-
-          {/* <p className="m-0 full text-center">
-              <span className="text-xs font-Poppins font-medium text-red-500">
-                ( PwD )
-              </span>
-            </p> */}
         </div>
 
         {/* Svg section of phone, emial */}

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { sortAscending, sortDescending } from "../../../../utils/sort";
-import ProfileCard from "../../list_of_members/ProfileCard";
 import { capitalizeSentence } from "../../../../utils/helper";
 import ReactPaginate from "react-paginate";
+import OfficeBearerProfileCard from "./OfficeBearerProfileCard";
 
 const Table = ({
   data,
@@ -36,56 +36,6 @@ const Table = ({
         <table className="w-full border-2 border-[#305D2B]">
           <thead className="w-full">
             <tr className="bg-[#305D2B] text-white w-full">
-              {/* Samaj */}
-
-              <th className="p-3 text-center border-white border-r font-bold font-Poppins  w-1/3">
-                <div
-                  className="w-full flex items-center hover:cursor-pointer"
-                  onClick={() => {
-                    sortHandler("samaj", sortSamaj, setSortSamaj);
-                  }}
-                >
-                  <p className="w-full">Samaj</p>
-                  <div>
-                    {sortSamaj === null ? (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        height="1em"
-                        viewBox="0 0 320 512"
-                        fill="#fff"
-                      >
-                        <path d="M137.4 41.4c12.5-12.5 32.8-12.5 45.3 0l128 128c9.2 9.2 11.9 22.9 6.9 34.9s-16.6 19.8-29.6 19.8H32c-12.9 0-24.6-7.8-29.6-19.8s-2.2-25.7 6.9-34.9l128-128zm0 429.3l-128-128c-9.2-9.2-11.9-22.9-6.9-34.9s16.6-19.8 29.6-19.8H288c12.9 0 24.6 7.8 29.6 19.8s2.2 25.7-6.9 34.9l-128 128c-12.5 12.5-32.8 12.5-45.3 0z" />
-                      </svg>
-                    ) : null}
-                    {sortSamaj === "ascending" ? (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        height="1em"
-                        viewBox="0 0 320 512"
-                        fill="#fff"
-                      >
-                        <path d="M182.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8H288c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-128-128z" />
-                      </svg>
-                    ) : (
-                      ""
-                    )}
-
-                    {sortSamaj === "descending" ? (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        height="1em"
-                        viewBox="0 0 320 512"
-                        fill="#fff"
-                      >
-                        <path d="M182.6 470.6c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-9.2-9.2-11.9-22.9-6.9-34.9s16.6-19.8 29.6-19.8H288c12.9 0 24.6 7.8 29.6 19.8s2.2 25.7-6.9 34.9l-128 128z" />
-                      </svg>
-                    ) : (
-                      ""
-                    )}
-                  </div>
-                </div>
-              </th>
-
               {/* Name */}
 
               <th className="p-3 text-center border-white border-r font-bold font-Poppins  w-1/3">
@@ -136,6 +86,58 @@ const Table = ({
                 </div>
               </th>
 
+              {/* Samaj */}
+
+              <th className="p-3 text-center border-white border-r font-bold font-Poppins  w-1/3">
+                <div
+                  className="w-full flex items-center hover:cursor-pointer"
+                  onClick={() => {
+                    sortHandler("samaj", sortSamaj, setSortSamaj);
+                  }}
+                >
+                  {/* Label for Samaj in table is : Coordinator */}
+
+                  <p className="w-full">Coordinator</p>
+                  <div>
+                    {sortSamaj === null ? (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="1em"
+                        viewBox="0 0 320 512"
+                        fill="#fff"
+                      >
+                        <path d="M137.4 41.4c12.5-12.5 32.8-12.5 45.3 0l128 128c9.2 9.2 11.9 22.9 6.9 34.9s-16.6 19.8-29.6 19.8H32c-12.9 0-24.6-7.8-29.6-19.8s-2.2-25.7 6.9-34.9l128-128zm0 429.3l-128-128c-9.2-9.2-11.9-22.9-6.9-34.9s16.6-19.8 29.6-19.8H288c12.9 0 24.6 7.8 29.6 19.8s2.2 25.7-6.9 34.9l-128 128c-12.5 12.5-32.8 12.5-45.3 0z" />
+                      </svg>
+                    ) : null}
+                    {sortSamaj === "ascending" ? (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="1em"
+                        viewBox="0 0 320 512"
+                        fill="#fff"
+                      >
+                        <path d="M182.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8H288c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-128-128z" />
+                      </svg>
+                    ) : (
+                      ""
+                    )}
+
+                    {sortSamaj === "descending" ? (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="1em"
+                        viewBox="0 0 320 512"
+                        fill="#fff"
+                      >
+                        <path d="M182.6 470.6c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-9.2-9.2-11.9-22.9-6.9-34.9s16.6-19.8 29.6-19.8H288c12.9 0 24.6 7.8 29.6 19.8s2.2 25.7-6.9 34.9l-128 128z" />
+                      </svg>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </div>
+              </th>
+
               <th className="p-3 text-center w-1/3 whitespace-nowrap font-bold font-Poppins">
                 <p className="w-full"> View More</p>
               </th>
@@ -144,12 +146,13 @@ const Table = ({
           <tbody>
             {currentItems?.map((item, index) => (
               <tr key={index} className="border-b border-[#EF4D48] w-full">
-                <td className="p-2 border-r border-[#EF4D48]  text-center w-1/3  text-[#333] whitespace-nowrap font-Poppins font-medium ">
-                  {capitalizeSentence(item.samaj)}
-                </td>
                 <td className="p-2 border-r border-[#EF4D48]  text-center w-1/3  text-[#333] whitespace-nowrap font-bold font-Poppins">
                   {item.name.toUpperCase()}
                 </td>
+                <td className="p-2 border-r border-[#EF4D48]  text-center w-1/3  text-[#333] whitespace-nowrap font-Poppins font-medium ">
+                  {capitalizeSentence(item.samaj)}
+                </td>
+
                 <td className="p-2  text-center w-full whitespace-nowrap px-auto flex justify-center items-center hover:cursor-pointer">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -221,7 +224,7 @@ const Table = ({
         </div>
       </div>
       {showCard && (
-        <ProfileCard
+        <OfficeBearerProfileCard
           data={showCard}
           showCard={showCard}
           setShowCard={setShowCard}

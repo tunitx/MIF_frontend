@@ -578,7 +578,7 @@ function SearchBiodata() {
           }}
         </Formik>
       ) : (
-        <div className="w-full max-w-6xl flex justify-center p-5 flex-col">
+        <div className="w-full max-w-7xl flex justify-center p-5 flex-col">
           <div className="  w-full flex flex-col justify-center items-center gap-4 mb-8">
             <h2 className="w-full text-4xl font-semibold font-PlayFair text-center ">
               Available Biodatas
@@ -586,92 +586,138 @@ function SearchBiodata() {
           </div>
 
           {filteredBiodatas && (
-            <div className="w-full flex md:flex-row flex-col gap-8  justify-center">
-              <FilterSection
-                filteredBiodatas={filteredBiodatas}
-                setFilteredBioDatas={setFilteredBioDatas}
-                searchedBiodatas={searchedBiodatas}
-              />
+            <div className="w-full flex flex-col gap-4 justify-center items-center">
+              {totalPages > 1 && (
+                <div className="w-full  items-center justify-end hidden sm:flex ">
+                  <ReactPaginate
+                    forcePage={currentPage}
+                    pageCount={totalPages}
+                    pageRangeDisplayed={3}
+                    marginPagesDisplayed={1}
+                    onPageChange={handlePageChange}
+                    containerClassName={
+                      "flex justify-center items-center gap-6 font-Poppins text-sm text-[#333]  rounded-md p-3"
+                    }
+                    pageClassName={"font-bold"}
+                    activeClassName={
+                      "bg-[#EF4D48] text-white rounded-md py-2 px-4"
+                    }
+                    disabledClassName={
+                      "hover:cursor-not-allowed fill-gray-500 hidden"
+                    }
+                    previousLabel={
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="1.4rem"
+                        viewBox="0 0 320 512"
+                        fill="#EF4D48"
+                      >
+                        <path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" />
+                      </svg>
+                    }
+                    // className="flex hover:cursor-not-allowed w-full  justify-center font-Poppins text-sm text-[#333] gap-2 items-center "
+                    nextLabel={
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="1.4rem"
+                        fill="#EF4D48"
+                        viewBox="0 0 320 512"
+                      >
+                        <path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z" />
+                      </svg>
+                    }
+                  />
+                </div>
+              )}
+              <div className="w-full flex md:flex-row flex-col gap-6  justify-center">
+                <FilterSection
+                  filteredBiodatas={filteredBiodatas}
+                  setFilteredBioDatas={setFilteredBioDatas}
+                  searchedBiodatas={searchedBiodatas}
+                />
 
-              <div className="w-full flex justify-center items-center">
-                {filteredBiodatas && filteredBiodatas?.length === 0 ? (
-                  <div className="w-full fade-in flex flex-col justify-center items-center gap-8">
-                    <div className="w-full flex flex-col justify-center items-center gap-2">
-                      <p className="w-full text-center font-Poppins text-xl font-semibold text-[#EF4D48]">
-                        Sorry, no Biodata available...
-                      </p>
-                      <p className="w-full text-center font-Poppins text-base text-[#EF4D48]">
-                        Please try changing filters.
-                      </p>
+                <div className="w-full flex justify-center gap-6 items-center">
+                  {/* <div className="w-[2px] h-full rounded-lg bg-[#EF4D48]" /> */}
+
+                  {filteredBiodatas && filteredBiodatas?.length === 0 ? (
+                    <div className="w-full fade-in flex flex-col justify-center items-center gap-8">
+                      <div className="w-full flex flex-col justify-center items-center gap-2">
+                        <p className="w-full text-center font-Poppins text-xl font-semibold text-[#EF4D48]">
+                          Sorry, no Biodata available...
+                        </p>
+                        <p className="w-full text-center font-Poppins text-base text-[#EF4D48]">
+                          Please try changing filters.
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                ) : (
-                  <div className="w-full flex flex-col justify-center items-center">
-                    <div className="w-full grid grid-col-1 sm:grid-cols-2 lg:grid-cols-3   gap-4">
-                      {currentItems?.map((biodata) => {
-                        return (
-                          <BiodataCard
-                            key={biodata._id}
-                            data={biodata}
-                            setShowImage={setShowImage}
-                            setShowBiodataFrame={setShowBiodataFrame}
+                  ) : (
+                    <div className="w-full flex flex-col justify-center items-center">
+                      <div className="w-full grid grid-col-1 sm:grid-cols-2 lg:grid-cols-3   gap-4">
+                        {currentItems?.map((biodata) => {
+                          return (
+                            <BiodataCard
+                              key={biodata._id}
+                              data={biodata}
+                              setShowImage={setShowImage}
+                              setShowBiodataFrame={setShowBiodataFrame}
+                            />
+                          );
+                        })}
+                      </div>
+                      <div className="w-full flex items-center flex-col sm:flex-row justify-start gap-4 sm:justify-between mt-5">
+                        {totalPages > 1 && (
+                          <ReactPaginate
+                            forcePage={currentPage}
+                            pageCount={totalPages}
+                            pageRangeDisplayed={3}
+                            marginPagesDisplayed={1}
+                            onPageChange={handlePageChange}
+                            containerClassName={
+                              "flex justify-center items-center gap-6 font-Poppins text-sm text-[#333]  rounded-md p-3"
+                            }
+                            pageClassName={"font-bold"}
+                            activeClassName={
+                              "bg-[#EF4D48] text-white rounded-md py-2 px-4"
+                            }
+                            disabledClassName={
+                              "hover:cursor-not-allowed fill-gray-500 hidden"
+                            }
+                            previousLabel={
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                height="1.4rem"
+                                viewBox="0 0 320 512"
+                                fill="#EF4D48"
+                              >
+                                <path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" />
+                              </svg>
+                            }
+                            // className="flex hover:cursor-not-allowed w-full  justify-center font-Poppins text-sm text-[#333] gap-2 items-center "
+                            nextLabel={
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                height="1.4rem"
+                                fill="#EF4D48"
+                                viewBox="0 0 320 512"
+                              >
+                                <path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z" />
+                              </svg>
+                            }
                           />
-                        );
-                      })}
+                        )}
+                        {totalPages >= 1 ? (
+                          <p className="text-base w-full text-center sm:text-right tracking-wide font-Poppins text-[#333] font-semibold">
+                            Page : {currentPage + 1} of {totalPages}
+                          </p>
+                        ) : (
+                          <p className="text-base w-full text-center sm:text-right tracking-wide font-Poppins text-[#333] font-semibold">
+                            Page : {currentPage} of {totalPages}
+                          </p>
+                        )}
+                      </div>
                     </div>
-                    <div className="w-full flex items-center flex-col sm:flex-row justify-start gap-4 sm:justify-between mt-5">
-                      {totalPages > 1 && (
-                        <ReactPaginate
-                          forcePage={currentPage}
-                          pageCount={totalPages}
-                          pageRangeDisplayed={3}
-                          marginPagesDisplayed={1}
-                          onPageChange={handlePageChange}
-                          containerClassName={
-                            "flex justify-center items-center gap-6 font-Poppins text-sm text-[#333]  rounded-md p-3"
-                          }
-                          pageClassName={"font-bold"}
-                          activeClassName={
-                            "bg-[#EF4D48] text-white rounded-md py-2 px-4"
-                          }
-                          disabledClassName={
-                            "hover:cursor-not-allowed fill-gray-500 hidden"
-                          }
-                          previousLabel={
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              height="1.4rem"
-                              viewBox="0 0 320 512"
-                              fill="#EF4D48"
-                            >
-                              <path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" />
-                            </svg>
-                          }
-                          // className="flex hover:cursor-not-allowed w-full  justify-center font-Poppins text-sm text-[#333] gap-2 items-center "
-                          nextLabel={
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              height="1.4rem"
-                              fill="#EF4D48"
-                              viewBox="0 0 320 512"
-                            >
-                              <path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z" />
-                            </svg>
-                          }
-                        />
-                      )}
-                      {totalPages >= 1 ? (
-                        <p className="text-base w-full text-center sm:text-right tracking-wide font-Poppins text-[#333] font-semibold">
-                          Page : {currentPage + 1} of {totalPages}
-                        </p>
-                      ) : (
-                        <p className="text-base w-full text-center sm:text-right tracking-wide font-Poppins text-[#333] font-semibold">
-                          Page : {currentPage} of {totalPages}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
             </div>
           )}

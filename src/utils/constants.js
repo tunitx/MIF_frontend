@@ -74,6 +74,24 @@ export const PHONE_NUMBERS_TO_NOT_VERIFY_OTP_FOR = [
   "9660623448",
 ];
 
+// Configuration
+
+export const GET_ALL_CONFIGURATIONS = BASE_URL + "configuration/all";
+export const UPDATE_CONFIGURATION = BASE_URL + "configuration/all";
+
+export const GET_ADVERTISMENTS_SPEED = BASE_URL + "configuration/ads_speed";
+export const UPDATE_ADVERTISMENTS_SPEED = BASE_URL + "configuration/ads_speed";
+
+export const GET_TOTAL_VISITOR_COUNT =
+  BASE_URL + "configuration/totalVisitorCount";
+export const UPDATE_TOTAL_VISITOR_COUNT =
+  BASE_URL + "configuration/totalVisitorCount";
+
+export const GET_EXPIRYTIME_VISITORIP =
+  BASE_URL + "configuration/expiryTime_visitorIP";
+export const UPDATE_EXPIRYTIME_VISITORIP =
+  BASE_URL + "configuration/expiryTime_visitorIP";
+
 export const responsive = {
   superLargeDesktop: {
     breakpoint: { max: 4000, min: 3000 },

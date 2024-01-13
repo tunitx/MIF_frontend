@@ -14,7 +14,7 @@ import 'chart.js';
 
 const Home = () => {
   const navigate = useNavigate();
-  const [show, setShow] = useState('');
+  const [show, setShow] = useState("");
   const [showNested, setShowNested] = useState({});
   const [profiles, setProfiles] = useState([]);
   const [showMatrimonyStats, setShowMatrimonyStats] = useState(false);
@@ -47,11 +47,11 @@ const Home = () => {
   //   ]
   // };
   const toggleNested = (key) => {
-    setShowNested(prev => ({ ...prev, [key]: !prev[key] }));
+    setShowNested((prev) => ({ ...prev, [key]: !prev[key] }));
   };
   return (
     <div className="flex flex-col justify-center items-center gap-16 mt-10 p-5">
-      <div className="max-w-6xl w-full flex flex-col justify-center items-center text-left gap-4 w-fit">
+      <div className="max-w-6xl w-full flex flex-col justify-center items-center text-left gap-4 ">
         <div className="text-gray-900 font-bold text-4xl leading-[2.5rem] tracking-normal font-Poppins w-full">
           Hi there,
         </div>
@@ -62,31 +62,28 @@ const Home = () => {
           How are you doing today.
         </div>
         <div className="flex flex-row gap-8 justify-center items-center self-start py-8 ">
-
           <button
             onClick={() => {
-              setShow(null)
+              setShow(null);
               toggleNested("addMember");
             }}
             className="flex w-full justify-center max-w-[210px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 whitespace-nowrap"
-
           >
             Member
           </button>
 
           <button
             onClick={() => {
-              setShow(null)
+              setShow(null);
               toggleNested("advertisement");
             }}
             className="flex w-full justify-center max-w-[210px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 whitespace-nowrap"
-
           >
             Advertisement
           </button>
           <button
             onClick={() => {
-              setShow(null)
+              setShow(null);
               toggleNested("matrimony");
               setShowMatrimonyStats(!showMatrimonyStats);
             }}
@@ -96,7 +93,7 @@ const Home = () => {
           </button>
           <button
             onClick={() => {
-              setShow(null)
+              setShow(null);
               toggleNested("press");
             }}
             className="flex w-full justify-center max-w-[210px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 whitespace-nowrap"
@@ -105,15 +102,13 @@ const Home = () => {
           </button>
           <button
             onClick={() => {
-              setShow(null)
+              setShow(null);
               toggleNested("contact");
             }}
             className="flex w-full justify-center max-w-[210px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 whitespace-nowrap"
-
           >
             Contact Queries
           </button>
-
         </div>
         {showMatrimonyStats && (
           <div className="text-gray-900 font-bold text-2xl leading-[1rem] tracking-normal font-Poppins w-full">
@@ -122,13 +117,36 @@ const Home = () => {
         )}
         {showMatrimonyStats && (
           <div className="w-full grid grid-cols-1 sm:grid-cols-3 gap-2 md:grid-cols-4 lg:grid-cols-6 self-start py-8 ">
-
-            <p className={`group  border flex  justify-center items-center px-4 gap-3 border-[#EF4D48] rounded-full  py-3 md:py-4  text-sm sm:text-base font-Poppins hover:cursor-pointer bg-[#EF4D48] text-white whitespace-nowrap`}>Total Biodatas: {totalBiodatas}</p>
-            <p className={`group  border flex  justify-center items-center px-4 gap-3 border-[#EF4D48] rounded-full  py-3 md:py-4  text-sm sm:text-base font-Poppins hover:cursor-pointer bg-[#EF4D48] text-white whitespace-nowrap`}>Active Biodatas: {activeBiodatas}</p>
-            <p className={`group  border flex  justify-center items-center px-4 gap-3 border-[#EF4D48] rounded-full  py-3 md:py-4  text-sm sm:text-base font-Poppins hover:cursor-pointer bg-[#EF4D48] text-white whitespace-nowrap`}>Matured Biodatas: {maturedBiodatas}</p>
-            <p className={`group  border flex  justify-center items-center px-4 gap-3 border-[#EF4D48] rounded-full  py-3 md:py-4  text-sm sm:text-base font-Poppins hover:cursor-pointer bg-[#EF4D48] text-white whitespace-nowrap`}>Discarded Biodatas: {discardedBiodatas}</p>
-            <p className={`group  border flex  justify-center items-center px-4 gap-3 border-[#EF4D48] rounded-full  py-3 md:py-4  text-sm sm:text-base font-Poppins hover:cursor-pointer bg-[#EF4D48] text-white whitespace-nowrap`}>Male Biodatas: {maleBiodatas}</p>
-            <p className={`group  border flex  justify-center items-center px-4 gap-3 border-[#EF4D48] rounded-full  py-3 md:py-4  text-sm sm:text-base font-Poppins hover:cursor-pointer bg-[#EF4D48] text-white whitespace-nowrap`}>Female Biodatas: {femaleBiodatas}</p>
+            <p
+              className={`group  border flex  justify-center items-center px-4 gap-3 border-[#EF4D48] rounded-full  py-3 md:py-4  text-sm sm:text-base font-Poppins hover:cursor-pointer bg-[#EF4D48] text-white whitespace-nowrap`}
+            >
+              Total Biodatas: {totalBiodatas}
+            </p>
+            <p
+              className={`group  border flex  justify-center items-center px-4 gap-3 border-[#EF4D48] rounded-full  py-3 md:py-4  text-sm sm:text-base font-Poppins hover:cursor-pointer bg-[#EF4D48] text-white whitespace-nowrap`}
+            >
+              Active Biodatas: {activeBiodatas}
+            </p>
+            <p
+              className={`group  border flex  justify-center items-center px-4 gap-3 border-[#EF4D48] rounded-full  py-3 md:py-4  text-sm sm:text-base font-Poppins hover:cursor-pointer bg-[#EF4D48] text-white whitespace-nowrap`}
+            >
+              Matured Biodatas: {maturedBiodatas}
+            </p>
+            <p
+              className={`group  border flex  justify-center items-center px-4 gap-3 border-[#EF4D48] rounded-full  py-3 md:py-4  text-sm sm:text-base font-Poppins hover:cursor-pointer bg-[#EF4D48] text-white whitespace-nowrap`}
+            >
+              Discarded Biodatas: {discardedBiodatas}
+            </p>
+            <p
+              className={`group  border flex  justify-center items-center px-4 gap-3 border-[#EF4D48] rounded-full  py-3 md:py-4  text-sm sm:text-base font-Poppins hover:cursor-pointer bg-[#EF4D48] text-white whitespace-nowrap`}
+            >
+              Male Biodatas: {maleBiodatas}
+            </p>
+            <p
+              className={`group  border flex  justify-center items-center px-4 gap-3 border-[#EF4D48] rounded-full  py-3 md:py-4  text-sm sm:text-base font-Poppins hover:cursor-pointer bg-[#EF4D48] text-white whitespace-nowrap`}
+            >
+              Female Biodatas: {femaleBiodatas}
+            </p>
             <label
               htmlFor="date"
               className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left mt-8 mr-8"
@@ -144,7 +162,9 @@ const Home = () => {
             {inputDate && (
               <p
                 className={`group  border flex  justify-center items-center px-4 gap-3 border-[#EF4D48] rounded-full  py-3 md:py-4  text-sm sm:text-base font-Poppins hover:cursor-pointer bg-[#EF4D48] text-white whitespace-nowrap ml-8 mt-2`}
-              >Biodatas: {biodatasOnInputDate}</p>
+              >
+                Biodatas: {biodatasOnInputDate}
+              </p>
             )}
     {/* <Doughnut data={pieData}/> */}
           </div>
@@ -154,8 +174,6 @@ const Home = () => {
       <div className="flex flex-col w-full sm:flex-row ">
         <div className="w-full sm:w-1/4 md:1/5 lg:1/6 flex justify-center items-center my-5 sm:border-r-4 sm:border-[#444]">
           <div className="flex flex-col gap-8 justify-center items-center self-start py-8 ">
-
-
             {showNested.addMember && (
               <div className="flex flex-col gap-8 justify-center items-center self-start py-8 ">
                 <button
@@ -163,7 +181,7 @@ const Home = () => {
                     setShow("addMember");
                   }}
                   className="flex w-full justify-center max-w-[210px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 whitespace-nowrap"
-                // ...
+                  // ...
                 >
                   Add member
                 </button>
@@ -180,7 +198,7 @@ const Home = () => {
                     setShow("addMemberType");
                   }}
                   className="flex w-full justify-center max-w-[210px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 whitespace-nowrap"
-                // ...
+                  // ...
                 >
                   Add Member Type
                 </button>
@@ -189,7 +207,7 @@ const Home = () => {
                     setShow("approveMembers");
                   }}
                   className="flex w-full justify-center max-w-[210px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 whitespace-nowrap"
-                // ...
+                  // ...
                 >
                   Pending Approvals
                 </button>
@@ -203,7 +221,7 @@ const Home = () => {
                     setShow("addAdvertisement");
                   }}
                   className="flex w-full justify-center max-w-[210px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 whitespace-nowrap"
-                // ...
+                  // ...
                 >
                   Add Advertisement
                 </button>
@@ -223,7 +241,6 @@ const Home = () => {
                 >
                   Slugs
                 </button>
-
               </div>
             )}
 
@@ -234,7 +251,7 @@ const Home = () => {
                     setShow("matrimonyUsers");
                   }}
                   className="flex w-full justify-center max-w-[210px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 whitespace-nowrap"
-                // ...
+                  // ...
                 >
                   All Matrimony Users
                 </button>
@@ -290,7 +307,6 @@ const Home = () => {
 
 
               </div>
-
             )}
 
             {showNested.press && (
@@ -341,9 +357,7 @@ const Home = () => {
                 >
                   Active Biodatas
                 </button> */}
-
               </div>
-
             )}
 
             {showNested.contact && (
@@ -353,12 +367,10 @@ const Home = () => {
                     setShow("contactQueries");
                   }}
                   className="flex w-full justify-center max-w-[210px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 whitespace-nowrap"
-                // ...
+                  // ...
                 >
                   All contact Queries
                 </button>
-
-
               </div>
             )}
 
@@ -412,7 +424,6 @@ const Home = () => {
             >
               Add Advertisement
             </button> */}
-
           </div>
         </div>
         {/* {show === "addMember" ? <FormAddNewMember /> : show === "addMemberType" ? <FormAddMemberType /> : <Members />} */}
@@ -441,9 +452,6 @@ const Home = () => {
                                               null
         }
       </div>
-
-
-
     </div>
   );
 };

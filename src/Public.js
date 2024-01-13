@@ -90,11 +90,11 @@ const Public = () => {
           <AdvertismentContext.Provider
             value={{ advertismentList, setAdvertismentList }}
           >
-            <LoadingBar color="#EF4D48" ref={topLoadingBarRef} />
+            <LoadingBar color="#EF4D48" ref={topLoadingBarRef} height="4px" />
             <div className="bg-[#f7f3f5]">
               <Navbar />
               <Outlet />
-              <div className="w-full flex justify-center ">
+              <div className="w-full flex justify-center flex-col gap-5">
                 <Advertisment />
               </div>
               <Footer />

@@ -5,8 +5,7 @@ const ProfileCard = ({ data, showCard, setShowCard }) => {
   const {
     address,
     email,
-    memberType = "not_available",
-    samaj = "not_available",
+    memberType,
     name,
     nativePlace,
     phoneNumber,
@@ -15,10 +14,10 @@ const ProfileCard = ({ data, showCard, setShowCard }) => {
   } = data;
   console.log(memberType);
   return (
-    <div className=" z-50 fixed flex flex-col justify-center gap-8 items-center w-screen h-screen top-0 left-0 bg-[#323233] bg-opacity-90 overflow-x-auto py-5 px-5">
-      <div className="w-full flex flex-col gap-8 justify-center items-center">
+    <div className=" z-50 fixed  justify-center gap-8 items-center w-screen h-screen top-0 left-0 bg-[#323233] bg-opacity-90 overflow-x-auto py-5 px-5">
+      <div className="w-full flex flex-col gap-8 justify-center items-center my-auto">
         <div
-          className="self-end flex justify-end pr-5 sm:pr-20 hover:cursor-pointer group mt-5"
+          className="self-end flex justify-end pr-5 sm:pr-20 hover:cursor-pointer group mt-3"
           onClick={() => {
             setShowCard(null);
           }}
@@ -36,8 +35,7 @@ const ProfileCard = ({ data, showCard, setShowCard }) => {
         <div className="w-full  border-4 rounded-b-xl border-[#EF4D48] font-Poppins max-w-md  min-w-[350px] box-border  bg-gradient-to-r from-[#FFDD57] to-[#FE954C]">
           <div className="flex justify-center items-center w-full rounded-b-2xl bg-[#EF4D48] p-3">
             <h1 className="text-[#fff] font-semibold text-xl sm:text-2xl font-Poppins w-full text-center whitespace-nowrap">
-              {memberType !== "not_available" && memberType.name.toUpperCase()}
-              {samaj !== "not_available" && samaj.toUpperCase()}
+              {memberType.name.toUpperCase()}
             </h1>
           </div>
           <div className="w-full p-5 flex justify-center items-center flex-col gap-4">
@@ -57,7 +55,7 @@ const ProfileCard = ({ data, showCard, setShowCard }) => {
               </h3>
             </div>
             <div className="w-full flex gap-4 justify-center items-center">
-              <a href={`tel:${phoneNumber}`} className="w-[40%]">
+              <a href={`tel:${phoneNumber}`}>
                 <button
                   className={`group w-full border flex justify-center gap-3 px-4 items-center border-[#EF4D48] rounded-full text-sm sm:text-base py-3 md:py-4 font-Poppins hover:cursor-pointer hover:bg-[#EF4D48] hover:text-white`}
                 >
@@ -71,10 +69,10 @@ const ProfileCard = ({ data, showCard, setShowCard }) => {
                     <path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z" />
                   </svg>
 
-                  <p className="font-medium whitespace-nowrap">Phone</p>
+                  <p className="font-medium whitespace-nowrap text-sm">Phone</p>
                 </button>
               </a>
-              <a href={`mailto:${email}`} className="w-[40%]">
+              <a href={`mailto:${email}`}>
                 <button
                   className={`group w-full border flex  justify-center items-center px-4 gap-3 border-[#EF4D48] rounded-full  py-3 md:py-4  text-sm sm:text-base font-Poppins hover:cursor-pointer hover:bg-[#EF4D48] hover:text-white`}
                 >
@@ -88,10 +86,13 @@ const ProfileCard = ({ data, showCard, setShowCard }) => {
                     <path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z" />
                   </svg>
 
-                  <p className="font-medium whitespace-nowrap">E-mail</p>
+                  <p className="font-medium whitespace-nowrap text-sm">
+                    E-mail
+                  </p>
                 </button>
               </a>
             </div>
+
             <div className="w-full">
               <div className="flex gap-3 items-start w-full text-xl font-medium py-2">
                 <svg

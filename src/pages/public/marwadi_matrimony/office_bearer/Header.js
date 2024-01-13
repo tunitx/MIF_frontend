@@ -7,7 +7,7 @@ const Header = () => {
       <div className="max-w-6xl w-full justify-center items-center flex flex-col gap-6">
         <div className="max-w-6xl w-full flex flex-col gap-2">
           <h2 className="text-[#2B161B] text-lg font-Poppins font-bold  w-full text-center md:text-4xl ">
-            Office Bearer
+            Office Bearers
           </h2>
           <p className="text-[#2B161B] font-medium  text-base sm:text-xl w-full text-center font-Poppins">
             MIF Marwadi Matrimony

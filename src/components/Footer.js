@@ -1,65 +1,60 @@
 import React, { useEffect, useState } from "react";
 import marwadi_logo from "../../assests/images/marwari_logo_pro.webp";
-import { Link } from "react-router-dom";
 import AwesomeSlider from "react-awesome-slider";
 import "react-awesome-slider/dist/custom-animations/cube-animation.css";
 import withAutoplay from "react-awesome-slider/dist/autoplay";
 import "react-awesome-slider/dist/styles.css";
 import { useAdvertisment } from "../hooks/useAdvertisment";
+import {
+  GET_TOTAL_VISITOR_COUNT,
+  GET_ADVERTISMENTS_SPEED,
+} from "../utils/constants";
+import axios from "axios";
 
 const Footer = () => {
   const AutoplaySlider = withAutoplay(AwesomeSlider);
 
-  const [visitorCount, setVisitorCount] = useState(6384);
+  const [visitorCount, setVisitorCount] = useState(null);
+
+  const [advertismentSpeed, setAdvertismentSpeed] = useState(1000);
 
   const { categorisedAds } = useAdvertisment("bronze");
-  // console.log(categorisedAds);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     let api;
-  //     google.auth
-  //       .getClient({
-  //         scopes: ["https://www.googleapis.com/auth/analytics.readonly"],
-  //       })
-  //       .then((auth) => {
-  //         api = google.analyticsreporting({ version: "v4", auth });
-  //         const batchGet = promisify(api.reports.batchGet.bind(api.reports));
-  //         return batchGet({
-  //           requestBody: {
-  //             reportRequests: [
-  //               {
-  //                 viewId: process.env.VIEW_ID,
-  //                 dateRanges: [
-  //                   {
-  //                     startDate: "7daysAgo",
-  //                     endDate: "today",
-  //                   },
-  //                 ],
-  //                 metrics: [
-  //                   {
-  //                     expression: "ga:users",
-  //                   },
-  //                 ],
-  //               },
-  //             ],
-  //           },
-  //         });
-  //       })
-  //       .then(({ data: { reports } }) => {
-  //         const visitorsCount = reports[0].data.totals[0].values[0];
-  //         console.log(`Visitors count: ${visitorsCount}`);
-  //         setVisitorCount(visitorsCount);
-  //       })
-  //       .catch((err) => {
-  //         console.error(err);
-  //       });
-  //   };
+  useEffect(() => {
+    async function get_total_visitor_count() {
+      try {
+        const res = await axios.get(GET_TOTAL_VISITOR_COUNT);
+        if (res.status === 200) {
+          setVisitorCount(res.data.value);
+        } else {
+          setVisitorCount(null);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    }
 
-  //   fetchData();
-  // }, []);
+    get_total_visitor_count();
+
+    async function get_adsSpeed() {
+      try {
+        const res = await axios.get(GET_ADVERTISMENTS_SPEED);
+        // console.log(res);
+        if (res.status === 200) {
+          setAdvertismentSpeed(res.data.value);
+        } else {
+          setAdvertismentSpeed(1000);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    }
+
+    get_adsSpeed();
+  }, []);
+
   return (
-    <div className="w-full flex flex-col bg-[#5C5D5C] text-[#F6F7F8] sm:items-center">
+    <div className="w-full flex flex-col bg-[#5C5D5C] text-[#F6F7F8] sm:items-center ">
       {/* Footer Section */}
 
       <div className="w-full flex flex-col items-center md:flex-row px-5 py-16 gap-12 md:gap-8   max-w-7xl">
@@ -164,7 +159,7 @@ const Footer = () => {
                 <strong>Contact Us</strong>
               </p>
               <div className="flex flex-col gap-3">
-                <p className="flex gap-3 items-start justify-start">
+                <p className="flex gap-3 items-start sm:justify-start justify-center">
                   <span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -181,7 +176,7 @@ const Footer = () => {
                     <strong>Email: </strong> marwadiif@gmail.com
                   </span>
                 </p>
-                <p className="flex gap-3 items-start justify-start">
+                <p className="flex gap-3 items-start sm:justify-start justify-center">
                   <span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -197,7 +192,7 @@ const Footer = () => {
                     <strong>Phone: </strong> +91 9314503871
                   </span>{" "}
                 </p>
-                <p className="flex gap-3 items-start text-left justify-start">
+                <p className="flex gap-3 items-start sm:text-left text-center sm:justify-start justify-center">
                   <span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -218,30 +213,46 @@ const Footer = () => {
                 </p>
               </div>
             </div>
-            {/* <div>
-            <p className="text-center"> Total Users : {visitorCount}</p>
-          </div> */}
+            {visitorCount && (
+              <p className="flex gap-3 items-start sm:text-left  sm:justify-start justify-center">
+                <span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="1.2rem"
+                    viewBox="0 0 448 512"
+                    fill="#fff"
+                  >
+                    {/*!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.*/}
+                    <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z" />
+                  </svg>
+                </span>{" "}
+                <span>Total Visitors : {visitorCount}</span>
+              </p>
+            )}
           </div>
         </div>
 
         {/*Advertisment Section of Footer */}
         {categorisedAds?.length > 0 && (
-          <div className="w-full p-5 max-w-md  sm:px-5 sm:py-2 flex justify-center items-center h-full">
+          <div className=" w-[350px] sm:w-[500px] overflow-hidden sm:px-5 sm:py-2 flex justify-center items-center h-[300px]">
             <AutoplaySlider
               play={true}
-              interval={2000}
+              interval={advertismentSpeed}
               organicArrows={false}
               animation="cubeAnimation"
               bullets={false}
-              className="rounded-md"
+              className="rounded-md w-[350px] sm:w-[500px] bg-[#5C5D5C] flex justify-center items-center"
             >
-              {/* <div>1</div>
-          <div>2</div>
-          <div>3</div> */}
               {categorisedAds?.map((ad) => {
                 return (
-                  <div key={ad._id} className="rounded-md">
-                    <img src={ad.businessImage} className="rounded-md" />
+                  <div
+                    key={ad._id}
+                    className="w-full h-full flex bg-[#5C5D5C] justify-center items-center"
+                  >
+                    <img
+                      src={ad.businessImage}
+                      className="object-contain max-h-full max-w-full"
+                    />
                   </div>
                 );
               })}

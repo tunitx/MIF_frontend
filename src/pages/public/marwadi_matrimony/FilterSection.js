@@ -164,7 +164,7 @@ const FilterSection = ({
   }, []);
 
   return (
-    <div className="md:w-fit w-full  flex-row flex-wrap fade-in flex md:flex-col gap-5 md:max-w-[200px] item font-Poppins ">
+    <div className="md:w-fit w-full p-3 h-fit  border border-indigo-900 rounded-md flex-row flex-wrap fade-in flex md:flex-col gap-5 md:max-w-[200px] item font-Poppins ">
       <button
         ref={filterBtnRef}
         onClick={() => {

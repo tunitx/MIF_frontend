@@ -6,7 +6,11 @@ import FormAddAdvertisement from "../advertisment-board/FormAddAdvertisment";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../../utils/constants";
 import axios from "axios";
-
+import MaturedBiodataTable from "../Matrimony/MaturedBiodataTable";
+import BiodataTables from "../Matrimony/MatrimonyProfiles";
+import DiscardedBiodataTable from "../Matrimony/DiscardedBiodataTable";
+import { Doughnut } from 'react-chartjs-2';
+import 'chart.js';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -23,6 +27,7 @@ const Home = () => {
 
     fetchProfiles();
   }, []);
+  
 
   const totalBiodatas = profiles.length;
   const activeBiodatas = profiles.filter(profile => !profile.matured && !profile.discard).length;
@@ -31,7 +36,16 @@ const Home = () => {
   const maleBiodatas = profiles.filter(profile => profile.gender === 'male').length;
   const femaleBiodatas = profiles.filter(profile => profile.gender === 'female').length;
   const biodatasOnInputDate = profiles.filter(profile => new Date(profile.timestamp).toDateString() === new Date(inputDate).toDateString()).length;
-
+  // const pieData = {
+  //   labels: ['Total', 'Active', 'Matured', 'Discarded', 'Male', 'Female'],
+  //   datasets: [
+  //       {
+  //           data: [totalBiodatas, activeBiodatas, maturedBiodatas, discardedBiodatas, maleBiodatas, femaleBiodatas],
+  //           backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#FF6384', '#36A2EB', '#FFCE56'],
+  //           hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#FF6384', '#36A2EB', '#FFCE56']
+  //       }
+  //   ]
+  // };
   const toggleNested = (key) => {
     setShowNested(prev => ({ ...prev, [key]: !prev[key] }));
   };
@@ -132,8 +146,9 @@ const Home = () => {
                 className={`group  border flex  justify-center items-center px-4 gap-3 border-[#EF4D48] rounded-full  py-3 md:py-4  text-sm sm:text-base font-Poppins hover:cursor-pointer bg-[#EF4D48] text-white whitespace-nowrap ml-8 mt-2`}
               >Biodatas: {biodatasOnInputDate}</p>
             )}
-
+    {/* <Doughnut data={pieData}/> */}
           </div>
+          
         )}
       </div>
       <div className="flex flex-col w-full sm:flex-row ">
@@ -255,6 +270,23 @@ const Home = () => {
                 >
                   Active Biodatas
                 </button>
+                <button
+                  onClick={() => {
+                    setShow("maturedBiodatas");
+                  }}
+                  className="flex w-full justify-center max-w-[210px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 whitespace-nowrap"
+                >
+                  Matured Biodatas
+                </button>
+                <button
+                  onClick={() => {
+                    setShow("discardedBiodatas");
+                  }}
+                  className="flex w-full justify-center max-w-[210px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 whitespace-nowrap"
+                >
+                  Discarded Biodatas
+                </button>
+               
 
 
               </div>
@@ -398,8 +430,10 @@ const Home = () => {
                             show === "slugs" ? navigate('/admin/slugs') :
                               show === "officeBearerSamaj" ? navigate('/admin/office_bearer_samaj') :
                                 show === "modifyCastes" ? navigate('/admin/add-caste') :
-                                  show === "activeBiodatas" ? navigate('/admin/matrimony_profiles') :
-                                    show === "activeBiodatas" ? navigate('/admin/matrimony_profiles') :
+                                  show === "activeBiodatas" ? <BiodataTables/> :
+                                  show === "discardedBiodatas" ? <DiscardedBiodataTable/> :
+                                  show === "maturedBiodatas" ? <MaturedBiodataTable/> :
+                                   
                                       show === "addPress" ? navigate('/admin/press') :
                                         show === "addPressClip" ? navigate('/admin/press-clip') :
                                           show === "addPressCutout" ? navigate('/admin/press-cutout') :

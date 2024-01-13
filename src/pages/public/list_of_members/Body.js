@@ -1,23 +1,22 @@
 import React, { useContext, useEffect, useState } from "react";
 import Table from "./Table";
-// import {
-//   trusteeMembers,
-//   advisoryMembers,
-//   activeLifeMembers,
-// } from "../../utils/constants";
 import MembersContext from "../../../utils/context/Members";
 
 import {
   GET_ALL_MEMBER,
   GET_AVAILABLE_MEMBERTYPES_LIST,
 } from "../../../utils/constants";
+import { BASE_URL } from "../../../utils/constants";
 import { usePagination } from "../../../hooks/usePagination";
 
 const Body = () => {
   const [showList, setShowList] = useState([]);
   const [filteredList, setFilteredList] = useState(showList);
+  const [selectedMemberType, setSelectedMemberType] = useState('Individual');
 
   const [membersList, setMembersList] = useState([]);
+  const [selectedCorporateType, setSelectedCorporateType] = useState('Silver');
+  const [corporateMembersList, setCorporateMembersList] = useState([]);
 
   const [memberTypeList, setMemberTypeList] = useState([]);
 
@@ -25,6 +24,10 @@ const Body = () => {
 
   const [sortName, setSortName] = useState(null);
   const [sortProfession, setSortProfession] = useState(null);
+
+  function handleStaticButtonClick(type) {
+    setSelectedCorporateType(type);
+  }
 
   function search(str) {
     const updatedList = showList?.filter((items, index) => {
@@ -36,7 +39,6 @@ const Body = () => {
     setFilteredList(updatedList);
   }
 
-  // For Pagination
 
   const { currentPage, handlePageChange, currentItems, totalPages } =
     usePagination(() => {
@@ -88,7 +90,38 @@ const Body = () => {
     getMembers().then((data) => {
       setMembersList(data);
     });
+    async function getCorporateMembers() {
+      try {
+        const resBody = await fetch('http://localhost:3000/getAllApprovedCorporateMembers'); // Replace with your actual API endpoint
+
+        const resData = await resBody.json();
+        console.log(resData)
+
+        return resData;
+      } catch (e) {
+        console.log(e);
+      }
+    }
+
+    getCorporateMembers().then((data) => {
+      setCorporateMembersList(data);
+    });
   }, []);
+  useEffect(() => {
+    if (selectedMemberType === 'Corporate') {
+      const list = corporateMembersList.filter((member) => {
+        return member.membershipType === selectedCorporateType;
+      });
+
+      setShowList(list);
+    } else {
+      const list = membersList.filter((member) => {
+        return member.memberType.id === memberTypeList[0]?.id;
+      });
+
+      setShowList(list);
+    }
+  }, [membersList, memberTypeList, corporateMembersList, selectedCorporateType, selectedMemberType]);
 
   useEffect(() => {
     const list = membersList?.filter((member) => {
@@ -109,64 +142,135 @@ const Body = () => {
   return (
     <div className="w-full py-12 flex justify-center items-center">
       <div className="w-full max-w-6xl flex flex-col gap-8 items-center">
-        <div className="flex flex-col w-full pb-6 sm:flex-row">
-          <div className="w-full flex flex-wrap">
-            {memberTypeList &&
-              memberTypeList?.map((type, index) => {
-                return (
-                  <button
-                    key={index}
-                    className={`w-1/2 sm:w-fit grow min-w-[170px] border  border-[#EF4D48] rounded-xl text-sm sm:text-base py-3 md:py-4 font-Poppins hover:cursor-pointer ${
-                      showList[0]?.memberType?.id === type?.id
-                        ? "bg-[#EF4D48] text-white"
-                        : " bg-[#FFFFFF] text-[#333]"
-                    }`}
-                    onClick={() => {
-                      handleShowListChange(type?.id);
-                    }}
-                  >
-                    {type?.name}
-                  </button>
-                );
-              })}
-          </div>
+        <div className="w-full flex flex-wrap">
+          <button
+            className={`w-1/2 sm:w-fit grow min-w-[170px] border  border-[#EF4D48] rounded-xl text-sm sm:text-base py-3 md:py-4 font-Poppins hover:cursor-pointer ${selectedMemberType === 'Individual'
+              ? "bg-[#EF4D48] text-white"
+              : " bg-[#FFFFFF] text-[#333]"
+              }`}
+            onClick={() => {
+              setSelectedMemberType('Individual');
+            }}
+          >
+            Individual Member
+          </button>
+          <button
+            className={`w-1/2 sm:w-fit grow min-w-[170px] border  border-[#EF4D48] rounded-xl text-sm sm:text-base py-3 md:py-4 font-Poppins hover:cursor-pointer ${selectedMemberType === 'Corporate'
+              ? "bg-[#EF4D48] text-white"
+              : " bg-[#FFFFFF] text-[#333]"
+              }`}
+            onClick={() => {
+              setSelectedMemberType('Corporate');
+            }}
+          >
+            Corporate Member
+          </button>
         </div>
-        <div className="flex w-full justify-center max-w-5xl">
-          <div className="bg-[#EF4D4847] flex items-center justify-center rounded-tl-full rounded-bl-full p-3 px-6">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              height="1em"
-              viewBox="0 0 512 512"
-            >
-              <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z" />
-            </svg>
-          </div>
+        {selectedMemberType === 'Individual' && (
+          <>
+            <div className="flex flex-col w-full pb-6 sm:flex-row">
+              <div className="w-full flex flex-wrap">
+                {memberTypeList &&
+                  memberTypeList?.map((type, index) => {
+                    return (
+                      <button
+                        key={index}
+                        className={`w-1/2 sm:w-fit grow min-w-[170px] border  border-[#EF4D48] rounded-xl text-sm sm:text-base py-3 md:py-4 font-Poppins hover:cursor-pointer ${showList[0]?.memberType?.id === type?.id
+                          ? "bg-[#EF4D48] text-white"
+                          : " bg-[#FFFFFF] text-[#333]"
+                          }`}
+                        onClick={() => {
+                          handleShowListChange(type?.id);
+                        }}
+                      >
+                        {type?.name}
+                      </button>
+                    );
+                  })}
+              </div>
+            </div>
+            <div className="flex w-full justify-center max-w-5xl">
+              <div className="bg-[#EF4D4847] flex items-center justify-center rounded-tl-full rounded-bl-full p-3 px-6">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="1em"
+                  viewBox="0 0 512 512"
+                >
+                  <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z" />
+                </svg>
+              </div>
 
-          <input
-            type="text"
-            value={searchFor}
-            onChange={(e) => {
-              setSearchFor(e.target.value);
-            }}
-            placeholder="View Member"
-            className="w-full rounded-tr-full rounded-br-full bg-[#EF4D4847] p-3 text-[#7A7A7A] font-Poppins focus:outline focus:outline-[#371c1b47]"
-          />
-        </div>
-        <div className="flex w-full max-w-5xl">
-          <Table
-            data={filteredList}
-            setFilteredList={setFilteredList}
-            nameSorting={{ sortName: sortName, setSortName: setSortName }}
-            professionSorting={{
-              sortProfession: sortProfession,
-              setSortProfession: setSortProfession,
-            }}
-            currentItems={currentItems}
-            currentPage={currentPage}
-            handlePageChange={handlePageChange}
-            totalPages={totalPages}
-          />
-        </div>
+              <input
+                type="text"
+                value={searchFor}
+                onChange={(e) => {
+                  setSearchFor(e.target.value);
+                }}
+                placeholder="View Member"
+                className="w-full rounded-tr-full rounded-br-full bg-[#EF4D4847] p-3 text-[#7A7A7A] font-Poppins focus:outline focus:outline-[#371c1b47]"
+              />
+            </div>
+            <div className="flex w-full max-w-5xl">
+              <Table
+                data={filteredList}
+                setFilteredList={setFilteredList}
+                nameSorting={{ sortName: sortName, setSortName: setSortName }}
+                professionSorting={{
+                  sortProfession: sortProfession,
+                  setSortProfession: setSortProfession,
+                }}
+                currentItems={currentItems}
+                currentPage={currentPage}
+                handlePageChange={handlePageChange}
+                totalPages={totalPages}
+              />
+            </div>
+          </>
+        )}
+      {selectedMemberType === 'Corporate' && (
+        <>
+          <div className="flex flex-col w-full pb-6 sm:flex-row">
+            <div className="w-full flex flex-wrap">
+              <button
+                className="w-1/2 sm:w-fit grow min-w-[170px] border border-[#EF4D48] rounded-xl text-sm sm:text-base py-3 md:py-4 font-Poppins hover:cursor-pointer"
+                onClick={() => handleStaticButtonClick('private')}
+              >
+                Silver
+              </button>
+              <button
+                className="w-1/2 sm:w-fit grow min-w-[170px] border border-[#EF4D48] rounded-xl text-sm sm:text-base py-3 md:py-4 font-Poppins hover:cursor-pointer"
+                onClick={() => handleStaticButtonClick('Gold')}
+              >
+                Gold
+              </button>
+              <button
+                className="w-1/2 sm:w-fit grow min-w-[170px] border border-[#EF4D48] rounded-xl text-sm sm:text-base py-3 md:py-4 font-Poppins hover:cursor-pointer"
+                onClick={() => handleStaticButtonClick('Bronze')}
+              >
+                Bronze
+              </button>
+            </div>
+          </div>
+          <div className="flex w-full max-w-5xl">
+            <Table
+              data={filteredList}
+              setFilteredList={setFilteredList}
+              nameSorting={{ sortName: sortName, setSortName: setSortName }}
+              professionSorting={{
+                sortProfession: sortProfession,
+                setSortProfession: setSortProfession,
+              }}
+              currentItems={currentItems}
+              currentPage={currentPage}
+              handlePageChange={handlePageChange}
+              totalPages={totalPages}
+            />
+          </div>
+        </>
+      )}
+
+
+
       </div>
     </div>
   );

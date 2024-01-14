@@ -19,6 +19,13 @@ const Home = () => {
   const [profiles, setProfiles] = useState([]);
   const [showMatrimonyStats, setShowMatrimonyStats] = useState(false);
   const [inputDate, setInputDate] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+
+  const biodatasInRange = profiles.filter(profile => {
+    const profileDate = new Date(profile.timestamp);
+    return profileDate >= new Date(startDate) && profileDate <= new Date(endDate);
+  }).length;
   useEffect(() => {
     const fetchProfiles = async () => {
       const response = await axios.get(`${BASE_URL}getProfiles`);
@@ -27,7 +34,7 @@ const Home = () => {
 
     fetchProfiles();
   }, []);
-  
+
 
   const totalBiodatas = profiles.length;
   const activeBiodatas = profiles.filter(profile => !profile.matured && !profile.discard).length;
@@ -47,7 +54,18 @@ const Home = () => {
   //   ]
   // };
   const toggleNested = (key) => {
-    setShowNested((prev) => ({ ...prev, [key]: !prev[key] }));
+    // First, close all sub-buttons
+    setShowNested(prev => {
+      const newState = {};
+      for (let k in prev) {
+        newState[k] = false;
+        setShowMatrimonyStats(false)
+      }
+      return newState;
+    });
+
+    // Then, open the clicked sub-button
+    setShowNested(prev => ({ ...prev, [key]: !prev[key] }));
   };
   return (
     <div className="flex flex-col justify-center items-center gap-16 mt-10 p-5">
@@ -147,28 +165,47 @@ const Home = () => {
             >
               Female Biodatas: {femaleBiodatas}
             </p>
-            <label
-              htmlFor="date"
-              className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left mt-8 mr-8"
-            >
-              Biodata Upload Date* :
-            </label>
-            <input
-              type="date"
-              value={inputDate}
-              onChange={(e) => setInputDate(e.target.value)}
-              className="grow border w-full rounded border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm ml-4 mt-4"
-            />
-            {inputDate && (
+            
+           
+<div>
+  <label
+    htmlFor="date"
+    className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] mt-8"
+  >
+    From :
+  </label>
+  <input
+    type="date"
+    value={startDate}
+    onChange={(e) => setStartDate(e.target.value)}
+    className="grow border w-full rounded border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm  mt-4 "
+  />
+</div>
+<div>
+  <label
+    htmlFor="date"
+    className="font-semibold text-sm font-Poppins  tracking-wide sm:text-base whitespace-nowrap w-full text-[#444] text-left mt-8"
+  >
+    To :
+  </label>
+  <input
+    type="date"
+    value={endDate}
+    onChange={(e) => setEndDate(e.target.value)}
+    className="grow border w-full rounded border-[#ca403b] py-2 px-3 text-sm sm:text-base  bg-[#f7f3f5] focus:outline-[#EF4D48] placeholder:font-Poppins placeholder:text-sm  mt-4"
+  />
+</div>
+
+            {startDate && endDate && (
               <p
                 className={`group  border flex  justify-center items-center px-4 gap-3 border-[#EF4D48] rounded-full  py-3 md:py-4  text-sm sm:text-base font-Poppins hover:cursor-pointer bg-[#EF4D48] text-white whitespace-nowrap ml-8 mt-2`}
               >
-                Biodatas: {biodatasOnInputDate}
+                Biodatas: {biodatasInRange}
               </p>
             )}
-    {/* <Doughnut data={pieData}/> */}
+            {/* <Doughnut data={pieData}/> */}
           </div>
-          
+
         )}
       </div>
       <div className="flex flex-col w-full sm:flex-row ">
@@ -181,7 +218,7 @@ const Home = () => {
                     setShow("addMember");
                   }}
                   className="flex w-full justify-center max-w-[210px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 whitespace-nowrap"
-                  // ...
+                // ...
                 >
                   Add member
                 </button>
@@ -198,7 +235,7 @@ const Home = () => {
                     setShow("addMemberType");
                   }}
                   className="flex w-full justify-center max-w-[210px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 whitespace-nowrap"
-                  // ...
+                // ...
                 >
                   Add Member Type
                 </button>
@@ -207,7 +244,7 @@ const Home = () => {
                     setShow("approveMembers");
                   }}
                   className="flex w-full justify-center max-w-[210px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 whitespace-nowrap"
-                  // ...
+                // ...
                 >
                   Pending Approvals
                 </button>
@@ -221,7 +258,7 @@ const Home = () => {
                     setShow("addAdvertisement");
                   }}
                   className="flex w-full justify-center max-w-[210px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 whitespace-nowrap"
-                  // ...
+                // ...
                 >
                   Add Advertisement
                 </button>
@@ -251,7 +288,7 @@ const Home = () => {
                     setShow("matrimonyUsers");
                   }}
                   className="flex w-full justify-center max-w-[210px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 whitespace-nowrap"
-                  // ...
+                // ...
                 >
                   All Matrimony Users
                 </button>
@@ -303,7 +340,7 @@ const Home = () => {
                 >
                   Discarded Biodatas
                 </button>
-               
+
 
 
               </div>
@@ -367,7 +404,7 @@ const Home = () => {
                     setShow("contactQueries");
                   }}
                   className="flex w-full justify-center max-w-[210px] rounded-md bg-[#EF4D48] px-2 py-2 text-md font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 whitespace-nowrap"
-                  // ...
+                // ...
                 >
                   All contact Queries
                 </button>
@@ -438,18 +475,18 @@ const Home = () => {
                         show === "addNewPress" ? navigate('/admin/press') :
                           show === "matrimonyUsers" ? navigate('/admin/matrimony-users') :
                             show === "officeBearerMember" ? navigate('/admin/office_bearer_member') :
-                            show === "slugs" ? navigate('/admin/slugs') :
-                              show === "officeBearerSamaj" ? navigate('/admin/office_bearer_samaj') :
-                                show === "modifyCastes" ? navigate('/admin/add-caste') :
-                                  show === "activeBiodatas" ? <BiodataTables/> :
-                                  show === "discardedBiodatas" ? <DiscardedBiodataTable/> :
-                                  show === "maturedBiodatas" ? <MaturedBiodataTable/> :
-                                   
-                                      show === "addPress" ? navigate('/admin/press') :
-                                        show === "addPressClip" ? navigate('/admin/press-clip') :
-                                          show === "addPressCutout" ? navigate('/admin/press-cutout') :
-                                            show === "contactQueries" ? navigate('/admin/contact-queries') :
-                                              null
+                              show === "slugs" ? navigate('/admin/slugs') :
+                                show === "officeBearerSamaj" ? navigate('/admin/office_bearer_samaj') :
+                                  show === "modifyCastes" ? navigate('/admin/add-caste') :
+                                    show === "activeBiodatas" ? <BiodataTables /> :
+                                      show === "discardedBiodatas" ? <DiscardedBiodataTable /> :
+                                        show === "maturedBiodatas" ? <MaturedBiodataTable /> :
+
+                                          show === "addPress" ? navigate('/admin/press') :
+                                            show === "addPressClip" ? navigate('/admin/press-clip') :
+                                              show === "addPressCutout" ? navigate('/admin/press-cutout') :
+                                                show === "contactQueries" ? navigate('/admin/contact-queries') :
+                                                  null
         }
       </div>
     </div>

@@ -40,6 +40,13 @@ const AddNewCaste = () => {
       setGotraOptions(Object.keys(casteData[selectedCaste] || {}));
     }
   };
+  const handleEdit = () => {
+    // Code to handle edit action
+  };
+  
+  const handleDelete = () => {
+    // Code to handle delete action
+  };
 
   const handleSubCasteChange = (event) => {
     const selectedSubCaste = event.target.value;
@@ -158,6 +165,7 @@ const AddNewCaste = () => {
                   type="text" value={inputValue} onChange={(event) => setInputValue(event.target.value)} />
 
               </div>
+              
             </div>
           </>
         ) : (
